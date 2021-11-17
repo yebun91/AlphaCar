@@ -6,8 +6,8 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 public class CommonMethod {
+    public static String ipConfig = "http://192.168.0.13:80";
 
-    public static String  ipConfig = "http://192.168.0.30:8989";
 
     // 네트워크에 연결되어 있는가
     public static boolean isNetworkConnected(Context context) {
@@ -26,5 +26,7 @@ public class CommonMethod {
             Log.d("isconnected : ", "False => 데이터 통신 불가!!!" );
             return false;
         }
+
     }
+
 }
