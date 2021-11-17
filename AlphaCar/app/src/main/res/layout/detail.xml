@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+
+    >
+    <!--상단 검색 창-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="8"
+            android:text="여기는 검색창"
+            android:textSize="24sp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:src="@drawable/ic_baseline_search_24"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+    <!--전체 화면-->
+    <ScrollView
+        android:id="@+id/detail_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--세차장 사진-->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                >
+                <!--사진이 들어가는곳, viewpager2로 만듦-->
+                <!--detail_store_img-->
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/image_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_centerInParent="true" />
+
+                <LinearLayout
+                    android:id="@+id/dots_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/image_container"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:layout_gravity="bottom|center"
+                    android:orientation="horizontal" />
+
+                <!--좋아요 버튼-->
+                <ImageButton
+                    android:id="@+id/detail_favorite_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_favorite_24"
+                    android:layout_gravity="right|bottom"
+                    />
+            </FrameLayout>
+
+
+            <!--세차장 이름, 별점, 가격-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_margin="6dp"
+                android:background="@drawable/layout_background"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:padding="6dp"
+                android:layout_marginTop="4dp"
+                >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:weightSum="2"
+                    android:layout_weight="1"
+                    >
+                    <TextView
+                        android:id="@+id/detail_store_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="24sp"
+                        android:layout_weight="1"
+                        />
+
+                    <ImageView
+                        android:layout_width="97dp"
+                        android:layout_height="34dp"
+                        android:layout_gravity="left"
+                        android:layout_weight="1"
+                        android:src="@drawable/star"
+                        />
+
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/detail_store_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+
+            <!--실시간 버튼-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <Button
+                    android:id="@+id/detail_now_btn"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_fill"
+                    android:backgroundTint="#063157"
+                    android:text="실시간"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <!--구분선-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#9C9C9C"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                />
+            <!--소개, 리뷰 글-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="4dp"
+                    android:weightSum="10"
+                    >
+                    <ExpandableListView
+                        android:id="@+id/store_info_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="8"
+                        >
+                    </ExpandableListView>
+
+
+                    <Button
+                        android:id="@+id/detail_review_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:textColor="#ffffff"
+                        android:text="리뷰 작성 하기"
+                        android:background="@drawable/round_fill"
+                        android:layout_weight="2"
+                        />
+                </LinearLayout>
+
+
+
+
+            <!--구분선-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#9C9C9C"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                />
+
+
+            <!--지도 레이아웃-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+
+                android:layout_marginTop="4dp"
+
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="위치"
+                    android:textSize="24sp"
+                    />
+                <!--지도 들어가야 함-->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/naver_map"
+                    />
+
+                <TextView
+                    android:id="@+id/detail_store_addr"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:textSize="14sp"
+                    />
+            </LinearLayout>
+
+            <!--구분선-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#9C9C9C"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

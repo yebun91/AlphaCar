@@ -8,7 +8,8 @@ import android.os.AsyncTask;
 import android.util.JsonReader;
 import android.util.Log;
 
-import com.example.alphacar.Dto.MemberDTO;
+import com.example.alphacar.DTOS.MemberVO;
+
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -21,9 +22,8 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 
-public class LoginSelect extends AsyncTask<Void, Void, MemberDTO> {
+public class LoginSelect extends AsyncTask<Void, Void, MemberVO> {
 
     String customer_email, customer_pw;
 
@@ -39,7 +39,7 @@ public class LoginSelect extends AsyncTask<Void, Void, MemberDTO> {
 
 
     @Override
-    protected MemberDTO doInBackground(Void... voids) {
+    protected MemberVO doInBackground(Void... voids) {
 
         try {
             // MultipartEntityBuild 생성
@@ -90,7 +90,7 @@ public class LoginSelect extends AsyncTask<Void, Void, MemberDTO> {
 
 
 
-    public MemberDTO readMessage(InputStream inputStream) throws IOException {
+    public MemberVO readMessage(InputStream inputStream) throws IOException {
         JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
 
         String customer_email = "", customer_pw = "", customer_name = "",  admin = "", customer_picture="";
@@ -114,7 +114,7 @@ public class LoginSelect extends AsyncTask<Void, Void, MemberDTO> {
         }
         reader.endObject();
         Log.d("main:loginselect : ", customer_email + "," + customer_pw + "," + customer_name + "," + admin+ "," + customer_picture);
-        return new MemberDTO(customer_email, customer_pw, customer_name, admin, customer_picture);
+        return new MemberVO(customer_email, customer_pw, customer_name, admin, customer_picture);
 
     }
 

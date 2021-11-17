@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.se.omapi.Session;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,13 +11,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.alphacar.ATask.LoginSelect;
-import com.example.alphacar.Dto.MemberDTO;
+import com.example.alphacar.DTOS.MemberVO;
+
 
 import java.util.concurrent.ExecutionException;
 
@@ -26,7 +25,7 @@ public class LoginPage extends AppCompatActivity {
 
     // 로그인이 성공하면 static 로그인DTO 변수에 담아서
     // 어느곳에서나 접근할 수 있게 한다
-    public static MemberDTO loginDTO = null;
+    public static MemberVO loginDTO = null;
 
     EditText memberlogin_et_email, memberlogin_et_pw;
     Button memberlogin_bt_login, memberlogin_bt_join;

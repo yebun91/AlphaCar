@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_reserve"
+            android:icon="@drawable/ic_bookmark"
+            android:title="예약 현황"/>
+        <item
+            android:id="@+id/nav_myPage"
+            android:icon="@drawable/ic_myinfo"
+            android:title="마이페이지"/>
+        <item
+            android:id="@+id/nav_favorite"
+            android:icon="@drawable/ic_baseline_favorite_24"
+            android:title="즐겨찾기"/>
+
+
+    </group>
+
+    <item
+        android:id="@+id/communi"
+        android:title="communicate"
+        android:visible="false">
+
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@android:drawable/ic_menu_share"
+                android:title="Share"/>
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@android:drawable/ic_menu_send"
+                android:title="Send"/>
+
+        </menu>
+
+
+    </item>
+
+</menu>
