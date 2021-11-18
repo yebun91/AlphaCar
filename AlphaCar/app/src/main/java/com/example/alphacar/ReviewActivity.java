@@ -1,5 +1,7 @@
 package com.example.alphacar;
 
+import static com.example.alphacar.LoginPage.loginDTO;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -89,6 +91,7 @@ public class ReviewActivity extends AppCompatActivity {
                 String rating = String.valueOf(ratingBar.getRating());
                 String reviewTitle = editTitle.getText().toString();
                 String reviewContent = editReview.getText().toString();
+                String email = loginDTO.getCustomer_email();
                 Toast.makeText(getApplicationContext(), rating, Toast.LENGTH_LONG).show();
 
                 String imgPath = "";
@@ -97,7 +100,7 @@ public class ReviewActivity extends AppCompatActivity {
                 }
                 // 이정보를 비동기 Task 로 넘겨 서버에게 전달한다
                 com.example.alphacar.ATask.ReviewInsert reviewInsert = new
-                        com.example.alphacar.ATask.ReviewInsert(rating ,reviewTitle, reviewContent, imgPath);
+                        com.example.alphacar.ATask.ReviewInsert(email, rating, reviewTitle, reviewContent, imgPath);
                 try {
                     state = reviewInsert.execute().get().trim();
                 } catch (ExecutionException e) {

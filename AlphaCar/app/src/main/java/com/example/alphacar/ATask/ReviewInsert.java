@@ -25,9 +25,10 @@ public class ReviewInsert extends AsyncTask<Void, Void, String> {
     private static final String TAG = "main:ReviewInsert";
 
     // 생성자를 만들어서 데이터를 받는다
-    String rating, reviewTitle, reviewContent, imgPath;
+    String email, rating, reviewTitle, reviewContent, imgPath;
 
-    public ReviewInsert(String rating, String reviewTitle, String reviewContent, String imgPath) {
+    public ReviewInsert(String email, String rating, String reviewTitle, String reviewContent, String imgPath) {
+        this.email = email;
         this.rating = rating;
         this.reviewTitle = reviewTitle;
         this.reviewContent = reviewContent;
@@ -54,6 +55,7 @@ public class ReviewInsert extends AsyncTask<Void, Void, String> {
 
             // 여기가 우리가 수정해야 하는 부분 : 서버로 보내는 데이터
             // builder 에 문자열 및 데이터 추가하기
+            builder.addTextBody("email", email, ContentType.create("Multipart/related", "UTF-8"));
             builder.addTextBody("rating", rating, ContentType.create("Multipart/related", "UTF-8"));
             builder.addTextBody("reviewTitle", reviewTitle, ContentType.create("Multipart/related", "UTF-8"));
             builder.addTextBody("reviewContent", reviewContent, ContentType.create("Multipart/related", "UTF-8"));
