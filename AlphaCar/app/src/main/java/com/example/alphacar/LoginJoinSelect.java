@@ -1,5 +1,6 @@
 package com.example.alphacar;
 
+import static com.example.alphacar.LoginPage.loginDTO;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,12 +17,16 @@ public class LoginJoinSelect extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login_join_select);
 
         loginjoin_bt_join = findViewById(R.id.loginjoin_bt_join);
         btn_back = findViewById(R.id.btn_back);
         loginjoin_bt_login = findViewById(R.id.loginjoin_bt_login);
-        
+        if(loginDTO != null){ loginjoin_bt_login.setText("정보 수정");
+            loginjoin_bt_join.setVisibility(View.INVISIBLE);
+        }
+
+
         //상단 뒤로가기
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,13 +34,23 @@ public class LoginJoinSelect extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        
-        //로그인 페이지로 이동
+
+
+
+
+       // 로그인 페이지로 이동
         loginjoin_bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),LoginPage.class);
-                startActivity(intent);
+                Intent intent;
+                if(loginDTO != null){
+                     intent = new Intent(getApplicationContext(),MemberUpdatePage.class);
+                    startActivity(intent);
+                }else{
+                     intent = new Intent(getApplicationContext(),LoginPage.class);
+                    startActivity(intent);
+                }
+
             }
         });
     

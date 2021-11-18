@@ -1,6 +1,7 @@
 package com.example.alphacar;
 
 import static com.example.alphacar.Common.CommonMethod.isNetworkConnected;
+import static com.example.alphacar.LoginPage.loginDTO;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,14 +18,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.bumptech.glide.Glide;
 import com.example.alphacar.ATask.Storelist;
 import com.example.alphacar.Adapter.ViewpagerAdapter;
+import com.example.alphacar.DTOS.MemberVO;
 import com.example.alphacar.DTOS.StoreDTO;
 import com.example.alphacar.Fragment.ViewpagerFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -47,12 +53,17 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     Storelist storelist;
     LottieAnimationView animationView;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         pager = findViewById(R.id.pager);
+
 
         nav_view = findViewById(R.id.nav_view);
         // implement Listener 할 떄는 반드시 아래와 같이 정의 한다.
@@ -62,6 +73,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         searchView = findViewById(R.id.searchView);
         storeDTOArrayList = new ArrayList<>();
 
+        View headerView = nav_view.getHeaderView(0);
+        ImageView login_image = headerView.findViewById(R.id.loginImage);
+        TextView login_text =headerView.findViewById(R.id.loginID);
+        TextView login_str =  headerView.findViewById(R.id.loginStr);
 
         if(isNetworkConnected(this) == true){
             storelist  = new Storelist(dto, storeDTOArrayList);
@@ -91,6 +106,15 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 new ViewpagerAdapter(getSupportFragmentManager());
         viewpagerAdapter.setList(list);
         pager.setAdapter(viewpagerAdapter);
+
+        pager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
 ////////////////////////////////////////////////////////////////////////////////
 
 /*        Intent intent = new Intent(MainActivity.this, LoadingPageActivity.class);
@@ -135,16 +159,41 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         findViewById(R.id.tab3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoginPage.class);
+
+                Intent intent = new Intent(getApplicationContext(), LoginJoinSelect.class);
                 startActivity(intent);
             }
         });
+
+      //  ImageView login_image
+
+
+
+
+
 
         /*tab4 마이페이지 */
        findViewById(R.id.tab4).setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+
+
+
+               if(loginDTO != null){
+                //   login_image.setImageResource(loginDTO.getCustomer_picture());
+                   Glide.with(MainActivity.this)
+                           .load(loginDTO.getCustomer_picture())
+                           // .load("https://upload3.inven.co.kr/upload/2020/06/21/bbs/i015955522648.gif")//.load("url넣기 png,gif,jpg파일 밖에 안됨")
+                           .circleCrop()
+                           .into(login_image);
+                   login_text.setText(loginDTO.getCustomer_name());
+                   login_str.setText(loginDTO.getCustomer_email());
+               }
+
                draw_layout.openDrawer(GravityCompat.START);
+
+
+
            }
        });
 

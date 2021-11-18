@@ -267,7 +267,7 @@ public class MemberUpdatePage extends AppCompatActivity {
         memberupdate_et_name.setHint(loginDTO.getCustomer_name());
 
         //프로필 사진을 등록하지 않았을 경우 기본 이미지를 보여줌
-        Glide.with(this).load(R.drawable.guest).circleCrop().into(memberupdate_iv_profile);
+        Glide.with(this).load(R.drawable.guest2).circleCrop().into(memberupdate_iv_profile);
         
         //사업자를 체크 했을 경우 체크한 채로 나타나게 하기
         if(loginDTO.getAdmin().equals("M")){ memberupdate_cb_company.setChecked(true); }

@@ -29,6 +29,7 @@ public class ViewpagerAdapter extends FragmentStatePagerAdapter {
 
 
 
+
     // list 인덱스 위치에 있는 프래그먼트를 가져온다.
     @NonNull
     @Override
