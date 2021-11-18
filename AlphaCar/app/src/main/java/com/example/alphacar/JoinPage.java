@@ -240,7 +240,7 @@ public class JoinPage extends AppCompatActivity {
         memberjoin_iv_profile = findViewById(R.id.memberjoin_iv_profile);
         memberjoin_bt_join = findViewById(R.id.memberjoin_bt_join);
 
-        Glide.with(this).load(R.drawable.guest).circleCrop().into(memberjoin_iv_profile); //사람 모양 이미지 둥글게 넣기
+        Glide.with(this).load(R.drawable.guest2).circleCrop().into(memberjoin_iv_profile); //사람 모양 이미지 둥글게 넣기
 
         btn_back = findViewById(R.id.btn_back);
 
