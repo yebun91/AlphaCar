@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.alphacar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -96,8 +96,8 @@ public class ReviewActivity extends AppCompatActivity {
                     imgPath = imgFilePath;
                 }
                 // 이정보를 비동기 Task 로 넘겨 서버에게 전달한다
-                ReviewInsert reviewInsert = new
-                        ReviewInsert(rating ,reviewTitle, reviewContent, imgPath);
+                com.example.myapplication.ReviewInsert reviewInsert = new
+                        com.example.myapplication.ReviewInsert(rating ,reviewTitle, reviewContent, imgPath);
                 try {
                     state = reviewInsert.execute().get().trim();
                 } catch (ExecutionException e) {
