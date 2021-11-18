@@ -20,6 +20,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,7 +50,7 @@ public class JoinPage extends AppCompatActivity {
 
     EditText memberjoin_et_email, memberjoin_et_pw, memberjoin_et_name, memberjoin_et_pw2;
     CheckBox memberjoin_cb_company;
-    Button memberjoin_bt_join;
+    TextView memberjoin_bt_join;
     boolean emailCheck = true;
     ImageButton btn_back;
 

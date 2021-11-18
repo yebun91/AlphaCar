@@ -22,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,7 +52,7 @@ public class MemberUpdatePage extends AppCompatActivity {
 
     EditText memberupdate_et_email, memberupdate_et_name, memberupdate_et_oldpw, memberupdate_et_newpw, memberupdate_et_newpw2;
     CheckBox memberupdate_cb_company;
-    Button memberupdate_bt_update;
+    TextView memberupdate_bt_update;
     ImageButton btn_back;
 
     private int GALLEY_CODE = 10;

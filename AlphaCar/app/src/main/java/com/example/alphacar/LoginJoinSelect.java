@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginJoinSelect extends AppCompatActivity {
-    Button loginjoin_bt_login, loginjoin_bt_join;
+    TextView  loginjoin_bt_join;
+    TextView loginjoin_bt_login;
     ImageButton btn_back;
     
     
@@ -23,7 +25,7 @@ public class LoginJoinSelect extends AppCompatActivity {
         btn_back = findViewById(R.id.btn_back);
         loginjoin_bt_login = findViewById(R.id.loginjoin_bt_login);
         if(loginDTO != null){ loginjoin_bt_login.setText("정보 수정");
-            loginjoin_bt_join.setVisibility(View.INVISIBLE);
+            loginjoin_bt_join.setText("로그 아웃");
         }
 
 
@@ -58,8 +60,16 @@ public class LoginJoinSelect extends AppCompatActivity {
         loginjoin_bt_join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),JoinPage.class);
-                startActivity(intent);
+                if(loginDTO != null){
+                   loginDTO = null;
+                   Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                   startActivity(intent);
+                }else{
+                    Intent intent = new Intent(getApplicationContext(),JoinPage.class);
+                    startActivity(intent);
+                }
+
+
             }
         });
     }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +29,8 @@ public class LoginPage extends AppCompatActivity {
     public static MemberVO loginDTO = null;
 
     EditText memberlogin_et_email, memberlogin_et_pw;
-    Button memberlogin_bt_login, memberlogin_bt_join;
+    TextView memberlogin_bt_login;
+       Button memberlogin_bt_join;
     ImageButton btn_back;
 
     @Override
