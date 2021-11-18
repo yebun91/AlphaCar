@@ -24,8 +24,6 @@ import java.nio.charset.Charset;
 public class ReviewInsert extends AsyncTask<Void, Void, String> {
     private static final String TAG = "main:ReviewInsert";
 
-    public static String ipConfig = "http://192.168.0.36:8080";
-
     // 생성자를 만들어서 데이터를 받는다
     String rating, reviewTitle, reviewContent, imgPath;
 
