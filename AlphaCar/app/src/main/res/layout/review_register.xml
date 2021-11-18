@@ -32,7 +32,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/ic_backicon"
+                    android:background="@drawable/ic_backicon_selector"
                     android:layout_gravity="center_vertical"/>
 
 
@@ -63,7 +63,7 @@
                     android:textSize="24dp" />
 
                 <RatingBar
-                    android:id="@+id/imgRatingBar"
+                    android:id="@+id/ratingBar"
                     android:layout_width="245dp"
                     android:layout_height="40dp"
                     android:numStars="5"
@@ -71,7 +71,7 @@
 
             </LinearLayout>
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/tvReview"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
@@ -79,19 +79,38 @@
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
                 android:text="내용"
-                android:textSize="24sp" />
+                android:textSize="24sp" />-->
+
+            <EditText
+                android:id="@+id/editTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="2.5dp"
+                android:layout_gravity="center_vertical"
+                android:hint="제목을 입력하세요(20자 이내)"
+                android:background="@drawable/border"
+                android:textSize="24sp"
+                android:maxLength="20"/>
+
 
             <EditText
                 android:id="@+id/editReview"
                 android:layout_width="400dp"
                 android:layout_height="360dp"
+                android:paddingLeft="2.5dp"
                 android:layout_gravity="center_horizontal"
                 android:gravity="start"
                 android:layout_weight="1"
                 android:background="@drawable/border"
                 android:ems="10"
                 android:inputType="text"
-                android:textSize="36dp" />
+                android:textSize="24sp"
+                android:maxLength="50"
+                android:hint="리뷰 내용을 입력하세요(50자 이내)"/>
 
             <TextView
                 android:id="@+id/photo"
@@ -103,20 +122,27 @@
                 android:text="사진등록"
                 android:textSize="24sp" />
 
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="10dp"
-                android:text="+"
-                android:textSize="40dp">
-
-            </Button>
+            <!--ImageView to preview the selected image-->
+            <ImageView
+                android:id="@+id/addPhoto"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_below="@+id/photo"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/add_photo"/>
 
             <Button
                 android:id="@+id/btnRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/round_fill"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@+id/addPhoto"
+                android:background="@drawable/btn_selector"
                 android:text="등록하기"/>
 
         </LinearLayout>
