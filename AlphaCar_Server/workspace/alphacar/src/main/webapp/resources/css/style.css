@@ -1,0 +1,181 @@
+:root{
+  /* color */
+  --background-color: #272529;
+  --black-color: #4d4b4e;
+  --white-color: #dcdcdc;
+  --blue-color: #0054a3;
+
+  /* font size */
+  --font-large: 48px;
+  --font-medium: 28px;
+  --font-regular: 18px;
+  --font-small: 16px;
+  --font-micro: 14px;
+
+  /* font weight */
+  --weight-bold: 700;
+  --weight-semi-bold: 600;
+  --weight-regular: 400;
+}
+
+/* -------------------------기본설정------------------------- */
+
+* {margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    box-sizing: border-box;}
+html {font-family: 'Noto Sans KR', sans-serif;}
+body {font-family: 'Noto Sans KR', sans-serif;}
+h1 {margin: 0;}
+a {color: inherit;text-decoration: none;}
+button,input,select,textarea {
+    background-color: transparent;
+    border: 0;}
+
+a,button {cursor: pointer;}
+ul,ol {
+    padding-left: 0;
+    list-style: none;}
+
+
+/* 위로 가기 */
+.go_top{
+    width: 50px;
+    height: 50px;
+    background-color: var(--black-color);
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    color: var(--white-color);
+    text-align: center;
+}
+.fa-arrow-up{
+    line-height: 50px;
+    font-size: var(--font-medium)
+}
+
+
+/* main image */
+.main_image{
+  position: relative;
+}
+.main_image img{
+  width: 100%;
+  height: 400px;
+}
+
+/* nav */
+nav{
+
+}
+
+#header{
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  min-width: 650px;
+
+  /* 포지션이 absolute 일 때 가운데 정렬 */
+  left: 50%; 
+  transform: translateX(-50%);
+}
+
+
+.alphacar_logo img{
+    height: 80px;
+}
+nav ul { 
+  display: flex;
+}
+
+nav li{
+  color:var(--white-color);
+  font-weight: var(--weight-semi-bold);
+  padding-right: 20px;
+}
+
+/* recommend */
+.recommend_box{
+    display: flex;
+    flex-flow: wrap;
+}
+.recommend_box div{
+    width: 300px;
+    height: 400px;
+    background-color: var(--black-color);
+    margin: 10px;
+}
+.recommend_box div:last-child{
+    background-color:var(--blue-color);
+}
+
+/* distinction */
+
+.distinction_box{
+    display: flex;
+}
+
+.distinction_box div{
+    width: 300px;
+    height: 400px;
+    background-color: var(--black-color);
+    margin: 10px;
+}
+
+/* notice */
+.notice_image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.notice_content{
+    border-bottom: 1px solid var(--background-color);
+}
+.notice_content p {
+    display: inline;
+}
+
+/* news */
+.news_box{
+    display: flex;
+}
+
+.news_box div{
+    width: 300px;
+    height: 400px;
+    background-color: var(--black-color);
+    margin: 10px;
+}
+
+/* footer */
+
+footer{
+  background-color: var(--background-color);
+}
+.footer_all{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    max-width: 1200px;
+    min-width: 650px;
+    margin:auto;
+}
+
+.footer_logo img{
+    height: 80px;
+    display: block;
+}
+
+.footer_box a{
+    color: var(--white-color);
+    padding-right: 10px;
+    border-right: 1px solid var(--white-color);
+    font-size: var(--font-micro);
+}
+.footer_box a:last-child{
+    border: none;
+}
