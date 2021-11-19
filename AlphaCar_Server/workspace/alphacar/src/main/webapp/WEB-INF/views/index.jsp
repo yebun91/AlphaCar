@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -6,12 +8,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AlphaCar</title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-  <link rel="stylesheet" href="../../resources/css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <!-- 위로 가기 버튼 -->
   <a href="#header">
-    <div class="go_top">
+  	<div class="go_top">
       <i class="fas fa-arrow-up"></i>
     </div>
   </a>
@@ -19,13 +21,13 @@
   <nav>
     <div class="main_image">
       <a href="">
-        <img src="../../resources/img/main_image.jpg" alt="">
+        <img src="img/main_image.jpg" alt="">
       </a>
     </div>
     <div id="header">
       <div class="alphacar_logo">
         <a href="">
-          <img src="../../resources/img/알파카로고_white_300px.png" alt="">
+          <img src="img/알파카로고_white_300px.png" alt="">
         </a>
       </div>
       <ul>
@@ -67,7 +69,7 @@
       <div id="notice">
         <h1>공지사항</h1>
           <a href=""><div class="notice_image">
-              <img src="../../resources/img/main_image.jpg" alt="main image">
+              <img src="img/main_image.jpg" alt="main image">
               <h2>공지사항 전체보기</h2>
           </div></a>
           <div class="notice_contents">
@@ -103,21 +105,6 @@
           </div>
       </div>
   </main>
-  <footer>
-    <div class="footer_all">
-      <div class="footer_logo">
-        <a href="">
-          <img src="../../resources/img/알파카로고_white_300px.png" alt="">
-        </a>
-      </div>
-      <div class="footer_box">
-        <a href="">알파카 이용약관</a>
-        <a href="">서비스 약관</a>
-        <a href="">운영정책</a>
-        <a href="">개인정보 처리방침</a>
-      </div>
-    </div>
-
-  </footer>
+  <jsp:include page="/WEB-INF/views/include/footer.jsp" />
 </body>
 </html>
