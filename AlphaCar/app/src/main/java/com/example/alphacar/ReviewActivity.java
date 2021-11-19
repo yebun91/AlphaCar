@@ -61,7 +61,7 @@ public class ReviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.review_register);
 
         btnBack = findViewById(R.id.btnBack);
         btnRegister = findViewById(R.id.btnRegister);
