@@ -19,7 +19,6 @@ import review.ReviewVO;
 @Controller
 public class ReviewController {
 	
-	
 	@Autowired private ReviewServiceImpl service;
 	
 	@ResponseBody
@@ -30,6 +29,7 @@ public class ReviewController {
 		String score = req.getParameter("rating");
 		String title = req.getParameter("reviewTitle");
 		String content = req.getParameter("reviewContent");
+		String email = req.getParameter("email");
 		
 //		String score = "3.0";
 //		String title = "∏Æ∫‰¡¶∏Ò1";
@@ -76,6 +76,12 @@ public class ReviewController {
 		System.out.println(fileName);
 		
 		return service.review_insert(vo);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/selectReview", method = {RequestMethod.GET, RequestMethod.POST})
+	public ReviewVO reviewSelect(int review_id) {
+		return service.review_select(review_id);
 	}
 	
 }

@@ -21,6 +21,11 @@ public class ReviewDAO implements ReviewService {
 		
 		return sql.insert("review.mapper.insert", vo);
 	}
+
+	@Override
+	public ReviewVO review_select(int review_id) {
+		return (ReviewVO) sql.selectList("review.mapper.select", review_id);
+	}
 	
 
 }
