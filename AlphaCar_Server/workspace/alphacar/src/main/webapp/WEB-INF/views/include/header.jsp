@@ -16,7 +16,7 @@
     <ul>
       <li><a href="">AlphaCar</a></li>
       <li><a href="list.no">공지사항</a></li>
-      <li><a href="">고객센터</a></li>
+      <li><a href="list.se">고객센터</a></li>
       <li><a href="homeLogin">로그인</a></li>
       <li><a href="">마이페이지</a></li>
     </ul>

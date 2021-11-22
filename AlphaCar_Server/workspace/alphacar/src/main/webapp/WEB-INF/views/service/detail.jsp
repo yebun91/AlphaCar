@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <div class="sub_image">
-        <img src="img/main_image.jpg" alt="">
+       <img src="img/main_image.jpg" alt="">
     </div>
 	<div class="page_detail_text">
-		<p>[공지] 좌표로 주소 변환하기 api어쩌고</p>
-		<p>AlphaCar</p>
-		<p>2021-11-18 12:00:00</p>
+		<p>고객센터 글 고객센터 글</p>
 	</div>
   </nav>
   <!-- 메인 시작 -->
@@ -27,9 +25,9 @@
 		</p>
 	  </div>
 	  <div class="page_write_button">
-		<button type="button" onclick="location.href='list.no'">목록으로</button>
-		<button type="button" onclick="location.href='update.no'">수정</button>
-		<button type="button" onclick="location.href='delete.no'">삭제</button>
+		<button type="button" onclick="location.href='list.se'">목록으로</button>
+		<button type="button" onclick="location.href='update.se'">수정</button>
+		<button type="button" onclick="location.href='delete.se'">삭제</button>
 	  </div>
     </div>
   </main>

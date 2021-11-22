@@ -28,6 +28,8 @@
 	
 	<definition name="member/login" template="/WEB-INF/views/tiles/default.jsp">
 		<put-attribute name="content" value="/WEB-INF/views/member/login.jsp" />
+	</definition>
+	<definition name="member/join" template="/WEB-INF/views/tiles/default.jsp">
 		<put-attribute name="content" value="/WEB-INF/views/member/join.jsp" />
 	</definition>
 	

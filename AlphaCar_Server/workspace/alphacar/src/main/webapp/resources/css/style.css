@@ -47,7 +47,7 @@ ul,ol {
   background-color: var(--black-color);
   position: fixed;
   bottom: 10%;
-  right: 10px;
+  right: 10%;
   color: var(--white-color);
   text-align: center;
   z-index: 1;
@@ -577,3 +577,35 @@ input[type="checkbox"]:checked, input[type="radio"]:checked{
 .join_company>div>label:nth-child(1){
   margin-right: 100px;
 }
+
+/* 서비스 페이지 */
+
+.service_buttons{
+  position: absolute;
+  top: 320px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  min-width: 750px;
+  z-index: 1;
+  left: 65%; 
+}
+
+.service_buttons>button{
+  color:var(--white-color);
+  border:1px solid var(--white-color);
+  padding:15px 30px;
+  margin-left:10px
+}
+
+
+
+
+
+
+
+
+
+
+
