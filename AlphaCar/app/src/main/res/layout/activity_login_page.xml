@@ -102,7 +102,7 @@
                     />
 
             </LinearLayout>
-            <Button
+            <TextView
                 android:id="@+id/memberlogin_bt_login"
                 android:layout_width="250dp"
                 android:layout_height="45dp"
@@ -112,6 +112,7 @@
                 android:backgroundTintMode="add"
                 android:hapticFeedbackEnabled="false"
                 android:text="로그인"
+                android:gravity="center"
                 android:textColor="#063157"
                 android:onClick="login"
                 app:srcCompat="@drawable/round_empty" />

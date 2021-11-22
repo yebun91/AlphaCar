@@ -107,14 +107,14 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         viewpagerAdapter.setList(list);
         pager.setAdapter(viewpagerAdapter);
 
-        pager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-                startActivity(intent);
-                return true;
-            }
-        });
+//        pager.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+//                startActivity(intent);
+//                return true;
+//            }
+//        });
 ////////////////////////////////////////////////////////////////////////////////
 
 /*        Intent intent = new Intent(MainActivity.this, LoadingPageActivity.class);
@@ -231,6 +231,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             startActivity(intent);
         }else if (id == R.id.nav_reserve){
             Intent intent = new Intent(getApplicationContext(), FavoriteActivity.class);
+            startActivity(intent);
+        }else if(id == R.id.nav_logout){
+            loginDTO = null;
+            Intent intent = getIntent();
+            finish();
             startActivity(intent);
         }
 
