@@ -28,8 +28,22 @@
 		<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
 		<beans:property name="maxUploadSize" value="50000000" /> 
 	</beans:bean>
-	<context:component-scan base-package="Controller" />
 	
+	
+	
+	<!-- 화면의 레이아웃을 지정하기 위한 tiles 라이브러리 설정
+	      view 의 순서(order) 를 지정 -->
+	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+		<beans:property name="order" value="0" /> <!-- 순서(0) 지정 -->
+	</beans:bean>
+	
+	<!-- tiles 설정부를 별도 파일로 지정하여 정의하는 부분 -->
+	
+	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions" value="/WEB-INF/views/tiles/config.xml" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.hanul.alphacar" />
 	
 	
 	
