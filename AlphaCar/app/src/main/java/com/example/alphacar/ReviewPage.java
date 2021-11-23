@@ -1,6 +1,6 @@
 package com.example.alphacar;
 
-import com.example.alphacar.ATask.ReviewSelect.reviewDTO;
+
 import static com.example.alphacar.LoginPage.loginDTO;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.alphacar.DTOS.ReviewDTO;
 
 public class ReviewPage extends AppCompatActivity {
 
@@ -45,7 +47,7 @@ public class ReviewPage extends AppCompatActivity {
         reviewContent = findViewById(R.id.reviewContent);
         showRating = findViewById(R.id.showRating);
 
-        reviewTitle.setText(reviewDTO.getTitle());
+        //reviewTitle.setText(ReviewDTO.getTitle());
 
 
     }

@@ -66,9 +66,9 @@ public class ReviewActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
         btnRegister = findViewById(R.id.btnRegister);
         editReview = findViewById(R.id.editReview);
-        editTitle = findViewById(R.id.editTitle);
-        addPhoto = findViewById(R.id.addPhoto);
-        ratingBar = findViewById(R.id.ratingBar);
+//        editTitle = findViewById(R.id.editTitle);
+//        addPhoto = findViewById(R.id.addPhoto);
+//        ratingBar = findViewById(R.id.ratingBar);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,7 +257,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     // 사진을 저장처리 하는 곳
     private void setPic() {
-        addPhoto = findViewById(R.id.addPhoto);
+       // addPhoto = findViewById(R.id.addPhoto);
         // 이미지뷰의 크기 알아오기
         int targetW = addPhoto.getWidth();
         int targetH = addPhoto.getHeight();

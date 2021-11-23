@@ -56,9 +56,10 @@
         android:gravity="left">
 
         <ImageView
+            android:id="@+id/profileImg"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:src="@drawable/trash"/>
+            android:src="@drawable/trash" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,7 +67,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/descRatingBar"
+                android:id="@+id/userID"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
@@ -75,7 +76,7 @@
                 android:textSize="12dp" />
 
             <RatingBar
-                android:id="@+id/imgRatingBar"
+                android:id="@+id/showRating"
                 android:layout_width="80dp"
                 android:layout_height="19dp"
                 android:numStars="5"
@@ -86,16 +87,22 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/reviewTitle"
+        android:layout_marginLeft="15dp"/>
+
     <ImageView
+        android:id="@+id/reviewPhoto"
         android:layout_width="350dp"
         android:layout_height="350dp"
-        android:layout_gravity="center_horizontal"
-       />
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/text1"
+        android:id="@+id/reviewContent"
         android:layout_marginLeft="15dp"
         android:text="Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1" />
 
