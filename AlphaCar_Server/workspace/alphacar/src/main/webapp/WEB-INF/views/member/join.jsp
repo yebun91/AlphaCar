@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<main>
   <div class="join_page">
     <h1>회원가입</h1>
     <div class="text_logo">
@@ -27,4 +26,3 @@
       <button>회원가입</button>
     </form>
   </div>
-</main>

@@ -5,7 +5,7 @@
   </div>
   <div class="service_buttons">
   	<button>실시간 채팅 문의</button>
-  	<button>1:1 문의하기</button>
+  	<button onclick="location.href='customer_write.se'">1:1 문의하기</button>
   </div>
 </nav>
 <!-- 메인 시작 -->
@@ -24,7 +24,7 @@
       <!-- service 검색기능 -->
       <form action="" class="page_search">
         <div class="page_search_index">
-          <select name="notice_search_index" id="notice_search_index">
+          <select name="service_search_index" id="service_search_index">
             <option value="all" selected="selected">전체</option>
             <option value="user-info">고객정보</option>
             <option value="delivery">배송</option>

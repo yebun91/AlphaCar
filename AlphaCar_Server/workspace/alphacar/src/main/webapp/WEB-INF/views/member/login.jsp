@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-  <main>
     <div class="login_page">
       <div class="text_logo">
         <img src="img/alphacarLogo_text_black_500px.png" alt="alphaCar">
@@ -17,4 +16,3 @@
         <button type="button" onclick="location.href='homeJoin'">회원가입</button>
       </div>
     </div>
-  </main>

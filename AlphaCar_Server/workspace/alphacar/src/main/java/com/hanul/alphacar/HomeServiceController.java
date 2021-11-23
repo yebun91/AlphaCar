@@ -32,4 +32,8 @@ public class HomeServiceController {
 	public String delete(HttpSession session, Model model) {
 		return "redirect:list.se";
 	}
+	@RequestMapping("/customer_write.se")
+	public String customer_write(HttpSession session, Model model) {
+		return "service/customer_write";
+	}
 }
