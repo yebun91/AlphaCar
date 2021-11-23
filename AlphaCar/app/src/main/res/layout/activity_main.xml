@@ -27,7 +27,6 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:orientation="vertical"
             android:weightSum="100">
 
@@ -35,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-android:layout_weight="20"
+                android:layout_weight="20"
                 >
 
                     <androidx.appcompat.widget.SearchView
@@ -47,38 +46,45 @@ android:layout_weight="20"
                         />
 
 
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="80"
+                >
+
+
+                 <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="600dp"
+                    android:layout_weight="60"/>
+
 
 
             </LinearLayout>
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/pager"
-                android:layout_width="match_parent"
-                android:layout_height="600dp"
-                android:layout_weight="60"/>
-
-
-            <FrameLayout
-                android:id="@+id/contain"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-
-                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_navi"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_weight="20"
+                android:layout_height="60dp"
+                android:layout_weight="15"
+                android:background="@color/sky"
                 app:itemBackground="@color/sky"
                 app:itemIconTint="@drawable/item_color"
                 app:itemTextColor="@drawable/item_color"
                 app:menu="@menu/bottom_menu"
+                app:labelVisibilityMode="labeled"
                 />
 
+
         </LinearLayout>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -87,4 +93,5 @@ android:layout_weight="20"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/main_menu"/>
+
 </androidx.drawerlayout.widget.DrawerLayout>

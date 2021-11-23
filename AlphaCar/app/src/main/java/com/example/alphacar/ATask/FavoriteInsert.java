@@ -21,7 +21,7 @@ import java.nio.charset.Charset;
 public class FavoriteInsert extends AsyncTask<Void, Void,Void> {
 
 
-    String customer_email = "store_master@naver.com";
+    String customer_email = "cc";
 
     // 반드시 선언해야 할것들 : 무조건 해야함  복,붙
     HttpClient httpClient;       // 클라이언트 객체

@@ -1,6 +1,7 @@
 package com.example.alphacar.ATask;
 
 import static com.example.alphacar.Common.CommonMethod.ipConfig;
+import static com.example.alphacar.LoginPage.loginDTO;
 
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
@@ -18,7 +19,8 @@ import java.nio.charset.Charset;
 
 public class FavoriteDelect extends AsyncTask<Void, Void, Void> {
 
-    int fav_number = 101;
+    int fav_number = 0;
+
 
     HttpClient httpClient;       // 클라이언트 객체
     HttpPost httpPost;           // 클라이언트에 붙일 본문
@@ -39,10 +41,11 @@ public class FavoriteDelect extends AsyncTask<Void, Void, Void> {
             builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
             builder.setCharset(Charset.forName("UTF-8"));
 
+
             // 여기가 우리가 수정해야 하는 부분 : 서버로 보내는 데이터
             // builder에 문자열 및 데이터 추가하기
             builder.addTextBody("fav_number", String.valueOf(fav_number), ContentType.create("Multipart/related", "UTF-8"));
-           // builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
+            //builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
 
 
             // 전송

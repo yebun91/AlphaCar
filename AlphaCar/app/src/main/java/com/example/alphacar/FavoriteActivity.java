@@ -33,7 +33,7 @@ public class FavoriteActivity extends AppCompatActivity {
         FavoriteDTO dto;
         FavoriteSelect favoriteSelect;
         RecyclerView recyclerView;
-    FavoriteAdapter favoriteAdapter;
+         FavoriteAdapter favoriteAdapter;
 
 
     @Override

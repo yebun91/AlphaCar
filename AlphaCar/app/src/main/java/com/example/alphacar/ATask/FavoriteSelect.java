@@ -1,6 +1,7 @@
 package com.example.alphacar.ATask;
 
 import static com.example.alphacar.Common.CommonMethod.ipConfig;
+import static com.example.alphacar.LoginPage.loginDTO;
 
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
@@ -29,12 +30,14 @@ public class FavoriteSelect extends AsyncTask<Void,Void, FavoriteDTO> {
     /* 스토어 정보 AsyncTask */
     ArrayList<FavoriteDTO> dtos;
     FavoriteDTO dto;
-    String customer_email = "cc";
+    String customer_email = "";
 
     public FavoriteSelect(FavoriteDTO dto, ArrayList<FavoriteDTO> dtos){
         this.dto = dto;
         this.dtos = dtos;
     }
+
+
 
     // 반드시 선언해야 할것들 : 무조건 해야함  복,붙
     HttpClient httpClient;       // 클라이언트 객체
@@ -55,6 +58,8 @@ public class FavoriteSelect extends AsyncTask<Void,Void, FavoriteDTO> {
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
             builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
             builder.setCharset(Charset.forName("UTF-8"));
+
+            customer_email = loginDTO.getCustomer_email();
 
             // 여기가 우리가 수정해야 하는 부분 : 서버로 보내는 데이터
             // builder에 문자열 및 데이터 추가하기

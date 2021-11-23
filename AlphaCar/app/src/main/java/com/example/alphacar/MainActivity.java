@@ -107,14 +107,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         viewpagerAdapter.setList(list);
         pager.setAdapter(viewpagerAdapter);
 
-//        pager.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-//                startActivity(intent);
-//                return true;
-//            }
-//        });
 ////////////////////////////////////////////////////////////////////////////////
 
 /*        Intent intent = new Intent(MainActivity.this, LoadingPageActivity.class);
@@ -150,6 +142,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         findViewById(R.id.tab2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(getApplicationContext(), FavoriteActivity.class);
                 startActivity(intent);
             }
@@ -177,8 +170,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
            @Override
            public void onClick(View v) {
 
-
-
                if(loginDTO != null){
                 //   login_image.setImageResource(loginDTO.getCustomer_picture());
                    Glide.with(MainActivity.this)
@@ -191,8 +182,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                }
 
                draw_layout.openDrawer(GravityCompat.START);
-
-
 
            }
        });
@@ -227,9 +216,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             Intent intent = new Intent(getApplicationContext(), FavoriteActivity.class);
             startActivity(intent);
         }else if (id == R.id.nav_myPage){
-            Intent intent = new Intent(getApplicationContext(), FavoriteActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MemberUpdatePage.class);
             startActivity(intent);
-        }else if (id == R.id.nav_reserve){
+        }else if (id == R.id.nav_noti){
             Intent intent = new Intent(getApplicationContext(), FavoriteActivity.class);
             startActivity(intent);
         }else if(id == R.id.nav_logout){

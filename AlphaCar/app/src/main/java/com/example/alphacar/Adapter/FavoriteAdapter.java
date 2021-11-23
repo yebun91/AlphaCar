@@ -1,6 +1,7 @@
 package com.example.alphacar.Adapter;
 
 import static com.example.alphacar.Common.CommonMethod.isNetworkConnected;
+import static com.example.alphacar.LoginPage.loginDTO;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +38,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ItemVi
     ArrayList<FavoriteDTO> favoriteDTOS;
     FavoriteDelect favoriteDelect;
 
-    int fav_number = 101;
+    int fav_number;
 
 
     public FavoriteAdapter(Context mContext, ArrayList<FavoriteDTO> favoriteDTOS) {
@@ -105,9 +107,25 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ItemVi
         holder.setItem(item);
 
 
+
         holder.del_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(isNetworkConnected(mContext) == true){
+
+                    favoriteDelect = new FavoriteDelect(item.getFav_number());
+                    //listDetail = new ListDetail(store_number);
+                    try {
+                        favoriteDelect.execute().get();
+                        //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }else {
+
+                }
                 // 특정위치에 있는 항목 지우기
                 //dtos.remove(position);
                 delDto(position);
@@ -136,6 +154,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ItemVi
 
 
 
+
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -144,25 +163,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ItemVi
             fabt = itemView.findViewById(R.id.fabt);
             del_btn = itemView.findViewById(R.id.fadel);
 
-            del_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                 /*   if(isNetworkConnected(mContext) == true){
-                        favoriteDelect = new FavoriteDelect(fav_number);
-                        //listDetail = new ListDetail(store_number);
-                        try {
-                            favoriteDelect.execute().get();
-                            //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }else {
 
-                    }*/
-                }
-            });
+
 
         }
 
