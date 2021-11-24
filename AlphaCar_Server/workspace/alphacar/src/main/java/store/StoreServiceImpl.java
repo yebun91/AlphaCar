@@ -32,7 +32,27 @@ public class StoreServiceImpl implements StoreService{
 	@Override
 	public List<StoreVO> store_state(String customer_email) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.store_state(customer_email);
 	}
+
+
+	@Override
+	public int store_register(RegisterVO vo) {
+		// TODO Auto-generated method stub
+		return dao.store_register(vo);
+	}
+
+	@Override
+	public int store_file_register(StoreFileVO vo) {
+		// TODO Auto-generated method stub
+		return dao.store_file_register(vo);
+	}
+
+	@Override
+	public int store_file_register(RegisterVO vo) {
+		// TODO Auto-generated method stub
+		return dao.store_file_register(vo);
+	}
+
 
 }

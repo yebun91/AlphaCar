@@ -1,66 +1,33 @@
 package com.example.alphacar.DTOS;
 
-import java.io.Serializable;
+public class RegisterDTO {
+    private String customer_email             ;
+    private String store_name                 ;
+    private String store_addr                 ;
+    private String store_tel                  ;
+    private String store_time                 ;
+    private String store_dayoff               ;
+    private String introduce                  ;
+    private int inventory                  ;
+    private String store_price                ;
+    private String store_master_name          ;
+    private String store_registration_number  ;
+    private String imgpath ;
+    private String imgname ;
 
-public class StoreDTO implements Serializable {
-    private int store_number,inventory, store_favorite_cnt, file_id;
-    private String customer_email, store_name, store_addr, store_tel,
-                   store_time, store_dayoff, introduce, picture
-                 , store_price, store_master_name
-                 , store_registration_number
-                 , filename, imgPath, imgname;
-
-    public StoreDTO(String store_name, String introduce, String imgPath) {
+    public RegisterDTO(String customer_email, String store_name, String store_addr, String store_tel, String store_time, String store_dayoff, String introduce, int inventory, String store_price, String store_master_name, String store_registration_number, String imgpath, String imgname) {
+        this.customer_email = customer_email;
         this.store_name = store_name;
+        this.store_addr = store_addr;
+        this.store_tel = store_tel;
+        this.store_time = store_time;
+        this.store_dayoff = store_dayoff;
         this.introduce = introduce;
-        this.imgPath = imgPath;
-    }
-
-    public int getStore_number() {
-        return store_number;
-    }
-
-    public void setStore_number(int store_number) {
-        this.store_number = store_number;
-    }
-
-    public int getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(int inventory) {
         this.inventory = inventory;
-    }
-
-    public int getStore_favorite_cnt() {
-        return store_favorite_cnt;
-    }
-
-    public void setStore_favorite_cnt(int store_favorite_cnt) {
-        this.store_favorite_cnt = store_favorite_cnt;
-    }
-
-    public int getFile_id() {
-        return file_id;
-    }
-
-    public void setFile_id(int file_id) {
-        this.file_id = file_id;
-    }
-
-    public String getImgPath() {
-        return imgPath;
-    }
-
-    public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
-    }
-
-    public String getImgname() {
-        return imgname;
-    }
-
-    public void setImgname(String imgname) {
+        this.store_price = store_price;
+        this.store_master_name = store_master_name;
+        this.store_registration_number = store_registration_number;
+        this.imgpath = imgpath;
         this.imgname = imgname;
     }
 
@@ -120,6 +87,14 @@ public class StoreDTO implements Serializable {
         this.introduce = introduce;
     }
 
+    public int getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(int inventory) {
+        this.inventory = inventory;
+    }
+
     public String getStore_price() {
         return store_price;
     }
@@ -144,11 +119,19 @@ public class StoreDTO implements Serializable {
         this.store_registration_number = store_registration_number;
     }
 
-    public String getFilename() {
-        return filename;
+    public String getImgpath() {
+        return imgpath;
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
+    public void setImgpath(String imgpath) {
+        this.imgpath = imgpath;
+    }
+
+    public String getImgname() {
+        return imgname;
+    }
+
+    public void setImgname(String imgname) {
+        this.imgname = imgname;
     }
 }

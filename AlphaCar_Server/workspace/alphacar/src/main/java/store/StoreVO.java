@@ -1,5 +1,7 @@
 package store;
 
+import java.util.Date;
+
 public class StoreVO {
 	private int store_number               ;
 	private String customer_email             ;
@@ -9,12 +11,48 @@ public class StoreVO {
 	private String store_time                 ;
 	private String store_dayoff               ;
 	private String introduce                  ;
-	private String picture                    ;
 	private int inventory                  ;
 	private String store_price                ;
 	private String store_master_name          ;
 	private String store_registration_number  ;
 	private int store_favorite_cnt         ;
+	private int inventory_number ;
+	private int sensor_id        ;
+	private String now_state        ;
+	private Date create_date      ;
+	private Date change_date      ;
+	
+	
+	public int getInventory_number() {
+		return inventory_number;
+	}
+	public void setInventory_number(int inventory_number) {
+		this.inventory_number = inventory_number;
+	}
+	public int getSensor_id() {
+		return sensor_id;
+	}
+	public void setSensor_id(int sensor_id) {
+		this.sensor_id = sensor_id;
+	}
+	public String getNow_state() {
+		return now_state;
+	}
+	public void setNow_state(String now_state) {
+		this.now_state = now_state;
+	}
+	public Date getCreate_date() {
+		return create_date;
+	}
+	public void setCreate_date(Date create_date) {
+		this.create_date = create_date;
+	}
+	public Date getChange_date() {
+		return change_date;
+	}
+	public void setChange_date(Date change_date) {
+		this.change_date = change_date;
+	}
 	public int getStore_number() {
 		return store_number;
 	}
@@ -62,12 +100,6 @@ public class StoreVO {
 	}
 	public void setIntroduce(String introduce) {
 		this.introduce = introduce;
-	}
-	public String getPicture() {
-		return picture;
-	}
-	public void setPicture(String picture) {
-		this.picture = picture;
 	}
 	public int getInventory() {
 		return inventory;

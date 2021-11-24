@@ -32,7 +32,26 @@ public class StoreDAO implements StoreService{
 	@Override
 	public List<StoreVO> store_state(String customer_email) {
 		// TODO Auto-generated method stub
-		return null;
+		return sql.selectList("store.mapper.allList", customer_email);
+	}
+
+	
+	@Override
+	public int store_register(RegisterVO vo) {
+		
+		return sql.insert("store.mapper.register", vo);
+	}
+
+	@Override
+	public int store_file_register(StoreFileVO vo) {
+		// TODO Auto-generated method stub
+		return sql.insert("store.mapper.registerFile", vo);
+	}
+
+	@Override
+	public int store_file_register(RegisterVO vo) {
+		// TODO Auto-generated method stub
+		return sql.insert("store.mapper.register", vo);
 	}
 	
 	

@@ -5,11 +5,18 @@ import java.util.List;
 
 public interface StoreService {
 
-	List<StoreVO> store_list(); // ÀüÃ¼ °¡°Ô Á¤º¸ Á¶È¸
+	List<StoreVO> store_list(); //ì „ì²´ ê°€ê²Œ ì •ë³´ ì¡°íšŒ
 	
-	StoreVO store_detail(String customer_email); // 1°ÇÀÇ °¡°Ô »ó¼¼³»¿ë Á¶È¸
-	//StoreVO store_detail(int store_number); // 1°ÇÀÇ °¡°Ô »ó¼¼³»¿ë Á¶È¸
+	StoreVO store_detail(String customer_email); //ê°€ê²Œ í•˜ë‚˜ì˜ ì„¸ë¶€ì •ë³´ ì¡°íšŒ
+	//StoreVO store_detail(int store_number); 
 	
-	List<StoreVO> store_state(String customer_email);
+	List<StoreVO> store_state(String customer_email); //ê°€ê²Œ í•˜ë‚˜ì˜ ì„¸ë¶€ì •ë³´ì™€ ìƒíƒœ ì¡°íšŒ
+	
+	int store_register(RegisterVO vo); //ê°€ê²Œ ë“±ë¡
+	
+	int store_file_register(StoreFileVO vo);
+	
+	int store_file_register(RegisterVO vo);
+	
 	
 }
