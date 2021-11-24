@@ -6,19 +6,17 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import member.MemberServiceImpl;
-import member.MemberVO;
+import member.WebMemberServiceImpl;
 import member.WebMemberVO;
 
 @Controller
 public class HomeMemberController {
 	
-	@Autowired private MemberServiceImpl service;
+	@Autowired private WebMemberServiceImpl service;
 	
 	// 로그아웃 처리 요청
 	@RequestMapping ("/homeLogout")

@@ -17,8 +17,15 @@
       <li><a href="">AlphaCar</a></li>
       <li><a href="list.no">공지사항</a></li>
       <li><a href="list.se">고객센터</a></li>
-      <li><a href="homeLogin">로그인</a></li>
-      <li><a href="mypage.mp">마이페이지</a></li>
-    </ul>
+    	<!-- 로그인을 하지 않은 경우 -->
+			<c:if test="${empty loginInfo }">
+	      <li><a href="homeLogin">로그인</a></li>
+      </c:if>
+    	<!-- 로그인을 한 경우 -->
+			<c:if test="${!empty loginInfo }">
+	      <li><a href="homeLogout">로그아웃</a></li>
+      </c:if>
+	    <li><a href="mypage.mp">마이페이지</a></li>
+    </ul>     
   </div>
 
