@@ -11,6 +11,7 @@ public class HomeNoticeVO {
 	
 	
 	public String getNotice_time() {
+		notice_time = common.Time.txtDate(getNotice_writedate());
 		return notice_time;
 	}
 	public void setNotice_time(String notice_time) {
@@ -58,12 +59,11 @@ public class HomeNoticeVO {
 	public void setCustomer_name(String customer_name) {
 		this.customer_name = customer_name;
 	}
-	public Date getNotice_writedate() {
+	public Date getNotice_writedate() {	
 		return notice_writedate;
 	}
 	public void setNotice_writedate(Date notice_writedate) {
-		
-		this.notice_writedate = notice_writedate;
+		this.notice_writedate = notice_writedate;	
 	}
 
 	

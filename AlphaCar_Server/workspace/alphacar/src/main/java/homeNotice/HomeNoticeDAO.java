@@ -19,8 +19,14 @@ public class HomeNoticeDAO implements HomeNoticeService {
 
 	@Override
 	public HomeNoticePage notice_list(HomeNoticePage page) {
-		// TODO Auto-generated method stub
-		return null;
+		//총 글의 개수를 조회(totalList)
+			int pagecnt = sql.selectOne("homeNotice.mapper.hometotalList", page);
+			page.setTotallist(pagecnt); //총 글의 수
+			
+			//전체 글을 조회하여 List 
+			List<HomeNoticeVO> list = sql.selectList("homeNotice.mapper.homeNoticeList", page);
+			page.setList(list);
+			return page;
 	}
 
 	@Override

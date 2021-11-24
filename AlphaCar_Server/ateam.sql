@@ -25,3 +25,18 @@ select w.*,  c.customer_name customer_name, to_char(w.notice_writedate, 'YYYY-MM
 select w.*,  c.customer_name customer_name
 		from web_notice w, customer c
 		where w.customer_email = c.customer_email;
+    
+select w.*,  c.customer_name customer_name
+		from web_notice w, customer c
+		where w.customer_email = c.customer_email and NOTICE_ATTRIBUTE = 'N'
+		order by w.notice_id desc  
+
+
+
+
+
+
+
+
+
+

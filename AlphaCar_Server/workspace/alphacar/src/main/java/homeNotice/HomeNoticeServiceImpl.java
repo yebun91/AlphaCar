@@ -19,7 +19,7 @@ public class HomeNoticeServiceImpl implements HomeNoticeService {
 	@Override
 	public HomeNoticePage notice_list(HomeNoticePage page) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.notice_list(page);
 	}
 
 	@Override

@@ -14,7 +14,7 @@
         <ul>
           <li>전체</li>
           <li>공지</li>
-          <li>알파카비지니스</li>
+          <li>알파카</li>
           <li>점검</li>
         </ul>        
       </div>
@@ -22,15 +22,15 @@
       <!-- notice 검색기능 -->
       <form action="list.no" method="post" class="page_search">
         <div class="page_search_index">
-          <select name="notice_search_index" id="notice_search_index">
-            <option value="all" ${page.search eq 'all' ? 'selected' : '' }>전체</option>
-            <option value="notice" ${page.search eq 'notice' ? 'selected' : '' }>공지</option>
-            <option value="alphacer_business" ${page.search eq 'alphacer_business' ? 'selected' : '' }>알파카비지니스</option>
-            <option value="maintainance" ${page.search eq 'maintainance' ? 'selected' : '' }>점검</option>
+          <select name="search" id="notice_search_index">
+            <option value="all" ${notice_page.search eq 'all' ? 'selected' : '' }>전체</option>
+            <option value="notice" ${notice_page.search eq 'notice' ? 'selected' : '' }>공지</option>
+            <option value="alphacer" ${notice_page.search eq 'alphacer' ? 'selected' : '' }>알파카</option>
+            <option value="maintainance" ${notice_page.search eq 'maintainance' ? 'selected' : '' }>점검</option>
           </select>
         </div>
         <div class="page_search_box">
-          <input type="text" placeholder="search" name="keyword" value="${page.keyword}">
+          <input type="text" placeholder="search" name="keyword" value="${notice_page.keyword}">
           <i class="fas fa-search" onclick='$("form").submit()'></i>
         </div>
       </form>
@@ -44,7 +44,7 @@
         <h3>활동</h3>
       </div>
       <div class="page_list_box">
-      	<c:forEach items="${notice_page}" var="vo">
+      	<c:forEach items="${notice_page.list}" var="vo">
       		<div class="page_list_content">
 	          <div class="page_list_content_title">
 	            <a href='detail.no?id=${vo.notice_id }'>
@@ -52,7 +52,7 @@
 	              	<p>[공지]</p>
 	              </c:if>
 	              <c:if test="${vo.notice_attribute eq 'A'}">
-	              	<p>[알파카비지니스]</p>
+	              	<p>[알파카]</p>
 	              </c:if>
 	              <c:if test="${vo.notice_attribute eq 'M'}">
 	              	<p>[점검]</p>
