@@ -3,8 +3,8 @@
 
 <div class='notice_paging'>
 	<c:if test="${page.curBlock gt 1 }"> <!-- lt < 같은 의미 -->
-		<i class="fas fa-angle-double-left page_first"><a class='page_first' title='처음' onclick='go_page(1)'></a></i>
-		<i class="fas fa-angle-left page_prev"><a class='page_prev' title='이전' onclick='go_page(${page.beginPage - page.blockPage })'></a></i>
+		<a class='page_first' title='처음' onclick='go_page(1)'><i class="fas fa-angle-double-left page_first"></i></a>
+		<a class='page_prev' title='이전' onclick='go_page(${page.beginPage - page.blockPage })'><i class="fas fa-angle-left page_prev"></i></a>
 			
 	</c:if>
 	<c:forEach var="no" begin="${page.beginPage }" end="${page.endPage }">
@@ -19,8 +19,8 @@
 	</c:forEach>
 	<!-- 현재 블록 번호가 총 블록수 보다 작으면 이미지가 나오고 그렇지 않으면 않 보임 -->
 	<c:if test="${page.curBlock lt page.totalBlock }"> <!-- lt < 같은 의미 -->
-		<i class="fas fa-angle-right"><a class='page_next' title="다음" onclick='go_page(${page.endPage+1})'></a></i>
-		<i class="fas fa-angle-double-right"><a class='page_last' title='마지막' onclick='go_page(${page.totalPage })'></a></i>	
+		<a class='page_next' title="다음" onclick='go_page(${page.endPage+1})'><i class="fas fa-angle-right"></i></a>
+		<a class='page_last' title='마지막' onclick='go_page(${page.totalPage })'><i class="fas fa-angle-double-right"></i></a>
 	</c:if>
 	
 	
@@ -47,12 +47,4 @@
 		width: 30px; height: 32px; color: #777; border: 1px soild gray;
 	}
 	
-	/* .page_next {background: url("imgs/page_next.jpg") center no-repeat;}
-	 .page_last {background: url("imgs/page_last.jpg") center no-repeat;}
-	 .page_first {background: url("imgs/page_first.jpg") center no-repeat;}
-	.page_prev {background: url("imgs/page_prev.jpg") center no-repeat;} */
-
-
-
-
 </style>

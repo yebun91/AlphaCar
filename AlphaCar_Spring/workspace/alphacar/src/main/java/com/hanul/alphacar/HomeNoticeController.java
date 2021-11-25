@@ -1,7 +1,8 @@
 package com.hanul.alphacar;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -42,7 +43,6 @@ public class HomeNoticeController {
 		page.setCurPage(curPage);
 		page.setSearch(search);
 		page.setKeyword(keyword);
-
 		
 		model.addAttribute("page", service.notice_list(page));
 		return "notice/list";
