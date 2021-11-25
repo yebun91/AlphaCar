@@ -1,8 +1,12 @@
 package com.hanul.alphacar;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
+
+import com.google.gson.Gson;
 
 import review.ReviewServiceImpl;
 import review.ReviewVO;
@@ -25,21 +31,16 @@ public class ReviewController {
 	@RequestMapping(value="/review", method = {RequestMethod.GET, RequestMethod.POST})
 	public int review(HttpServletRequest req, Model model) {
 		
-		// 1. �ȵ���̵忡�� ���� �����͸� req�� �޾Ƽ� ������ ����
+
 		String score = req.getParameter("rating");
 		String title = req.getParameter("reviewTitle");
 		String content = req.getParameter("reviewContent");
 		String email = req.getParameter("email");
 		
-//		String score = "3.0";
-//		String title = "��������1";
-//		String content = "���䳻��1";
+
 		
 		ReviewVO vo = new ReviewVO();
-		
-		
-		// 3. �ȵ���̵忡�� ���� ���� �ޱ� : ������ ���� ��쿡�� ����
-		// �����̸��� ������ ���� �ȵ���̵忡�� �޾Ƽ� ��ü ��θ� �ϼ��Ѵ�
+
 		String fileName = "";
 		
 		MultipartRequest multi = (MultipartRequest)req;
@@ -56,7 +57,6 @@ public class ReviewController {
 				System.out.println("realpath : " + realImgPath);
 				System.out.println("fileSize : " + file.getSize());
 				
-				// �̹��� ������ ������ ����
 				try {
 					file.transferTo(new File(realImgPath, fileName));
 				} catch (Exception e) {
@@ -71,7 +71,7 @@ public class ReviewController {
 		vo.setTitle(title);
 		vo.setContent(content);
 		vo.setFileName(fileName);
-		vo.setFilePath("D:\\Study_Android_Spring\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\AlphaCar2\\resources\\"+fileName);
+//		vo.setFilePath("D:\\Study_Android_Spring\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\AlphaCar2\\resources\\"+fileName);
 
 		System.out.println(fileName);
 		

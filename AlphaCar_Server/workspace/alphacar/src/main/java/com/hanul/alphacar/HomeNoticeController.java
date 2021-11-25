@@ -26,13 +26,13 @@ public class HomeNoticeController {
 	@Autowired private HomeNoticePage page;
 	@Autowired private WebMemberServiceImpl member;
 	
-	//공지사항 리스트로 가기
+
 	@RequestMapping("/list.no")
 	public String list(HttpSession session, Model model, 
 			@RequestParam (defaultValue = "1") int curPage,
 			String search, String keyword) {
 		
-		// 공지글 처리 중 임의로 로그인해 두기
+
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("customer_email", "admin@naver.com");
 		map.put("customer_pw", "admin1234");
@@ -44,7 +44,6 @@ public class HomeNoticeController {
 		page.setKeyword(keyword);
 
 		
-		//DB에서 공지글 목로을 조회한 후 목록화면에 출력
 		model.addAttribute("page", service.notice_list(page));
 		return "notice/list";
 	}

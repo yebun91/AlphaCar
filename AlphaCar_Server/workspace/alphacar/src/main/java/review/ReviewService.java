@@ -1,5 +1,7 @@
 package review;
 
+import java.util.List;
+
 public interface ReviewService {
 	
 	int review_insert(ReviewVO vo);

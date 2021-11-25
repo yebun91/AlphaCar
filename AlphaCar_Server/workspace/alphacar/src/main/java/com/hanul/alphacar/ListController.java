@@ -24,6 +24,7 @@ import store.RegisterVO;
 import store.StoreFileVO;
 import store.StoreServiceImpl;
 import store.StoreVO;
+import store.Store_FileVO;
 
 @Controller
 public class ListController {
@@ -94,7 +95,6 @@ public class ListController {
 					System.out.println("realpath : " + realImgPath);
 					System.out.println("fileSize : " + file.get(i).getSize());
 					
-					// 이미지 파일을 서버에 저장
 					try {
 						file.get(i).transferTo(new File(realImgPath, fileName));
 					} catch (Exception e) {

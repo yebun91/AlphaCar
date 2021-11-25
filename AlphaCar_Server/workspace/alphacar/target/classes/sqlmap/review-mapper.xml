@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="review.mapper">
+
+
+	<select id="list" resultType="review.ReviewVO">
+		select * from review where customer_email = #{customer_email,
+		jdbcType=VARCHAR}
+	</select>
+
+
+
+	<insert id="insert">
+		insert into review(review_id, customer_email, store_number, title, content,
+		score, filename, filepath)
+		values(106, 'w', 111, #{title}, #{content} , #{score}, #{fileName}, #{filePath})
+
+	</insert>
+
+</mapper>

@@ -2,6 +2,7 @@ package review;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Repository;
 public class ReviewDAO implements ReviewService {
 	@Autowired private SqlSession sql;
 	
-	// ������ ���̽��� ���� : �����ͺ��̽� �ʱ�ȭ ����
 	DataSource dataSource;
 	
 	@Override

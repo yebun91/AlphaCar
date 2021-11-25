@@ -1,7 +1,5 @@
 package review;
 
-import java.sql.Clob;
-import java.sql.Date;
 
 public class ReviewVO {
 	private String customerEmail, title, content, score, fileName, filePath, date;

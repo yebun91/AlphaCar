@@ -18,17 +18,16 @@ public class HomeMemberController {
 	
 	@Autowired private WebMemberServiceImpl service;
 	
-	// 로그아웃 처리 요청
+
 	@RequestMapping ("/homeLogout")
 	public String logout (HttpSession session) {
-		// 세션에 담긴 로그인 정보를 삭제한다.
+
 		session.removeAttribute("loginInfo");
 		
-		// 로그아웃 시 루트(home.jsp)로 이동
+
 		return "redirect:/";	
 	}
-	
-	//로그인 처리 요청
+
 	@ResponseBody
 	@RequestMapping("/webLogin")
 	public Boolean webLogin(HttpSession session, String customer_email, String customer_pw) {
@@ -42,7 +41,7 @@ public class HomeMemberController {
 		return vo == null ? false : true;
 	}
 	
-	//로그인 화면 요청
+
 	@RequestMapping("/homeLogin")
 	public String login(HttpSession session, Model model) {
 		
