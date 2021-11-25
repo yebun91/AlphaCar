@@ -9,24 +9,24 @@
   <div id="page">
     <h1>공지사항</h1>
     <div class="page_index">
-    <form action="list.no" method="post">
+    <form action="list.no" method="get">
       <div class="page_select">
         <ul>
-          <li>전체</li>
-          <li>공지</li>
-          <li>알파카</li>
-          <li>점검</li>
+          <li onclick="location.href='list.no'">전체</li>
+          <li onclick="location.href='list.no?search=notice'">공지</li>
+          <li onclick="location.href='list.no?search=alphacer'">알파카</li>
+          <li onclick="location.href='list.no?search=maintainance'">점검</li>
         </ul>        
       </div>
       </form>
       <!-- notice 검색기능 -->
-      <form action="list.no" method="post" class="page_search">
+      <form action="list.no" method="get" class="page_search">
         <div class="page_search_index">
           <select name="search" id="notice_search_index">
-            <option value="all" ${notice_page.search eq 'all' ? 'selected' : '' }>전체</option>
-            <option value="notice" ${notice_page.search eq 'notice' ? 'selected' : '' }>공지</option>
-            <option value="alphacer" ${notice_page.search eq 'alphacer' ? 'selected' : '' }>알파카</option>
-            <option value="maintainance" ${notice_page.search eq 'maintainance' ? 'selected' : '' }>점검</option>
+            <option value="all" ${page.search eq 'all' ? 'selected' : '' }>전체</option>
+            <option value="notice" ${page.search eq 'notice' ? 'selected' : '' }>공지</option>
+            <option value="alphacer" ${page.search eq 'alphacer' ? 'selected' : '' }>알파카</option>
+            <option value="maintainance" ${page.search eq 'maintainance' ? 'selected' : '' }>점검</option>
           </select>
         </div>
         <div class="page_search_box">
@@ -44,7 +44,7 @@
         <h3>활동</h3>
       </div>
       <div class="page_list_box">
-      	<c:forEach items="${notice_page.list}" var="vo">
+      	<c:forEach items="${page.list}" var="vo">
       		<div class="page_list_content">
 	          <div class="page_list_content_title">
 	            <a href='detail.no?id=${vo.notice_id }'>
@@ -74,12 +74,7 @@
     </div>
     
     <!-- 페이징 처리 -->
-    <div class="notice_paging">
-      <i class="fas fa-angle-double-left"></i>
-      <i class="fas fa-angle-left"></i>
-      <p>1 2 3 4 5 6 7 8 9 10</p>
-      <i class="fas fa-angle-right"></i>
-      <i class="fas fa-angle-double-right"></i>
-    </div>    
+
+    <jsp:include page="/WEB-INF/views/include/page.jsp" />
   </div>
 </main>

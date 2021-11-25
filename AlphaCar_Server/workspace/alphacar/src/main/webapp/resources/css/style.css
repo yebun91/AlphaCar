@@ -279,6 +279,7 @@ footer{
   margin-right: 25px;
   font-size: var(--font-regular);
   font-weight: var(--weight-semi-bold);
+  cursor: pointer;
 }
 .page_search{
   display: flex;
@@ -303,6 +304,7 @@ footer{
 }
 .fa-search{
   color: var(--gray-color);
+  cursor: pointer;
 }
 .page_list, .page_list_name{
   border-bottom: 2px solid var(--black-color);
@@ -339,7 +341,7 @@ footer{
 .page_list_content_title a{
   width: 100%;
   overflow:hidden; 
-  text-overflow:ellipsis;
+  /* text-overflow:ellipsis; */
   white-space:nowrap; 
 }
 .page_list_content>p:nth-child(2), 

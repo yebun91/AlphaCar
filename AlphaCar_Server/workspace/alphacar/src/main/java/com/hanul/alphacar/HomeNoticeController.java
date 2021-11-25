@@ -1,11 +1,7 @@
 package com.hanul.alphacar;
 
-
-
-import java.sql.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+
 
 import javax.servlet.http.HttpSession;
 
@@ -43,24 +39,13 @@ public class HomeNoticeController {
 		session.setAttribute("loginInfo", member.member_login(map));
 		session.setAttribute("category", "no");
 		
-//		List<HomeNoticeVO> list = service.notice_list();
-//		HomeNoticeVO homeNoticeVO = new HomeNoticeVO();
-//		for (int i = 0; i < list.size(); i++) {
-//			homeNoticeVO = list.get(i);
-//			Date time = list.get(i).getNotice_writedate();
-//			homeNoticeVO.setNotice_time(common.Time.txtDate(time));
-//			list.set(i, homeNoticeVO);
-//		}
-		
 		page.setCurPage(curPage);
 		page.setSearch(search);
 		page.setKeyword(keyword);
-		service.notice_list(page);
+
 		
-//		model.addAttribute("notice_page", list);
 		//DB에서 공지글 목로을 조회한 후 목록화면에 출력
-		model.addAttribute("notice_page", service.notice_list(page));
-		
+		model.addAttribute("page", service.notice_list(page));
 		return "notice/list";
 	}
 	
