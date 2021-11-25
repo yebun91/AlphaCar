@@ -10,6 +10,7 @@
     <h1>공지사항</h1>
     <div class="page_index">
     <form action="list.no" method="get">
+    <input type="hidden" name="curPage" value="1" /> 
       <div class="page_select">
         <ul>
           <li onclick="location.href='list.no'">전체</li>
@@ -21,6 +22,7 @@
       </form>
       <!-- notice 검색기능 -->
       <form action="list.no" method="get" class="page_search">
+      <input type="hidden" name="curPage" value="1" /> 
         <div class="page_search_index">
           <select name="search" id="notice_search_index">
             <option value="all" ${page.search eq 'all' ? 'selected' : '' }>전체</option>
@@ -74,7 +76,6 @@
     </div>
     
     <!-- 페이징 처리 -->
-
     <jsp:include page="/WEB-INF/views/include/page.jsp" />
   </div>
 </main>

@@ -3,13 +3,37 @@ package homeNotice;
 import java.sql.Date;
 
 public class HomeNoticeVO {
-
-	private int notice_id, notice_readcnt;
+	
+	private int notice_id, notice_readcnt, no, root, step, indent;
 	private String notice_title, notice_content, customer_email, customer_name, notice_attribute, notice_time;
 	private Date notice_writedate;
 	
 	
 	
+	public int getNo() {
+		return no;
+	}
+	public void setNo(int no) {
+		this.no = no;
+	}
+	public int getRoot() {
+		return root;
+	}
+	public void setRoot(int root) {
+		this.root = root;
+	}
+	public int getStep() {
+		return step;
+	}
+	public void setStep(int step) {
+		this.step = step;
+	}
+	public int getIndent() {
+		return indent;
+	}
+	public void setIndent(int indent) {
+		this.indent = indent;
+	}
 	public String getNotice_time() {
 		notice_time = common.Time.txtDate(getNotice_writedate());
 		return notice_time;
