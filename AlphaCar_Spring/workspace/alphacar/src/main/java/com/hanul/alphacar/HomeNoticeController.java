@@ -1,8 +1,6 @@
 package com.hanul.alphacar;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import common.CommonService;
 import homeNotice.HomeNoticePage;
 import homeNotice.HomeNoticeServiceImpl;
-import homeNotice.HomeNoticeVO;
-import member.MemberServiceImpl;
 import member.WebMemberServiceImpl;
 
 @Controller
@@ -27,7 +23,7 @@ public class HomeNoticeController {
 	@Autowired private HomeNoticePage page;
 	@Autowired private WebMemberServiceImpl member;
 	
-
+	/* 공지사항 리스트 */
 	@RequestMapping("/list.no")
 	public String list(HttpSession session, Model model, 
 			@RequestParam (defaultValue = "1") int curPage,
@@ -53,18 +49,29 @@ public class HomeNoticeController {
 		return "notice/write";
 	}
 	
+	// 공지사항 상세화면 요청
 	@RequestMapping("/detail.no")
-	public String detail(HttpSession session, Model model) {
+	public String detail(int id, Model model) {
+		/* 클릭시 조회수 증가 */
+		service.notice_read(id);
+		
+		model.addAttribute("vo", service.notice_detail(id));
+		model.addAttribute("crlf", "\r\n");
+		model.addAttribute("page", page);
+		
 		return "notice/detail";
 	}
 	
 	@RequestMapping("/update.no")
 	public String update(HttpSession session, Model model) {
+		
 		return "notice/update";
 	}
 	
+	//공지글 삭제처리
 	@RequestMapping("/delete.no")
-	public String delete(HttpSession session, Model model) {
+	public String delete(HttpSession session, Model model, int id) {
+		service.notice_delete(id);
 		return "redirect:list.no";
 	}
 }

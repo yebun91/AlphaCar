@@ -42,8 +42,7 @@ public class HomeNoticeDAO implements HomeNoticeService {
 
 	@Override
 	public HomeNoticeVO notice_detail(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return sql.selectOne("homeNotice.mapper.homeNoticeDetail", id);
 	}
 
 	@Override
@@ -54,14 +53,13 @@ public class HomeNoticeDAO implements HomeNoticeService {
 
 	@Override
 	public void notice_delete(int id) {
-		// TODO Auto-generated method stub
+		sql.delete("homeNotice.mapper.homeNoticeDelete", id);
 		
 	}
 
 	@Override
 	public void notice_read(int id) {
-		// TODO Auto-generated method stub
-		
+		sql.update("homeNotice.mapper.homeNoticeRead", id);
 	}
 	
 	

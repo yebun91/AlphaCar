@@ -44,7 +44,10 @@
 	}
 	
 	.page_prev, .page_next, .page_last, .page_first {
-		width: 30px; height: 32px; color: #777; border: 1px soild gray;
+		width: 30px; height: 32px; color: #777;
+	}
+	.page_next{
+		margin-left: 25px;
 	}
 	
 </style>
