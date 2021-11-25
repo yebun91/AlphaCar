@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import common.CommonService;
 import homeNotice.HomeNoticePage;
 import homeNotice.HomeNoticeServiceImpl;
+import homeNotice.HomeNoticeVO;
 import member.WebMemberServiceImpl;
+import member.WebMemberVO;
 
 @Controller
 public class HomeNoticeController {
@@ -47,6 +49,18 @@ public class HomeNoticeController {
 	@RequestMapping("/write.no")
 	public String write(HttpSession session, Model model) {
 		return "notice/write";
+	}
+	
+	@RequestMapping("/insert.no")
+	public String insert(HomeNoticeVO vo, HttpSession session, Model model) {
+		
+		// 로그인 된 사용자의 id를 가져와 글쓴이(writer)에 담기 위한 처리
+		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
+		
+		// 화면에서 입력한 정보를 DB에 저장한 후 화면으로 연결(출력)
+		service.notice_insert(vo);
+		
+		return "redirect:list.no";
 	}
 	
 	// 공지사항 상세화면 요청

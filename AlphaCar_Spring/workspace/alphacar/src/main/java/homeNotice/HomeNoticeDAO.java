@@ -13,8 +13,7 @@ public class HomeNoticeDAO implements HomeNoticeService {
 
 	@Override
 	public void notice_insert(HomeNoticeVO vo) {
-		// TODO Auto-generated method stub
-		
+		sql.insert("homeNotice.mapper.homeNoticeInsert", vo);
 	}
 
 	@Override

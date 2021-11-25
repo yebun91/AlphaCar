@@ -14,9 +14,7 @@
   <main>
     <div id="page">
       <div class="detail">
-	    	<textarea id="summernote" name="editordata">
-	    
-		    </textarea> 
+	    	<textarea id="summernote" name="editordata"></textarea> 
 		  </div>
 		  <div class="page_write_button">
 			<button type="button" onclick="location.href='list.se'">목록으로</button>

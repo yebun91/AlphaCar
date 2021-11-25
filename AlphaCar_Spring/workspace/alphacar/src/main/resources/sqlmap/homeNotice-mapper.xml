@@ -71,4 +71,11 @@
 		delete from web_notice
 		where notice_id = #{id}	
 	</delete>
+	
+	<!-- 글작성 -->
+	<insert id="homeNoticeInsert">
+		insert into web_notice (notice_id, customer_email , notice_title, notice_content, notice_attribute)
+		values (SEQ_WEB_NOTICE.nextval, #{customer_email}, #{notice_title}, #{notice_content}, #{notice_attribute})
+		
+	</insert>
 </mapper>

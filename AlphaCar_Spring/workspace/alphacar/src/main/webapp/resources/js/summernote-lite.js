@@ -5950,8 +5950,9 @@ var Editor_Editor = /*#__PURE__*/function () {
           if (typeof param === 'string') {
             $image.attr('data-filename', param);
           }
-
+		  
           $image.css('width', Math.min(_this3.$editable.width(), $image.width()));
+          //$image.css('width', '100%');
         }
 
         $image.show();
@@ -10259,6 +10260,7 @@ var ModalUI_ModalUI = /*#__PURE__*/function () {
 
 /* harmony default export */ var ui_ModalUI = (ModalUI_ModalUI);
 // CONCATENATED MODULE: ./src/js/lite/ui.js
+
 
 
 
