@@ -1,6 +1,6 @@
 package com.example.alphacar;
 
-import static com.example.alphacar.LoginPage.loginDTO;
+import static com.example.alphacar.LoginPageActivity.loginDTO;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;

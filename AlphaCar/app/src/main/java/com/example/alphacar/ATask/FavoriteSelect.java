@@ -1,15 +1,13 @@
 package com.example.alphacar.ATask;
 
 import static com.example.alphacar.Common.CommonMethod.ipConfig;
-import static com.example.alphacar.LoginPage.loginDTO;
+import static com.example.alphacar.LoginPageActivity.loginDTO;
 
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.JsonReader;
-import android.util.Log;
 
 import com.example.alphacar.DTOS.FavoriteDTO;
-import com.example.alphacar.DTOS.StoreDTO;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

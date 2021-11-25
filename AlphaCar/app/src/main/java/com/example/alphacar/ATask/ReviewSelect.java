@@ -33,13 +33,14 @@ public class ReviewSelect extends AsyncTask<Void, Void, Void> {
     /*public ListDetail(int store_number) {
         this.store_number = store_number;
     }*/
-    String customer_email = "store_master@naver.com";
+    String customer_email = "";
+    int store_number = 0;
     ReviewDTO dto;
     ArrayList<ReviewDTO> dtos = new ArrayList<>();
 
 
-    public ReviewSelect(String customer_email,ArrayList<ReviewDTO> dtos, ReviewDTO dto ) {
-        this.customer_email = customer_email;
+    public ReviewSelect(int store_number,ArrayList<ReviewDTO> dtos, ReviewDTO dto ) {
+        this.store_number = store_number;
         this.dto = dto;
         this.dtos = dtos;
     }
@@ -66,8 +67,8 @@ public class ReviewSelect extends AsyncTask<Void, Void, Void> {
 
             // 여기가 우리가 수정해야 하는 부분 : 서버로 보내는 데이터
             // builder에 문자열 및 데이터 추가하기
-            //builder.addTextBody("store_number", String.valueOf(store_number), ContentType.create("Multipart/related", "UTF-8"));
-            builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
+            builder.addTextBody("store_number", String.valueOf(store_number), ContentType.create("Multipart/related", "UTF-8"));
+            //builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
 
 
 

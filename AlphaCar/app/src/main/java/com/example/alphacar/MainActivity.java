@@ -1,24 +1,18 @@
 package com.example.alphacar;
 
 import static com.example.alphacar.Common.CommonMethod.isNetworkConnected;
-import static com.example.alphacar.LoginPage.loginDTO;
+import static com.example.alphacar.LoginPageActivity.loginDTO;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
-import android.app.ProgressDialog;
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,8 +24,9 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.alphacar.ATask.Storelist;
 import com.example.alphacar.Adapter.ViewpagerAdapter;
-import com.example.alphacar.DTOS.MemberVO;
 import com.example.alphacar.DTOS.StoreDTO;
+import com.example.alphacar.Fragment.FavoriteFragment;
+import com.example.alphacar.Fragment.LoginJoinSelectFragment;
 import com.example.alphacar.Fragment.ViewpagerFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -69,7 +64,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         // implement Listener 할 떄는 반드시 아래와 같이 정의 한다.
         nav_view.setNavigationItemSelectedListener(this);
         draw_layout = findViewById(R.id.draw_layout);
-      //  viewPager2 = findViewById(R.id.pager);
+       //  viewPager2 = findViewById(R.id.pager);
         searchView = findViewById(R.id.searchView);
         storeDTOArrayList = new ArrayList<>();
 
@@ -77,6 +72,12 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         ImageView login_image = headerView.findViewById(R.id.loginImage);
         TextView login_text =headerView.findViewById(R.id.loginID);
         TextView login_str =  headerView.findViewById(R.id.loginStr);
+
+        /* 사이드 네비게이션 로그인 할떄 안할떄 보여지는 글자 */
+        if (loginDTO == null){
+            nav_view.getMenu().findItem(R.id.nav_myPage).setTitle("로그인");
+            nav_view.getMenu().findItem(R.id.nav_logout).setVisible(false);
+        }
 
         if(isNetworkConnected(this) == true){
             storelist  = new Storelist(dto, storeDTOArrayList);
@@ -137,23 +138,35 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         /* 메인 뷰페이저에 데이터 집어넣기 */
              storeDTOArrayList = new ArrayList<StoreDTO>();
-
-        /*tab2 즐겨찾기*/
-        findViewById(R.id.tab2).setOnClickListener(new View.OnClickListener() {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+        /* tab1 홈 버튼 바텀네비게이션 */
+        findViewById(R.id.tab1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(getApplicationContext(), FavoriteActivity.class);
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
             }
         });
 
-        /*tab3 로그인,회원가입*/
+        /*tab2 즐겨찾기  바텀네비게이션*/
+        findViewById(R.id.tab2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new FavoriteFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.contain, fragment).commit();
+
+//                Intent intent = new Intent(getApplicationContext(), FavoriteFragment.class);
+//                startActivity(intent);
+            }
+        });
+
+        /*tab3 로그인,회원가입  바텀네비게이션*/
         findViewById(R.id.tab3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getApplicationContext(), LoginJoinSelect.class);
+                Intent intent = new Intent(getApplicationContext(), LoginJoinSelectFragment.class);
                 startActivity(intent);
             }
         });
@@ -161,11 +174,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
       //  ImageView login_image
 
 
-
-
-
-
-        /*tab4 마이페이지 */
+        /*tab4 마이페이지 바텀네비게이션*/
        findViewById(R.id.tab4).setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -181,12 +190,13 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                    login_str.setText(loginDTO.getCustomer_email());
                }
 
+
                draw_layout.openDrawer(GravityCompat.START);
 
            }
        });
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////
         /*메인 뷰페이저*/
 
 
@@ -205,21 +215,29 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     });
     }
 
-    /*바텀 네비게이션*/
+    /*사이드 네비게이션*/
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         // 클릭한 아이템의 아이디를 얻는다.
         int id = item.getItemId();
 
+
+
         if (id == R.id.nav_favorite){
-            Intent intent = new Intent(getApplicationContext(), FavoriteActivity.class);
-            startActivity(intent);
+            Fragment fragment = new FavoriteFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.contain, fragment).commit();
         }else if (id == R.id.nav_myPage){
-            Intent intent = new Intent(getApplicationContext(), MemberUpdatePage.class);
-            startActivity(intent);
+            if (loginDTO != null){
+                Intent intent = new Intent(getApplicationContext(), MemberUpdatePageActivity.class);
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(getApplicationContext(), LoginPageActivity.class);
+                startActivity(intent);
+            }
         }else if (id == R.id.nav_noti){
-            Intent intent = new Intent(getApplicationContext(), FavoriteActivity.class);
+            Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
             startActivity(intent);
         }else if(id == R.id.nav_logout){
             loginDTO = null;

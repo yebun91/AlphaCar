@@ -5,6 +5,7 @@ package com.example.alphacar;
 
 import static com.example.alphacar.Common.CommonMethod.isNetworkConnected;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MotionEvent;
@@ -17,6 +18,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -51,7 +53,11 @@ public class DetailActivity extends AppCompatActivity{
     TextView store_price;
     TextView store_addr;
 
-    String customer_email= "qqq@naver.com";
+  //  String customer_email= "";
+
+
+    int store_number;
+
 
     ScrollView scrollView;
 
@@ -75,10 +81,14 @@ public class DetailActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail);
 
+        Intent intent = getIntent();
+        store_number = intent.getIntExtra("store_number", 0);
+
+
 
         //영업장 정보 불러오는 atask
         if(isNetworkConnected(this) == true){
-            detailSelect = new DetailSelect(customer_email);
+            detailSelect = new DetailSelect(store_number);
             //    reviewSelect = new ReviewSelect(customer_email,dtos,rdto);
             try {
                 dto = detailSelect.execute().get();
@@ -92,9 +102,9 @@ public class DetailActivity extends AppCompatActivity{
                     Toast.LENGTH_SHORT).show();
         }
         //리뷰 정보 불러오는 atask
-        if(isNetworkConnected(this) == true){
+       /* if(isNetworkConnected(this) == true){
 
-            reviewSelect = new ReviewSelect(customer_email,dtos,rdto);
+            reviewSelect = new ReviewSelect(store_number,dtos,rdto);
             try {
                 reviewSelect.execute().get();
                 //     reviewSelect.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -105,7 +115,7 @@ public class DetailActivity extends AppCompatActivity{
             Toast.makeText(this, "인터넷이 연결되어 있지 않습니다.",
                     Toast.LENGTH_SHORT).show();
         }
-
+*/
         scrollView = findViewById(R.id.detail_scroll);
 
         //세차장 이름, 가격, 위치 가져오기
@@ -286,4 +296,5 @@ public class DetailActivity extends AppCompatActivity{
 
     }
     //------------ViewPager Indicator-----------------------
+
 }

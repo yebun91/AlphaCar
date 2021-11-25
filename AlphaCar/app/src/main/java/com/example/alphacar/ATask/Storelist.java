@@ -128,6 +128,8 @@ public class Storelist extends AsyncTask<Void, Void, Void> {
     //하나의 DTO형태로 데이터를 받을때 파싱하는 부분
     private StoreDTO readMessage(JsonReader reader) throws IOException {
 
+        int store_number = 0;
+
         String
                 store_name = "",
                 introduce = "",
@@ -136,7 +138,10 @@ public class Storelist extends AsyncTask<Void, Void, Void> {
         reader.beginObject();
         while (reader.hasNext()) {
             String readStr = reader.nextName();
-            if (readStr.equals("store_name")) {
+            if (readStr.equals("store_number")) {
+                store_number = reader.nextInt();
+            }
+            else if (readStr.equals("store_name")) {
                 store_name = reader.nextString();
             }  else if (readStr.equals("imgpath")) {
                 imgpath =reader.nextString();
@@ -147,7 +152,7 @@ public class Storelist extends AsyncTask<Void, Void, Void> {
             }
         }
         reader.endObject();
-        return new StoreDTO(store_name, introduce,imgpath);
+        return new StoreDTO(store_number,store_name, introduce,imgpath);
         //return new StoreDTO(store_number, imgpath, inventory);
 
     }

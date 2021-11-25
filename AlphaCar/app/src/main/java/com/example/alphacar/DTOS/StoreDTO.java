@@ -1,19 +1,103 @@
 package com.example.alphacar.DTOS;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class StoreDTO implements Serializable {
-    private int store_number,inventory, store_favorite_cnt, file_id;
+    private int store_number,inventory, store_favorite_cnt;
     private String customer_email, store_name, store_addr, store_tel,
                    store_time, store_dayoff, introduce, picture
                  , store_price, store_master_name
                  , store_registration_number
-                 , filename, imgPath, imgname;
+                 , imgpath, filename;
+    private int inventory_number ;
+    private int sensor_id        ;
+    private String now_state        ;
+    private Date create_date      ;
+    private Date change_date      ;
 
-    public StoreDTO(String store_name, String introduce, String imgPath) {
+    public StoreDTO(int store_number, String customer_email, String store_name, String store_addr, String store_tel, String store_time, String store_dayoff, String introduce, String picture, int inventory, String store_price, String store_master_name, String store_registration_number, int store_favorite_cnt) {
+        this.store_number = store_number;
+        this.inventory = inventory;
+        this.store_favorite_cnt = store_favorite_cnt;
+        this.customer_email = customer_email;
+        this.store_name = store_name;
+        this.store_addr = store_addr;
+        this.store_tel = store_tel;
+        this.store_time = store_time;
+        this.store_dayoff = store_dayoff;
+        this.introduce = introduce;
+        this.picture = picture;
+        this.store_price = store_price;
+        this.store_master_name = store_master_name;
+        this.store_registration_number = store_registration_number;
+
+    }
+
+
+    public StoreDTO(String customer_email, String imgpath, int inventory) {
+
+        this.customer_email = customer_email;
+        this.imgpath = imgpath;
+        this.inventory = inventory;
+    }
+
+    public StoreDTO(String customer_email, String imgpath, int inventory, String now_state) {
+        this.customer_email = customer_email;
+        this.imgpath = imgpath;
+        this.inventory = inventory;
+        this.now_state = now_state;
+    }
+
+    public StoreDTO(int store_number,String store_name, String introduce, String imgpath) {
+        this.store_number = store_number;
         this.store_name = store_name;
         this.introduce = introduce;
-        this.imgPath = imgPath;
+        this.imgpath = imgpath;
+    }
+
+    public StoreDTO() {
+
+    }
+
+    public int getInventory_number() {
+        return inventory_number;
+    }
+
+    public void setInventory_number(int inventory_number) {
+        this.inventory_number = inventory_number;
+    }
+
+    public int getSensor_id() {
+        return sensor_id;
+    }
+
+    public void setSensor_id(int sensor_id) {
+        this.sensor_id = sensor_id;
+    }
+
+    public String getNow_state() {
+        return now_state;
+    }
+
+    public void setNow_state(String now_state) {
+        this.now_state = now_state;
+    }
+
+    public Date getCreate_date() {
+        return create_date;
+    }
+
+    public void setCreate_date(Date create_date) {
+        this.create_date = create_date;
+    }
+
+    public Date getChange_date() {
+        return change_date;
+    }
+
+    public void setChange_date(Date change_date) {
+        this.change_date = change_date;
     }
 
     public int getStore_number() {
@@ -38,30 +122,6 @@ public class StoreDTO implements Serializable {
 
     public void setStore_favorite_cnt(int store_favorite_cnt) {
         this.store_favorite_cnt = store_favorite_cnt;
-    }
-
-    public int getFile_id() {
-        return file_id;
-    }
-
-    public void setFile_id(int file_id) {
-        this.file_id = file_id;
-    }
-
-    public String getImgPath() {
-        return imgPath;
-    }
-
-    public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
-    }
-
-    public String getImgname() {
-        return imgname;
-    }
-
-    public void setImgname(String imgname) {
-        this.imgname = imgname;
     }
 
     public String getCustomer_email() {
@@ -120,6 +180,14 @@ public class StoreDTO implements Serializable {
         this.introduce = introduce;
     }
 
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     public String getStore_price() {
         return store_price;
     }
@@ -142,6 +210,14 @@ public class StoreDTO implements Serializable {
 
     public void setStore_registration_number(String store_registration_number) {
         this.store_registration_number = store_registration_number;
+    }
+
+    public String getImgpath() {
+        return imgpath;
+    }
+
+    public void setImgpath(String imgpath) {
+        this.imgpath = imgpath;
     }
 
     public String getFilename() {

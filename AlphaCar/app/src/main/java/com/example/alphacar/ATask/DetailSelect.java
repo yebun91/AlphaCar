@@ -27,14 +27,16 @@ import java.nio.charset.Charset;
 public class DetailSelect extends AsyncTask<Void, Void, StoreDTO> {
 
 
-    String customer_email = "store_master@naver.com";
+//    String customer_email = "store_master@naver.com";
+
+     int store_number = 0;
     /*public ListDetail(int store_number) {
         this.store_number = store_number;
     }*/
     StoreDTO dto;
 
-    public DetailSelect(String customer_email) {
-        this.customer_email = customer_email;
+    public DetailSelect(int store_number) {
+        this.store_number = store_number;
     }
 
     // 반드시 선언해야 할것들 : 무조건 해야함  복,붙
@@ -59,8 +61,8 @@ public class DetailSelect extends AsyncTask<Void, Void, StoreDTO> {
 
             // 여기가 우리가 수정해야 하는 부분 : 서버로 보내는 데이터
             // builder에 문자열 및 데이터 추가하기
-            //builder.addTextBody("store_number", String.valueOf(store_number), ContentType.create("Multipart/related", "UTF-8"));
-            builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
+            builder.addTextBody("store_number", String.valueOf(store_number), ContentType.create("Multipart/related", "UTF-8"));
+           // builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
 
 
             // 전송

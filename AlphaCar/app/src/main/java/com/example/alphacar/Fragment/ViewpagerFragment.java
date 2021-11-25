@@ -13,13 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.example.alphacar.Adapter.ViewpagerAdapter;
 import com.example.alphacar.DTOS.StoreDTO;
 import com.example.alphacar.DetailActivity;
 import com.example.alphacar.MainActivity;
 import com.example.alphacar.R;
-
-import java.util.ArrayList;
 
 public class ViewpagerFragment extends Fragment {
     MainActivity mActivity;
@@ -54,17 +51,21 @@ public class ViewpagerFragment extends Fragment {
 
         
         // 이미지 파일은 글리드 및 리소스로 변경 리스트에서 받아오기
+        if(dto != null){
+
+
         Glide.with(ViewpagerFragment.this)
                 .load(dto.getImgpath())
                 .into(pagerimage);
         pagerstoreName.setText(dto.getStore_name());
         pagerstoreName.setBackgroundColor(999999);
         pagerintroduce.setText(dto.getIntroduce());
-
+        }
         pagerimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mActivity, DetailActivity.class);
+                intent.putExtra("store_number", dto.getStore_number());
                 startActivity(intent);
             }
         });

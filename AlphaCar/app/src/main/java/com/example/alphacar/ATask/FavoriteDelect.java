@@ -1,7 +1,6 @@
 package com.example.alphacar.ATask;
 
 import static com.example.alphacar.Common.CommonMethod.ipConfig;
-import static com.example.alphacar.LoginPage.loginDTO;
 
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;

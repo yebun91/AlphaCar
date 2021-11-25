@@ -66,32 +66,34 @@
             android:name=".RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".LoadingPageActivity"
+            android:name=".Fragment.LoadingPageFragment"
             android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity android:name=".DetailActivity" android:exported="true" />
+        <activity android:name=".MainActivity" android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                    <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FavoriteActivity" android:exported="true"/>
-        <activity android:name=".DetailActivity" android:exported="true" />
-        <activity android:name=".MainActivity" android:exported="true" />
         <activity
-            android:name=".MemberUpdatePage"
+            android:name=".MemberUpdatePageActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginJoinSelect"
+            android:name=".Fragment.LoginJoinSelectFragment"
             android:exported="true" />
         <activity
-            android:name=".JoinPage"
+            android:name=".LoginPageActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginPage"
+            android:name=".Fragment.NowFragment"
             android:exported="true" />
-        <activity
-            android:name=".NowActivity"
-            android:exported="true" />
+
 
         <provider
             android:name="androidx.core.content.FileProvider"
