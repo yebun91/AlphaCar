@@ -23,7 +23,6 @@ import member.MemberVO;
 
 @Controller
 public class FavoriteController {
-	
 	@Autowired private FavoriteServiceImpl service;
 	
 
@@ -34,13 +33,14 @@ public class FavoriteController {
 		res.setContentType("text/html"); 
 		req.setCharacterEncoding("UTF-8");
 		int fav_number =Integer.parseInt(req.getParameter("fav_number"));
-	//	String customer_email =req.getParameter("customer_email");
+
 		
+//	String customer_email =req.getParameter("customer_email");		
 //		HashMap<String, Object> map = new HashMap<String, Object>();
 //		map.put( "fav_number", fav_number);
 //		map.put( "customer_email" , req.getParameter("customer_email"));
 		
-		service.favorite_delete(fav_number); 
+		//service.favorite_delete(fav_number); 
 		  
 		  
 	  
@@ -87,4 +87,5 @@ public class FavoriteController {
 	 */
 		
 	}
+	
 }
