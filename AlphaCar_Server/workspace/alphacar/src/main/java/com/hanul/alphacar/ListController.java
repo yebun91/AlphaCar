@@ -152,6 +152,26 @@ public class ListController {
 	}
 	
 	@ResponseBody
+	@RequestMapping("/anSelectFile")
+	public void anSelectFile(HttpServletRequest req , HttpServletResponse res) throws Exception {
+		res.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html");
+		req.setCharacterEncoding("UTF-8");
+		
+		
+		List<Store_FileVO> file = service.store_file();
+		
+		
+		PrintWriter out = res.getWriter();
+		Gson gson = new Gson();
+		String data = gson.toJson(file);
+		out.println(data);
+		
+	}
+	
+	
+	
+	@ResponseBody
 	@RequestMapping("/anSelectDetail")
 	//@RequestMapping(value ="anSelectDetail", method = {RequestMethod.GET, RequestMethod.POST})
 	public void anSelectDetail(HttpServletRequest req, HttpServletResponse res) throws IOException {

@@ -18,5 +18,7 @@ public interface StoreService {
 	
 	int store_file_register(RegisterVO vo);
 	
+	List<Store_FileVO> store_file();
+	
 	
 }

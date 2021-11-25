@@ -25,21 +25,21 @@ public class ReviewController {
 	@RequestMapping(value="/review", method = {RequestMethod.GET, RequestMethod.POST})
 	public int review(HttpServletRequest req, Model model) {
 		
-		// 1. ¾Èµå·ÎÀÌµå¿¡¼­ º¸³½ µ¥ÀÌÅÍ¸¦ req·Î ¹Þ¾Æ¼­ º¯¼ö¿¡ ÀúÀå
+		// 1. ï¿½Èµï¿½ï¿½ï¿½Ìµå¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ reqï¿½ï¿½ ï¿½Þ¾Æ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		String score = req.getParameter("rating");
 		String title = req.getParameter("reviewTitle");
 		String content = req.getParameter("reviewContent");
 		String email = req.getParameter("email");
 		
 //		String score = "3.0";
-//		String title = "¸®ºäÁ¦¸ñ1";
-//		String content = "¸®ºä³»¿ë1";
+//		String title = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1";
+//		String content = "ï¿½ï¿½ï¿½ä³»ï¿½ï¿½1";
 		
 		ReviewVO vo = new ReviewVO();
 		
 		
-		// 3. ¾Èµå·ÎÀÌµå¿¡¼­ º¸³½ ÆÄÀÏ ¹Þ±â : ÆÄÀÏÀ» º¸³½ °æ¿ì¿¡¸¸ ½ÇÇà
-		// ÆÄÀÏÀÌ¸§¸¸ ÀúÀåÇØ ³õ°í ¾Èµå·ÎÀÌµå¿¡¼­ ¹Þ¾Æ¼­ ÀüÃ¼ °æ·Î¸¦ ¿Ï¼ºÇÑ´Ù
+		// 3. ï¿½Èµï¿½ï¿½ï¿½Ìµå¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½ : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½ï¿½ï¿½Ìµå¿¡ï¿½ï¿½ ï¿½Þ¾Æ¼ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½Î¸ï¿½ ï¿½Ï¼ï¿½ï¿½Ñ´ï¿½
 		String fileName = "";
 		
 		MultipartRequest multi = (MultipartRequest)req;
@@ -56,7 +56,7 @@ public class ReviewController {
 				System.out.println("realpath : " + realImgPath);
 				System.out.println("fileSize : " + file.getSize());
 				
-				// ÀÌ¹ÌÁö ÆÄÀÏÀ» ¼­¹ö¿¡ ÀúÀå
+				// ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				try {
 					file.transferTo(new File(realImgPath, fileName));
 				} catch (Exception e) {
@@ -82,6 +82,27 @@ public class ReviewController {
 	@RequestMapping(value="/selectReview", method = {RequestMethod.GET, RequestMethod.POST})
 	public ReviewVO reviewSelect(int review_id) {
 		return service.review_select(review_id);
+	}
+	
+
+	@ResponseBody
+	@RequestMapping("/anSelectReview")
+	public void anSelectReview(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		res.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html");
+		req.setCharacterEncoding("UTF-8");
+	   
+		
+		List<ReviewVO> list = service.review_list(req.getParameter("customer_email"));
+		
+		
+		PrintWriter out = res.getWriter();
+		Gson gson = new Gson();
+		String data = gson.toJson(list);
+		out.println(data);
+		
+
+		
 	}
 	
 }

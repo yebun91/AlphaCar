@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ReviewDAO implements ReviewService {
-	@Autowired SqlSession sql;
+	@Autowired private SqlSession sql;
 	
-	// µ¥ÀÌÅÍ º£ÀÌ½º¿Í ¿¬µ¿ : µ¥ÀÌÅÍº£ÀÌ½º ÃÊ±âÈ­ ÇØÁÜ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½ï¿½
 	DataSource dataSource;
 	
 	@Override
@@ -25,6 +25,13 @@ public class ReviewDAO implements ReviewService {
 	@Override
 	public ReviewVO review_select(int review_id) {
 		return (ReviewVO) sql.selectList("review.mapper.select", review_id);
+	}
+	
+
+	@Override
+	public List<ReviewVO> review_list(String customer_email) {
+		// TODO Auto-generated method stub
+		return sql.selectList("review.mapper.list", customer_email);
 	}
 	
 

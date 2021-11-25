@@ -5,6 +5,15 @@
 
 <mapper namespace="store.mapper">
 
+	<select id="file" resultType="store.Store_FileVO">
+		select s.*, f.*
+		from store s left
+		outer join store_file f on s.store_number = f.store_number
+		where f.rank
+		= 1
+	</select>
+	
+
 	<select id="list" resultType="store.StoreVO">
 		select * from store
 	</select>

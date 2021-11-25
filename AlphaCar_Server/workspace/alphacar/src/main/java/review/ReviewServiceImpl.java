@@ -16,5 +16,12 @@ public class ReviewServiceImpl implements ReviewService {
 	public ReviewVO review_select(int review_id) {
 		return dao.review_select(review_id);
 	}
+	
+	
+	@Override
+	public List<ReviewVO> review_list(String customer_email) {
+		// TODO Auto-generated method stub
+		return dao.review_list(customer_email);
+	}
 
 }

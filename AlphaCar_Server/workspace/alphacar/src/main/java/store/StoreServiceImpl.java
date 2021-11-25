@@ -53,6 +53,13 @@ public class StoreServiceImpl implements StoreService{
 		// TODO Auto-generated method stub
 		return dao.store_file_register(vo);
 	}
+	
+	@Override
+	public List<Store_FileVO> store_file() {
+		
+		return dao.store_file();
+	}
+
 
 
 }
