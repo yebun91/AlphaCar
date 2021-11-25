@@ -279,7 +279,6 @@ footer{
   margin-right: 25px;
   font-size: var(--font-regular);
   font-weight: var(--weight-semi-bold);
-  cursor: pointer;
 }
 .page_search{
   display: flex;
