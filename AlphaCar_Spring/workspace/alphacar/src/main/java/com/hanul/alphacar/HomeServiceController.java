@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -34,24 +35,28 @@ public class HomeServiceController {
 	@Autowired private BestQnaServiceImpl service;
 	@Autowired private CommonService common;
 	
-	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json")
+	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
-	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
-		
+	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
 		JsonObject jsonObject = new JsonObject();
 		
-		String fileRoot = "C:\\summernote_image\\";	//저장될 외부 파일 경로
+        /*
+		 * String fileRoot = "C:\\summernote_image\\"; // 외부경로로 저장을 희망할때.
+		 */
+		
+		// 내부경로로 저장
+		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
+		String fileRoot = contextRoot+"resources/img/fileupload/";
+		
 		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-				
 		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
 		
 		File targetFile = new File(fileRoot + savedFileName);	
-		
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-			jsonObject.addProperty("url", "/summernoteImage/"+savedFileName);
+			jsonObject.addProperty("url", "resources/img/fileupload/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
 			jsonObject.addProperty("responseCode", "success");
 				
 		} catch (IOException e) {
@@ -59,9 +64,43 @@ public class HomeServiceController {
 			jsonObject.addProperty("responseCode", "error");
 			e.printStackTrace();
 		}
-		
-		return jsonObject;
+		String a = jsonObject.toString();
+		return a;
 	}
+	
+//	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json")
+//	@ResponseBody
+//	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, BestQnaVO vo) {
+//		
+//		JsonObject jsonObject = new JsonObject();
+//		
+//		String fileRoot = "C:\\summernote_image\\";	//저장될 외부 파일 경로
+//		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+//		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+//				
+//		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+//		
+//		File targetFile = new File(fileRoot + savedFileName);	
+//		
+//		try {
+//			InputStream fileStream = multipartFile.getInputStream();
+//			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
+//			jsonObject.addProperty("url", "/summernoteImage/"+savedFileName);
+//			jsonObject.addProperty("responseCode", "success");
+//			if ( ! multipartFile.isEmpty() ) {// 파일이 있는 경우
+//				// 파일 첨부 처리 부분
+//				vo.setBest_qna_filename(savedFileName);
+//				vo.setBest_qna_filepath(targetFile+"");
+//			}
+//				
+//		} catch (IOException e) {
+//			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
+//			jsonObject.addProperty("responseCode", "error");
+//			e.printStackTrace();
+//		}
+//		
+//		return jsonObject;
+//	}
 	//faq 리스트로 가기
 	@RequestMapping("/list.se")
 	
@@ -119,7 +158,15 @@ public class HomeServiceController {
 	}
 	
 	@RequestMapping("/detail.se")
-	public String detail(HttpSession session, Model model) {
+	public String detail(int id, Model model) {
+		// 클릭시 조회수 증가
+		service.faq_read(id);
+		
+		model.addAttribute("vo", service.faq_detail(id));
+		model.addAttribute("crlf", "\r\n");
+		//model.addAttribute("page", page);
+				
+		
 		return "service/detail";
 	}
 	

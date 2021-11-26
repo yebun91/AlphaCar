@@ -14,7 +14,9 @@
   <main>
     <div id="page">
       <div class="detail">
-	    	
+	    	<p>
+					${vo.best_qna_content }
+				</p>
 		  </div>
 		  <div class="page_write_button">
 			<button type="button" onclick="location.href='list.se'">목록으로</button>

@@ -49,6 +49,22 @@
    			</if>
 		</if>
 	</sql>
+	
+	<!-- 글 자세히보기 -->
+	<select id="homeBestQnaDetail" resultType="homeBestQna.BestQnaVO">
+		select * 
+		from (select w.*, c.customer_name 
+			  from web_best_qna w, customer c
+			  where w.customer_email = c.customer_email)
+		where best_qna_id = #{id}
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="homeBestQnaRead">
+		update web_best_qna
+		set best_qna_readcnt = best_qna_readcnt +1
+		where best_qna_id = #{id}	
+	</update>
 		
 	
 	<!-- 전체 공지글 수 조회 -->

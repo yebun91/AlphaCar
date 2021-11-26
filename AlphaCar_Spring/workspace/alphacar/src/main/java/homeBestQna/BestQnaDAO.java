@@ -40,7 +40,7 @@ public class BestQnaDAO implements BestQnaService {
 	@Override
 	public BestQnaVO faq_detail(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return sql.selectOne("homeBestQna.mapper.homeBestQnaDetail", id);
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class BestQnaDAO implements BestQnaService {
 
 	@Override
 	public void faq_read(int id) {
-		// TODO Auto-generated method stub
+		sql.update("homeBestQna.mapper.homeBestQnaRead", id);
 		
 	}
 

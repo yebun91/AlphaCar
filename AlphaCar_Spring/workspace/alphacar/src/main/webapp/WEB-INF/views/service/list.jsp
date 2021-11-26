@@ -52,7 +52,7 @@
       	<c:forEach items="${list}" var="vo">
       		<div class="page_list_content">
 	          <div class="page_list_content_title">
-	            <a href='detail.no?id=${vo.best_qna_id }'>
+	            <a href='detail.se?id=${vo.best_qna_id }'>
 	              <c:if test="${vo.best_qna_attribute eq 'C'}">
 	              	<p>[고객]</p>
 	              </c:if>
