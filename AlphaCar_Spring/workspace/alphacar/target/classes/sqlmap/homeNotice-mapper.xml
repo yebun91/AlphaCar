@@ -76,6 +76,12 @@
 	<insert id="homeNoticeInsert">
 		insert into web_notice (notice_id, customer_email , notice_title, notice_content, notice_attribute)
 		values (SEQ_WEB_NOTICE.nextval, #{customer_email}, #{notice_title}, #{notice_content}, #{notice_attribute})
-		
 	</insert>
+	<!-- 글 수정 -->
+	<update id="homeNoticeUpdate">
+		update web_notice set notice_title=#{notice_title}, notice_content=#{notice_content}
+				, notice_attribute = #{notice_attribute}
+		where notice_id = #{notice_id}
+	</update>
+	
 </mapper>

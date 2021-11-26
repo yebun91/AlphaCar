@@ -39,7 +39,7 @@ public class HomeNoticeServiceImpl implements HomeNoticeService {
 
 	@Override
 	public void notice_update(HomeNoticeVO vo) {
-		// TODO Auto-generated method stub
+		dao.notice_update(vo);
 		
 	}
 

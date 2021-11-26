@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
   <div class="main_image">
     <a href="">
       <img src="img/main_image.jpg" alt="">
@@ -35,34 +36,30 @@
   </div>
   <div id="notice">
     <h1>공지사항</h1>
-      <a href="">
+      <a href="list.no">
       	<div class="notice_image">
           <img src="img/main_image.jpg" alt="main image">
           <h2>공지사항 전체보기</h2>
       	</div>
       </a>
       <div class="notice_contents">
-        <a>
-          <div class="notice_content">
-            <h3>[공지]</h3>
-            <h3>좌표로 주소 변환하기 api어쩌고</h3>
-            <p>2021.11.17</p>
-          </div>
-        </a>
-        <a>
-          <div class="notice_content">
-            <h3>[공지]</h3>
-            <h3>좌표로 주소 변환하기 api어쩌고</h3>
-            <p>2021.11.17</p>
-          </div>
-        </a>
-        <a>
-          <div class="notice_content">
-            <h3>[공지]</h3>
-            <h3>좌표로 주소 변환하기 api어쩌고</h3>
-            <p>2021.11.17</p>
-          </div>
-        </a>
+      	<c:forEach items="${page.list}" var="vo" begin="0" end="2">
+			<a href='detail.no?id=${vo.notice_id }'>
+	          <div class="notice_content">
+	            <c:if test="${vo.notice_attribute eq 'N'}">
+	              <h3>[공지]</h3>
+	            </c:if>
+	            <c:if test="${vo.notice_attribute eq 'A'}">
+	              <h3>[알파카]</h3>
+	            </c:if>
+	            <c:if test="${vo.notice_attribute eq 'M'}">
+	              <h3>[점검]</h3>
+	            </c:if>
+	            <h3>${vo.notice_title}</h3>
+	            <p>${vo.notice_writedate}</p>
+	          </div>
+        	</a>
+		</c:forEach>
       </div>
   </div>
   <div id="news">

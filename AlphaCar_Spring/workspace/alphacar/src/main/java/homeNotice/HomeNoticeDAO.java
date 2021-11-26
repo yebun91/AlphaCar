@@ -46,8 +46,7 @@ public class HomeNoticeDAO implements HomeNoticeService {
 
 	@Override
 	public void notice_update(HomeNoticeVO vo) {
-		// TODO Auto-generated method stub
-		
+		sql.update("homeNotice.mapper.homeNoticeUpdate", vo);
 	}
 
 	@Override
