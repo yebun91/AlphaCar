@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="mypage_image">
     </div>
     <div class="mypage_select">
@@ -46,18 +47,31 @@
           <h3>조회수</h3>
           <h3>활동</h3>
         </div>
-        <div class="page_list_box">
-          <div class="page_list_content">
-            <div class="page_list_content_title">
-              <a href="detail.no">
-                <p>[고객정보]</p>
-                <p>제 고객정보가 이상하게뜨는데 이게 뭘까요</p>
-              </a>
-            </div>
-            <p></p>
-            <p>1</p>
-            <p>18분</p>
-          </div>  
+       <div class="page_list_box">
+      	<c:forEach items="${list}" var="vo">
+      		<div class="page_list_content">
+	          <div class="page_list_content_title">
+	            <a href='detail.no?id=${vo.qna_id }'>
+	              <c:if test="${vo.qna_attribute eq 'C'}">
+	              	<p>[고객]</p>
+	              </c:if>
+	              <c:if test="${vo.qna_attribute eq 'S'}">
+	              	<p>[가게]</p>
+	              </c:if>
+	              <c:if test="${vo.qna_attribute eq 'M'}">
+	              	<p>[모바일/홈페이지]</p>
+	              </c:if>
+	              <c:if test="${vo.qna_attribute eq 'A'}">
+	              	<p>[알파카]</p>
+	              </c:if>
+	              <p>${vo.qna_title}</p>
+	            </a>
+	          </div>
+	          <p>${vo.customer_name}</p>
+	          <p>${vo.qna_readcnt}</p>
+	        </div>
+				</c:forEach> 
+	     </div>  
           <div class="page_list_content">
             <div class="page_list_content_title">
               <a href="">
