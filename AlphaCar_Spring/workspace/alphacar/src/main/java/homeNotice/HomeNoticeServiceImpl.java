@@ -21,11 +21,6 @@ public class HomeNoticeServiceImpl implements HomeNoticeService {
 		return dao.notice_list(page);
 	}
 
-	@Override
-	public void notice_reply_insert(HomeNoticeVO vo) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public List<HomeNoticeVO> notice_list() {
@@ -52,6 +47,29 @@ public class HomeNoticeServiceImpl implements HomeNoticeService {
 	@Override
 	public void notice_read(int id) {
 		dao.notice_read(id);
+	}
+
+	@Override
+	public int board_comment_insert(HomeNoticeCommentVO vo) {
+		return dao.board_comment_insert(vo);
+	}
+
+	@Override
+	public int board_comment_update(HomeNoticeCommentVO vo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int board_comment_delete(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<HomeNoticeCommentVO> board_comment_list(int pid) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

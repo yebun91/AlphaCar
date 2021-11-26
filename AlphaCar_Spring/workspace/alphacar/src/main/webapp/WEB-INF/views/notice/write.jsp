@@ -27,7 +27,6 @@
 			</div>
 			<div class="page_write_space">
 				<textarea id="summernote" name="notice_content" cols="100" >
-				
 				</textarea>
 			</div>
 			<div class="page_write_button">

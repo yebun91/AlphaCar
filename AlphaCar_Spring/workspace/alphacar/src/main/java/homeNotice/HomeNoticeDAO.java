@@ -29,12 +29,6 @@ public class HomeNoticeDAO implements HomeNoticeService {
 	}
 
 	@Override
-	public void notice_reply_insert(HomeNoticeVO vo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public List<HomeNoticeVO> notice_list() {
 		return sql.selectList("homeNotice.mapper.homeNoticeList");
 	}
@@ -58,6 +52,28 @@ public class HomeNoticeDAO implements HomeNoticeService {
 	@Override
 	public void notice_read(int id) {
 		sql.update("homeNotice.mapper.homeNoticeRead", id);
+	}
+
+	@Override
+	public int board_comment_insert(HomeNoticeCommentVO vo) {
+		return sql.insert("homeNotice.mapper.commentInsert", vo);
+	}
+
+	@Override
+	public int board_comment_update(HomeNoticeCommentVO vo) {
+		return 0;
+	}
+
+	@Override
+	public int board_comment_delete(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<HomeNoticeCommentVO> board_comment_list(int pid) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

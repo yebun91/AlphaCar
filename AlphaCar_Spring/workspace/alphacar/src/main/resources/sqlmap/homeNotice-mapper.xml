@@ -84,4 +84,10 @@
 		where notice_id = #{notice_id}
 	</update>
 	
+	<!-- 댓글 입력 -->
+	<insert id="commentInsert">
+		insert into web_notice_coment (NOTICE_COMENT_ID, NOTICE_ID, CUSTOMER_EMAIL, COMENT_CONTENT)
+		values ( SEQ_WEB_NOTICE_COMENT.nextval, #{NOTICE_ID}, #{CUSTOMER_EMAIL}, #{COMENT_CONTENT})
+	</insert>
+	
 </mapper>

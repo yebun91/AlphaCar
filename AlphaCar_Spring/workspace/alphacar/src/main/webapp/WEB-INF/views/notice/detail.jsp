@@ -21,6 +21,18 @@
 			${vo.notice_content }
 		</p>
 	  </div>
+	  
+	   <!-- 댓글 입력 -->
+	  <div class='comment'>
+	  	<div id='comment_list'>
+	  	</div>
+		<div id='comment_regist'> 
+			<textarea id="summernote" name="coment_content"></textarea>	
+			<button onclick="comment_regist()" class="comment_insert">댓글작성</button>
+
+		</div>
+	  </div>
+	  
 	  <div class="page_write_button">
 		<button type="button" onclick="location.href='list.no'">목록으로</button>
 		<c:if test="${loginInfo.customer_email eq vo.customer_email}">
@@ -34,3 +46,73 @@
 	  </div>
     </div>
   </main>
+ <!-- 서머노트를 위해 추가해야할 부분 -->
+ <script src="resources/js/summernote-lite.js"></script>
+ <script src="resources/js/lang/summernote-ko-KR.js"></script>
+ <link rel="stylesheet" href="resources/css/summernote-lite.css">
+ <script>
+ 	//서머노트
+	$('#summernote').summernote({
+	      height: 150,
+	      lang: "ko-KR",
+	      toolbar: [
+	           // [groupName, [list of button]]
+	           ['fontname', ['fontname']],
+	           ['fontsize', ['fontsize']],
+	           ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+	           ['color', ['forecolor','color']],
+	           ['para', ['ul', 'ol', 'paragraph']],
+	           ['height', ['height']],
+		       // 그림첨부, 링크만들기, 동영상첨부
+		 		   ['insert',['picture','link']],
+	           ['view', ['help']]
+	         ],
+	       fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+	       fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+	    });
+	
+	
+	//코맨트 버튼 눌렀을 때 처리
+	function comment_regist() {
+		if ( ${ empty loginInfo}) { 	
+			//로그인 안했을 경우
+			alert ('댓글을 등록하려면 로그인하세요!');
+			return;
+		} else if ( $.trim( $('#summernote').val() ) == ''  ) { 
+			//내용 없이 등록하기를 눌렀을 경우
+			alert ('댓글을 입력하세요!');
+			$('#summernote').val('');
+			$('#summernote').focus();
+			return;
+		}
+		$.ajax ({
+			//경로 형태로 url 지정
+			url : "board/comment/regist"
+			, data : { notice_id:${vo.notice_id} , content:$('#summernote').val()  }
+			, success : function ( response ) {
+				if ( response ) {	// true == true T, false == true F
+					alert ('댓글이 등록되었습니다.');
+					$('#comment').val('');
+					comment_list();		// 댓글 목록 조회 요청 함수
+				} else 
+					alert('댓글 등록이 실패하였습니다.');
+			}, error : function (req, text) {
+				alert(text + ":" + req.status);
+			}
+			
+		});
+		
+	}
+	
+	function comment_list() {
+		$.ajax({
+			url: 'board/comment/list/${vo.notice_id}'
+			, success: function ( response ) {
+				$('#comment_list').html( response );
+			}, error: function (req, text) {
+				alert (text + ":" + req.status);
+			}	
+		})
+	}
+	comment_list();
+  </script>

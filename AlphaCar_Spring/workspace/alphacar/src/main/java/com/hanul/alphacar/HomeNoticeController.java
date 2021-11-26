@@ -7,10 +7,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import common.CommonService;
+import homeNotice.HomeNoticeCommentVO;
 import homeNotice.HomeNoticePage;
 import homeNotice.HomeNoticeServiceImpl;
 import homeNotice.HomeNoticeVO;
@@ -66,7 +69,7 @@ public class HomeNoticeController {
 	// 공지사항 상세화면 요청
 	@RequestMapping("/detail.no")
 	public String detail(int id, Model model) {
-		/* 클릭시 조회수 증가 */
+		// 클릭시 조회수 증가
 		service.notice_read(id);
 		
 		model.addAttribute("vo", service.notice_detail(id));
@@ -83,7 +86,7 @@ public class HomeNoticeController {
 		return "notice/update";
 	}
 	
-	/// 공지글 수정 저장 처리 요청
+	// 공지글 수정 저장 처리 요청
 	@RequestMapping ("/update_work.no")
 	public String update_work(HomeNoticeVO vo, HttpSession session, String attach) {
 		service.notice_update(vo);		
@@ -95,5 +98,26 @@ public class HomeNoticeController {
 	public String delete(HttpSession session, Model model, int id) {
 		service.notice_delete(id);
 		return "redirect:list.no";
+	}
+	
+	// 방명록 글에 대한 댓글 목록조회 요청
+	@RequestMapping ("/board/comment/list/{notice_id}")
+	public String comment_list(@PathVariable int notice_id, Model model) {
+		// 해당 글에 대한 댓글들을 DB에서 조회한다.
+		model.addAttribute("list", service.board_comment_list(notice_id) );
+		model.addAttribute("crlf", "\r\n");
+		model.addAttribute("lf", "\n");
+		return "notice/comment/comment_list";
+	}
+		
+	//방명록 글에 대한 댓글 저장처리 요청
+	@ResponseBody
+	@RequestMapping ("/board/comment/regist")
+	public boolean comment_regist(HomeNoticeCommentVO vo, HttpSession session) {
+		//작성자의 경우 member의 id 값을 담아야 하므로 로그인 정보 확인
+		WebMemberVO member = (WebMemberVO) session.getAttribute("loginInfo");
+		vo.setCustomer_email(member.getCustomer_email());
+		return service.board_comment_insert(vo) == 1 ? true : false;
+		//반환 결과가 1이면 true 아니면 false
 	}
 }
