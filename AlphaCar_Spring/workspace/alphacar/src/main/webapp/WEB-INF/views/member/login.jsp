@@ -5,12 +5,12 @@
       <div class="text_logo">
         <img src="img/alphacarLogo_text_black_500px.png" alt="alphaCar">
       </div>
-      <form action="" class="form">
+      <form class="form" method="post" action="">
         <input type="text" placeholder="이메일" class="customer_email" id="customer_email" />
         <input type="password" placeholder="비밀번호" class="customer_pw" id="customer_pw"
         				onkeypress = "if (event.keyCode == 13) go_login()" />
         <label><input type="checkbox" name="alwaysLogin" value="" class="login_always">로그인 항상 유지</label>
-        <button onclick="go_login()">로그인</button>
+        <button type="button" onclick="go_login()">로그인</button>
       </form>
       <div class="login_page_bottom_button">
         <button type="button" onclick="location.href='searchPw'">비밀번호 찾기</button>
