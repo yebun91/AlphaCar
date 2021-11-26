@@ -74,6 +74,19 @@ public class FavoriteController {
 		res.setContentType("text/html");
 		req.setCharacterEncoding("UTF-8");
 		
+		String customer_email = req.getParameter("customer_email");
+		int store_number =Integer.parseInt(req.getParameter("store_number"));
+		
+		System.out.println(customer_email);
+		System.out.println(store_number);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("customer_email", customer_email);
+		map.put("store_number", store_number);
+		
+		System.out.println(map);
+	
+		service.favorite_insert(map);
 		
 	//	FavoriteVO vo = new FavoriteVO(req.getParameter("customer_email"), req.getParameter("Stroe_number"));
 		

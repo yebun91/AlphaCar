@@ -24,15 +24,15 @@ public class StoreDAO implements StoreService{
 //	}
 
 	@Override
-	public StoreVO store_detail(String customer_email) {
+	public List<StoreVO> store_detail(int store_number) {
 		// TODO Auto-generated method stub
-		return sql.selectOne("store.mapper.detail", customer_email);
+		return sql.selectList("store.mapper.detail", store_number);
 	}
 
 	@Override
-	public List<StoreVO> store_state(String customer_email) {
+	public List<StoreVO> store_state(int store_number) {
 		// TODO Auto-generated method stub
-		return sql.selectList("store.mapper.allList", customer_email);
+		return sql.selectList("store.mapper.allList",store_number);
 	}
 	
 

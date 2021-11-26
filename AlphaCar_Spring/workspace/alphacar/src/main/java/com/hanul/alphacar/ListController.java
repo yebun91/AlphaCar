@@ -95,6 +95,7 @@ public class ListController {
 					System.out.println("realpath : " + realImgPath);
 					System.out.println("fileSize : " + file.get(i).getSize());
 					
+					// 이미지 파일을 서버에 저장
 					try {
 						file.get(i).transferTo(new File(realImgPath, fileName));
 					} catch (Exception e) {
@@ -136,12 +137,13 @@ public class ListController {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");
 		req.setCharacterEncoding("UTF-8");
-		String param = req.getParameter("customer_email");
-		System.out.println(param);
+		int store_number = Integer.parseInt(req.getParameter("store_number"));
+		//String param = req.getParameter("customer_email");
+		//System.out.println(param);
+		System.out.println(store_number);
 		
-		List<StoreVO> list = service.store_state(param);
+		List<StoreVO> list = service.store_state(store_number);
 		
-		System.out.println(list.size());
 		
 		
 		PrintWriter out = res.getWriter();
@@ -179,8 +181,8 @@ public class ListController {
 		res.setContentType("text/html");
 		req.setCharacterEncoding("UTF-8");
 		System.out.println(req.getParameter("customer_email"));
-		
-		StoreVO vo = service.store_detail(req.getParameter("customer_email"));
+		int store_number = Integer.parseInt(req.getParameter("store_number"));
+		List<StoreVO> vo = service.store_detail(store_number);
 		
 		
 		PrintWriter out = res.getWriter();

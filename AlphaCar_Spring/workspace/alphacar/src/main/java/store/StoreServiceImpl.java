@@ -24,15 +24,15 @@ public class StoreServiceImpl implements StoreService{
 //	
 	
 	@Override
-	public StoreVO store_detail(String customer_email) {
+	public List<StoreVO> store_detail(int store_number) {
 		// TODO Auto-generated method stub
-		return dao.store_detail(customer_email);
+		return dao.store_detail(store_number);
 	}
 
 	@Override
-	public List<StoreVO> store_state(String customer_email) {
+	public List<StoreVO> store_state(int store_number) {
 		// TODO Auto-generated method stub
-		return dao.store_state(customer_email);
+		return dao.store_state(store_number);
 	}
 
 

@@ -7,10 +7,10 @@ public interface StoreService {
 
 	List<StoreVO> store_list(); //전체 가게 정보 조회
 	
-	StoreVO store_detail(String customer_email); //가게 하나의 세부정보 조회
-	//StoreVO store_detail(int store_number); 
+//	StoreVO store_detail(int store_number); //가게 하나의 세부정보 조회
+	List<StoreVO> store_detail(int store_number); 
 	
-	List<StoreVO> store_state(String customer_email); //가게 하나의 세부정보와 상태 조회
+	List<StoreVO> store_state(int store_number); //가게 하나의 세부정보와 상태 조회
 	
 	int store_register(RegisterVO vo); //가게 등록
 	

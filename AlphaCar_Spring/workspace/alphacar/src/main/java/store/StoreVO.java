@@ -21,8 +21,15 @@ public class StoreVO {
 	private String now_state        ;
 	private Date create_date      ;
 	private Date change_date      ;
+	private String imgpath ;
 	
 	
+	public String getImgpath() {
+		return imgpath;
+	}
+	public void setImgpath(String imgpath) {
+		this.imgpath = imgpath;
+	}
 	public int getInventory_number() {
 		return inventory_number;
 	}
