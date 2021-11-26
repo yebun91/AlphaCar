@@ -62,14 +62,12 @@ public class HomeNoticeServiceImpl implements HomeNoticeService {
 
 	@Override
 	public int board_comment_delete(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.board_comment_delete(id);
 	}
 
 	@Override
-	public List<HomeNoticeCommentVO> board_comment_list(int pid) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<HomeNoticeCommentVO> board_comment_list(int notice_id) {
+		return dao.board_comment_list(notice_id);
 	}
 	
 	

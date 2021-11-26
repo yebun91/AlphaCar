@@ -66,14 +66,12 @@ public class HomeNoticeDAO implements HomeNoticeService {
 
 	@Override
 	public int board_comment_delete(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sql.delete("homeNotice.mapper.commentDelete", id);
 	}
 
 	@Override
-	public List<HomeNoticeCommentVO> board_comment_list(int pid) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<HomeNoticeCommentVO> board_comment_list(int notice_id) {
+		return sql.selectList("homeNotice.mapper.commentList", notice_id);
 	}
 	
 	

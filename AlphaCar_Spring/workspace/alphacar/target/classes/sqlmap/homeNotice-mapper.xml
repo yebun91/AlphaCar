@@ -87,7 +87,19 @@
 	<!-- 댓글 입력 -->
 	<insert id="commentInsert">
 		insert into web_notice_coment (NOTICE_COMENT_ID, NOTICE_ID, CUSTOMER_EMAIL, COMENT_CONTENT)
-		values ( SEQ_WEB_NOTICE_COMENT.nextval, #{NOTICE_ID}, #{CUSTOMER_EMAIL}, #{COMENT_CONTENT})
+		values ( SEQ_WEB_NOTICE_COMENT.nextval, #{notice_id}, #{customer_email}, #{coment_content})
 	</insert>
 	
+	<!-- 댓글 목록 조회 -->
+	<select id="commentList" resultType="homeNotice.HomeNoticeCommentVO">
+		select c.*, (select customer_name from customer where customer_email = c.customer_email) customer_name
+		from web_notice_coment c
+		where notice_id = #{notice_id}
+		order by coment_writedate
+	</select>
+	<!-- 댓글 삭제 -->
+	<delete id="commentDelete">
+		delete from web_notice_coment
+		where notice_coment_id = #{id}	
+	</delete>
 </mapper>

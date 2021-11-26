@@ -256,9 +256,12 @@ footer{
 
 
 /* -------------page-------------- */
+
 #page {
   margin: auto;
-  width: 1200px;
+  width: 100%;
+  max-width:1200px;
+  min-width: 750px;
   padding-top: 100px;
 }
 #page>h1{
@@ -862,9 +865,45 @@ input[type="checkbox"]:checked, input[type="radio"]:checked{
 }
 
 /* 댓글기능 */
+.comment{
+	width: 100%
+}
+
 .comment_insert{
 	padding-top:20px;
 	font-size: var(--font-regular);
 	font-weight: var(--weight-semi-bold);
 	float: right;
 }
+#comment_list{
+	padding-bottom: 10px;
+}
+.comment_detail{
+	padding: 10px 0;
+	border-bottom: 1px solid var(--gray-color);
+}
+.comment_name>p{
+	display: inline;	
+}
+.comment_name{
+	display: inline;	
+}
+.comment_date{
+	font-size: var(--font-micro);
+}
+.comment_write_name{
+	font-weight: var(--weight-semi-bold);
+}
+.comment_content{
+	padding-top:10px;
+}
+.comment_setting{
+	color: var(--gray-color);
+}
+
+
+
+
+
+
+

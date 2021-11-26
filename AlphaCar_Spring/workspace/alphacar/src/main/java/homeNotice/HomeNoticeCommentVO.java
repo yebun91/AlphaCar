@@ -3,9 +3,16 @@ package homeNotice;
 public class HomeNoticeCommentVO {
 
 	private int notice_coment_id, notice_id;
-	private String customer_email, coment_content, coment_writedate;
+	private String customer_name, customer_email, coment_content, coment_writedate;
 	
 	
+	
+	public String getCustomer_name() {
+		return customer_name;
+	}
+	public void setCustomer_name(String customer_name) {
+		this.customer_name = customer_name;
+	}
 	public int getNotice_coment_id() {
 		return notice_coment_id;
 	}

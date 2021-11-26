@@ -25,14 +25,13 @@
 	   <!-- 댓글 입력 -->
 	  <div class='comment'>
 	  	<div id='comment_list'>
+
 	  	</div>
 		<div id='comment_regist'> 
 			<textarea id="summernote" name="coment_content"></textarea>	
 			<button onclick="comment_regist()" class="comment_insert">댓글작성</button>
-
 		</div>
 	  </div>
-	  
 	  <div class="page_write_button">
 		<button type="button" onclick="location.href='list.no'">목록으로</button>
 		<c:if test="${loginInfo.customer_email eq vo.customer_email}">
@@ -64,14 +63,14 @@
 	           ['para', ['ul', 'ol', 'paragraph']],
 	           ['height', ['height']],
 		       // 그림첨부, 링크만들기, 동영상첨부
-		 		   ['insert',['picture','link']],
+		 		   ['insert',['picture']],
 	           ['view', ['help']]
 	         ],
 	       fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 	       fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
 	    });
 	
-	
+	comment_list();
 	//코맨트 버튼 눌렀을 때 처리
 	function comment_regist() {
 		if ( ${ empty loginInfo}) { 	
@@ -88,11 +87,11 @@
 		$.ajax ({
 			//경로 형태로 url 지정
 			url : "board/comment/regist"
-			, data : { notice_id:${vo.notice_id} , content:$('#summernote').val()  }
+			, data : { notice_id:${vo.notice_id} , coment_content:$('#summernote').val()  }
 			, success : function ( response ) {
 				if ( response ) {	// true == true T, false == true F
 					alert ('댓글이 등록되었습니다.');
-					$('#comment').val('');
+					$('#summernote').val('');
 					comment_list();		// 댓글 목록 조회 요청 함수
 				} else 
 					alert('댓글 등록이 실패하였습니다.');
@@ -114,5 +113,5 @@
 			}	
 		})
 	}
-	comment_list();
+	
   </script>

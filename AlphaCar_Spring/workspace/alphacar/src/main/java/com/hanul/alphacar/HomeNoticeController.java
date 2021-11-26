@@ -1,6 +1,7 @@
 package com.hanul.alphacar;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -100,7 +101,7 @@ public class HomeNoticeController {
 		return "redirect:list.no";
 	}
 	
-	// 방명록 글에 대한 댓글 목록조회 요청
+	//댓글 목록조회 요청
 	@RequestMapping ("/board/comment/list/{notice_id}")
 	public String comment_list(@PathVariable int notice_id, Model model) {
 		// 해당 글에 대한 댓글들을 DB에서 조회한다.
@@ -110,7 +111,7 @@ public class HomeNoticeController {
 		return "notice/comment/comment_list";
 	}
 		
-	//방명록 글에 대한 댓글 저장처리 요청
+	//댓글 저장처리 요청
 	@ResponseBody
 	@RequestMapping ("/board/comment/regist")
 	public boolean comment_regist(HomeNoticeCommentVO vo, HttpSession session) {
@@ -119,5 +120,12 @@ public class HomeNoticeController {
 		vo.setCustomer_email(member.getCustomer_email());
 		return service.board_comment_insert(vo) == 1 ? true : false;
 		//반환 결과가 1이면 true 아니면 false
+	}
+	
+	//댓글 삭제 처리
+	@RequestMapping("/comment_delete.no")
+	public String comment_delete(HttpSession session, Model model, int id, int notice_id) {
+		service.board_comment_delete(id);
+		return "redirect:detail.no?id="+notice_id;
 	}
 }
