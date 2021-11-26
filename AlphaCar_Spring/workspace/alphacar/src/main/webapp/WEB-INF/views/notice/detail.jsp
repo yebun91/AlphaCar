@@ -3,8 +3,12 @@
     <div class="sub_image">
         <img src="img/main_image.jpg" alt="">
     </div>
-	<div class="page_detail_text">
-		<p>[공지] ${vo.notice_title }</p>
+	<div class="page_detail_text"> 
+		<p>
+			<c:if test="${vo.notice_attribute eq 'N'}">[공지]</c:if>
+	        <c:if test="${vo.notice_attribute eq 'A'}">[알파카]</c:if>
+	        <c:if test="${vo.notice_attribute eq 'M'}">[점검]</c:if>
+		${vo.notice_title }</p>
 		<p>${vo.customer_name }</p>
 		<p>${vo.notice_writedate }</p>
 	</div>

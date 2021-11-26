@@ -25,7 +25,7 @@ public class HomeNoticeController {
 	@Autowired private HomeNoticePage page;
 	@Autowired private WebMemberServiceImpl member;
 	
-	/* 공지사항 리스트 */
+	//공지사항 리스트
 	@RequestMapping("/list.no")
 	public String list(HttpSession session, Model model, 
 			@RequestParam (defaultValue = "1") int curPage,
@@ -46,20 +46,20 @@ public class HomeNoticeController {
 		return "notice/list";
 	}
 	
+	//공지사항 작성 화면으로
 	@RequestMapping("/write.no")
 	public String write(HttpSession session, Model model) {
 		return "notice/write";
 	}
 	
+	//공지사항 작성한 글 저장처리
 	@RequestMapping("/insert.no")
 	public String insert(HomeNoticeVO vo, HttpSession session, Model model) {
 		
-		// 로그인 된 사용자의 id를 가져와 글쓴이(writer)에 담기 위한 처리
+		// 로그인 된 사용자의 email을 저장함
 		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
 		
-		// 화면에서 입력한 정보를 DB에 저장한 후 화면으로 연결(출력)
 		service.notice_insert(vo);
-		
 		return "redirect:list.no";
 	}
 	
@@ -76,12 +76,20 @@ public class HomeNoticeController {
 		return "notice/detail";
 	}
 	
+	//공지글 수정 화면으로
 	@RequestMapping("/update.no")
-	public String update(HttpSession session, Model model) {
-		
+	public String update(HttpSession session, Model model, int id) {
+		model.addAttribute("vo", service.notice_detail(id));
 		return "notice/update";
 	}
 	
+	/// 공지글 수정 저장 처리 요청
+	@RequestMapping ("/update_work.no")
+	public String update_work(HomeNoticeVO vo, HttpSession session, String attach) {
+		service.notice_update(vo);		
+		return "redirect:detail.no?id=" + vo.getNotice_id();
+	}
+
 	//공지글 삭제처리
 	@RequestMapping("/delete.no")
 	public String delete(HttpSession session, Model model, int id) {

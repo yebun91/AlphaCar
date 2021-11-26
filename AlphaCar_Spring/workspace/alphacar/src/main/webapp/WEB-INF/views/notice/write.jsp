@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <div class="sub_image">
         <img src="img/main_image.jpg" alt="">
     </div>
@@ -13,13 +12,13 @@
   <main>
     <div id="page">
       <h1>신규글 작성</h1>
-		<form action="insert.no" class="page_write">
+		<form action="insert.no" class="page_write" method="post">
 			<div class="page_write_index">
 				<div class="page_search_index">
-					<select name="notice_search_index" id="notice_search_index">
-						<option value="notice" selected="selected">공지</option>
-						<option value="alphacer_business">알파카비지니스</option>
-						<option value="maintainance">점검</option>
+					<select name="notice_attribute" id="notice_search_index">
+						<option value="N" selected="selected">공지</option>
+						<option value="A">알파카</option>
+						<option value="M">점검</option>
 					</select>
 				</div>
 				<div class="page_write_title">
@@ -27,11 +26,13 @@
 				</div>
 			</div>
 			<div class="page_write_space">
-				<textarea id="summernote" name="notice_content" cols="100" ></textarea>
+				<textarea id="summernote" name="notice_content" cols="100" >
+				
+				</textarea>
 			</div>
 			<div class="page_write_button">
 				<button>작성완료</button>
-				<button type="button">취소</button>
+				<button type="button" onclick="location.href='list.no'" >취소</button>
 			</div>
 		</form>
     </div>
@@ -43,8 +44,7 @@
 
   <script>
 	$('#summernote').summernote({
-	       width: 800,
-	      height: 300,
+	      height: 500,
 	      lang: "ko-KR",
 	      toolbar: [
 	           // [groupName, [list of button]]
