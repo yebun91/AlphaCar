@@ -25,7 +25,6 @@
 	   <!-- 댓글 입력 -->
 	  <div class='comment'>
 	  	<div id='comment_list'>
-
 	  	</div>
 		<div id='comment_regist'> 
 			<textarea id="summernote" name="coment_content"></textarea>	
