@@ -34,7 +34,7 @@ public class HomeServiceController {
 	@Autowired private BestQnaServiceImpl service;
 	@Autowired private CommonService common;
 	
-	@PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
+	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json")
 	@ResponseBody
 	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
 		
@@ -64,6 +64,7 @@ public class HomeServiceController {
 	}
 	//faq 리스트로 가기
 	@RequestMapping("/list.se")
+	
 	public String list(HttpSession session, Model model,
 			//@RequestParam (defaultValue = "1") int curPage,
 			String search, String keyword) {
@@ -76,39 +77,40 @@ public class HomeServiceController {
 	}
 	
 	// 신규 공지사항 저장 처리 요청
-		@RequestMapping ("/insert.se")
-		public String insert (BestQnaVO vo, HttpSession session, MultipartFile file, String notice_search_index) {
-			
+	@RequestMapping ("/insert.se")
+	public String insert (BestQnaVO vo, HttpSession session, MultipartFile file, String notice_search_index) {
+		
 //			MemberVO member = (MemberVO) session.getAttribute("loginInfo");
 //			vo.setWriter(member.getId());
-			
-			// 로그인 된 사용자의 id를 가져와 글쓴이(writer)에 담기 위한 처리
-			vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
-			System.out.println(vo.getCustomer_email());
-			System.out.println(notice_search_index);
-			String index = "";
-			if (notice_search_index.equals("user-info") ) {
-				index = "C";
-			} else if(notice_search_index.equals("store") ) {
-				index = "S";
-			} else if(notice_search_index.equals("app_web") ) {
-				index = "M";
-			} else if(notice_search_index.equals("alphacar") ) {
-				index = "A";
-			}
-			vo.setBest_qna_attribute(index);
-			if ( ! file.isEmpty() ) {// 파일이 있는 경우
-				// 파일 첨부 처리 부분
-				vo.setBest_qna_filename(file.getOriginalFilename());
-				vo.setBest_qna_filepath(common.fileUpload( "notice", file, session ));
-				
-			}
-			
-			
-			// 화면에서 입력한 정보를 DB에 저장한 후 화면으로 연결(출력)
-			service.faq_insert(vo);
-			
-			return "redirect:list.se"; // 리턴 시 공지사항 목록 화면으로 이동 처리
+		
+		// 로그인 된 사용자의 id를 가져와 글쓴이(writer)에 담기 위한 처리
+		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
+		System.out.println(vo.getCustomer_email());
+		System.out.println(notice_search_index);
+		String index = "";
+		if (notice_search_index.equals("user-info") ) {
+			index = "C";
+		} else if(notice_search_index.equals("store") ) {
+			index = "S";
+		} else if(notice_search_index.equals("app_web") ) {
+			index = "M";
+		} else if(notice_search_index.equals("alphacar") ) {
+			index = "A";
+		}
+		vo.setBest_qna_attribute(index);
+		
+		
+//		if ( ! file.isEmpty() ) {// 파일이 있는 경우
+//			// 파일 첨부 처리 부분
+//			vo.setBest_qna_filename(savedFileName);
+//			vo.setBest_qna_filepath(targetFile+"");
+//		}
+		
+		
+		// 화면에서 입력한 정보를 DB에 저장한 후 화면으로 연결(출력)
+		service.faq_insert(vo);
+		
+		return "redirect:list.se"; // 리턴 시 공지사항 목록 화면으로 이동 처리
 		}
 	
 	@RequestMapping("/write.se")
