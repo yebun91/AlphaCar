@@ -18,16 +18,23 @@
 		select * from store
 	</select>
 	
-	<select id="detail" resultType="store.StoreVO">
+<!-- 	<select id="detail" resultType="store.StoreVO">
 			select s.*, (select now_state from state where s.store_number = store_number) now_state 
 			from store s
-			where customer_email = #{customer_email, jdbcType=VARCHAR}
+			where store_number = #{store_number}
+	</select>  -->
+	
+	<select id="detail" resultType="store.StoreVO">
+		select s.*, f.*
+		from store s left
+		outer join store_file f on s.store_number = f.store_number
+			where s.store_number = #{store_number}
 	</select> 
 	
 	<select id="allList" resultType="store.StoreVO"> 
  		select s.* , st.*
 		from store s left outer join state st on s.store_number = st.store_number
-		where customer_email = #{customer_email, jdbcType=VARCHAR}
+		where s.store_number = #{store_number}
 		ORDER BY st.inventory_number
 	</select>
 

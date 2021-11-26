@@ -22,6 +22,7 @@ public class FavoriteInsert extends AsyncTask<Void, Void,Void> {
 
 
     String customer_email = "cc";
+    int store_number = 0;
 
     // 반드시 선언해야 할것들 : 무조건 해야함  복,붙
     HttpClient httpClient;       // 클라이언트 객체
@@ -29,6 +30,10 @@ public class FavoriteInsert extends AsyncTask<Void, Void,Void> {
     HttpResponse httpResponse;   // 서버에서의 응답받는 부분
     HttpEntity httpEntity;       // 응답내용
 
+    public FavoriteInsert(String customer_email, int store_number) {
+        this.customer_email = customer_email;
+        this.store_number = store_number;
+    }
 
     @Override
     protected Void doInBackground(Void... voids) {
@@ -39,7 +44,7 @@ public class FavoriteInsert extends AsyncTask<Void, Void,Void> {
         builder.setCharset(Charset.forName("UTF-8"));
 
         builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
-
+        builder.addTextBody("store_number", String.valueOf(store_number), ContentType.create("Multipart/related", "UTF-8"));
 
         String postURL = ipConfig + "/alphacar/anFavoriteInsert";
 

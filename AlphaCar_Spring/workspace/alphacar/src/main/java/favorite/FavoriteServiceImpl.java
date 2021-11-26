@@ -21,9 +21,9 @@ public class FavoriteServiceImpl implements FavoriteService {
 
 	
 	@Override
-	public int favorite_insert(FavoriteCustomerVO vo) {
+	public int favorite_insert(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return dao.favorite_insert(vo);
+		return dao.favorite_insert(map);
 	}
 
 

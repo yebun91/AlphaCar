@@ -13,7 +13,7 @@ public interface FavoriteService {
 	
 	int favorite_delete(int fav_number); 			
 	
-	int favorite_insert(FavoriteCustomerVO vo);
+	int favorite_insert(HashMap<String, Object> map);
 	
 	
 	

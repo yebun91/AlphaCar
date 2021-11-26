@@ -6,7 +6,7 @@ import java.util.Date;
 public class StoreDTO implements Serializable {
     private int store_number,inventory, store_favorite_cnt;
     private String customer_email, store_name, store_addr, store_tel,
-                   store_time, store_dayoff, introduce, picture
+                   store_time, store_dayoff, introduce
                  , store_price, store_master_name
                  , store_registration_number
                  , imgpath, filename;
@@ -16,7 +16,10 @@ public class StoreDTO implements Serializable {
     private Date create_date      ;
     private Date change_date      ;
 
-    public StoreDTO(int store_number, String customer_email, String store_name, String store_addr, String store_tel, String store_time, String store_dayoff, String introduce, String picture, int inventory, String store_price, String store_master_name, String store_registration_number, int store_favorite_cnt) {
+
+
+
+    public StoreDTO(int store_number, String customer_email, String store_name, String store_addr, String store_tel, String store_time, String store_dayoff, String introduce, String imgpath, int inventory, String store_price, String store_master_name, String store_registration_number, int store_favorite_cnt) {
         this.store_number = store_number;
         this.inventory = inventory;
         this.store_favorite_cnt = store_favorite_cnt;
@@ -27,7 +30,7 @@ public class StoreDTO implements Serializable {
         this.store_time = store_time;
         this.store_dayoff = store_dayoff;
         this.introduce = introduce;
-        this.picture = picture;
+        this.imgpath = imgpath;
         this.store_price = store_price;
         this.store_master_name = store_master_name;
         this.store_registration_number = store_registration_number;
@@ -59,6 +62,9 @@ public class StoreDTO implements Serializable {
     public StoreDTO() {
 
     }
+
+
+
 
     public int getInventory_number() {
         return inventory_number;
@@ -180,13 +186,6 @@ public class StoreDTO implements Serializable {
         this.introduce = introduce;
     }
 
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
 
     public String getStore_price() {
         return store_price;

@@ -21,13 +21,12 @@
 		
 	</delete>
 
-<!-- 
+
 <insert id="favorite_insert" >
 
-insert into favorite values (seq_favorite.nextval, #{customer_eamil}, #{store_number})
+insert into favorite values (101, #{customer_email, jdbcType=VARCHAR}, #{store_number})
 
-insert into favorite values (101, 'user@gmail.com' , 111);
 
-</insert> -->
+</insert>
 
 </mapper>
