@@ -30,14 +30,15 @@ import java.util.ArrayList;
 public class ListAllDetail extends AsyncTask<Void, Void, Void> {
     private static final String TAG = "main:ListAllDetail";
 
-    int store_number;
     String customer_email;
     ArrayList<StoreDTO> storeDTOArrayList;
     MyGridViewAdapter adapter;
+    StoreDTO storeDTO;
 
-    public ListAllDetail(int store_number, ArrayList<StoreDTO> storeDTOArrayList,
+
+    public ListAllDetail(String customer_email, ArrayList<StoreDTO> storeDTOArrayList,
                          MyGridViewAdapter adapter) {
-        this.store_number = store_number;
+        this.customer_email = customer_email;
         this.storeDTOArrayList = storeDTOArrayList;
         this.adapter = adapter;
 
@@ -67,13 +68,13 @@ public class ListAllDetail extends AsyncTask<Void, Void, Void> {
 
             // 여기가 우리가 수정해야 하는 부분 : 서버로 보내는 데이터
             // builder에 문자열 및 데이터 추가하기
-            builder.addTextBody("store_number", String.valueOf(store_number), ContentType.create("Multipart/related", "UTF-8"));
-            //builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
+            //builder.addTextBody("store_number", String.valueOf(store_number), ContentType.create("Multipart/related", "UTF-8"));
+            builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
 
 
             // 전송
             // 전송 url : 우리가 수정해야 하는 부분
-            String postURL = ipConfig + "/alphacar//anSelectAllDetail";
+            String postURL = ipConfig + "/alphacar/anSelectAllDetail";
             // 그대로 사용  복,붙
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");

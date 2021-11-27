@@ -4,7 +4,6 @@ package com.example.alphacar;
 
 
 import static com.example.alphacar.Common.CommonMethod.isNetworkConnected;
-import static com.example.alphacar.LoginPageActivity.loginDTO;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +24,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 
 import com.example.alphacar.ATask.DetailSelect;
-import com.example.alphacar.ATask.FavoriteInsert;
 import com.example.alphacar.ATask.ReviewSelect;
 import com.example.alphacar.Adapter.DetailAdapter;
 import com.example.alphacar.Adapter.Detail_SliderAdapter;
@@ -41,9 +39,6 @@ public class DetailActivity extends AppCompatActivity{
     //사업장 정보를 id값 기준으로 가져와야함
     DetailSelect detailSelect;
     ReviewSelect reviewSelect;
-    FavoriteInsert favoriteInsert;
-
-    ArrayList<StoreDTO> store_list = new ArrayList<>();
 
     //ArrayList<String> review = new ArrayList<>();
     // List<String> review = new ArrayList<>();
@@ -54,12 +49,10 @@ public class DetailActivity extends AppCompatActivity{
 
     ImageButton like_btn;
 
-
     TextView store_name;
     TextView store_price;
     TextView store_addr;
-    TextView detail_now_btn;
-    TextView detail_review_btn;
+
   //  String customer_email= "";
 
 
@@ -88,25 +81,17 @@ public class DetailActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail);
 
-
-        detail_now_btn = findViewById(R.id.detail_now_btn);
-        detail_review_btn = findViewById(R.id.detail_review_btn);
-
-
         Intent intent = getIntent();
         store_number = intent.getIntExtra("store_number", 0);
 
 
 
-
-
-
         //영업장 정보 불러오는 atask
         if(isNetworkConnected(this) == true){
-            detailSelect = new DetailSelect(store_number,store_list);
+            detailSelect = new DetailSelect(store_number);
             //    reviewSelect = new ReviewSelect(customer_email,dtos,rdto);
             try {
-                detailSelect.execute().get();
+                dto = detailSelect.execute().get();
                 //    reviewSelect.execute().get();
                 //     reviewSelect.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             } catch (Exception e) {
@@ -138,56 +123,24 @@ public class DetailActivity extends AppCompatActivity{
         store_price = findViewById(R.id.detail_store_price);
         store_addr = findViewById(R.id.detail_store_addr);
 
-        store_name.setText(store_list.get(0).getStore_name());
-        store_price.setText(store_list.get(0).getStore_price());
-        store_addr.setText(store_list.get(0).getStore_addr());
-
-
-/*        store_name.setText(dto.getStore_name());
+        store_name.setText(dto.getStore_name());
         store_price.setText(dto.getStore_price());
-        store_addr.setText(dto.getStore_addr());*/
-
-        detail_now_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DetailActivity.this, NowActivity.class);
-                intent.putExtra("store_number", store_list.get(0).getStore_number());
-                startActivity(intent);
-            }
-        });
-
-
+        store_addr.setText(dto.getStore_addr());
 
 
         like_btn = findViewById(R.id.detail_favorite_btn);
         //좋아요 버튼 누르면 FAV_NUMBER, CUSTOMER_EMAIL, STORE_NUMBER값을 Favorite테이블에 넣어줌
+        like_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //유저 메일 = dd 인 사람이 현재 가게를 등록한다
+                //1. 즐겨찾기 버튼은 로그인 된 상태에서만 활성화 된다
+                //2. 즐겨찾기 버튼을 누르면 사용자의 이메일을 기준으로 favorite에 값이 담긴다
+                //insert into favorite values (FAV_NUMBER ,CUSTOMER_EMAIL ,STORE_NUMBER)
+                //select * from favorite where customer_email
+            }
+        });
 
-        if(loginDTO != null) {
-            like_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(isNetworkConnected(DetailActivity.this) == true){
-                        favoriteInsert  = new FavoriteInsert(loginDTO.getCustomer_email(), store_list.get(0).getStore_number());
-                        //    reviewSelect = new ReviewSelect(customer_email,dtos,rdto);
-                        try {
-                            favoriteInsert.execute().get();
-                            //    reviewSelect.execute().get();
-                            //     reviewSelect.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }else {
-                        Toast.makeText(DetailActivity.this, "인터넷이 연결되어 있지 않습니다.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                    //유저 메일 = dd 인 사람이 현재 가게를 등록한다
-                    //1. 즐겨찾기 버튼은 로그인 된 상태에서만 활성화 된다
-                    //2. 즐겨찾기 버튼을 누르면 사용자의 이메일을 기준으로 favorite에 값이 담긴다
-                    //insert into favorite values (FAV_NUMBER ,CUSTOMER_EMAIL ,STORE_NUMBER)
-                    //select * from favorite where customer_email
-                }
-            });
-        }
 
         //------------ViewPager Indicator-----------------------
         layout = findViewById(R.id.dots_container);
@@ -200,10 +153,6 @@ public class DetailActivity extends AppCompatActivity{
         list[1] = getResources().getColor(R.color.white);
         list[2] = getResources().getColor(R.color.teal_200);*/
 
-     /*   for (int i = 0 ; i < store_list.size(); i ++){
-            list[i] = store_list.get(i).getImgpath();
-        }
-*/
         list[0] = getResources().getColor(R.color.black);
         list[1] = getResources().getColor(R.color.white);
         list[2] = getResources().getColor(R.color.teal_200);
@@ -276,29 +225,13 @@ public class DetailActivity extends AppCompatActivity{
             }
         });
 
-        detail_review_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
-
-                startActivity(intent);
-
-            }
-        });
-
-
-
         //-----------------------expandableListView--------------------
     }
     //-----------------------expandableListView--------------------
     private void createCollection() {
 
         //소개, 리뷰를 가져와서 넣어야함
-
-      //  String[] intro = {dto.getIntroduce(),"쉬는 날 :" + dto.getStore_dayoff(),"영업 시간 : " + dto.getStore_time()};//dto.getIntroduce()
-        String[] intro = {store_list.get(0).getIntroduce(),"쉬는 날 :" + store_list.get(0).getStore_dayoff(),"영업 시간 : " + store_list.get(0).getStore_time()};//dto.getIntroduce()
-
-
+        String[] intro = {dto.getIntroduce(),"쉬는 날 :" + dto.getStore_dayoff(),"영업 시간 : " + dto.getStore_time()};//dto.getIntroduce()
 
         review = new String[dtos.size()];
 
@@ -344,7 +277,7 @@ public class DetailActivity extends AppCompatActivity{
     private void selectedDots(int position) {
         for (int i = 0; i < dots.length; i++) {
             if (i == position) {
-                dots[i].setTextColor((list[position]));
+                dots[i].setTextColor(list[position]);
             } else {
                 //   dots[i].setTextColor(getResources().getColor(R.color.grey));
             }

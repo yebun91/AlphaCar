@@ -12,9 +12,13 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +27,8 @@ import androidx.appcompat.widget.SearchView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.alphacar.ATask.Storelist;
+import com.example.alphacar.ATask.Storename;
+import com.example.alphacar.Adapter.StoreAdapter;
 import com.example.alphacar.Adapter.ViewpagerAdapter;
 import com.example.alphacar.DTOS.StoreDTO;
 import com.example.alphacar.Fragment.FavoriteFragment;
@@ -36,19 +42,20 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "main:MainActivity";
-    
+
     NavigationView nav_view;
     DrawerLayout draw_layout;
     ViewPager pager;
     ArrayList<StoreDTO> storeDTOArrayList;
     BottomNavigationView bottomNavigationView;
-    SearchView searchView ;
-    Fragment viewpagerfragment;
+    SearchView searchView;
     StoreDTO dto;
     Storelist storelist;
+    Storename storename;
     LottieAnimationView animationView;
-
-
+    ArrayAdapter<StoreDTO> storeAdapter;
+    ListView listView ;
+    StoreAdapter sAdapter;
 
 
     @Override
@@ -59,13 +66,13 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         pager = findViewById(R.id.pager);
 
-
+        searchView = findViewById(R.id.searchView);
         nav_view = findViewById(R.id.nav_view);
         // implement Listener 할 떄는 반드시 아래와 같이 정의 한다.
         nav_view.setNavigationItemSelectedListener(this);
         draw_layout = findViewById(R.id.draw_layout);
-       //  viewPager2 = findViewById(R.id.pager);
-        searchView = findViewById(R.id.searchView);
+
+
         storeDTOArrayList = new ArrayList<>();
 
         View headerView = nav_view.getHeaderView(0);
@@ -73,40 +80,41 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         TextView login_text =headerView.findViewById(R.id.loginID);
         TextView login_str =  headerView.findViewById(R.id.loginStr);
 
+
+
         /* 사이드 네비게이션 로그인 할떄 안할떄 보여지는 글자 */
         if (loginDTO == null){
             nav_view.getMenu().findItem(R.id.nav_myPage).setTitle("로그인");
             nav_view.getMenu().findItem(R.id.nav_logout).setVisible(false);
         }
 
-        if(isNetworkConnected(this) == true){
-            storelist  = new Storelist(dto, storeDTOArrayList);
-            //listDetail = new ListDetail(store_number);
-            try {
-                storelist.execute().get();
-            //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+
+      searchBar(null);
+
+        /* 서치뷰 검색 */
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            //검색버튼을 눌렀을 경우
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchBar(query);
+                return true;
             }
-        }else {
-            Toast.makeText(this, "인터넷이 연결되어 있지 않습니다.",
-                    Toast.LENGTH_SHORT).show();
-        }
+            //텍스트가 바뀔때마다 호출
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                String text = newText;
+
+                return true;
+            }
+        });
+
 
 // 메인 뷰페이저
 ///////////////////////////////////////////////////////////////////////////////
         /* 메인 뷰페이저 스프링에서 데이터받아온 만큼 횡스크롤로 뿌려줌 */
-        ArrayList<Fragment> list = new ArrayList<>();
-        for (int i =0; i<storeDTOArrayList.size(); i++){
-            list.add(new ViewpagerFragment(storeDTOArrayList.get(i)));
-        }
-
-        ViewpagerAdapter viewpagerAdapter =
-                new ViewpagerAdapter(getSupportFragmentManager());
-        viewpagerAdapter.setList(list);
-        pager.setAdapter(viewpagerAdapter);
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -122,18 +130,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             animationView.setRepeatCount(2);
 */
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
 
 
         /* 메인 뷰페이저에 데이터 집어넣기 */
@@ -197,7 +193,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
        });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-        /*메인 뷰페이저*/
+
 
 
 
@@ -214,6 +210,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     });
     }
+
 
     /*사이드 네비게이션*/
     @Override
@@ -253,6 +250,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     }
 
+
     // 뒤로가기를 눌렀을때 만약 드로어 창이 열려있으면 드로어 창을 닫고
     // 아니면 그냥 뒤로가기 원래 작업을 한다(여기서는 앱 종료).
     @Override
@@ -265,4 +263,68 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     }
 
-}
+    /* 검색 및 뷰페이져 보여주기*/
+    public void searchBar(String query){
+            if(isNetworkConnected(this) == true){
+                storelist  = new Storelist( storeDTOArrayList , "anSelectFile");
+
+                //listDetail = new ListDetail(store_number);
+
+                /* 뷰페이저 */
+                try {
+                    storelist.execute().get();
+                    //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }else {
+                Toast.makeText(this, "인터넷이 연결되어 있지 않습니다.",
+                        Toast.LENGTH_SHORT).show();
+                }
+                ArrayList<Fragment> list = new ArrayList<>();
+                for (int i =0; i<storeDTOArrayList.size(); i++){
+                    list.add(new ViewpagerFragment(storeDTOArrayList.get(i)));
+
+                }
+
+                ViewpagerAdapter viewpagerAdapter =
+                        new ViewpagerAdapter(getSupportFragmentManager());
+                viewpagerAdapter.setList(list);
+                pager.setAdapter(viewpagerAdapter);
+
+
+                storeDTOArrayList = new ArrayList<>();
+
+            /* 검색바 */
+            if(isNetworkConnected(this) == true){
+                storename = new Storename(storeDTOArrayList,"anShowName",query);
+                try {
+                    storename.execute().get();
+                    //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+             }else{
+                Toast.makeText(this, "인터넷이 연결되어 있지 않습니다.",
+                        Toast.LENGTH_SHORT).show();
+            }
+            if(storeDTOArrayList.size() != 0){
+
+            listView =findViewById(R.id.listview);
+            sAdapter = new StoreAdapter(this,storeDTOArrayList);
+            listView.setAdapter(sAdapter);
+            sAdapter.notifyDataSetChanged();
+            StoreDTO dto =(StoreDTO) sAdapter.getItem(0);
+                Toast.makeText(this, dto.getStore_name(), Toast.LENGTH_SHORT).show();
+            }
+
+            }
+
+
+    }
+
+

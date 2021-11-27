@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 public class CommonMethod {
-    public static String ipConfig = "http://192.168.0.13:80";
+    public static String ipConfig = "http://192.168.0.13:80/alphacar";
 
 
     // 네트워크에 연결되어 있는가
