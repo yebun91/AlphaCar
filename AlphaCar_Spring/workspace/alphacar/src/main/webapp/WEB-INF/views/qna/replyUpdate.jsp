@@ -5,39 +5,38 @@
     </div>
 	<div class="page_header_text">
 		<p>고객센터</p>
-		<p>FAQ 글을 수정하는 페이지 입니다.</p>
+		<p>Q&A 글을 수정하는 페이지 입니다.</p>
 	</div>
   </nav>
 
   <!-- 메인 시작 -->
   <main>
     <div id="page">
-      <h1>FAQ 글 수정</h1>
-		<form action="update_work.se" class="page_write" method="post">
-			<input type="hidden" name='best_qna_id' value="${vo.best_qna_id}"/>
+      <h1>Q&A 글 수정</h1>
+		<form action="update_work.qna" class="page_write" method="post">
+			<input type="hidden" name='qna_id' value="${vo.qna_id}"/>
 			<input type="hidden" name='attach' />
 			<div class="page_write_index">
 				<div class="page_search_index">
-					<select name="best_qna_search_index" id="best_qna_search_index">
-						<option value="user-info" ${vo.best_qna_attribute eq 'C' ? 'selected' : '' }>고객</option>
-            <option value="store" ${vo.best_qna_attribute eq 'S' ? 'selected' : '' }>가게</option>
-            <option value="app_web" ${vo.best_qna_attribute eq 'M' ? 'selected' : '' }>모바일/홈페이지</option>
-            <option value="alphacar" ${vo.best_qna_attribute eq 'A' ? 'selected' : '' }>알파카</option>
+					<select name="qna_search_index" id="qna_search_index">
+						<option value="user-info" ${vo.qna_attribute eq 'C' ? 'selected' : '' }>고객</option>
+            <option value="store" ${vo.qna_attribute eq 'S' ? 'selected' : '' }>가게</option>
+            <option value="app_web" ${vo.qna_attribute eq 'M' ? 'selected' : '' }>모바일/홈페이지</option>
+            <option value="alphacar" ${vo.qna_attribute eq 'A' ? 'selected' : '' }>알파카</option>
 					</select>
 				</div>
 				<div class="page_write_title">
-					<input type="text" name="best_qna_title" value="${vo.best_qna_title }">
+					<input type="text" name="qna_title" value="${vo.qna_title }">
 				</div>
 			</div>
 			<div class="page_write_space">
-				<textarea id="summernote" name="best_qna_content" cols="100" >${vo.best_qna_content }</textarea>
+				<textarea id="summernote" name="qna_content" cols="100" >${vo.qna_content }</textarea>
 				
 			</div>
 			<div class="page_write_button">
 				<button>수정완료</button>
 				<button type="button" onclick="if(confirm('정말 취소 하시겠습니까?')) { 
-					location.href='list.se'}">취소</button>
-				
+					location.href='masterContact.mp'}">취소</button>
 			</div>
 		</form>
     </div>
@@ -48,4 +47,4 @@
   <script src="resources/js/summernote.js"></script>
   <script src="resources/js/lang/summernote-ko-KR.js"></script>
   <link rel="stylesheet" href="resources/css/summernote-lite.css">
-
+  

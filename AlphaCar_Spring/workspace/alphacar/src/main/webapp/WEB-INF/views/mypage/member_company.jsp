@@ -34,8 +34,8 @@
         </div>
         <div class="mypage_company"> 
         </div>
-        <div class="mypage_company">  
-          +
+        <div class="mypage_company">
+        	<a href="memberCompanyInsert.mp">+</a>  
         </div>
       </div>
     </div>

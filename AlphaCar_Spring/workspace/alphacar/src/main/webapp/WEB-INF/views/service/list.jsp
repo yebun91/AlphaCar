@@ -6,7 +6,7 @@
   </div>
   <div class="service_buttons">
   	<button>실시간 채팅 문의</button>
-  	<button onclick="location.href='customer_write.se'">1:1 문의하기</button>
+  	<button onclick="location.href='write.qna'">1:1 문의하기</button>
   </div>
 </nav>
 <!-- 메인 시작 -->
@@ -14,29 +14,33 @@
   <div id="page">
     <h1>자주 묻는 질문</h1>
     <div class="page_index">
-      <div class="page_select">
-        <ul>
-          <li>전체</li>
-          <li>고객</li>
-          <li>가게</li>
-          <li>모바일/홈페이지</li>
-          <li>알파카</li>
-        </ul>
-      </div>
+    <form action="list.se" method="get">
+	    <input type="hidden" name="curPage" value="1" /> 
+	      <div class="page_select">
+	        <ul>
+	          <li onclick="location.href='list.se'">전체</li>
+	          <li onclick="location.href='list.se?search=user-info'">고객</li>
+	          <li onclick="location.href='list.se?search=store'">가게</li>
+	          <li onclick="location.href='list.se?search=app_web'">모바일/홈페이지</li>
+	          <li onclick="location.href='list.se?search=alphacar'">알파카</li>
+	        </ul>
+	      </div>
+      </form>
       <!-- service 검색기능 -->
-      <form action="" class="page_search">
+      <form action="list.se" method="get" class="page_search">
+      	<input type="hidden" name="curPage" value="1" /> 
         <div class="page_search_index">
-          <select name="service_search_index" id="service_search_index">
-            <option value="all" selected="selected">전체</option>
-            <option value="user-info">고객</option>
-            <option value="store">가게</option>
-            <option value="app_web">모바일/홈페이지</option>
-            <option value="alphacar">알파카</option>
+          <select name="search" id="service_search_index">
+            <option value="all" ${page.search eq 'all' ? 'selected' : '' }>전체</option>
+            <option value="user-info" ${page.search eq 'user-info' ? 'selected' : '' }>고객</option>
+            <option value="store" ${page.search eq 'store' ? 'selected' : '' }>가게</option>
+            <option value="app_web" ${page.search eq 'app_web' ? 'selected' : '' }>모바일/홈페이지</option>
+            <option value="alphacar" ${page.search eq 'alphacar' ? 'selected' : '' }>알파카</option>
           </select>
         </div>
         <div class="page_search_box">
-          <input type="text" placeholder="search">
-          <i class="fas fa-search"></i>
+          <input type="text" placeholder="search" name="keyword" value="${best_qna_page.keyword}">
+          <i class="fas fa-search" onclick='$("form").submit()'></i>
         </div>
         
       </form>
@@ -47,12 +51,13 @@
         <h3>글</h3>
         <h3>작성자</h3>
         <h3>조회수</h3>
+        <h3>활동</h3>
       </div>
-       <div class="page_list_box">
-      	<c:forEach items="${list}" var="vo">
-      		<div class="page_list_content">
+      <div class="page_list_box">
+	     	<c:forEach items="${page.list}" var="vo">
+	     		<div class="page_list_content">
 	          <div class="page_list_content_title">
-	            <a href='detail.se?id=${vo.best_qna_id }'>
+	            <a href='detail.se?best_qna_id=${vo.best_qna_id }'>
 	              <c:if test="${vo.best_qna_attribute eq 'C'}">
 	              	<p>[고객]</p>
 	              </c:if>
@@ -70,26 +75,23 @@
 	          </div>
 	          <p>${vo.customer_name}</p>
 	          <p>${vo.best_qna_readcnt}</p>
+	          <p>${vo.best_qna_time}</p>
 	        </div>
-			</c:forEach> 
-     </div> 
+				</c:forEach> 
+    	</div> 
+    </div>
         
     <div class="page_content_create">
-    <ul>
+    
 				<!-- 관리자로 로그인된 경우만 글쓰기 가능 -->
 				<c:if test="${loginInfo.admin eq 'A'}">
-      		<button type="button" onclick="location.href='write.se'">글 작성</button>
+      				<button type="button" onclick="location.href='write.se'">글 작성</button>
 				</c:if>
-			</ul>
+			
     </div>
     
     <!-- 페이징 처리 -->
-    <div class="notice_paging">
-      <i class="fas fa-angle-double-left"></i>
-      <i class="fas fa-angle-left"></i>
-      <p>1 2 3 4 5 6 7 8 9 10</p>
-      <i class="fas fa-angle-right"></i>
-      <i class="fas fa-angle-double-right"></i>
-    </div>    
+    <jsp:include page="/WEB-INF/views/include/page.jsp" />  
+  
   </div>
 </main>

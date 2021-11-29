@@ -16,6 +16,7 @@ public class BestQnaVO {
 	private String best_qna_time; 
 	
 	public String getBest_qna_time() {
+		best_qna_time = common.Time.txtDate(getBest_qna_writedate());
 		return best_qna_time;
 	}
 	public void setBest_qna_time(String best_qna_time) {

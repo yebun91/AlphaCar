@@ -20,7 +20,7 @@ public class BestQnaDAO implements BestQnaService {
 	}
 
 	@Override
-	public BsetQnaPage faq_list(BsetQnaPage page) {
+	public BestQnaPage faq_list(BestQnaPage page) {
 		//총 글의 개수를 조회(totalList)
 		int pagecnt = sql.selectOne("homeBestQna.mapper.hometotalList", page);
 		page.setTotallist(pagecnt); //총 글의 수
@@ -38,26 +38,26 @@ public class BestQnaDAO implements BestQnaService {
 	}
 
 	@Override
-	public BestQnaVO faq_detail(int id) {
+	public BestQnaVO faq_detail(int best_qna_id) {
 		// TODO Auto-generated method stub
-		return sql.selectOne("homeBestQna.mapper.homeBestQnaDetail", id);
+		return sql.selectOne("homeBestQna.mapper.homeBestQnaDetail", best_qna_id);
 	}
 
 	@Override
 	public void faq_update(BestQnaVO vo) {
-		// TODO Auto-generated method stub
+		sql.update("homeBestQna.mapper.homeBestQnaUpdate", vo);
 		
 	}
 
 	@Override
-	public void faq_delete(int id) {
-		// TODO Auto-generated method stub
+	public void faq_delete(int best_qna_id) {
+		sql.delete("homeBestQna.mapper.homeBestQnaDelete", best_qna_id);
 		
 	}
 
 	@Override
-	public void faq_read(int id) {
-		sql.update("homeBestQna.mapper.homeBestQnaRead", id);
+	public void faq_read(int best_qna_id) {
+		sql.update("homeBestQna.mapper.homeBestQnaRead", best_qna_id);
 		
 	}
 

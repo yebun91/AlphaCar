@@ -17,7 +17,7 @@ public class BestQnaServiceImpl implements BestQnaService {
 	}
 
 	@Override
-	public BsetQnaPage faq_list(BsetQnaPage page) {
+	public BestQnaPage faq_list(BestQnaPage page) {
 		// TODO Auto-generated method stub
 		return dao.faq_list(page);
 	}
@@ -29,9 +29,9 @@ public class BestQnaServiceImpl implements BestQnaService {
 	}
 
 	@Override
-	public BestQnaVO faq_detail(int id) {
+	public BestQnaVO faq_detail(int best_qna_id) {
 		// TODO Auto-generated method stub
-		return dao.faq_detail(id);
+		return dao.faq_detail(best_qna_id);
 	}
 
 	@Override
@@ -41,15 +41,15 @@ public class BestQnaServiceImpl implements BestQnaService {
 	}
 
 	@Override
-	public void faq_delete(int id) {
-		dao.faq_delete(id);
+	public void faq_delete(int best_qna_id) {
+		dao.faq_delete(best_qna_id);
 		
 	}
 
 	@Override
-	public void faq_read(int id) {
+	public void faq_read(int best_qna_id) {
 		// TODO Auto-generated method stub
-		dao.faq_read(id);
+		dao.faq_read(best_qna_id);
 	}
 
 	

@@ -17,7 +17,14 @@ public class QnaVO {
 	private int qna_indent ;
 	private String qna_attribute;
 	private String qna_time;
+	private String qna_password ;
 	
+	public String getQna_password() {
+		return qna_password;
+	}
+	public void setQna_password(String qna_password) {
+		this.qna_password = qna_password;
+	}
 	public String getCustomer_name() {
 		return customer_name;
 	}
@@ -97,6 +104,7 @@ public class QnaVO {
 		this.qna_attribute = qna_attribute;
 	}
 	public String getQna_time() {
+		qna_time = common.Time.txtDate(getQna_writedate());
 		return qna_time;
 	}
 	public void setQna_time(String qna_time) {

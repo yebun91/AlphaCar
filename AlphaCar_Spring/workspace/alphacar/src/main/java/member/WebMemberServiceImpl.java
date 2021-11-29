@@ -17,4 +17,10 @@ public class WebMemberServiceImpl implements WebMemberService {
 		return dao.member_login(map);
 	}
 
+	@Override
+	public boolean member_join(WebMemberVO vo) {
+		// TODO Auto-generated method stub
+		return dao.member_join(vo);
+	}
+
 }

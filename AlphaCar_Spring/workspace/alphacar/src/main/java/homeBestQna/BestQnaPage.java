@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import common.PageVO;
 
 @Component
-public class BsetQnaPage extends PageVO{
+public class BestQnaPage extends PageVO{
 	private List<BestQnaVO> list;
 	
 	public List<BestQnaVO> getList(){

@@ -17,4 +17,10 @@ public class WebMemberDAO implements WebMemberService {
 		// TODO Auto-generated method stub
 		return sql.selectOne("webmember.mapper.member_login", map);
 	}
+
+	@Override
+	public boolean member_join(WebMemberVO vo) {
+		// TODO Auto-generated method stub
+		return sql.insert("webmember.mapper.member_join", vo) == 1 ? true : false;
+	}
 }

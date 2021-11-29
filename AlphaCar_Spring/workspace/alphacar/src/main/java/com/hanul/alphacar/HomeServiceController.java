@@ -28,13 +28,18 @@ import com.google.gson.JsonObject;
 import common.CommonService;
 import homeBestQna.BestQnaServiceImpl;
 import homeBestQna.BestQnaVO;
+import homeBestQna.BestQnaPage;
+import homeNotice.HomeNoticePage;
+import homeNotice.HomeNoticeVO;
 import member.WebMemberVO;
 
 @Controller
 public class HomeServiceController {
 	@Autowired private BestQnaServiceImpl service;
 	@Autowired private CommonService common;
+	@Autowired private BestQnaPage page;
 	
+	//게시판 파일 저장
 	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
@@ -68,54 +73,27 @@ public class HomeServiceController {
 		return a;
 	}
 	
-//	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json")
-//	@ResponseBody
-//	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, BestQnaVO vo) {
-//		
-//		JsonObject jsonObject = new JsonObject();
-//		
-//		String fileRoot = "C:\\summernote_image\\";	//저장될 외부 파일 경로
-//		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
-//		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-//				
-//		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
-//		
-//		File targetFile = new File(fileRoot + savedFileName);	
-//		
-//		try {
-//			InputStream fileStream = multipartFile.getInputStream();
-//			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-//			jsonObject.addProperty("url", "/summernoteImage/"+savedFileName);
-//			jsonObject.addProperty("responseCode", "success");
-//			if ( ! multipartFile.isEmpty() ) {// 파일이 있는 경우
-//				// 파일 첨부 처리 부분
-//				vo.setBest_qna_filename(savedFileName);
-//				vo.setBest_qna_filepath(targetFile+"");
-//			}
-//				
-//		} catch (IOException e) {
-//			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
-//			jsonObject.addProperty("responseCode", "error");
-//			e.printStackTrace();
-//		}
-//		
-//		return jsonObject;
-//	}
+
 	//faq 리스트로 가기
 	@RequestMapping("/list.se")
 	
 	public String list(HttpSession session, Model model,
-			//@RequestParam (defaultValue = "1") int curPage,
+			@RequestParam (defaultValue = "1") int curPage,
 			String search, String keyword) {
 		//System.out.println(service.faq_list());
-		List<BestQnaVO> list =  service.faq_list();
-		model.addAttribute("list",list);
+		//List<BestQnaVO> list =  service.faq_list();
+		//model.addAttribute("list",list);
+		
+		page.setCurPage(curPage);
+		page.setSearch(search);
+		page.setKeyword(keyword);
+		
 		//DB에서 공지글 목록을 조회한 후 목록화면에 출력
-		//model.addAttribute("notice_page", service.faq_list(page));
+		model.addAttribute("page", service.faq_list(page));
 		return "service/list";
 	}
 	
-	// 신규 공지사항 저장 처리 요청
+	// 신규 faq 저장 처리 요청
 	@RequestMapping ("/insert.se")
 	public String insert (BestQnaVO vo, HttpSession session, MultipartFile file, String notice_search_index) {
 		
@@ -138,31 +116,25 @@ public class HomeServiceController {
 		}
 		vo.setBest_qna_attribute(index);
 		
-		
-//		if ( ! file.isEmpty() ) {// 파일이 있는 경우
-//			// 파일 첨부 처리 부분
-//			vo.setBest_qna_filename(savedFileName);
-//			vo.setBest_qna_filepath(targetFile+"");
-//		}
-		
-		
 		// 화면에서 입력한 정보를 DB에 저장한 후 화면으로 연결(출력)
 		service.faq_insert(vo);
 		
 		return "redirect:list.se"; // 리턴 시 공지사항 목록 화면으로 이동 처리
 		}
 	
+	//faq 새글 쓰기
 	@RequestMapping("/write.se")
 	public String write(HttpSession session, Model model) {
 		return "service/write";
 	}
 	
+	//faq 자세히 보기
 	@RequestMapping("/detail.se")
-	public String detail(int id, Model model) {
+	public String detail(int best_qna_id, Model model) {
 		// 클릭시 조회수 증가
-		service.faq_read(id);
+		service.faq_read(best_qna_id);
 		
-		model.addAttribute("vo", service.faq_detail(id));
+		model.addAttribute("vo", service.faq_detail(best_qna_id));
 		model.addAttribute("crlf", "\r\n");
 		//model.addAttribute("page", page);
 				
@@ -170,17 +142,37 @@ public class HomeServiceController {
 		return "service/detail";
 	}
 	
+	//faq 수정처리
 	@RequestMapping("/update.se")
-	public String update(HttpSession session, Model model) {
+	public String update(HttpSession session, Model model, int best_qna_id) {
+		model.addAttribute("vo", service.faq_detail(best_qna_id));
 		return "service/update";
 	}
 	
-	@RequestMapping("/delete.se")
-	public String delete(HttpSession session, Model model) {
-		return "redirect:list.se";
+	// faq 수정 저장 처리 요청
+	@RequestMapping ("/update_work.se")
+	public String update_work(BestQnaVO vo, HttpSession session, String best_qna_search_index) {
+		
+		String index = "";
+		if (best_qna_search_index.equals("user-info") ) {
+			index = "C";
+		} else if(best_qna_search_index.equals("store") ) {
+			index = "S";
+		} else if(best_qna_search_index.equals("app_web") ) {
+			index = "M";
+		} else if(best_qna_search_index.equals("alphacar") ) {
+			index = "A";
+		}
+		vo.setBest_qna_attribute(index);
+		
+		service.faq_update(vo);	
+		return "redirect:detail.se?best_qna_id=" + vo.getBest_qna_id();
 	}
-	@RequestMapping("/customer_write.se")
-	public String customer_write(HttpSession session, Model model) {
-		return "service/customer_write";
+	
+	//faq 게시글 삭제
+	@RequestMapping("/delete.se")
+	public String delete(HttpSession session, Model model, int best_qna_id) {
+		service.faq_delete(best_qna_id);
+		return "redirect:list.se";
 	}
 }
