@@ -765,6 +765,17 @@ input[type="checkbox"]:checked, input[type="radio"]:checked{
   bottom: 0px;
   line-height: 200px;
 }
+.mypage_company_delete{
+  position: absolute;
+  z-index: 2;
+  right:0px;
+  top: 0px;
+  font-size:var(--font-large);
+  color:var(--white-color);
+
+  background-color: var(--background-color);
+}
+
 .mypage_company_back{
   background-color: var(--background-color);
   opacity: 50%;

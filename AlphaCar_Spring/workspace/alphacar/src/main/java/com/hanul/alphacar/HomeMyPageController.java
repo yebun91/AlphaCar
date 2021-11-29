@@ -31,7 +31,7 @@ public class HomeMyPageController {
 	@Autowired private QnaPage page;
 	
 	@RequestMapping("/mypage.mp")
-	public String login(HttpSession session, Model model) {
+	public String login(HttpSession session) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("customer_email", "e");
 		map.put("customer_pw", "e");
@@ -95,11 +95,20 @@ public class HomeMyPageController {
 		
 		return "mypage/member_contact";
 	}
-
+	
+	//가게 삭제
+	@RequestMapping("/memberCompanyDelete.mp")
+	public String memberCompanyDelete(int store_number) {
+		return "redirect:memberCompany.mp";
+	}
+	
+	//가게 그래프 보러가기
 	@RequestMapping("/memberCompanyGraph.mp")
 	public String memberCompanyGraph(HttpSession session, Model model) {
 		return "mypage/member_company_graph";
 	}
+	
+	//가게 수정
 	@RequestMapping("/memberCompanyUpdate.mp")
 	public String memberCompanyUpdate(HttpSession session, Model model) {
 		return "mypage/member_company_update";
@@ -110,10 +119,13 @@ public class HomeMyPageController {
 	public String memberCompanyInsert(HttpSession session, Model model) {
 		return "mypage/member_company_insert";
 	}
+	
+	//회원 정보 검색
 	@RequestMapping("/masterMemberList.mp")
 	public String masterMemberList(HttpSession session, Model model) {
 		return "mypage/master_member_list";
 	}
+	
 	//1:1문의 처리
 	@RequestMapping("/masterContact.mp")
 	public String masterContact(HttpSession session, Model model, 
