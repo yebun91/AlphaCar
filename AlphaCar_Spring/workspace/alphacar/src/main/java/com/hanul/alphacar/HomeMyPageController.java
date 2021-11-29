@@ -59,7 +59,7 @@ public class HomeMyPageController {
 				File f = new File ( uuid );
 				// 기존 첨부 파일 삭제
 				if (f.exists()) f.delete();
-			}
+			} 
 			
 		}else {
 			//전송한 이미지가 없을 경우 기존 주소 유지

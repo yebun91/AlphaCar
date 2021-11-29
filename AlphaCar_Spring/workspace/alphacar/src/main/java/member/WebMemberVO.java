@@ -2,9 +2,19 @@ package member;
 
 public class WebMemberVO {
 
-	String customer_email, customer_pw, customer_name, customer_picture, admin, city,
-	addr;
+	String customer_email, customer_pw, customer_name, 
+		customer_picture, admin, city, addr, customer_filename;
 	
+	
+	
+	public String getCustomer_filename() {
+		return customer_filename;
+	}
+
+	public void setCustomer_filename(String customer_filename) {
+		this.customer_filename = customer_filename;
+	}
+
 	public String getCity() {
 		return city;
 	}

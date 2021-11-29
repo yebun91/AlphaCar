@@ -595,12 +595,12 @@ input[type="checkbox"]:checked, input[type="radio"]:checked{
   font-weight: var(--weight-bold);
   font-size: var(--font-large);
 }
-.join_company, .join_profile{
+.join_company, .join_profile, .join_addr{
   padding: 30px 0;
   display: block;
   width: 400px;
 }
-.join_company>h3, .join_profile>h3{
+.join_company>h3, .join_profile>h3, .join_addr>h3{
   text-align: left;
   margin-bottom: 20px;
 }
