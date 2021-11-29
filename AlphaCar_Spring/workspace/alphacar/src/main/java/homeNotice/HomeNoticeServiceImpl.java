@@ -56,8 +56,7 @@ public class HomeNoticeServiceImpl implements HomeNoticeService {
 
 	@Override
 	public int board_comment_update(HomeNoticeCommentVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.board_comment_update(vo);
 	}
 
 	@Override

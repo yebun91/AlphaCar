@@ -27,7 +27,7 @@
 	  	<div id='comment_list'>
 	  	</div>
 		<div id='comment_regist'> 
-			<textarea id="summernote" name="coment_content"></textarea>	
+			<textarea id="summernote" name="coment_content" class="comment_write"></textarea>	
 			<button onclick="comment_regist()" class="comment_insert">댓글작성</button>
 		</div>
 	  </div>
@@ -76,30 +76,28 @@
 			//로그인 안했을 경우
 			alert ('댓글을 등록하려면 로그인하세요!');
 			return;
-		} else if ( $.trim( $('#summernote').val() ) == ''  ) { 
+		} else if ( $.trim( $('.comment_write').val() ) == ''  ) { 
 			//내용 없이 등록하기를 눌렀을 경우
 			alert ('댓글을 입력하세요!');
-			$('#summernote').val('');
-			$('#summernote').focus();
+			$('.comment_write').val('');
+			$('.comment_write').focus();
 			return;
 		}
 		$.ajax ({
 			//경로 형태로 url 지정
 			url : "board/comment/regist"
-			, data : { notice_id:${vo.notice_id} , coment_content:$('#summernote').val()  }
+			, data : { notice_id:${vo.notice_id} , coment_content:$('.comment_write').val()  }
 			, success : function ( response ) {
 				if ( response ) {	// true == true T, false == true F
 					alert ('댓글이 등록되었습니다.');
-					$('#summernote').val('');
+					$('.comment_write').val('');
 					comment_list();		// 댓글 목록 조회 요청 함수
 				} else 
 					alert('댓글 등록이 실패하였습니다.');
 			}, error : function (req, text) {
 				alert(text + ":" + req.status);
-			}
-			
-		});
-		
+			}	
+		});	
 	}
 	
 	function comment_list() {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="homeMyPage.mapper">
+	<!--웹 회원 정보 수정 -->
+	<update id="memberUpdate">
+		update customer set customer_pw = #{customer_pw}, 
+			customer_name = #{customer_name}, 
+			admin = #{admin},
+			customer_picture = #{customer_picture}
+		where customer_email = #{customer_email}
+	</update>
+	
+	<select id="company_select" resultType="homeMypage.HomeCompanyVO">
+		select * 
+		from store s, store_file f
+		where s.customer_email = #{customer_email} 
+			and s.store_number = f.store_number
+	</select>
+</mapper>

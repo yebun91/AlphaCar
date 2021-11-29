@@ -97,9 +97,17 @@
 		where notice_id = #{notice_id}
 		order by coment_writedate
 	</select>
+	
 	<!-- 댓글 삭제 -->
 	<delete id="commentDelete">
 		delete from web_notice_coment
 		where notice_coment_id = #{id}	
 	</delete>
+	
+	<!-- 댓글 수정 -->
+	<update id="commentUpdate">
+		update web_notice_coment set coment_content = #{coment_content}
+		where notice_coment_id = #{notice_coment_id}
+	</update>
+	
 </mapper>

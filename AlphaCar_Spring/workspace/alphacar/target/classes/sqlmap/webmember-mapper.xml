@@ -5,10 +5,16 @@
 
 <mapper namespace="webmember.mapper">
 
-		<!-- 로그인 (id, pw 일치 여부 조회) -->
+	<!-- 로그인 (id, pw 일치 여부 조회) -->
 	<select id="member_login" resultType="member.WebMemberVO">
 		select * from customer
 		where customer_email = #{customer_email, jdbcType=VARCHAR}
 		and customer_pw = #{customer_pw}	
 	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="member_join">
+		insert into customer (customer_email, customer_pw, customer_name, customer_picture, admin)
+		values (#{customer_email}, #{customer_pw}, #{customer_name}, #{customer_picture, jdbcType=VARCHAR}, #{admin})
+	</insert>
 </mapper>

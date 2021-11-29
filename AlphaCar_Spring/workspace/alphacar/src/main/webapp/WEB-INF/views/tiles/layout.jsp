@@ -24,6 +24,7 @@
   	crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/style.css?v=<%=new java.util.Date().getTime() %>" />
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
 </head>
 <body>
 	<tiles:insertAttribute name="header"/>	

@@ -61,7 +61,7 @@ public class HomeNoticeDAO implements HomeNoticeService {
 
 	@Override
 	public int board_comment_update(HomeNoticeCommentVO vo) {
-		return 0;
+		return sql.update("homeNotice.mapper.commentUpdate", vo);
 	}
 
 	@Override
