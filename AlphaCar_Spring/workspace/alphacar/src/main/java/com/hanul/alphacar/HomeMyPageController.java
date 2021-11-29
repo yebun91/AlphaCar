@@ -90,8 +90,6 @@ public class HomeMyPageController {
 		page.setSearch(search);
 		page.setKeyword(keyword);
 		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
-		//DB에서 공지글 목록을 조회한 후 목록화면에 출력
-		//model.addAttribute("page", service.member_qna_list(page, vo.getCustomer_email()));
 		
 		return "mypage/member_contact";
 	}
@@ -99,6 +97,7 @@ public class HomeMyPageController {
 	//가게 삭제
 	@RequestMapping("/memberCompanyDelete.mp")
 	public String memberCompanyDelete(int store_number) {
+		homeService.company_delete(store_number);
 		return "redirect:memberCompany.mp";
 	}
 	

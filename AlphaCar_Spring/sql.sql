@@ -9,5 +9,16 @@ select c.*, (select customer_name from customer where customer_email = c.custome
 		from web_notice_coment c
 		where notice_id = 238
 		order by COMENT_WRITEDATE;
+    
+ALTER TABLE store_file
+ADD CONSTRAINT store_delete_cascade
+  FOREIGN KEY (store_number)
+  REFERENCES store(store_number)
+  ON DELETE CASCADE;    
+    
+delete 
+from store
+where store_number = 131;
+
 
 

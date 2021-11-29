@@ -22,6 +22,11 @@ public class HomeMyPageDAO implements HomeMyPageService {
 	public List<HomeCompanyVO> company_list(String customer_email) {
 		return sql.selectList("homeMyPage.mapper.company_select", customer_email);
 	}
+
+	@Override
+	public void company_delete(int store_number) {
+		sql.delete("homeMyPage.mapper.company_delete", store_number);
+	}
 	
 
 }

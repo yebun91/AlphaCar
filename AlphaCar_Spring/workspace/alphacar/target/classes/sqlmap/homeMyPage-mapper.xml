@@ -13,10 +13,17 @@
 		where customer_email = #{customer_email}
 	</update>
 	
+	<!-- 내회사 리스트 뽑아오기 -->
 	<select id="company_select" resultType="homeMypage.HomeCompanyVO">
 		select * 
 		from store s, store_file f
 		where s.customer_email = #{customer_email} 
 			and s.store_number = f.store_number
 	</select>
+	
+	<!-- 내 회사 지우기 -->
+	<delete id="company_delete">
+		delete from store
+		where store_number = #{store_number}	
+	</delete>
 </mapper>
