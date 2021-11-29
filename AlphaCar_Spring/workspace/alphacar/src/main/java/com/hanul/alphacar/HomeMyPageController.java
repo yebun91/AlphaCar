@@ -44,7 +44,7 @@ public class HomeMyPageController {
 	public String memberUpdate() {
 		return "mypage/member_update";
 	}
-	//회원정보 수정 페이지로 이동
+	//회원정보 수정 처리
 	@RequestMapping("/memberSubmit.mp")
 	public String memberUpdateWork(WebMemberVO vo, MultipartFile image_file, HttpSession session, String attach) {
 		WebMemberVO member = (WebMemberVO) session.getAttribute("loginInfo");

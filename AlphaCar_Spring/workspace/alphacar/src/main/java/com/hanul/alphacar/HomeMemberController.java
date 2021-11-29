@@ -1,5 +1,6 @@
 package com.hanul.alphacar;
 
+import java.io.File;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +49,7 @@ public class HomeMemberController {
 	
 	//로그인 화면 요청
 	@RequestMapping("/homeLogin")
-	public String login(HttpSession session, Model model) {
+	public String login(HttpSession session) {
 		
 		session.setAttribute("category", "homeLogin");
 		return "member/login";
@@ -57,8 +58,7 @@ public class HomeMemberController {
 	
 	//회원가입 화면 요청
 	@RequestMapping("/homeJoin")
-	public String join(HttpSession session, Model model) {
-		session.setAttribute("category", "homeJoin");
+	public String join() {
 		return "member/join";
 	}
 	
@@ -68,25 +68,17 @@ public class HomeMemberController {
 	public String homeRegister(HttpSession session, WebMemberVO vo, HttpServletRequest req, String join_company,
 			MultipartFile file) {
 		StringBuffer msg = new StringBuffer("<script>");
-		String admin = "";
-		if (join_company.equals("M")) {
-			admin = "M";
-			vo.setAdmin(admin);
-		} else if (join_company.equals("C")) {
-			admin = "C";
-			vo.setAdmin(admin);
-		}
 		
-		if (!file.isEmpty()) {// 파일이 있는 경우
-			// 파일 첨부 처리 부분
-			//vo.setCustomer_picture(file.getOriginalFilename());
-			vo.setCustomer_picture(common.fileUpload("join", file, session));
+		if (! file.isEmpty()) {
+			vo.setCustomer_picture(common.fileUpload("profiles", file, session));
+		}else {
+			//전송한 이미지가 없을 경우 null을 입력
+			vo.setCustomer_picture(null);
 		}
 		
 		if (service.member_join(vo)) {
 			msg.append("alert('회원가입을 축하드립니다.'); location='")
 				.append(req.getContextPath()).append("'");
-		//	msg.append("alert('회원가입을 축하드립니다.'); location='login' ")
 		} else {
 			msg.append("alert('회원가입 실패'); location='homeJoin' ");
 		}

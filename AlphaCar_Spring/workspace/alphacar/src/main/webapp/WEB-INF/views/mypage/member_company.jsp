@@ -20,8 +20,8 @@
 	          <img src="${vo.imgpath}" alt="회사이미지">
 	          <div class="mypage_company_back"></div>
 	          <div class="mypage_company_select">
-	            <button onclick="location.href='memberCompanyGraph.mp'">그래프로 보기</button>
-	            <button onclick="location.href='memberCompanyUpdate.mp'">수정하기</button>
+	            <button onclick="location.href='memberCompanyGraph.mp?store_number=${vo.store_number }'">그래프로 보기</button>
+	            <button onclick="location.href='memberCompanyUpdate.mp?store_number=${vo.store_number }'">수정하기</button>
 	          </div>
 	        </div>
 	    </c:if>    

@@ -57,13 +57,14 @@
 const image = document.querySelector('.mypage_user_image');
 const input_file = document.querySelector('.image_upload');
 
+//이미지 파일 누를 때 input_file도 같이 클릭
 function choose_image() {
 	image.addEventListener('click', () => {
 		input_file.click();
 	});
 }
 
-//첨부파일 선택시
+//첨부파일 선택시 처리
 $(document).on('change', '.image_upload', function() {
 	var attached = this.files[0];
 	if(attached){ // 첨부된 파일이 있을 경우
@@ -76,8 +77,10 @@ $(document).on('change', '.image_upload', function() {
 	}
 })
 
+//회원정보 수정 버튼 누를 시
 function member_update() {
 
 	$("form").submit()
 }
+
 </script>

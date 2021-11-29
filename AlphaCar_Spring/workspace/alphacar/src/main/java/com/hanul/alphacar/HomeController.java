@@ -28,6 +28,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		model.addAttribute("page", service.notice_list(page));
+		
 		return "index";
 	}
 }

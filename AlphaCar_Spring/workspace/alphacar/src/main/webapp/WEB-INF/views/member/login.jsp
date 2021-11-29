@@ -5,7 +5,7 @@
       <div class="text_logo">
         <img src="img/alphacarLogo_text_black_500px.png" alt="alphaCar">
       </div>
-      <form class="form" method="post" action="">
+      <form class="form" method="post" action="webLogin">
         <input type="text" placeholder="이메일" class="customer_email" id="customer_email" />
         <input type="password" placeholder="비밀번호" class="customer_pw" id="customer_pw"
         				onkeypress = "if (event.keyCode == 13) go_login()" />
