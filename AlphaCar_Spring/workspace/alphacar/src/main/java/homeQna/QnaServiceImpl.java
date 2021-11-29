@@ -83,6 +83,12 @@ public class QnaServiceImpl implements QnaService {
 		return dao.member_qna_list(page, customer_email);
 	}
 
+	@Override
+	public void reply_update(QnaVO vo) {
+		dao.reply_update(vo);
+		
+	}
+
 	
 
 }

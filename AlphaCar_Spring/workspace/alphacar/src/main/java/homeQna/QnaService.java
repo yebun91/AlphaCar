@@ -28,6 +28,9 @@ public interface QnaService {
 	//qna 답글 저장
 	void qna_reply_insert(QnaVO vo);
 	
+	//qna 답글 변경 저장
+	void reply_update(QnaVO vo);
+	
 	//qna 비밀번호 일치 확인
 	QnaVO check_pw(int qna_id);
 	

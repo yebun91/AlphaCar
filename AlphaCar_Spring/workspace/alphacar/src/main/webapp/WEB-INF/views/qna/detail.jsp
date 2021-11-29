@@ -30,7 +30,12 @@
 			<button type="button" onclick="location.href='masterContact.mp'">목록으로</button>
 			<!-- 관리자로 로그인된 경우만 수정 가능 -->
 			<c:if test="${loginInfo.customer_email eq vo.customer_email}">
-	    	<button type="button" onclick="location.href='update.qna?qna_id=${vo.qna_id}'">수정</button>
+				<c:if test="${vo.qna_indent eq 0 }">
+	    		<button type="button" onclick="location.href='update.qna?qna_id=${vo.qna_id}'">수정</button>
+				</c:if>
+				<c:if test="${vo.qna_indent ne 0 }">
+	    		<button type="button" onclick="location.href='replyUpdate.qna?qna_id=${vo.qna_id}'">수정</button>
+				</c:if>
 				<button type="button" onclick="if(confirm('정말 삭제 하시겠습니까?')) { 
 				location.href='delete.qna?qna_id=${vo.qna_id }'} ">삭제</button>
 			</c:if>

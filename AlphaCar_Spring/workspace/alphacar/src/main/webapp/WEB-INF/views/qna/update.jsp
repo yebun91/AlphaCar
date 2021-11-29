@@ -33,6 +33,9 @@
 				<textarea id="summernote" name="qna_content" cols="100" >${vo.qna_content }</textarea>
 				
 			</div>
+			<div class="page_password_space">
+				<input type="password" placeholder="비밀번호" name="qna_password" id="qna_password" />
+    	</div>
 			<div class="page_write_button">
 				<button>수정완료</button>
 				<button type="button" onclick="if(confirm('정말 취소 하시겠습니까?')) { 

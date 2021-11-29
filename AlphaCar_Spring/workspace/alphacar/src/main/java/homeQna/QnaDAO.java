@@ -91,4 +91,10 @@ public class QnaDAO implements QnaService {
 		return page;
 	}
 
+	@Override
+	public void reply_update(QnaVO vo) {
+		sql.update("homeQna.mapper.homeQnaReplyUpdate", vo);
+		
+	}
+
 }
