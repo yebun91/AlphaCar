@@ -14,7 +14,8 @@
 	
 	<!-- 회원가입 -->
 	<insert id="member_join">
-		insert into customer (customer_email, customer_pw, customer_name, customer_picture, admin)
-		values (#{customer_email}, #{customer_pw}, #{customer_name}, #{customer_picture, jdbcType=VARCHAR}, #{admin})
+		insert into customer (customer_email, customer_pw, customer_name, customer_picture, admin,city,addr)
+		values (#{customer_email}, #{customer_pw}, #{customer_name}, #{customer_picture, jdbcType=VARCHAR}, #{admin},
+			#{city}, #{addr})
 	</insert>
 </mapper>
