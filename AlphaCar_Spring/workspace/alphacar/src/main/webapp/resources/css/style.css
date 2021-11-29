@@ -596,7 +596,7 @@ input[type="checkbox"]:checked, input[type="radio"]:checked{
   font-size: var(--font-large);
 }
 .join_company, .join_profile{
-  padding-top: 20px;
+  padding: 30px 0;
   display: block;
   width: 400px;
 }
@@ -692,13 +692,14 @@ input[type="checkbox"]:checked, input[type="radio"]:checked{
   border-radius: 50%;
   height: 180px;
   width: 180px;
+  overflow: hidden;
 }
+
 .mypage_user_image>img{
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 
 .mypage_user_name>h3{
   display: inline-block;
