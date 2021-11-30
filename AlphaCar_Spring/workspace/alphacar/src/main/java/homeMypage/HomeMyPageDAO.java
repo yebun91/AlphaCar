@@ -37,7 +37,7 @@ public class HomeMyPageDAO implements HomeMyPageService {
 	@Override
 	public CustomerPage customer_list(CustomerPage page) {
 		//총 글의 개수를 조회(totalList)
-		int pagecnt = sql.selectOne("homeMyPage.mapper.customertotalList", page);
+		int pagecnt = sql.selectOne("homeMyPage.mapper.customerTotalList", page);
 		page.setTotallist(pagecnt); //총 글의 수
 		
 		//전체 글을 조회하여 List 

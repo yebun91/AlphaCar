@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="mypage_image">
     </div>
@@ -23,17 +22,18 @@
           </ul>
         </div>
         <!-- service 검색기능 -->
-        <form action="" class="page_search">
+        <form action="masterMemberList.mp" class="page_search">
+        <input type="hidden" name="curPage" value="1" /> 
           <div class="page_search_index">
             <select name="search" id="service_search_index">
-              <option value="all" ${page.search eq 'all' ? 'selected' : '' }>전체</option>
-              <option value="C" ${page.search eq 'C' ? 'selected' : '' }>일반</option>
-              <option value="M" ${page.search eq 'M' ? 'selected' : '' }>사업자</option>
+              <option value="all" ${page.search eq 'all' ? 'selected' : '' }>전체 검색</option>
+              <option value="customer_email" ${page.search eq 'customer_email' ? 'selected' : '' }>이메일로 검색</option>
+              <option value="customer_name" ${page.search eq 'customer_name' ? 'selected' : '' }>이름으로 검색</option>
             </select>
           </div>
           <div class="page_search_box">
             <input type="text" placeholder="search" name="keyword" value="${page.keyword}">
-            <i class="fas fa-search"></i>
+            <i class="fas fa-search" onclick="document.querySelector('.page_search').submit();"></i>
           </div>
         </form>
       </div>
