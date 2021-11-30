@@ -15,7 +15,7 @@
     <div id="page">
       <h1>1:1 문의 내역</h1>
       <div class="page_index">
-      <form action="memberContact.mp" method="get">
+      <form action="masterContact.mp" method="post">
 		    <input type="hidden" name="curPage" value="1" /> 
 	        <div class="page_select">
 	          <ul>
@@ -28,7 +28,7 @@
 	        </div>
         </form>
         <!-- service 검색기능 -->
-        <form action="memberContact.mp" method="get" class="page_search">
+        <form action="masterContact.mp" method="post" class="page_search">
       		<input type="hidden" name="curPage" value="1" /> 
           <div class="page_search_index">
             <select name="service_search_index" id="service_search_index">
@@ -40,8 +40,8 @@
             </select>
           </div>
           <div class="page_search_box">
-            <input type="text" placeholder="search">
-            <i class="fas fa-search"></i>
+            <input type="text" placeholder="search" name="keyword" value="${notice_page.keyword}">
+            <i class="fas fa-search" onclick='$("form").submit()'></i>
           </div>
         </form>
       </div>

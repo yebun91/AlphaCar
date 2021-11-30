@@ -46,6 +46,26 @@ public class HomeMyPageDAO implements HomeMyPageService {
 		return page;
 
 	}
+
+	@Override
+	public int company_insert(HomeStoreVO vo) {
+		// TODO Auto-generated method stub
+		return sql.insert("homeMyPage.mapper.company_register", vo);
+	}
+
+	@Override
+	public void company_update(HomeStoreVO vo) {
+		sql.update("homeMyPage.mapper.company_update", vo);
+		
+	}
+
+	@Override
+	public List<HomeStoreVO> companyId_list(int store_number) {
+		// TODO Auto-generated method stub
+		return sql.selectList("homeMyPage.mapper.companyId_select", store_number);
+	}
+
+
 	
 
 }
