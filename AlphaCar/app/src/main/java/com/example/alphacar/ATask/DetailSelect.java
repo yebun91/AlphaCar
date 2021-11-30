@@ -7,6 +7,7 @@ import static com.example.alphacar.Common.CommonMethod.ipConfig;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.JsonReader;
+import android.util.Log;
 
 
 import com.example.alphacar.DTOS.StoreDTO;
@@ -23,20 +24,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 
-public class DetailSelect extends AsyncTask<Void, Void, StoreDTO> {
+public class DetailSelect extends AsyncTask<Void, Void, Void> {
 
 
 //    String customer_email = "store_master@naver.com";
 
-     int store_number = 0;
+    int store_number = 0;
     /*public ListDetail(int store_number) {
         this.store_number = store_number;
     }*/
     StoreDTO dto;
+    ArrayList<StoreDTO> storeDTOArrayList;
 
-    public DetailSelect(int store_number) {
+    public DetailSelect(int store_number, ArrayList<StoreDTO> storeDTOArrayList) {
         this.store_number = store_number;
+        this.storeDTOArrayList = storeDTOArrayList;
     }
 
     // 반드시 선언해야 할것들 : 무조건 해야함  복,붙
@@ -52,7 +56,7 @@ public class DetailSelect extends AsyncTask<Void, Void, StoreDTO> {
     }
 
     @Override
-    protected StoreDTO doInBackground(Void... voids) {
+    protected Void doInBackground(Void... voids) {
         try {
             // MultipartEntityBuilder 생성 : 무조건 해야함  복,붙
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
@@ -62,7 +66,7 @@ public class DetailSelect extends AsyncTask<Void, Void, StoreDTO> {
             // 여기가 우리가 수정해야 하는 부분 : 서버로 보내는 데이터
             // builder에 문자열 및 데이터 추가하기
             builder.addTextBody("store_number", String.valueOf(store_number), ContentType.create("Multipart/related", "UTF-8"));
-           // builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
+            // builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
 
 
             // 전송
@@ -78,7 +82,7 @@ public class DetailSelect extends AsyncTask<Void, Void, StoreDTO> {
             inputStream = httpEntity.getContent();    // 응답내용을 inputStream 에 넣음
 
             // 응답 처리 : dto 형태
-            dto = readMessage(inputStream);
+            readJsonStream(inputStream);
 
             inputStream.close();
 
@@ -98,26 +102,38 @@ public class DetailSelect extends AsyncTask<Void, Void, StoreDTO> {
                 httpClient = null;
             }
         }
-    return dto;
+        return null;
     }
     // doInBackground 끝난후에 실행하는 부분
 
 
     @Override
-    protected void onPostExecute(StoreDTO storeDTO) {
-        super.onPostExecute(storeDTO);
+    protected void onPostExecute(Void unused) {
+        super.onPostExecute(unused);
     }
 
-    //하나의 DTO형태로 데이터를 받을때 파싱하는 부분
-    private StoreDTO readMessage(InputStream inputStream) throws IOException {
+    public void readJsonStream(InputStream inputStream) throws Exception {
         JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
+        try {
+            reader.beginArray();
+            while (reader.hasNext()) {
+                storeDTOArrayList.add(readMessage(reader));
+            }
+            reader.endArray();
+        } finally {
+            reader.close();
+        }
+    }
 
+
+    //하나의 DTO형태로 데이터를 받을때 파싱하는 부분
+    private StoreDTO readMessage(JsonReader reader) throws IOException {
 
 
         int store_number = 0;
-        String customer_email = "", store_name = "", store_addr ="" ,store_tel ="", store_time = "", store_dayoff = "",  introduce= "",  picture= "";
+        String customer_email = "", store_name = "", store_addr = "", store_tel = "", store_time = "", store_dayoff = "", introduce = "", imgpath = "";
         int inventory = 0;
-        String store_price = "", store_master_name = "", store_registration_number ="";
+        String store_price = "", store_master_name = "", store_registration_number = "";
         int store_favorite_cnt = 0;
 
         reader.beginObject();
@@ -127,38 +143,36 @@ public class DetailSelect extends AsyncTask<Void, Void, StoreDTO> {
                 store_number = reader.nextInt();
             } else if (readStr.equals("customer_email")) {
                 customer_email = reader.nextString();
-            }
-            else if (readStr.equals("store_name")) {
+            } else if (readStr.equals("store_name")) {
                 store_name = reader.nextString();
             } else if (readStr.equals("store_addr")) {
                 store_addr = reader.nextString();
             } else if (readStr.equals("store_tel")) {
                 store_tel = reader.nextString();
-            }else if (readStr.equals("store_time")) {
+            } else if (readStr.equals("store_time")) {
                 store_time = reader.nextString();
             } else if (readStr.equals("store_dayoff")) {
                 store_dayoff = reader.nextString();
             } else if (readStr.equals("introduce")) {
                 introduce = reader.nextString();
-            } else if (readStr.equals("picture")) {
-                picture = reader.nextString();
-            }else if (readStr.equals("inventory")) {
+            } else if (readStr.equals("imgpath")) {
+                imgpath = reader.nextString();
+            } else if (readStr.equals("inventory")) {
                 inventory = reader.nextInt();
-            }else if (readStr.equals("store_price")) {
+            } else if (readStr.equals("store_price")) {
                 store_price = reader.nextString();
             } else if (readStr.equals("store_master_name")) {
                 store_master_name = reader.nextString();
             } else if (readStr.equals("store_registration_number")) {
                 store_registration_number = reader.nextString();
-            }else if (readStr.equals("store_favorite_cnt")) {
+            } else if (readStr.equals("store_favorite_cnt")) {
                 store_favorite_cnt = reader.nextInt();
-            }
-            else {
+            } else {
                 reader.skipValue();
             }
         }
         reader.endObject();
 
-       return  new StoreDTO(store_number,customer_email, store_name, store_addr, store_tel, store_time,store_dayoff,introduce,picture,inventory,store_price,store_master_name,store_registration_number,store_favorite_cnt);
+        return new StoreDTO(store_number, customer_email, store_name, store_addr, store_tel, store_time, store_dayoff, introduce, imgpath, inventory, store_price, store_master_name, store_registration_number, store_favorite_cnt);
     }
 }

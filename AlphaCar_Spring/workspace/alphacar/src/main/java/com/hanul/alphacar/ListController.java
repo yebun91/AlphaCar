@@ -182,6 +182,7 @@ public class ListController {
 		req.setCharacterEncoding("UTF-8");
 		System.out.println(req.getParameter("customer_email"));
 		int store_number = Integer.parseInt(req.getParameter("store_number"));
+		System.out.println(store_number);
 		List<StoreVO> vo = service.store_detail(store_number);
 		
 		
