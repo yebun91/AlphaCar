@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import common.CommonService;
+import homeMypage.CustomerPage;
 import homeMypage.HomeMyPageServiceImpl;
 import homeStore.HomeStoreServiceImpl;
 import homeStore.HomeStoreVO;
@@ -32,7 +33,7 @@ public class HomeMyPageController {
 	
 	@Autowired private CommonService common;
 	@Autowired private HomeMyPageServiceImpl homeService;
-
+	@Autowired private CustomerPage c_page;
 	@Autowired private WebMemberServiceImpl member;
 	@Autowired private QnaServiceImpl service;
 	@Autowired private QnaPage page;
@@ -78,7 +79,49 @@ public class HomeMyPageController {
 		return "redirect:mypage.mp";
 
 	}	
+    //회원 탈퇴
+    @RequestMapping("/memberDelete.mp")
+    public String memberDelete(HttpSession session, String customer_email) {
+        homeService.home_member_delete(customer_email);
+        session.removeAttribute("loginInfo");
+        return "redirect:/";
+    }
+    //회원 삭제
+    @RequestMapping("/mastermemberDelete.mp")
+    public String mastermemberDelete(HttpSession session, String customer_email) {
+        homeService.home_member_delete(customer_email);
+        session.removeAttribute("loginInfo");
+        return "redirect:masterMemberList.mp";
+        
+    }
+  //마스터가 하는 회원정보 수정 처리
+  	@RequestMapping("/memberSubmit.mp")
+  	public String memberUpdateWork(WebMemberVO vo, MultipartFile image_file, HttpSession session, String attach) {
+  		WebMemberVO member = (WebMemberVO) session.getAttribute("loginInfo");
+  		String uuid = session.getServletContext().getRealPath("resources")
+  				+ "/" + member.getCustomer_picture();
+  			
+  		//전송한 이미지 파일이 있다면
+  		if (! image_file.isEmpty()) {
+  			vo.setCustomer_picture(common.fileUpload("profiles", image_file, session));
+  			//기존에 가지고 있었던 파일 패스값이 있다면
+  			if ( member.getCustomer_picture() != null ) {
+  				File f = new File ( uuid );
+  				// 기존 첨부 파일 삭제
+  				if (f.exists()) f.delete();
+  			} 
+  			
+  		}else {
+  			//전송한 이미지가 없을 경우 기존 주소 유지
+  			vo.setCustomer_picture(member.getCustomer_picture());
+  		}
+  		
+  		//화면에서 변경 입력한 정보를 db에 변경 저장한 후 상세화면으로 연결
+  		homeService.home_member_update(vo);	
+  		return "redirect:mypage.mp";
 
+  	}
+    
 	//내 가게 정보
 	@RequestMapping("/memberCompany.mp")
 	public String memberCompany(HttpSession session, Model model) {
@@ -86,6 +129,8 @@ public class HomeMyPageController {
 		model.addAttribute("company", homeService.company_list(member.getCustomer_email()));
 		return "mypage/member_company";
 	}
+	
+	
 	
 	//1:1 문의 내역
 	@RequestMapping("/memberContact.mp")
@@ -134,10 +179,10 @@ public class HomeMyPageController {
         			storeInventory.set(i, "Y");
        		 }
         		for (int i = 0; i < storeInventory.size(); i++) {
-			vo.setNow_state(storeInventory.get(i));
+			//vo.setNow_state(storeInventory.get(i));
 			
 		}
-		homeService.company_update(vo);
+		//homeService.company_update(vo);
 		return "redirect:memberCompany.mp?store_number=" + vo.getStore_number();
 	}
 	
@@ -225,18 +270,26 @@ public class HomeMyPageController {
 		return msg.toString();
 	}
 	
-	//회원 정보 검색
+	//회원 정보 리스트로 반환
 	@RequestMapping("/masterMemberList.mp")
-	public String masterMemberList(HttpSession session, Model model) {
+	public String masterMemberList(HttpSession session, Model model, 
+			@RequestParam (defaultValue = "1") int curPage,
+			String search, String keyword) {
+		
+		c_page.setCurPage(curPage);
+		c_page.setSearch(search);
+		c_page.setKeyword(keyword);
+		
+		model.addAttribute("page", homeService.customer_list(c_page));
 		return "mypage/master_member_list";
 	}
 	
 	//회원정보 수정 마스터 페이지로 이동
 	@RequestMapping("/mastermemberUpdate.mp")
-	public String masterMemberUpdate(Model model, String customer_email) {
-		WebMemberVO vo = homeService.home_member_select(customer_email);
+	public String masterMemberUpdate(Model model, String id) {
+		WebMemberVO vo = homeService.home_member_select(id);
 		System.out.println(vo.getCustomer_name());
-		model.addAttribute("customer_info", service.qna_list(page));
+		model.addAttribute("vo", vo);
 		return "mypage/master_member_update";
 	}
 	

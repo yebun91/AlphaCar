@@ -49,7 +49,7 @@
           <c:forEach items="${page.list}" var="vo">
       		<div class="user_list_content">
 	          <div class="user_list_content_title">
-	            <a href='detail.me?id=${vo.customer_email}'>
+	            <a href='mastermemberUpdate.mp?id=${vo.customer_email}'>
 	              <p>${vo.customer_email}</p>
 	            </a>
 	          </div>

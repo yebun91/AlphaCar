@@ -29,8 +29,6 @@
 		where store_number = #{store_number}	
 	</delete>
 	
-	
-	
 	<!-- 회원정보 select -->
 	<select id="customerList" resultType="member.WebMemberVO">
 		select *
@@ -67,36 +65,21 @@
 		</if> -->
 	</sql>
 	
-	
-	<!-- <sql id = 'where_search'>
-		<if test="search == 'M' ">
-			where admin = 'M' 
-			<if test="keyword != null">
-   				and customer_email like '%'||#{keyword}||'%'
-   			</if>
-		</if>
-		<if test="search == 'C' ">
-			where admin = 'C' 
-			<if test="keyword != null">
-   				and customer_email like '%'||#{keyword}||'%'
-   			</if>
-		</if>
-		<if test="search == 'all' ">
-   			<if test="keyword != null">
-   				where customer_email like '%'||#{keyword}||'%'
-   			</if>
-		</if>
-	</sql> -->
-	
 	<!-- 전체 공지글 수 조회 -->
 	<select id="customerTotalList" resultType="integer">
 		select count(*) from customer <include refid="where_search" />
 	</select>
 	
 	<!-- 한명의 회원 정보 가져오기 -->
-	<select id="company_select" resultType="member.WebMemberVO">
+	<select id="company_select_one" resultType="member.WebMemberVO">
 		select * 
 		from customer
 		where customer_email = #{customer_email} 
 	</select>
+	
+	<!-- 회원지우기 -->
+	<delete id="home_member_delete">
+		delete from customer
+		where customer_email = #{customer_email}	
+	</delete>
 </mapper>
