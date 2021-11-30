@@ -19,7 +19,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import common.CommonService;
 import homeMypage.HomeMyPageServiceImpl;
-import homeMypage.HomeStoreVO;
+import homeStore.HomeStoreServiceImpl;
+import homeStore.HomeStoreVO;
 import homeQna.QnaPage;
 import homeQna.QnaServiceImpl;
 import homeQna.QnaVO;
@@ -31,6 +32,7 @@ public class HomeMyPageController {
 	
 	@Autowired private CommonService common;
 	@Autowired private HomeMyPageServiceImpl homeService;
+
 	@Autowired private WebMemberServiceImpl member;
 	@Autowired private QnaServiceImpl service;
 	@Autowired private QnaPage page;
@@ -117,7 +119,7 @@ public class HomeMyPageController {
 	//가게 수정 페이지 요청
 	@RequestMapping("/memberCompanyUpdate.mp")
 	public String memberCompanyUpdate(HttpSession session, Model model, int store_number ) {
-		model.addAttribute("vo", homeService.companyId_list(store_number));
+		//model.addAttribute("vo", service.companyId_list(store_number));
 		return "mypage/member_company_update";
 	}
 	
@@ -145,7 +147,7 @@ public class HomeMyPageController {
         }
         
         for (int i = 0; i < storeInventory.size(); i++) {
-			vo.setNow_state(storeInventory.get(i));
+			//vo.setNow_state(storeInventory.get(i));
 			
 		}
         
@@ -194,13 +196,13 @@ public class HomeMyPageController {
 //			}
 //		}
 //		
-		if (homeService.company_insert(vo) == 0) {
-		//	msg.append("alert('회원가입을 축하드립니다.'); location='login' ")
-			msg.append("alert('가게등록 실패'); location='memberCompanyInsert.mp' ");
-		} else {
-			msg.append("alert('가게 등록이 완료되었습니다!'); location='")
-			.append(req.getContextPath()).append("'");
-		}
+		/*
+		 * if (homeService.company_insert(vo) == 0) { //
+		 * msg.append("alert('회원가입을 축하드립니다.'); location='login' ")
+		 * msg.append("alert('가게등록 실패'); location='memberCompanyInsert.mp' "); } else {
+		 * msg.append("alert('가게 등록이 완료되었습니다!'); location='")
+		 * .append(req.getContextPath()).append("'"); }
+		 */
 		msg.append("</script>");
 		return msg.toString();
 	}
@@ -210,6 +212,16 @@ public class HomeMyPageController {
 	public String masterMemberList(HttpSession session, Model model) {
 		return "mypage/master_member_list";
 	}
+	
+	//회원정보 수정 마스터 페이지로 이동
+	@RequestMapping("/mastermemberUpdate.mp")
+	public String masterMemberUpdate(Model model, String customer_email) {
+		WebMemberVO vo = homeService.home_member_select(customer_email);
+		System.out.println(vo.getCustomer_name());
+		model.addAttribute("customer_info", service.qna_list(page));
+		return "mypage/master_member_update";
+	}
+	
 	
 	//1:1문의 처리
 	@RequestMapping("/masterContact.mp")

@@ -92,4 +92,11 @@
 	<select id="customerTotalList" resultType="integer">
 		select count(*) from customer <include refid="where_search" />
 	</select>
+	
+	<!-- 한명의 회원 정보 가져오기 -->
+	<select id="company_select" resultType="member.WebMemberVO">
+		select * 
+		from customer
+		where customer_email = #{customer_email} 
+	</select>
 </mapper>

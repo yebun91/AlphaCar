@@ -46,6 +46,11 @@ public class HomeMyPageDAO implements HomeMyPageService {
 		return page;
 
 	}
+
+	@Override
+	public WebMemberVO home_member_select(String customer_email) {
+		return sql.selectOne("homeMyPage.mapper.memberSelect");
+	}
 	
 
 }

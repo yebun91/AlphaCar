@@ -854,8 +854,11 @@ input[type="checkbox"]:checked, input[type="radio"]:checked{
 }
 
 /* 회원정보 확인 */
+.page_list_box{
+	border-bottom: 2px solid var(--black-color);
+}
 
-.user_list, .user_list_name{
+.user_list_name{
   border-bottom: 2px solid var(--black-color);
 }
 .user_list_name{
@@ -898,6 +901,9 @@ input[type="checkbox"]:checked, input[type="radio"]:checked{
   width: 20%;
   text-align: center;
   font-weight: var(--weight-semi-bold);
+}
+.page{
+	padding-top: 20px
 }
 
 /* 댓글기능 */

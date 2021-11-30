@@ -36,4 +36,9 @@ public class HomeMyPageServiceImpl implements HomeMyPageService {
 	public CustomerPage customer_list(CustomerPage page) {
 		return dao.customer_list(page);
 	}
+
+	@Override
+	public WebMemberVO home_member_select(String customer_email) {
+		return dao.home_member_select(customer_email);
+	}
 }

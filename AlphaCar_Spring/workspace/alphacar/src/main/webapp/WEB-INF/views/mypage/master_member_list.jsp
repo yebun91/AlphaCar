@@ -11,7 +11,7 @@
   </nav>
   <!-- 메인 시작 -->
   <main>
-    <div id="page">
+    <div id="page" class="master_member_list">
       <h1>회원정보 확인</h1>
       <div class="page_index">
         <div class="page_select">
@@ -68,6 +68,9 @@
 		  </c:forEach> 
     </div>
     <!-- 페이징 처리 -->
-    <jsp:include page="/WEB-INF/views/include/page.jsp" /> 
+    <div class="page">
+    	<jsp:include page="/WEB-INF/views/include/page.jsp" /> 
+    </div>
+    
   </main>
   
