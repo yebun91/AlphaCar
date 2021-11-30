@@ -1,9 +1,11 @@
 package com.hanul.alphacar;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import common.CommonService;
-import homeMypage.CustomerPage;
 import homeMypage.HomeMyPageServiceImpl;
+import homeMypage.HomeStoreVO;
 import homeQna.QnaPage;
 import homeQna.QnaServiceImpl;
 import homeQna.QnaVO;
@@ -30,7 +34,6 @@ public class HomeMyPageController {
 	@Autowired private WebMemberServiceImpl member;
 	@Autowired private QnaServiceImpl service;
 	@Autowired private QnaPage page;
-	@Autowired private CustomerPage c_page;
 	
 	@RequestMapping("/mypage.mp")
 	public String login(HttpSession session) {
@@ -43,16 +46,8 @@ public class HomeMyPageController {
 	}
 	//회원정보 수정 페이지로 이동
 	@RequestMapping("/memberUpdate.mp")
-	public String memberUpdate(Model model) {
+	public String memberUpdate() {
 		return "mypage/member_update";
-	}
-	//회원 탈퇴
-	@RequestMapping("/memberDelete.mp")
-	public String memberDelete(HttpSession session, int store_number) {
-		homeService.company_delete(store_number);
-		session.removeAttribute("loginInfo");
-		return "redirect:/";
-		
 	}
 	//회원정보 수정 처리
 	@RequestMapping("/memberSubmit.mp")
@@ -100,6 +95,8 @@ public class HomeMyPageController {
 		page.setSearch(search);
 		page.setKeyword(keyword);
 		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
+		//DB에서 공지글 목록을 조회한 후 목록화면에 출력
+		//model.addAttribute("page", service.member_qna_list(page, vo.getCustomer_email()));
 		
 		return "mypage/member_contact";
 	}
@@ -117,9 +114,10 @@ public class HomeMyPageController {
 		return "mypage/member_company_graph";
 	}
 	
-	//가게 수정
+	//가게 수정 페이지 요청
 	@RequestMapping("/memberCompanyUpdate.mp")
-	public String memberCompanyUpdate(HttpSession session, Model model) {
+	public String memberCompanyUpdate(HttpSession session, Model model, int store_number ) {
+		model.addAttribute("vo", homeService.companyId_list(store_number));
 		return "mypage/member_company_update";
 	}
 	
@@ -129,17 +127,87 @@ public class HomeMyPageController {
 		return "mypage/member_company_insert";
 	}
 	
+	//신규 가게 저장 요청
+	@ResponseBody
+	@RequestMapping(value = "/homeStoreRegister.mp", produces = "text/html; charset=utf-8")
+	public String homeStoreRegister(HttpSession session, HomeStoreVO vo, HttpServletRequest req, String join_company,
+			MultipartFile file, int inventory, MultipartHttpServletRequest mtfRequest) {
+		StringBuffer msg = new StringBuffer("<script>");
+		
+		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
+		
+		ArrayList<String> storeInventory = new ArrayList<>();
+		for (int i =0; i< 9; i++){
+			storeInventory.add("X");
+        }
+        for(int i =0; i<inventory; i++){
+        	storeInventory.set(i, "Y");
+        }
+        
+        for (int i = 0; i < storeInventory.size(); i++) {
+			vo.setNow_state(storeInventory.get(i));
+			
+		}
+        
+        System.out.println(file);
+
+		
+//        ArrayList<MultipartFile> file = new ArrayList<MultipartFile>();
+//		file.add(multi.getFile("imgpath1"));
+//		file.add(multi.getFile("imgpath2"));
+//		file.add(multi.getFile("imgpath3"));
+//		
+//		for (int i = 0; i < file.size(); i++) {
+//			if(file.get(i) != null) {
+//				fileName = file.get(i).getOriginalFilename();
+//				System.out.println("fileName : " + fileName);
+//				
+//				if(file.get(i).getSize() > 0) {
+//					realImgPath = req.getSession().getServletContext()
+//							.getRealPath("/resources/");
+//					
+//					System.out.println("realpath : " + realImgPath);
+//					System.out.println("fileSize : " + file.get(i).getSize());
+//					
+//					// 이미지 파일을 서버에 저장
+//					try {
+//						file.get(i).transferTo(new File(realImgPath, fileName));
+//					} catch (Exception e) {
+//						e.getMessage();
+//					} 
+//					
+//				}
+//			
+//			
+//			}
+//			if (i==0) {
+//				vo.setImgname1(fileName);
+//				vo.setImgpath1(realImgPath);
+//			}else if(i==1) {
+//
+//				vo.setImgname2(fileName);
+//				vo.setImgpath2(realImgPath);
+//			}else if(i==2) {
+//
+//				vo.setImgname3(fileName);
+//				vo.setImgpath3(realImgPath);
+//			}
+//		}
+//		
+		if (homeService.company_insert(vo) == 0) {
+		//	msg.append("alert('회원가입을 축하드립니다.'); location='login' ")
+			msg.append("alert('가게등록 실패'); location='memberCompanyInsert.mp' ");
+		} else {
+			msg.append("alert('가게 등록이 완료되었습니다!'); location='")
+			.append(req.getContextPath()).append("'");
+		}
+		msg.append("</script>");
+		return msg.toString();
+	}
+	
 	//회원 정보 검색
 	@RequestMapping("/masterMemberList.mp")
-	public String masterMemberList(HttpSession session, Model model, 
-			@RequestParam (defaultValue = "1") int curPage,
-			String search, String keyword) {
-		
-		c_page.setCurPage(curPage);
-		c_page.setSearch(search);
-		c_page.setKeyword(keyword);
-		
-		model.addAttribute("page", homeService.customer_list(c_page));
+	public String masterMemberList(HttpSession session, Model model) {
 		return "mypage/master_member_list";
 	}
 	
