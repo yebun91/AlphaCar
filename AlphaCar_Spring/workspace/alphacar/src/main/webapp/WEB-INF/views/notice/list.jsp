@@ -32,7 +32,7 @@
           </select>
         </div>
         <div class="page_search_box">
-          <input type="text" placeholder="search" name="keyword" value="${notice_page.keyword}">
+          <input type="text" placeholder="search" name="keyword" value="${page.keyword}">
           <i class="fas fa-search" onclick='$("form").submit()'></i>
         </div>
       </form>

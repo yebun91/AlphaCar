@@ -28,4 +28,41 @@
 		delete from store
 		where store_number = #{store_number}	
 	</delete>
+	
+	<!-- 회원정보 select -->
+	<select id="customerList" resultType="member.WebMemberVO">
+		select *
+		from (select rownum no, w.* 
+				from ( select * 
+					   from customer
+					   <include refid="where_search" /> 
+					   order by customer_name) w
+			  order by no desc)
+		where no between #{beginList} and #{endList}
+	</select>
+	
+	<sql id = 'where_search'>
+		<if test="search == 'M' ">
+			where admin = 'M' 
+			<if test="keyword != null">
+   				and customer_email like '%'||#{keyword}||'%'
+   			</if>
+		</if>
+		<if test="search == 'C' ">
+			where admin = 'C' 
+			<if test="keyword != null">
+   				and customer_email like '%'||#{keyword}||'%'
+   			</if>
+		</if>
+		<if test="search == 'all' ">
+   			<if test="keyword != null">
+   				where customer_email like '%'||#{keyword}||'%'
+   			</if>
+		</if>
+	</sql>
+	
+	<!-- 전체 공지글 수 조회 -->
+	<select id="customertotalList" resultType="integer">
+		select count(*) from customer <include refid="where_search" />
+	</select>
 </mapper>

@@ -12,4 +12,8 @@ public interface HomeMyPageService {
 	List<HomeCompanyVO> company_list(String customer_email);
 	//회사 삭제
 	void company_delete(int store_number);
+	//회원 정보 불러오기
+	List<WebMemberVO> customer_list();
+	//공지글 목록 조회 - 페이지 처리된
+	CustomerPage customer_list(CustomerPage page);
 }

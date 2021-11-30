@@ -26,4 +26,14 @@ public class HomeMyPageServiceImpl implements HomeMyPageService {
 	public void company_delete(int store_number) {
 		dao.company_delete(store_number);
 	}
+
+	@Override
+	public List<WebMemberVO> customer_list() {
+		return dao.customer_list();
+	}
+
+	@Override
+	public CustomerPage customer_list(CustomerPage page) {
+		return dao.customer_list(page);
+	}
 }

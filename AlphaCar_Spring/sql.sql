@@ -10,7 +10,7 @@ select c.*, (select customer_name from customer where customer_email = c.custome
 		where notice_id = 238
 		order by COMENT_WRITEDATE;
     
-ALTER TABLE store_file
+ALTER TABLE sensor
 ADD CONSTRAINT store_delete_cascade
   FOREIGN KEY (store_number)
   REFERENCES store(store_number)
@@ -20,5 +20,21 @@ delete
 from store
 where store_number = 131;
 
+select * from store_file;
 
 
+-- 삭제하는 SQL
+
+ALTER TABLE 테이블명 DROP FOREIGN KEY 포린키이름;
+
+ALTER TABLE feed DROP FOREIGN KEY feed_ibfk_3;
+
+-- 추가하는 SQL
+
+ALTER TABLE 테이블명 
+ADD CONSTRAINT 포린키이름 
+FOREIGN KEY 자식속성 
+REFERENCES 부모테이블명(자식속성이 참고할 부모속성) 
+ON DELETE CASCADE;
+
+ALTER TABLE feed ADD CONSTRAINT FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE;

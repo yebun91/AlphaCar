@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import common.CommonService;
+import homeMypage.CustomerPage;
 import homeMypage.HomeMyPageServiceImpl;
 import homeQna.QnaPage;
 import homeQna.QnaServiceImpl;
@@ -29,6 +30,7 @@ public class HomeMyPageController {
 	@Autowired private WebMemberServiceImpl member;
 	@Autowired private QnaServiceImpl service;
 	@Autowired private QnaPage page;
+	@Autowired private CustomerPage c_page;
 	
 	@RequestMapping("/mypage.mp")
 	public String login(HttpSession session) {
@@ -41,8 +43,16 @@ public class HomeMyPageController {
 	}
 	//회원정보 수정 페이지로 이동
 	@RequestMapping("/memberUpdate.mp")
-	public String memberUpdate() {
+	public String memberUpdate(Model model) {
 		return "mypage/member_update";
+	}
+	//회원 탈퇴
+	@RequestMapping("/memberDelete.mp")
+	public String memberDelete(HttpSession session, int store_number) {
+		homeService.company_delete(store_number);
+		session.removeAttribute("loginInfo");
+		return "redirect:/";
+		
 	}
 	//회원정보 수정 처리
 	@RequestMapping("/memberSubmit.mp")
@@ -121,7 +131,15 @@ public class HomeMyPageController {
 	
 	//회원 정보 검색
 	@RequestMapping("/masterMemberList.mp")
-	public String masterMemberList(HttpSession session, Model model) {
+	public String masterMemberList(HttpSession session, Model model, 
+			@RequestParam (defaultValue = "1") int curPage,
+			String search, String keyword) {
+		
+		c_page.setCurPage(curPage);
+		c_page.setSearch(search);
+		c_page.setKeyword(keyword);
+		
+		model.addAttribute("page", homeService.customer_list(c_page));
 		return "mypage/master_member_list";
 	}
 	

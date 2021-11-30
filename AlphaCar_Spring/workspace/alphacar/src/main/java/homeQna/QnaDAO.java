@@ -34,7 +34,6 @@ public class QnaDAO implements QnaService {
 
 	@Override
 	public List<QnaVO> qna_list() {
-		// TODO Auto-generated method stub
 		return sql.selectList("homeQna.mapper.homeQnaList");
 	}
 

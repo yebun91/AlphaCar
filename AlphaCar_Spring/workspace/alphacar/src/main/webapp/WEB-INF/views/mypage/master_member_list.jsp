@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="mypage_image">
     </div>
     <div class="mypage_select">
@@ -16,22 +17,22 @@
       <div class="page_index">
         <div class="page_select">
           <ul>
-            <li>전체</li>
-            <li>일반</li>
-            <li>사업자</li>
+            <li onclick="location.href='masterMemberList.mp'">전체</li>
+            <li onclick="location.href='masterMemberList.mp?search=C'">일반</li>
+            <li onclick="location.href='masterMemberList.mp?search=M'">사업자</li>
           </ul>
         </div>
         <!-- service 검색기능 -->
         <form action="" class="page_search">
           <div class="page_search_index">
-            <select name="service_search_index" id="service_search_index">
-              <option value="all" selected="selected">전체</option>
-            <option value="user">일반</option>
-            <option value="company">사업자</option>
+            <select name="search" id="service_search_index">
+              <option value="all" ${page.search eq 'all' ? 'selected' : '' }>전체</option>
+              <option value="C" ${page.search eq 'C' ? 'selected' : '' }>일반</option>
+              <option value="M" ${page.search eq 'M' ? 'selected' : '' }>사업자</option>
             </select>
           </div>
           <div class="page_search_box">
-            <input type="text" placeholder="search">
+            <input type="text" placeholder="search" name="keyword" value="${page.keyword}">
             <i class="fas fa-search"></i>
           </div>
         </form>
@@ -45,75 +46,28 @@
           <h3>사업자유무</h3>
         </div>
         <div class="page_list_box">
-          <div class="user_list_content">
-            <div class="user_list_content_title">
-              <a href="detail.me">
-                <p>text@naver.com</p>
-              </a>
-            </div>
-            <p>testtest</p>
-            <p>테스트이름</p>
-            <p>일반</p>
-          </div>  
-          <div class="user_list_content">
-            <div class="user_list_content_title">
-              <a href="detail.me">
-                <p>text@naver.com</p>
-              </a>
-            </div>
-            <p>testtest</p>
-            <p>토르</p>
-            <p>일반</p>
-          </div>  
-          <div class="user_list_content">
-            <div class="user_list_content_title">
-              <a href="detail.me">
-                <p>text@naver.com</p>
-              </a>
-            </div>
-            <p>testtest</p>
-            <p>아이언맨</p>
-            <p>사업자</p>
-          </div>  
-          <div class="user_list_content">
-            <div class="user_list_content_title">
-              <a href="detail.me">
-                <p>text@naver.com</p>
-              </a>
-            </div>
-            <p>testtest</p>
-            <p>배트맨</p>
-            <p>사업자</p>
-          </div>  
-          <div class="user_list_content">
-            <div class="user_list_content_title">
-              <a href="detail.me">
-                <p>text@naver.com</p>
-              </a>
-            </div>
-            <p>testtest</p>
-            <p>슈퍼맨</p>
-            <p>사업자</p>
-          </div>   
-          <div class="user_list_content">
-            <div class="user_list_content_title">
-              <a href="detail.me">
-                <p>text@naver.com</p>
-              </a>
-            </div>
-            <p>testtest</p>
-            <p>이름이름</p>
-            <p>사업자</p>
-          </div>  
-        </div>
-      </div>
-      <!-- 페이징 처리 -->
-      <div class="notice_paging">
-        <i class="fas fa-angle-double-left"></i>
-        <i class="fas fa-angle-left"></i>
-        <p>1 2 3 4 5 6 7 8 9 10</p>
-        <i class="fas fa-angle-right"></i>
-        <i class="fas fa-angle-double-right"></i>
-      </div>    
+          <c:forEach items="${page.list}" var="vo">
+      		<div class="user_list_content">
+	          <div class="user_list_content_title">
+	            <a href='detail.me?id=${vo.customer_email}'>
+	              <p>${vo.customer_email}</p>
+	            </a>
+	          </div>
+	          <p>${vo.customer_pw}</p>
+	          <p>${vo.customer_name}</p>
+	          <c:if test="${vo.admin eq 'M'}">
+            	<p>사업자</p>
+              </c:if>
+              <c:if test="${vo.admin eq 'C'}">
+            	<p>일반</p>
+              </c:if>
+              <c:if test="${vo.admin eq 'A'}">
+            	<p>알파카</p>
+              </c:if>
+	        </div>
+		  </c:forEach> 
     </div>
+    <!-- 페이징 처리 -->
+    <jsp:include page="/WEB-INF/views/include/page.jsp" /> 
   </main>
+  

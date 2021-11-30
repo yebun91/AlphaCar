@@ -72,8 +72,28 @@
       <%-- </c:if> --%>
       <div class="user_delete">
         <p>더 이상 알파카를 이용하지 않는다면 </p>
-        <button>회원탈퇴 바로가기</button>
+        <button onclick="user_delete('${loginInfo.customer_pw}')">회원탈퇴 바로가기</button>
       </div>
     </div>
-    
   </main>
+<script type="text/javascript">
+function user_delete(customer_pw) {
+	while(true){
+		//변수 ID 선언
+		var id = prompt("삭제하시려면 비밀번호를 입력하세요.","");
+		//id 변수 안의 데이터가 "abc"면 반복문 중단
+		if(id=="${loginInfo.customer_pw}"){ 
+			alert("탈퇴되었습니다."); 
+			location.href="memberDelete.mp?customer_pw="+customer_pw;
+			
+			break;
+		}
+		//id 변수 안의 데이터가 "abc"가 아니면 alert 상자 띄우기
+		else{ 
+			alert("비밀번호가 틀립니다."); 
+			break;
+		}
+
+	}
+}
+</script>
