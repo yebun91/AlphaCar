@@ -37,7 +37,6 @@ public class HomeMemberController {
 	@ResponseBody
 	@RequestMapping("/webLogin")
 	public Boolean webLogin(HttpSession session, String customer_email, String customer_pw) {
-		System.out.println(customer_email);
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("customer_email", customer_email);
 		map.put("customer_pw", customer_pw);
