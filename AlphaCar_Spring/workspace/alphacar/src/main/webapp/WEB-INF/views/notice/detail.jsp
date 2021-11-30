@@ -33,7 +33,7 @@
 	  </div>
 	  <div class="page_write_button">
 		<button type="button" onclick="location.href='list.no'">목록으로</button>
-		<c:if test="${loginInfo.customer_email eq vo.customer_email}">
+		<c:if test="${loginInfo.customer_email eq vo.customer_email || loginInfo.admin eq 'A'}">
 			<button type="button" onclick="location.href='update.no?id=${vo.notice_id }'">수정</button>
 			<button type="button" onclick="
 			if(confirm('정말 삭제 하시겠습니까?')) { 

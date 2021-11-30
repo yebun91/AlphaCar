@@ -66,6 +66,7 @@
 						class="mypage_user_images">
 				</div>
 			</div>
+			<input type="hidden" name="customer_picture" value="${vo.customer_picture}"/>
 			<input type="file" name="image_file" style="display: none"
 				class="image_upload" accept="image/*" />
 			<button type="button" onclick="member_update()">수정하기</button>

@@ -40,10 +40,11 @@ public class HomeMyPageController {
 	
 	@RequestMapping("/mypage.mp")
 	public String login(HttpSession session) {
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("customer_email", "e");
-		map.put("customer_pw", "e");
-		session.setAttribute("loginInfo", member.member_login(map));
+		/*
+		 * HashMap<String, String> map = new HashMap<String, String>();
+		 * map.put("customer_email", "e"); map.put("customer_pw", "e");
+		 * session.setAttribute("loginInfo", member.member_login(map));
+		 */
 		
 		return "mypage/mypage";
 	}
@@ -86,41 +87,6 @@ public class HomeMyPageController {
         session.removeAttribute("loginInfo");
         return "redirect:/";
     }
-    //회원 삭제
-    @RequestMapping("/mastermemberDelete.mp")
-    public String mastermemberDelete(HttpSession session, String customer_email) {
-        homeService.home_member_delete(customer_email);
-        session.removeAttribute("loginInfo");
-        return "redirect:masterMemberList.mp";
-        
-    }
-  //마스터가 하는 회원정보 수정 처리
-  	@RequestMapping("/memberSubmit.mp")
-  	public String memberUpdateWork(WebMemberVO vo, MultipartFile image_file, HttpSession session, String attach) {
-  		WebMemberVO member = (WebMemberVO) session.getAttribute("loginInfo");
-  		String uuid = session.getServletContext().getRealPath("resources")
-  				+ "/" + member.getCustomer_picture();
-  			
-  		//전송한 이미지 파일이 있다면
-  		if (! image_file.isEmpty()) {
-  			vo.setCustomer_picture(common.fileUpload("profiles", image_file, session));
-  			//기존에 가지고 있었던 파일 패스값이 있다면
-  			if ( member.getCustomer_picture() != null ) {
-  				File f = new File ( uuid );
-  				// 기존 첨부 파일 삭제
-  				if (f.exists()) f.delete();
-  			} 
-  			
-  		}else {
-  			//전송한 이미지가 없을 경우 기존 주소 유지
-  			vo.setCustomer_picture(member.getCustomer_picture());
-  		}
-  		
-  		//화면에서 변경 입력한 정보를 db에 변경 저장한 후 상세화면으로 연결
-  		homeService.home_member_update(vo);	
-  		return "redirect:mypage.mp";
-
-  	}
     
 	//내 가게 정보
 	@RequestMapping("/memberCompany.mp")
@@ -214,7 +180,6 @@ public class HomeMyPageController {
 			
 		}
         
-        System.out.println(file);
 
 		
 //        ArrayList<MultipartFile> file = new ArrayList<MultipartFile>();
@@ -284,15 +249,68 @@ public class HomeMyPageController {
 		return "mypage/master_member_list";
 	}
 	
+	//히든페이지
+	@RequestMapping("/hidden.mp")
+	public String hidden(HttpSession session, Model model, 
+			@RequestParam (defaultValue = "1") int curPage,
+			String search, String keyword, String customer_email) {
+		
+		c_page.setCurPage(curPage);
+		c_page.setSearch(search);
+		c_page.setKeyword(keyword);
+		
+		WebMemberVO vo = new WebMemberVO();
+		vo.setCustomer_email(customer_email);
+		
+		model.addAttribute("uri", "mastermemberUpdate.mp");
+		model.addAttribute("page", c_page);
+		model.addAttribute("vo", vo);
+		return "mypage/redirect";
+	}
+	
 	//회원정보 수정 마스터 페이지로 이동
 	@RequestMapping("/mastermemberUpdate.mp")
-	public String masterMemberUpdate(Model model, String id) {
-		WebMemberVO vo = homeService.home_member_select(id);
-		System.out.println(vo.getCustomer_name());
+	public String masterMemberUpdate(Model model, String customer_email) {
+		WebMemberVO vo = homeService.home_member_select(customer_email);
 		model.addAttribute("vo", vo);
+
+		
 		return "mypage/master_member_update";
 	}
 	
+	//마스터가 하는 회원 삭제
+    @RequestMapping("/mastermemberDelete.mp")
+    public String mastermemberDelete(HttpSession session, String customer_email) {
+        homeService.home_member_delete(customer_email);
+        session.removeAttribute("loginInfo");
+        return "redirect:masterMemberList.mp";
+        
+    }
+    //마스터가 하는 회원정보 수정 처리
+  	@RequestMapping("/mastermemberSubmit.mp")
+  	public String mastermemberUpdateWork(WebMemberVO vo, MultipartFile image_file, HttpSession session, String attach) {
+  		String uuid = session.getServletContext().getRealPath("resources")
+  				+ "/" + vo.getCustomer_picture();
+  		//전송한 이미지 파일이 있다면
+  		if (! image_file.isEmpty()) {
+  			vo.setCustomer_picture(common.fileUpload("profiles", image_file, session));
+  			//기존에 가지고 있었던 파일 패스값이 있다면
+  			if ( vo.getCustomer_picture() != null ) {
+  				File f = new File ( uuid );
+  				// 기존 첨부 파일 삭제
+  				if (f.exists()) f.delete();
+  			} 
+  			
+  		}else {
+  			//전송한 이미지가 없을 경우 기존 주소 유지
+  			vo.setCustomer_picture(vo.getCustomer_picture());
+  		}
+  		homeService.home_member_update(vo);	
+  		//화면에서 변경 입력한 정보를 db에 변경 저장한 후 상세화면으로 연결
+
+  		return "redirect:masterMemberList.mp";
+
+  	}
 	
 	//1:1문의 처리
 	@RequestMapping("/masterContact.mp")

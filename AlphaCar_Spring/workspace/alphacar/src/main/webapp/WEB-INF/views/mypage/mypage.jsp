@@ -41,7 +41,7 @@
           </div>
           <button onclick="location.href='memberContact.mp'">보러가기</button>
         </div>
-        <%-- <c:if test="${loginInfo.admin == 'M'}"> --%>
+        <c:if test="${loginInfo.admin == 'M'}">
         <div class="mypage_box mypage_contact">
           <h1>내 가게 정보</h1>
           <div class="mypage_content">
@@ -50,8 +50,8 @@
           </div>
           <button onclick="location.href='memberCompany.mp'">보러가기</button>
         </div>
-        <%-- </c:if> --%>
-        <%-- <c:if test="${loginInfo.admin == 'A'}"> --%>
+        </c:if>
+        <c:if test="${loginInfo.admin == 'A'}">
 	        <div class="mypage_box mypage_contact">
 	          <h1>전체 회원 관리</h1>
 	          <div class="mypage_content">
@@ -69,7 +69,7 @@
 	          <button onclick="location.href='masterContact.mp'">처리하기</button>
 	        </div>
 	      </div>
-      <%-- </c:if> --%>
+      </c:if>
       <div class="user_delete">
         <p>더 이상 알파카를 이용하지 않는다면 </p>
         <button onclick="user_delete('${loginInfo.customer_pw}', '${loginInfo.customer_email}')">회원탈퇴 바로가기</button>

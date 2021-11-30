@@ -36,10 +36,11 @@ public class HomeNoticeController {
 			String search, String keyword) {
 		
 
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("customer_email", "admin@naver.com");
-		map.put("customer_pw", "admin1234");
-		session.setAttribute("loginInfo", member.member_login(map));
+		/*
+		 * HashMap<String, String> map = new HashMap<String, String>();
+		 * map.put("customer_email", "admin@naver.com"); map.put("customer_pw",
+		 * "admin1234"); session.setAttribute("loginInfo", member.member_login(map));
+		 */
 		session.setAttribute("category", "no");
 		
 		page.setCurPage(curPage);

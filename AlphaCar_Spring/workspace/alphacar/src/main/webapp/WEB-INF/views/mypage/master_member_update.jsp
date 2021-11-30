@@ -12,7 +12,7 @@
 <!-- 메인 시작 -->
 <main class="mypage">
 	<div id="page">
-		<form action="memberSubmit.mp" enctype="multipart/form-data"
+		<form action="mastermemberSubmit.mp" enctype="multipart/form-data"
 			class="customer_update_form form" method="post">
 			<h1>회원 정보 수정</h1>
 			<input type="text" name="customer_email" value="${vo.customer_email}" class="join_email" readonly> 
@@ -49,6 +49,7 @@
 						alt="ProfileImage" onclick="choose_image()" class="mypage_user_images">
 				</div>
 			</div>
+			<input type="hidden" name="customer_picture" value="${vo.customer_picture}"/>
 			<input type="file" name="image_file" style="display: none"
 				class="image_upload" accept="image/*" />
 			<button type="button" onclick="member_update()">수정하기</button>
@@ -83,7 +84,7 @@ $(document).on('change', '.image_upload', function() {
 
 //회원정보 수정 버튼 누를 시
 function member_update() {
-
 	$("form").submit()
 }
+//회원 
 </script>
