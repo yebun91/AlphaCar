@@ -122,6 +122,24 @@ public class HomeMyPageController {
 		//model.addAttribute("vo", service.companyId_list(store_number));
 		return "mypage/member_company_update";
 	}
+
+	// 가게 수정 저장 처리 요청
+	@RequestMapping ("/update_work.mp")
+	public String update_work(HomeStoreVO vo, HttpSession session, int inventory) {
+		ArrayList<String> storeInventory = new ArrayList<>();
+		for (int i =0; i< 9; i++){
+			storeInventory.add("X");
+       		 }
+        		for(int i =0; i<inventory; i++){
+        			storeInventory.set(i, "Y");
+       		 }
+        		for (int i = 0; i < storeInventory.size(); i++) {
+			vo.setNow_state(storeInventory.get(i));
+			
+		}
+		homeService.company_update(vo);
+		return "redirect:memberCompany.mp?store_number=" + vo.getStore_number();
+	}
 	
 	//신규 가게등록 페이지 요청
 	@RequestMapping("/memberCompanyInsert.mp")

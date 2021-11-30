@@ -38,7 +38,30 @@ public class HomeMyPageServiceImpl implements HomeMyPageService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public WebMemberVO home_member_select(String customer_email) {
 		return dao.home_member_select(customer_email);
+=======
+	public void company_delete(int store_number) {
+		dao.company_delete(store_number);
+	}
+	
+	@Override
+	public int company_insert(HomeStoreVO vo) {
+		// TODO Auto-generated method stub
+		return dao.company_insert(vo);
+	}
+
+	@Override
+	public void company_update(HomeStoreVO vo) {
+		dao.company_update(vo);
+		
+	}
+
+	@Override
+	public List<HomeStoreVO> companyId_list(int store_number) {
+		// TODO Auto-generated method stub
+		return dao.companyId_list(store_number);
+>>>>>>> 08fe956823cfb828acc11197816c06c5e611dfe8
 	}
 }
