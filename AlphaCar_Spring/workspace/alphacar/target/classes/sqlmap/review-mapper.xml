@@ -7,8 +7,7 @@
 
 
 	<select id="list" resultType="review.ReviewVO">
-		select * from review where customer_email = #{customer_email,
-		jdbcType=VARCHAR}
+		select * from review where store_number = #{store_number}
 	</select>
 
 
