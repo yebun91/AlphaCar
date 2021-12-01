@@ -58,8 +58,9 @@ public class HomeMyPageDAO implements HomeMyPageService {
 	}
 
 	@Override
-	public List<HomeStoreVO> companyId_list(int store_number) {
-		return sql.selectList("homeMyPage.mapper.companyId_select", store_number);
+	public HomeStoreVO companyId_list(int store_number) {
+		// TODO Auto-generated method stub
+		return sql.selectOne("homeMyPage.mapper.companyId_select", store_number);
 	}
 
 	@Override
@@ -72,5 +73,11 @@ public class HomeMyPageDAO implements HomeMyPageService {
 		sql.delete("homeMyPage.mapper.home_member_delete", customer_email);
 		
 	}
+	@Override
+	public List<HomeStoreVO> company_img(int store_number) {
+		// TODO Auto-generated method stub
+		return sql.selectList("homeMyPage.mapper.companyId_img", sql);
+	}
+
 
 }

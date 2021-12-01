@@ -49,9 +49,11 @@ public class HomeMyPageServiceImpl implements HomeMyPageService {
 	}
 
 	@Override
-	public List<HomeStoreVO> companyId_list(int store_number) {
+	public HomeStoreVO companyId_list(int store_number) {
+		// TODO Auto-generated method stub
 		return dao.companyId_list(store_number);
 	}
+
 
 	@Override
 	public WebMemberVO home_member_select(String customer_email) {
@@ -62,5 +64,10 @@ public class HomeMyPageServiceImpl implements HomeMyPageService {
 	public void home_member_delete(String customer_email) {
 		dao.home_member_delete(customer_email);
 		
+	}
+	@Override
+	public List<HomeStoreVO> company_img(int store_number) {
+		// TODO Auto-generated method stub
+		return dao.company_img(store_number);
 	}
 }
