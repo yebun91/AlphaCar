@@ -7,9 +7,11 @@ public class HomeStoreFileVO {
 	private int file_id       ;
 	private int store_number  ;
 	private int rank          ;
+	private String imgpath       ;
+	private String imgname       ;
 	
-	private ArrayList<String> imgpath = new ArrayList<String>();
-	private ArrayList<String> imgname = new ArrayList<String>();
+	//private ArrayList<String> imgpath = new ArrayList<String>();
+	//private ArrayList<String> imgname = new ArrayList<String>();
 	
 //	private class img{
 //		private String imgpath       ;
@@ -20,24 +22,42 @@ public class HomeStoreFileVO {
 //		
 //	}
 	
+	
+	
 
 	public int getFile_id() {
 		return file_id;
 	}
 
-	public ArrayList<String> getImgpath() {
+//	public ArrayList<String> getImgpath() {
+//		return imgpath;
+//	}
+//
+//	public void setImgpath(ArrayList<String> imgpath) {
+//		this.imgpath = imgpath;
+//	}
+//
+//	public ArrayList<String> getImgname() {
+//		return imgname;
+//	}
+//
+//	public void setImgname(ArrayList<String> imgname) {
+//		this.imgname = imgname;
+//	}
+
+	public String getImgpath() {
 		return imgpath;
 	}
 
-	public void setImgpath(ArrayList<String> imgpath) {
+	public void setImgpath(String imgpath) {
 		this.imgpath = imgpath;
 	}
 
-	public ArrayList<String> getImgname() {
+	public String getImgname() {
 		return imgname;
 	}
 
-	public void setImgname(ArrayList<String> imgname) {
+	public void setImgname(String imgname) {
 		this.imgname = imgname;
 	}
 

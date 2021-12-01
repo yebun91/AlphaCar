@@ -2,6 +2,7 @@ package homeMypage;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class HomeStoreVO {
 	private int store_number               ;
@@ -16,20 +17,34 @@ public class HomeStoreVO {
 	private String store_price                ;
 	private String store_master_name          ;
 	private String store_registration_number  ;
+	//private String imgpath  ;
 	private int store_favorite_cnt         ;
 	private ArrayList<String> now_state = new ArrayList<String>();
-	private ArrayList<String> imgpath = new ArrayList<String>();
+	//private ArrayList<String> imgpath = new ArrayList<String>();
 	private ArrayList<String> imgname = new ArrayList<String>();
+	private List<String> imgpath = new ArrayList<String>();
 	private int file_id      ;
 	private int rank         ;
 
 	
-	public ArrayList<String> getImgpath() {
+	public List<String> getImgpath() {
 		return imgpath;
 	}
-	public void setImgpath(ArrayList<String> imgpath) {
+	public void setImgpath(List<String> imgpath) {
 		this.imgpath = imgpath;
 	}
+	//	public String getImgpath() {
+//		return imgpath;
+//	}
+//	public void setImgpath(String imgpath) {
+//		this.imgpath = imgpath;
+//	}
+//	public ArrayList<String> getImgpath() {
+//		return imgpath;
+//	}
+//	public void setImgpath(ArrayList<String> imgpath) {
+//		this.imgpath = imgpath;
+//	}
 	public ArrayList<String> getImgname() {
 		return imgname;
 	}

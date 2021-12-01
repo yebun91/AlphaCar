@@ -101,15 +101,26 @@
 				#{store_dayoff, jdbcType=VARCHAR}, #{introduce, jdbcType=VARCHAR}, 
 				#{inventory, jdbcType=VARCHAR}, #{store_price, jdbcType=VARCHAR}, 
 				#{store_master_name, jdbcType=VARCHAR}, #{store_registration_number, jdbcType=VARCHAR})
+				into store_file values (V_MAX_ID+1 , V_STORE_NUM , #{imgpath1}, #{imgname1} , 1)
+				into store_file values (V_MAX_ID+2 , V_STORE_NUM , #{imgpath2}, #{imgname2}, 2)
+				into store_file values (V_MAX_ID+3 , V_STORE_NUM , #{imgpath3}, #{imgname3}, 3)
+				<foreach collection="img" item="item"  >
+					insert into store_file (file_id, store_number, imgpath, imgname, rank)
+			  	values (V_MAX_ID+1 , V_STORE_NUM , #{imgpath1}, #{imgname1} , #{rank})
+				</foreach>
 			SELECT 1
 	    FROM dual ;
+	    
+	    
 		
 			<foreach collection="now_state" item="item"  >
 			  SELECT V_SENSOR + 1 INTO V_SENSOR FROM dual ;
+			  
 	      INSERT INTO SENSOR (SENSOR_ID, LATITUDE, LONGITUDE, STORE_NUMBER)
 			 	VALUES (V_SENSOR  , 1 , 2 ,V_STORE_NUM );
 	      INSERT INTO STATE(INVENTORY_NUMBER, STORE_NUMBER, SENSOR_ID, NOW_STATE, CREATE_DATE, CHANGE_DATE)
 			  VALUES (V_SENSOR  , V_STORE_NUM , V_SENSOR , #{item, jdbcType=VARCHAR}, sysdate, sysdate );
+			
 		
 		  	COMMIT;
 	    </foreach>
@@ -117,6 +128,7 @@
 		END;
 
 	</insert>
+	
 	<!-- 회사id를 기준으로 회사정보 조회 -->
 	<select id="companyId_select" resultType="homeMypage.HomeStoreVO">
 		select * 
@@ -124,6 +136,7 @@
 		where store_number = #{store_number} 
 	</select>
 	
+	<!-- 가게id를 기준으로 가게 사진 조회 -->
 	<select id="companyId_img" resultType="homeMypage.HomeStoreFileVO">
 		select *
 		from store_file
@@ -143,10 +156,17 @@
 				store_registration_number = #{store_registration_number}
 			where store_number = #{store_number};
 			
+			
 			<foreach collection="now_state" item="item"  >
 				  update state set now_state = #{item, jdbcType=VARCHAR};
 		  </foreach>
 			
 		end;  
+	</update>
+	
+	<update id="companyImg_update">
+		update store_file
+		set imgpath = #{imgpath}, imgname = #{imgname}, rank = #{rank}
+		where store_number = #{store_number}
 	</update>
 </mapper>

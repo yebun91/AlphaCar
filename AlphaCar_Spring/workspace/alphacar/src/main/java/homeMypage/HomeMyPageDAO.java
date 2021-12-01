@@ -74,9 +74,17 @@ public class HomeMyPageDAO implements HomeMyPageService {
 		
 	}
 	@Override
-	public List<HomeStoreVO> company_img(int store_number) {
+	public List<HomeStoreFileVO> company_img(int store_number) {
+		
 		// TODO Auto-generated method stub
-		return sql.selectList("homeMyPage.mapper.companyId_img", sql);
+		return sql.selectList("homeMyPage.mapper.companyId_img", store_number);
+	}
+
+
+	@Override
+	public void companyImg_update(HomeStoreFileVO vo) {
+		sql.update("homeMyPage.mapper.companyImg_update", vo);
+		
 	}
 
 

@@ -3,6 +3,7 @@ package com.hanul.alphacar;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import common.CommonService;
 import homeMypage.CustomerPage;
 import homeMypage.HomeMyPageServiceImpl;
+import homeMypage.HomeStoreFileVO;
 import homeMypage.HomeStoreVO;
 import homeQna.QnaPage;
 import homeQna.QnaServiceImpl;
@@ -39,11 +41,11 @@ public class HomeMyPageController {
 	
 	@RequestMapping("/mypage.mp")
 	public String login(HttpSession session) {
-		/*
-		 * HashMap<String, String> map = new HashMap<String, String>();
-		 * map.put("customer_email", "e"); map.put("customer_pw", "e");
-		 * session.setAttribute("loginInfo", member.member_login(map));
-		 */
+		
+	  HashMap<String, String> map = new HashMap<String, String>();
+	  map.put("customer_email", "e"); map.put("customer_pw", "e");
+	  session.setAttribute("loginInfo", member.member_login(map));
+		 
 		
 		return "mypage/mypage";
 	}
@@ -132,8 +134,9 @@ public class HomeMyPageController {
 	//가게 수정 페이지 요청
 	@RequestMapping("/memberCompanyUpdate.mp")
 	public String memberCompanyUpdate(HttpSession session, Model model, int store_number ) {
+		System.out.println(store_number);
 		model.addAttribute("vo", homeService.companyId_list(store_number));
-		//model.addAttribute("img", homeService.company_img(store_number));
+		model.addAttribute("img", homeService.company_img(store_number));
 		
 		return "mypage/member_company_update";
 	}
@@ -141,8 +144,17 @@ public class HomeMyPageController {
 	// 가게 수정 저장 처리 요청
 	
 	@RequestMapping ("/update_work.mp")
-	public String update_work(HomeStoreVO vo, HttpSession session, int inventory, int store_number) {
+	public String update_work(HomeStoreVO vo, HttpSession session, int inventory, int store_number, HomeStoreFileVO fileVo,
+			MultipartHttpServletRequest req) {
 		ArrayList<String> storeInventory = new ArrayList<>();
+		MultipartFile multiFile =  (MultipartFile) req;
+		//MultipartFile multipartFile = multiFile.getFile("imgpath");
+		
+		//HomeStoreVO store = homeService.companyId_list(store_number);
+		ArrayList<String> imgpath = new ArrayList<String>();
+		List<HomeStoreFileVO> fileListVO = homeService.company_img(store_number);
+		
+		
 		for (int i =0; i< 9; i++){
 			storeInventory.add("X");
        	}
@@ -154,8 +166,37 @@ public class HomeMyPageController {
 			
 		}
     	vo.setStore_number(store_number);
+    	
+    	// 원래 첨부된 파일이 있었다면 물리적인 디스크에서 해당 파일 삭제
+    	// 서버에 파일이 있는지 파악
+    	
+    	for (int i = 0; i < fileListVO.size(); i++) {
+    		String uuid = session.getServletContext().getRealPath("resources")
+    				+ "/" + fileListVO.get(i).getImgpath();
+    		
+    		// 원래 파일이 첨부된 경우 이전 파일을 삭제하고 변경한 파일을 저장
+    		if (! multiFile.isEmpty()) {
+    			//vo.setFilename(file.getOriginalFilename());
+    			//vo.setFilepath( common.fileUpload("notice", file, session) );
+    			fileVo.setImgname(multiFile.getOriginalFilename());
+    			fileVo.setImgpath(common.fileUpload("company", multiFile, session));
+    			
+	    		if (fileListVO.get(i).getImgname() != null) {
+	    			// 파일 정보를 File 형태의 f 에 할당
+					File f = new File ( uuid );
+					// 기존 첨부 파일이 있다면 삭제
+					if (f.exists()) f.delete();
+	    		} else {
+	    			fileVo.setImgname(fileListVO.get(i).getImgname());
+	    			fileVo.setImgpath(fileListVO.get(i).getImgpath());
+	    		}
+	    		fileVo.setRank(i);
+    		}
+		}
+    	
         
 		homeService.company_update(vo);
+		//homeService.companyImg_update(fileVo);
 		return "redirect:memberCompany.mp";
 	}
 	

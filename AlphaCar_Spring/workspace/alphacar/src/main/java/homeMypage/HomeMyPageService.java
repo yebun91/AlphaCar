@@ -23,11 +23,14 @@ public interface HomeMyPageService {
 	
 	//가게 수정
 	void company_update(HomeStoreVO vo);
+	//가게 이미지 수정
+	void companyImg_update(HomeStoreFileVO vo);
 	
 	//가게 id를 기준으로 회사 정보 조회
 	HomeStoreVO companyId_list(int store_number);
 	//회원 정보 삭제
 	void home_member_delete(String customer_email);
 	//가게 이미지 조회
-	List<HomeStoreVO> company_img(int store_number);
+	List<HomeStoreFileVO> company_img(int store_number);
+	
 }

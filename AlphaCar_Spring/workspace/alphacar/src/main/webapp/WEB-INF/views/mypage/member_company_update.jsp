@@ -14,11 +14,10 @@
   <!-- 메인 시작 -->
   <main class="mypage">
     <div id="page">
-      <form action="update_work.mp" class="form company_update_form" method="post">
+      <form action="update_work.mp" class="form company_update_form" method="post" enctype="multipart/form-data">
 	      <input type="hidden" name='store_number' value="${vo.store_number}"/>
 				<input type="hidden" name='attach' />
         <h1>세차장 정보 수정</h1>
-        <c:forEach items="${vo }" var="vo" begin="0" end="0">
 	        <div class="company_update">
 	          <div>
 	            <h3>세차장 이름</h3>
@@ -63,17 +62,20 @@
 	          </div>
 	          <div> 
 	            <h3>사진</h3>
-	            <c:forEach items="${img.list }" var="img">
+	            <c:forEach items="${img }" var="img">
 		            <div class="company_images">
 		              <div class="join_profile_image">
-		                <p>+</p>
+			              <label>
+									 		<a><img src='imgs/select.png' class='file-img' /></a>
+									 		<input type="file" name='imgpath' id='attach-file' />
+								 		</label>
+								 		<span id='file-name'>${img.imgname }</span>
 		              </div>
 	              </div>
 	            </c:forEach>
 	          </div>
 	        </div>
 	        <button>수정하기</button>
-        </c:forEach>
       </form>
     </div>
   </main>

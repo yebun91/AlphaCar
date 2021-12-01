@@ -14,7 +14,7 @@
   <!-- 메인 시작 -->
   <main class="mypage">
     <div id="page">
-      <form action="homeStoreRegister.mp" class="form company_update_form" method="post" enctype="multopart/form-data">
+      <form action="homeStoreRegister.mp" class="form company_update_form" method="post" enctype="multipart/form-data">
         <h1>신규 세차장 등록</h1>
         <div class="company_update">
           <div>
@@ -58,30 +58,19 @@
             <h3>사업자 번호</h3>
             <input type="text" name="store_registration_number">
           </div>
-<!--           <div class="join_profile"> -->
-<!-- 	          <h3>프로필 사진</h3> -->
-<!-- 	          <div class="mypage_user_image" > -->
-<!-- 	          	<img src="resources/pictures/profiles/noImage.png" alt="ProfileImage" onclick="choose_image()" class="mypage_user_images">  	 -->
-<!-- 	          </div> -->
-<!-- 	        </div> -->
-<!-- 	      	<input type="file" name="file" style="display:none"  -->
-<!-- 	        	class="image_upload" accept="image/*"/> -->
-<!--           </div> -->
-<!--         <button>등록하기</button> -->
-<!--       </form> -->
-    			</div> 
-			
-				  <div class="form-group" id="file-list">
-	        <div class="file-group">
-	          <input type="file" name="file1"><a href='#this' name='file-delete'>삭제</a>
-	          <input type="file" name="file2"><a href='#this' name='file-delete'>삭제</a>
-	          <input type="file" name="file3"><a href='#this' name='file-delete'>삭제</a>
+          <div class="join_profile">
+	          <h3>프로필 사진</h3>
+	          <div class="mypage_user_image" >
+	          	<img src="resources/pictures/profiles/noImage.png" alt="ProfileImage" onclick="choose_image()" class="mypage_user_images">  	
+	          </div>
 	        </div>
-    		</div>
-    		<button>등록하기</button>
-		  </form>
+	      	<input type="file" name="imgpath" />
+	      	<input type="file" name="imgpath" />
+	      	<input type="file" name="imgpath" accept="image/*"/>
+          </div>
+        <button>등록하기</button>
+      </form>
 		</div>
-
   </main>
   <script type="text/javascript">
 

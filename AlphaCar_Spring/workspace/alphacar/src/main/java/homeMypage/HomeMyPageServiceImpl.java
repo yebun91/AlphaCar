@@ -66,8 +66,15 @@ public class HomeMyPageServiceImpl implements HomeMyPageService {
 		
 	}
 	@Override
-	public List<HomeStoreVO> company_img(int store_number) {
+	public List<HomeStoreFileVO> company_img(int store_number) {
 		// TODO Auto-generated method stub
 		return dao.company_img(store_number);
+	}
+
+
+	@Override
+	public void companyImg_update(HomeStoreFileVO vo) {
+		dao.companyImg_update(vo);
+		
 	}
 }
