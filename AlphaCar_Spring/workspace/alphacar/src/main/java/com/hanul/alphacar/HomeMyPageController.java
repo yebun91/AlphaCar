@@ -133,7 +133,7 @@ public class HomeMyPageController {
 	@RequestMapping("/memberCompanyUpdate.mp")
 	public String memberCompanyUpdate(HttpSession session, Model model, int store_number ) {
 		model.addAttribute("vo", homeService.companyId_list(store_number));
-		model.addAttribute("img", homeService.company_img(store_number));
+		//model.addAttribute("img", homeService.company_img(store_number));
 		
 		return "mypage/member_company_update";
 	}

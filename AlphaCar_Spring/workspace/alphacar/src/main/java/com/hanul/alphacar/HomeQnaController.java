@@ -1,8 +1,4 @@
 package com.hanul.alphacar;
-
-
-
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +17,15 @@ public class HomeQnaController {
 	
 	@Autowired private QnaServiceImpl service;
 	
-
+	//채팅방 들어가기
+	@RequestMapping("/chat.do")
+	public String chat(HttpSession session, Model model) {
+		WebMemberVO vo = new WebMemberVO();
+		vo.setCustomer_name( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_name() );
+		session.setAttribute("id", vo.getCustomer_name());
+		return "chat/chat";
+	}
+	
 	//qna 새글쓰기
 	@RequestMapping("/write.qna")
 	public String write(HttpSession session, Model model) {

@@ -33,8 +33,8 @@
 		<put-attribute name="content" value="/WEB-INF/views/member/join.jsp" />
 	</definition>
 
-	<definition name="chat/*" template="/WEB-INF/views/tiles/blank.jsp">
-		<put-attribute name="content" value="/WEB-INF/views/chat/{1}.jsp" />
+	<definition name="chat/chat" template="/WEB-INF/views/tiles/default.jsp">
+		<put-attribute name="content" value="/WEB-INF/views/chat/chat.jsp" />
 	</definition>
 	
 </tiles-definitions>
