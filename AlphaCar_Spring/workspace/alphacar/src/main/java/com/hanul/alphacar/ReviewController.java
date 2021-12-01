@@ -67,10 +67,10 @@ public class ReviewController {
 		}
 		
 		
-		vo.setScore(score);
-		vo.setTitle(title);
-		vo.setContent(content);
-		vo.setFileName(fileName);
+//		vo.setScore(score);
+//		vo.setTitle(title);
+//		vo.setContent(content);
+//		vo.setFileName(fileName);
 //		vo.setFilePath("D:\\Study_Android_Spring\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\AlphaCar2\\resources\\"+fileName);
 
 		System.out.println(fileName);

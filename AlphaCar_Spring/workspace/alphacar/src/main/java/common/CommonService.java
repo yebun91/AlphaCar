@@ -33,7 +33,7 @@ public class CommonService {
 	public String fileUpload(String category, MultipartFile file, HttpSession session) {
 		// 업로드 할 위치
 		String resources = session.getServletContext().getRealPath("resources");
-		// D:\Study_Spring\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0
+		// D:\TeamProject\AteamAlphaCar\AlphaCar_Spring\.metadata\.plugins\org.eclipse.wst.server.core\tmp0
 		// \wtpwebapps\alphacar\resources\pictures\profiles\00.jpg
 
 		String folder = resources + "/pictures/" + category;
