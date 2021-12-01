@@ -147,8 +147,8 @@ public class HomeMyPageController {
 	public String update_work(HomeStoreVO vo, HttpSession session, int inventory, int store_number, HomeStoreFileVO fileVo,
 			MultipartHttpServletRequest req) {
 		ArrayList<String> storeInventory = new ArrayList<>();
-		MultipartFile multiFile =  (MultipartFile) req;
-		//MultipartFile multipartFile = multiFile.getFile("imgpath");
+		MultipartFile multiFile =  (MultipartFile) req.getFile("file");
+		//MultipartFile multipartFile = multiFile.getFile("file");
 		
 		//HomeStoreVO store = homeService.companyId_list(store_number);
 		ArrayList<String> imgpath = new ArrayList<String>();
@@ -167,36 +167,70 @@ public class HomeMyPageController {
 		}
     	vo.setStore_number(store_number);
     	
+    	homeService.company_update(vo);
+    	
     	// 원래 첨부된 파일이 있었다면 물리적인 디스크에서 해당 파일 삭제
     	// 서버에 파일이 있는지 파악
     	
     	for (int i = 0; i < fileListVO.size(); i++) {
     		String uuid = session.getServletContext().getRealPath("resources")
     				+ "/" + fileListVO.get(i).getImgpath();
-    		
-    		// 원래 파일이 첨부된 경우 이전 파일을 삭제하고 변경한 파일을 저장
-    		if (! multiFile.isEmpty()) {
-    			//vo.setFilename(file.getOriginalFilename());
-    			//vo.setFilepath( common.fileUpload("notice", file, session) );
-    			fileVo.setImgname(multiFile.getOriginalFilename());
-    			fileVo.setImgpath(common.fileUpload("company", multiFile, session));
-    			
-	    		if (fileListVO.get(i).getImgname() != null) {
-	    			// 파일 정보를 File 형태의 f 에 할당
-					File f = new File ( uuid );
-					// 기존 첨부 파일이 있다면 삭제
-					if (f.exists()) f.delete();
+//    		
+//    		// 원래 파일이 첨부된 경우 이전 파일을 삭제하고 변경한 파일을 저장
+//    		
+//    			//vo.setFilename(file.getOriginalFilename());
+//    			//vo.setFilepath( common.fileUpload("notice", file, session) );
+//    			fileVo.setImgname(multiFile.getOriginalFilename());
+//    			fileVo.setImgpath(common.fileUpload("company", multiFile, session));
+//    			
+//	    		if (fileListVO.get(i).getImgname() != null) {
+//	    			// 파일 정보를 File 형태의 f 에 할당
+//					File f = new File ( uuid );
+//					// 기존 첨부 파일이 있다면 삭제
+//					if (f.exists()) f.delete();
+//	    		} else {
+//	    			fileVo.setImgname(fileListVO.get(i).getImgname());
+//	    			fileVo.setImgpath(fileListVO.get(i).getImgpath());
+//	    		}
+//	    		fileVo.setRank(i);
+//	    		homeService.companyImg_update(fileVo);
+	    		
+	    		if (! multiFile.isEmpty()) {
+	    			// 원래 첨부 파일이 없었는데 수정시 첨부한 경우
+	    			fileVo.setImgname(multiFile.getOriginalFilename());
+	    			fileVo.setImgpath(common.fileUpload("company", multiFile, session));
+	    			
+	    			// 원래 첨부된 파일이 있었다면 물리적인 디스크에서 해당 파일 삭제
+	    			// 서버에 파일이 있는지 파악
+	    			if ( fileListVO.get(i).getImgname() != null ) {
+	    				// 파일 정보를 File 형태의 f 에 할당
+	    				File f = new File ( uuid );
+	    				// 기존 첨부 파일이 있다면 삭제
+	    				if (f.exists()) f.delete();
+	    			}
 	    		} else {
-	    			fileVo.setImgname(fileListVO.get(i).getImgname());
-	    			fileVo.setImgpath(fileListVO.get(i).getImgpath());
+	    			// 파일을 첨부하지 않은 경우
+	    			// 원래 첨부된 파일이 있었는데 삭제한 경우 
+	    			//if ( attach.isEmpty() ) {               // 첨부된 파일명이 없을 때
+	    				if (fileListVO.get(i).getImgpath() != null) {	// 원래 첨부된 파일이 있었다면
+	    					File f = new File (uuid);
+	    					if (f.exists()) f.delete();	// 물리 디스크의 파일을 삭제
+	    				} else {
+		    				// 원래 첨부된 파일을 그대로 사용하는 경우	
+	    					fileVo.setImgname(fileListVO.get(i).getImgname());
+	    	    			fileVo.setImgpath(fileListVO.get(i).getImgpath());
+		    			}
+	    			}
+		    		fileVo.setRank(i);
+		    		homeService.companyImg_update(fileVo);
 	    		}
-	    		fileVo.setRank(i);
-    		}
-		}
+	    		
+    		
+    	
+		
     	
         
-		homeService.company_update(vo);
-		//homeService.companyImg_update(fileVo);
+		
 		return "redirect:memberCompany.mp";
 	}
 	

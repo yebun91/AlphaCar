@@ -67,7 +67,7 @@
 		              <div class="join_profile_image">
 			              <label>
 									 		<a><img src='imgs/select.png' class='file-img' /></a>
-									 		<input type="file" name='imgpath' id='attach-file' />
+									 		<input type="file" name='file' id='attach-file' />
 								 		</label>
 								 		<span id='file-name'>${img.imgname }</span>
 		              </div>
