@@ -15,7 +15,7 @@
     <div id="page">
       <h1>내 1:1 문의 내역</h1>
       <div class="page_index">
-      <form action="memberContact.mp" method="get">
+      <form action="memberContact.mp" method="post">
 		    <input type="hidden" name="curPage" value="1" /> 
 	        <div class="page_select">
 	          <ul>
@@ -40,9 +40,9 @@
             </select>
           </div>
           <div class="page_search_box">
-            <input type="text" placeholder="search">
-            <i class="fas fa-search"></i>
-          </div>
+           <input type="text" placeholder="search" name="keyword" value="${page.keyword}">
+           <i class="fas fa-search" onclick='$("form").submit()'></i>
+         </div>
         </form>
       </div>
       <!-- notice 글 목록  -->
@@ -54,9 +54,33 @@
 	        <h3>활동</h3>
         </div>
        <div class="page_list_box">
-      	<c:forEach items="${page.member_qna_list}" var="vo">
+      	<c:forEach items="${page.list}" var="vo">
       		<div class="page_list_content">
 	          <div class="page_list_content_title">
+	          	<c:if test="${loginInfo.customer_email eq vo.customer_email || loginInfo.admin eq 'A'}">
+		          	<c:forEach begin="1" end='${vo.qna_indent }' var='i'>
+									${i eq vo.qna_indent ? "<img src='img/re.gif' />" : "&nbsp;&nbsp;" }
+								</c:forEach>			
+	            	<a href='detail.qna?qna_id=${vo.qna_id }'>
+	            	<c:if test="${vo.qna_attribute eq 'C'}">
+	              	<p>[고객]</p>
+	              </c:if>
+	              <c:if test="${vo.qna_attribute eq 'S'}">
+	              	<p>[가게]</p>
+	              </c:if>
+	              <c:if test="${vo.qna_attribute eq 'M'}">
+	              	<p>[모바일/홈페이지]</p>
+	              </c:if>
+	              <c:if test="${vo.qna_attribute eq 'A'}">
+	              	<p>[알파카]</p>
+	              </c:if>
+	              <p>${vo.qna_title}</p>
+	            </a>
+	            </c:if>
+	          	<c:if test="${loginInfo.customer_email ne vo.customer_email && loginInfo.admin ne 'A'}">
+	          		<c:forEach begin="1" end='${vo.qna_indent }' var='i'>
+									${i eq vo.qna_indent ? "<img src='img/re.gif' />" : "&nbsp;&nbsp;" }
+								</c:forEach>			
 	            	<a href='check.qna?qna_id=${vo.qna_id }'>
 	            	<c:if test="${vo.qna_attribute eq 'C'}">
 	              	<p>[고객]</p>
@@ -72,6 +96,8 @@
 	              </c:if>
 	              <p>${vo.qna_title}</p>
 	            </a>
+	            </c:if>
+	              
 	          </div>
 	          <p>${vo.customer_name}</p>
 	          <p>${vo.qna_readcnt}</p>

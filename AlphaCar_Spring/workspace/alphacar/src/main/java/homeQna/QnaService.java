@@ -38,7 +38,7 @@ public interface QnaService {
 	List<QnaVO> member_qna_list(String customer_email);
 	
 	//고객과 점주일 경우 qna 목록조회 - 페이지 처리된
-	QnaPage member_qna_list(QnaPage page, String customer_email);
+	QnaPage member_qna_list(HashMap<String, Object> map);
 }
 
 

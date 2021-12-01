@@ -78,9 +78,9 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public QnaPage member_qna_list(QnaPage page, String customer_email) {
+	public QnaPage member_qna_list(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return dao.member_qna_list(page, customer_email);
+		return dao.member_qna_list(map);
 	}
 
 	@Override

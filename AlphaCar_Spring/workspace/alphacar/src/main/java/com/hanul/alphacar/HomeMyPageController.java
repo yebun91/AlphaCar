@@ -20,8 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import common.CommonService;
 import homeMypage.CustomerPage;
 import homeMypage.HomeMyPageServiceImpl;
-import homeStore.HomeStoreServiceImpl;
-import homeStore.HomeStoreVO;
+import homeMypage.HomeStoreVO;
 import homeQna.QnaPage;
 import homeQna.QnaServiceImpl;
 import homeQna.QnaVO;
@@ -107,13 +106,16 @@ public class HomeMyPageController {
 		page.setCurPage(curPage);
 		page.setSearch(search);
 		page.setKeyword(keyword);
-		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
+		//((WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() ;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("customer_email", ((WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email());
+		map.put("page", page);
 		//DB에서 공지글 목록을 조회한 후 목록화면에 출력
-		//model.addAttribute("page", service.member_qna_list(page, vo.getCustomer_email()));
+		model.addAttribute("page", service.member_qna_list(map));
 		
 		return "mypage/member_contact";
 	}
-	
+
 	//가게 삭제
 	@RequestMapping("/memberCompanyDelete.mp")
 	public String memberCompanyDelete(int store_number) {
@@ -130,26 +132,31 @@ public class HomeMyPageController {
 	//가게 수정 페이지 요청
 	@RequestMapping("/memberCompanyUpdate.mp")
 	public String memberCompanyUpdate(HttpSession session, Model model, int store_number ) {
-		//model.addAttribute("vo", service.companyId_list(store_number));
+		model.addAttribute("vo", homeService.companyId_list(store_number));
+		model.addAttribute("img", homeService.company_img(store_number));
+		
 		return "mypage/member_company_update";
 	}
 
 	// 가게 수정 저장 처리 요청
+	
 	@RequestMapping ("/update_work.mp")
-	public String update_work(HomeStoreVO vo, HttpSession session, int inventory) {
+	public String update_work(HomeStoreVO vo, HttpSession session, int inventory, int store_number) {
 		ArrayList<String> storeInventory = new ArrayList<>();
 		for (int i =0; i< 9; i++){
 			storeInventory.add("X");
-       		 }
-        		for(int i =0; i<inventory; i++){
-        			storeInventory.set(i, "Y");
-       		 }
-        		for (int i = 0; i < storeInventory.size(); i++) {
-			//vo.setNow_state(storeInventory.get(i));
+       	}
+		for(int i =0; i<inventory; i++){
+			storeInventory.set(i, "Y");
+   		}
+    	for (int i = 0; i < storeInventory.size(); i++) {
+			vo.setNow_state(storeInventory.get(i));
 			
 		}
-		//homeService.company_update(vo);
-		return "redirect:memberCompany.mp?store_number=" + vo.getStore_number();
+    	vo.setStore_number(store_number);
+        
+		homeService.company_update(vo);
+		return "redirect:memberCompany.mp";
 	}
 	
 	//신규 가게등록 페이지 요청
@@ -176,61 +183,62 @@ public class HomeMyPageController {
         }
         
         for (int i = 0; i < storeInventory.size(); i++) {
-			//vo.setNow_state(storeInventory.get(i));
+			vo.setNow_state(storeInventory.get(i));
 			
 		}
         
+        System.out.println(file);
 
 		
-//        ArrayList<MultipartFile> file = new ArrayList<MultipartFile>();
-//		file.add(multi.getFile("imgpath1"));
-//		file.add(multi.getFile("imgpath2"));
-//		file.add(multi.getFile("imgpath3"));
-//		
-//		for (int i = 0; i < file.size(); i++) {
-//			if(file.get(i) != null) {
-//				fileName = file.get(i).getOriginalFilename();
-//				System.out.println("fileName : " + fileName);
+//	        ArrayList<MultipartFile> file = new ArrayList<MultipartFile>();
+//			file.add(multi.getFile("imgpath1"));
+//			file.add(multi.getFile("imgpath2"));
+//			file.add(multi.getFile("imgpath3"));
+//			
+//			for (int i = 0; i < file.size(); i++) {
+//				if(file.get(i) != null) {
+//					fileName = file.get(i).getOriginalFilename();
+//					System.out.println("fileName : " + fileName);
+//					
+//					if(file.get(i).getSize() > 0) {
+//						realImgPath = req.getSession().getServletContext()
+//								.getRealPath("/resources/");
+//						
+//						System.out.println("realpath : " + realImgPath);
+//						System.out.println("fileSize : " + file.get(i).getSize());
+//						
+//						// 이미지 파일을 서버에 저장
+//						try {
+//							file.get(i).transferTo(new File(realImgPath, fileName));
+//						} catch (Exception e) {
+//							e.getMessage();
+//						} 
+//						
+//					}
 //				
-//				if(file.get(i).getSize() > 0) {
-//					realImgPath = req.getSession().getServletContext()
-//							.getRealPath("/resources/");
-//					
-//					System.out.println("realpath : " + realImgPath);
-//					System.out.println("fileSize : " + file.get(i).getSize());
-//					
-//					// 이미지 파일을 서버에 저장
-//					try {
-//						file.get(i).transferTo(new File(realImgPath, fileName));
-//					} catch (Exception e) {
-//						e.getMessage();
-//					} 
-//					
+//				
 //				}
-//			
-//			
-//			}
-//			if (i==0) {
-//				vo.setImgname1(fileName);
-//				vo.setImgpath1(realImgPath);
-//			}else if(i==1) {
+//				if (i==0) {
+//					vo.setImgname1(fileName);
+//					vo.setImgpath1(realImgPath);
+//				}else if(i==1) {
 //
-//				vo.setImgname2(fileName);
-//				vo.setImgpath2(realImgPath);
-//			}else if(i==2) {
+//					vo.setImgname2(fileName);
+//					vo.setImgpath2(realImgPath);
+//				}else if(i==2) {
 //
-//				vo.setImgname3(fileName);
-//				vo.setImgpath3(realImgPath);
+//					vo.setImgname3(fileName);
+//					vo.setImgpath3(realImgPath);
+//				}
 //			}
-//		}
-//		
-		/*
-		 * if (homeService.company_insert(vo) == 0) { //
-		 * msg.append("alert('회원가입을 축하드립니다.'); location='login' ")
-		 * msg.append("alert('가게등록 실패'); location='memberCompanyInsert.mp' "); } else {
-		 * msg.append("alert('가게 등록이 완료되었습니다!'); location='")
-		 * .append(req.getContextPath()).append("'"); }
-		 */
+//			
+		if (homeService.company_insert(vo) == 0) {
+		//	msg.append("alert('회원가입을 축하드립니다.'); location='login' ")
+			msg.append("alert('가게등록 실패'); location='memberCompanyInsert.mp' ");
+		} else {
+			msg.append("alert('가게 등록이 완료되었습니다!'); location='")
+			.append(req.getContextPath()).append("'");
+		}
 		msg.append("</script>");
 		return msg.toString();
 	}

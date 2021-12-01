@@ -15,8 +15,10 @@
   <main class="mypage">
     <div id="page">
       <form action="update_work.mp" class="form company_update_form" method="post">
+	      <input type="hidden" name='store_number' value="${vo.store_number}"/>
+				<input type="hidden" name='attach' />
         <h1>세차장 정보 수정</h1>
-        <c:forEach items="${vo }" var="vo">
+        <c:forEach items="${vo }" var="vo" begin="0" end="0">
 	        <div class="company_update">
 	          <div>
 	            <h3>세차장 이름</h3>
@@ -61,17 +63,13 @@
 	          </div>
 	          <div> 
 	            <h3>사진</h3>
-	            <div class="company_images">
-	              <div class="join_profile_image">
-	                <p>+</p>
+	            <c:forEach items="${img.list }" var="img">
+		            <div class="company_images">
+		              <div class="join_profile_image">
+		                <p>+</p>
+		              </div>
 	              </div>
-	              <div class="join_profile_image">
-	                <p>+</p>
-	              </div>
-	              <div class="join_profile_image">
-	                <p>+</p>
-	              </div>
-	            </div>
+	            </c:forEach>
 	          </div>
 	        </div>
 	        <button>수정하기</button>

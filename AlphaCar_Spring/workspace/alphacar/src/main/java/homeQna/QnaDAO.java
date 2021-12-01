@@ -34,6 +34,7 @@ public class QnaDAO implements QnaService {
 
 	@Override
 	public List<QnaVO> qna_list() {
+		// TODO Auto-generated method stub
 		return sql.selectList("homeQna.mapper.homeQnaList");
 	}
 
@@ -78,16 +79,15 @@ public class QnaDAO implements QnaService {
 		return sql.selectList("homeQna.mapper.homeMembertotalList", customer_email);
 	}
 
+	//로그인 된 경우 목록 조회
 	@Override
-	public QnaPage member_qna_list(QnaPage page, String customer_email) {
-		//총 글의 개수를 조회(totalList)
-		int pagecnt = sql.selectOne("homeQna.mapper.homeMembertotalList",page);
-		page.setTotallist(pagecnt); //총 글의 수
+	public QnaPage member_qna_list(HashMap<String, Object> map) {
 		
-		//전체 글을 조회하여 List 
-		List<QnaVO> member_qna_list = sql.selectList("homeQna.mapper.homeMemberQnaList");
-		page.setList(member_qna_list);
+		QnaPage page = (QnaPage)map.get("page");
+		page.setTotallist( sql.selectOne("homeQna.mapper.homeMembertotalList", map) );        
+		page.setList( sql.selectList("homeQna.mapper.homeMemberQnaList", map) );
 		return page;
+		
 	}
 
 	@Override

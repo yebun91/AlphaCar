@@ -2,44 +2,25 @@ package com.hanul.alphacar;
 
 
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.JsonObject;
 
-import common.CommonService;
-import homeQna.QnaPage;
 import homeQna.QnaServiceImpl;
 import homeQna.QnaVO;
-import member.WebMemberServiceImpl;
 import member.WebMemberVO;
 
 @Controller
 public class HomeQnaController {
 	
 	@Autowired private QnaServiceImpl service;
-	@Autowired private CommonService common;
-	@Autowired private QnaPage page;
-	@Autowired private WebMemberServiceImpl member;
+	
 
 	//qna 새글쓰기
 	@RequestMapping("/write.qna")
@@ -52,8 +33,8 @@ public class HomeQnaController {
 	public String insert (QnaVO vo, HttpSession session, MultipartFile file, String qna_search_index, 
 			String qna_password) {
 		
-//				MemberVO member = (MemberVO) session.getAttribute("loginInfo");
-//				vo.setWriter(member.getId());
+//					MemberVO member = (MemberVO) session.getAttribute("loginInfo");
+//					vo.setWriter(member.getId());
 		
 		// 로그인 된 사용자의 id를 가져와 글쓴이(writer)에 담기 위한 처리
 		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
@@ -100,6 +81,7 @@ public class HomeQnaController {
 	//qna 글 수정
 	@RequestMapping("/update.qna")
 	public String update(HttpSession session, Model model, int qna_id) {
+		
 		model.addAttribute("vo", service.qna_detail(qna_id));
 		return "qna/update";
 	}
@@ -146,8 +128,8 @@ public class HomeQnaController {
 		System.out.println(qna_id);
 		// 로그인 된 사용자의 id를 가져와 글쓴이(writer)에 담기 위한 처리
 		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
-//		vo = service.qna_pw(qna_id);
-//		vo.setQna_password(vo.getQna_password());
+//			vo = service.qna_pw(qna_id);
+//			vo.setQna_password(vo.getQna_password());
 
 		// 화면에서 입력한 정보를 DB에 저장한 후 화면으로 연결(출력)
 		service.qna_reply_insert(vo);
