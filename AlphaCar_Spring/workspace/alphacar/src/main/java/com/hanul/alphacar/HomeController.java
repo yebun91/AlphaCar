@@ -33,7 +33,6 @@ public class HomeController {
 		
 		page.setCurPage(curPage);
 		model.addAttribute("page", service.notice_list(page));
-		
 		return "index";
 	}
 }

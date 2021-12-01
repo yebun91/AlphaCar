@@ -3,6 +3,7 @@ package com.hanul.alphacar;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -13,6 +14,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.CloseStatus;
@@ -20,23 +22,40 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-@Controller
+import favorite.FavoriteServiceImpl;
+import homeChat.ChatDAO;
+import homeChat.ChatServiceImpl;
+import homeChat.ChatVO;
+import homeChat.temp;
+import homeNotice.HomeNoticeServiceImpl;
+
+
+
 @ServerEndpoint(value="/chat.do")
+@Controller
 public class WebSocketChat{
+	
+	ChatVO vo = new ChatVO();
+	@Inject private ChatDAO dao;
     private static final List<Session> sessionList = new ArrayList<Session>();
     private static final Logger logger = LoggerFactory.getLogger(WebSocketChat.class);
     
+	/* service.insertChat(vo); */
+
     public WebSocketChat() {
     	System.out.println("웹소켓(서버) 객체생성");
     }
     
     @OnOpen
     public void onOpen(Session session) {
+    	
     	logger.info("open session id : "+ session.getId());
     	try {
 			final Basic basic = session.getBasicRemote();
 			basic.sendText("대화방에 연결 되었습니다.");
+
 		} catch (Exception e) {
+			
 			System.out.println(e.getMessage());
 		}
     	sessionList.add(session);
@@ -60,8 +79,10 @@ public class WebSocketChat{
     public void onMessage(String message, Session session) {
     	String sender = message.split(",")[1];
     	message = message.split(",")[0];
-    	
-    	logger.info("Message From "+ sender + ": "+ message);
+    	logger.info("Message From "+ sender + " : "+ message);
+    	vo.setCustomer_name(sender);
+    	vo.setContent(message);
+    
     	try {
 			final Basic basic = session.getBasicRemote();
 			basic.sendText("<나> : "+ message);
