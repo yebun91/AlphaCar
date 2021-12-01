@@ -18,7 +18,6 @@ import androidx.core.content.ContextCompat;
 
 import com.example.alphacar.ATask.LoginSelect;
 import com.example.alphacar.DTOS.MemberVO;
-import com.example.alphacar.Fragment.JoinPageFragment;
 
 
 import java.util.concurrent.ExecutionException;
@@ -106,7 +105,7 @@ public class LoginPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 회원가입 화면
-                Intent intent = new Intent(getApplicationContext(), JoinPageFragment.class);
+                Intent intent = new Intent(getApplicationContext(), JoinPageActivity.class);
                 startActivity(intent);
             }
         });

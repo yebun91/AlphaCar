@@ -71,7 +71,7 @@ public class DetailSelect extends AsyncTask<Void, Void, Void> {
 
             // 전송
             // 전송 url : 우리가 수정해야 하는 부분
-            String postURL = ipConfig + "/alphacar/anSelectDetail";
+            String postURL = ipConfig + "/anSelectDetail";
             // 그대로 사용  복,붙
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");

@@ -66,7 +66,7 @@
             android:name=".RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".Fragment.LoadingPageFragment"
+            android:name=".LoadingPageActivity"
             android:exported="true">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -74,7 +74,6 @@
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
         </activity>
-        <activity android:name=".DetailActivity" android:exported="true" />
         <activity android:name=".MainActivity" android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -85,14 +84,17 @@
             android:name=".MemberUpdatePageActivity"
             android:exported="true" />
         <activity
-            android:name=".Fragment.LoginJoinSelectFragment"
+            android:name=".LoginJoinSelectActivity"
             android:exported="true" />
         <activity
             android:name=".LoginPageActivity"
             android:exported="true" />
         <activity
-            android:name=".Fragment.NowFragment"
+            android:name=".NowActivity"
             android:exported="true" />
+        <activity
+            android:name=".DetailActivity"
+            android:exported="true"/>
 
 
         <provider

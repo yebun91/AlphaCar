@@ -17,14 +17,17 @@ import java.util.Locale;
 public class StoreAdapter extends BaseAdapter {
     Context mContext;
     LayoutInflater inflater;
+    private List<StoreDTO> list ;
 
-    ArrayList<StoreDTO> storeDTOArrayList;
+    private ArrayList<StoreDTO> storeDTOArrayList;
 
-    public StoreAdapter(Context mContext,  ArrayList<StoreDTO> storeDTOArrayList) {
+    public StoreAdapter(Context mContext,  List<StoreDTO> list) {
         this.mContext = mContext;
-        this.storeDTOArrayList = storeDTOArrayList;
-        this.inflater = (LayoutInflater) mContext
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.list = list;
+        this.inflater = LayoutInflater.from(mContext);
+               // .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.storeDTOArrayList = new ArrayList<StoreDTO>();
+        this.storeDTOArrayList.addAll(list);
 
     }
 
@@ -64,6 +67,8 @@ public class StoreAdapter extends BaseAdapter {
 
         return view;
     }
+
+
 
 
 }

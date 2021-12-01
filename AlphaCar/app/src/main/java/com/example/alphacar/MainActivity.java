@@ -12,12 +12,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,8 +32,9 @@ import com.example.alphacar.Adapter.StoreAdapter;
 import com.example.alphacar.Adapter.ViewpagerAdapter;
 import com.example.alphacar.DTOS.StoreDTO;
 import com.example.alphacar.Fragment.FavoriteFragment;
-import com.example.alphacar.Fragment.LoginJoinSelectFragment;
+import com.example.alphacar.Fragment.Main_search_bar_Fragment;
 import com.example.alphacar.Fragment.ViewpagerFragment;
+import com.example.alphacar.Fragment.announceFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -56,13 +57,15 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     ArrayAdapter<StoreDTO> storeAdapter;
     ListView listView ;
     StoreAdapter sAdapter;
-
+    LinearLayout searchV;
+    FrameLayout search_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        search_bar = findViewById(R.id.search_bar);
 
         pager = findViewById(R.id.pager);
 
@@ -74,6 +77,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
 
         storeDTOArrayList = new ArrayList<>();
+        /* 메인 뷰페이저에 데이터 집어넣기 */
+        storeDTOArrayList = new ArrayList<StoreDTO>();
 
         View headerView = nav_view.getHeaderView(0);
         ImageView login_image = headerView.findViewById(R.id.loginImage);
@@ -87,36 +92,14 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             nav_view.getMenu().findItem(R.id.nav_myPage).setTitle("로그인");
             nav_view.getMenu().findItem(R.id.nav_logout).setVisible(false);
         }
+        viewpagerShow(null);
+
+        /* 검색창 프래그먼트 */
+        Fragment fragment = new Main_search_bar_Fragment();
+        getSupportFragmentManager().beginTransaction()
+              .replace(R.id.contain,fragment).commit();
 
 
-
-      searchBar(null);
-
-        /* 서치뷰 검색 */
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-            //검색버튼을 눌렀을 경우
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchBar(query);
-                return true;
-            }
-            //텍스트가 바뀔때마다 호출
-            @Override
-            public boolean onQueryTextChange(String newText) {
-
-                String text = newText;
-
-                return true;
-            }
-        });
-
-
-// 메인 뷰페이저
-///////////////////////////////////////////////////////////////////////////////
-        /* 메인 뷰페이저 스프링에서 데이터받아온 만큼 횡스크롤로 뿌려줌 */
-
-////////////////////////////////////////////////////////////////////////////////
 
 /*        Intent intent = new Intent(MainActivity.this, LoadingPageActivity.class);
         startActivity(intent);*/
@@ -132,8 +115,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
 
 
-        /* 메인 뷰페이저에 데이터 집어넣기 */
-             storeDTOArrayList = new ArrayList<StoreDTO>();
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         /* tab1 홈 버튼 바텀네비게이션 */
         findViewById(R.id.tab1).setOnClickListener(new View.OnClickListener() {
@@ -152,8 +134,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contain, fragment).commit();
 
-//                Intent intent = new Intent(getApplicationContext(), FavoriteFragment.class);
-//                startActivity(intent);
             }
         });
 
@@ -162,13 +142,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getApplicationContext(), LoginJoinSelectFragment.class);
+                Intent intent = new Intent(getApplicationContext(), LoginJoinSelectActivity.class);
                 startActivity(intent);
             }
         });
-
-      //  ImageView login_image
-
 
         /*tab4 마이페이지 바텀네비게이션*/
        findViewById(R.id.tab4).setOnClickListener(new View.OnClickListener() {
@@ -195,20 +172,16 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
         /*바텀 네비게이션*/
         bottomNavigationView = findViewById(R.id.bottom_navi);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-
-
                 return true;
                 }
 
-    });
+        });
     }
 
 
@@ -218,7 +191,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         // 클릭한 아이템의 아이디를 얻는다.
         int id = item.getItemId();
-
 
 
         if (id == R.id.nav_favorite){
@@ -233,9 +205,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 Intent intent = new Intent(getApplicationContext(), LoginPageActivity.class);
                 startActivity(intent);
             }
-        }else if (id == R.id.nav_noti){
-            Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-            startActivity(intent);
+        }else if (id == R.id.notify){
+            Fragment fragment = new announceFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.notify,fragment).commit();
         }else if(id == R.id.nav_logout){
             loginDTO = null;
             Intent intent = getIntent();
@@ -263,66 +236,38 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     }
 
-    /* 검색 및 뷰페이져 보여주기*/
-    public void searchBar(String query){
-            if(isNetworkConnected(this) == true){
-                storelist  = new Storelist( storeDTOArrayList , "anSelectFile");
-
-                //listDetail = new ListDetail(store_number);
-
-                /* 뷰페이저 */
-                try {
-                    storelist.execute().get();
-                    //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }else {
-                Toast.makeText(this, "인터넷이 연결되어 있지 않습니다.",
-                        Toast.LENGTH_SHORT).show();
-                }
-                ArrayList<Fragment> list = new ArrayList<>();
-                for (int i =0; i<storeDTOArrayList.size(); i++){
-                    list.add(new ViewpagerFragment(storeDTOArrayList.get(i)));
-
-                }
-
-                ViewpagerAdapter viewpagerAdapter =
-                        new ViewpagerAdapter(getSupportFragmentManager());
-                viewpagerAdapter.setList(list);
-                pager.setAdapter(viewpagerAdapter);
-
-
-                storeDTOArrayList = new ArrayList<>();
-
-            /* 검색바 */
-            if(isNetworkConnected(this) == true){
-                storename = new Storename(storeDTOArrayList,"anShowName",query);
-                try {
-                    storename.execute().get();
-                    //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-             }else{
-                Toast.makeText(this, "인터넷이 연결되어 있지 않습니다.",
-                        Toast.LENGTH_SHORT).show();
+    /* 뷰페이져 */
+    public void viewpagerShow(String query){
+        if(isNetworkConnected(this) == true){
+            storelist  = new Storelist( storeDTOArrayList , "anSelectFile");
+            /* 뷰페이저 */
+            try {
+                storelist.execute().get();
+                //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            if(storeDTOArrayList.size() != 0){
+        }else {
+            Toast.makeText(this, "인터넷이 연결되어 있지 않습니다.",
+                    Toast.LENGTH_SHORT).show();
+        }
+        ArrayList<Fragment> list = new ArrayList<>();
+        for (int i =0; i<storeDTOArrayList.size(); i++){
+            list.add(new ViewpagerFragment(storeDTOArrayList.get(i)));
 
-            listView =findViewById(R.id.listview);
-            sAdapter = new StoreAdapter(this,storeDTOArrayList);
-            listView.setAdapter(sAdapter);
-            sAdapter.notifyDataSetChanged();
-            StoreDTO dto =(StoreDTO) sAdapter.getItem(0);
-                Toast.makeText(this, dto.getStore_name(), Toast.LENGTH_SHORT).show();
-            }
+        }
 
-            }
+        ViewpagerAdapter viewpagerAdapter =
+                new ViewpagerAdapter(getSupportFragmentManager());
+        viewpagerAdapter.setList(list);
+        pager.setAdapter(viewpagerAdapter);
+
+
+        storeDTOArrayList = new ArrayList<>();
+    }
+
 
 
     }

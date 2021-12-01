@@ -123,7 +123,9 @@ public class Storename extends AsyncTask<Void, Void, Void> {
             }
             Log.d(TAG, "readJsonStream: " +dtos.size());
             reader.endArray();
-        } finally {
+        }catch (Exception e){
+            e.getMessage();
+        }finally {
             reader.close();
         }
 

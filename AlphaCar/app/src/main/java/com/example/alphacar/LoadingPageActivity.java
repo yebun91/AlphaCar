@@ -27,7 +27,7 @@ public class LoadingPageActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent intent = new Intent(LoadingPageActivity.this,MainActivity.class);
+                Intent intent = new Intent(LoadingPageActivity.this, MainActivity.class);
                 LoadingPageActivity.this.startActivity(intent);
                 LoadingPageActivity.this.finish();
             }

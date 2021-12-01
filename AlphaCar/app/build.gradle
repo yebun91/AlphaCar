@@ -41,6 +41,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.airbnb.android:lottie:4.2.0'
 
+    //다음맵
+    implementation files('libs/libDaumMapAndroid.jar')
+
     /* 안드로이드와 통신할수 있는 버전 가져오기  */
     implementation group: 'org.apache.httpcomponents', name: 'httpclient-android', version: '4.3.5.1'
     implementation('org.apache.httpcomponents:httpmime:4.3') {

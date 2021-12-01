@@ -3,7 +3,6 @@ package com.example.alphacar;
 
 import static com.example.alphacar.Common.CommonMethod.isNetworkConnected;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
@@ -18,6 +17,7 @@ import com.example.alphacar.ATask.ListAllDetail;
 import com.example.alphacar.Adapter.MyGridViewAdapter;
 import com.example.alphacar.DTOS.NowDTO;
 import com.example.alphacar.DTOS.StoreDTO;
+import com.example.alphacar.R;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -31,8 +31,7 @@ public class NowActivity extends AppCompatActivity {
 
     ArrayList<NowDTO> nowDTOArrayList = new ArrayList<>();
 
-    //String customer_email = ;
-    int store_number = 0;
+    String customer_email = "store_master2@naver.com";
 
     ImageView btn_back;
 
@@ -40,9 +39,6 @@ public class NowActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.now);
-
-        Intent intent = getIntent();
-        store_number = intent.getIntExtra("store_number", 0);
 
         btn_back = findViewById(R.id.btn_back);
 
@@ -55,7 +51,7 @@ public class NowActivity extends AppCompatActivity {
 
         StoreDTO dto = new StoreDTO();
         if(isNetworkConnected(this) == true){
-            listAllDetail = new ListAllDetail(store_number, list, adapter );
+            listAllDetail = new ListAllDetail(customer_email, list, adapter );
             //listDetail = new ListDetail(store_number);
             try {
                 listAllDetail.execute().get();
