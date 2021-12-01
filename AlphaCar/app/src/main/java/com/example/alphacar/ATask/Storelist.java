@@ -29,10 +29,9 @@ public class Storelist extends AsyncTask<Void, Void, Void> {
     /* 스토어 정보 AsyncTask */
     ArrayList<StoreDTO> dtos;
     StoreDTO dto;
-    String type;
 
-    public Storelist( ArrayList<StoreDTO> dtos , String type ){
-        this.type = type;
+    public Storelist(StoreDTO dto, ArrayList<StoreDTO> dtos){
+        this.dto = dto;
         this.dtos = dtos;
     }
 
@@ -64,9 +63,7 @@ public class Storelist extends AsyncTask<Void, Void, Void> {
 
             // 전송
             // 전송 url : 우리가 수정해야 하는 부분
-            String postURL ="";
-            postURL = ipConfig +"/" +type;
-
+            String postURL = ipConfig + "/alphacar/anSelectFile";
             // 그대로 사용  복,붙
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");

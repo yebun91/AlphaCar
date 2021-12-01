@@ -136,9 +136,9 @@ public class ReviewSelect extends AsyncTask<Void, Void, Void> {
 
         // int review_id = 0, store_number = 0;
         int review_id = 0, store_number = 0;
-        String customer_email = "", title = "", content ="" ,filename ="";
+        String customer_email = "", review_title = "", review_content ="" ,review_filename ="" , review_score="";
         Date notice_writedate = null;
-        int readcnt = 0;
+        int review_readcnt = 0;
 
 
 
@@ -153,14 +153,16 @@ public class ReviewSelect extends AsyncTask<Void, Void, Void> {
             }else if (readStr.equals("customer_email")) {
                 customer_email = reader.nextString();
             }
-            else if (readStr.equals("title")) {
-                title = reader.nextString();
-            } else if (readStr.equals("content")) {
-                content = reader.nextString();
-            } else if (readStr.equals("filename")) {
-                filename = reader.nextString();
-            }else if (readStr.equals("readcnt")) {
-                readcnt = reader.nextInt();
+            else if (readStr.equals("review_title")) {
+                review_title = reader.nextString();
+            } else if (readStr.equals("review_content")) {
+                review_content = reader.nextString();
+            } else if (readStr.equals("review_filename")) {
+                review_filename = reader.nextString();
+            }else if (readStr.equals("review_readcnt")) {
+                review_readcnt = reader.nextInt();
+            }else if (readStr.equals("review_score")) {
+                review_score = reader.nextString();
             } else {
                 reader.skipValue();
             }
@@ -168,6 +170,6 @@ public class ReviewSelect extends AsyncTask<Void, Void, Void> {
         reader.endObject();
 
         //  return new ReviewDTO(review_id,store_number, readcnt, title, content, filename ,customer_email);
-        return new ReviewDTO(title,content);
+        return new ReviewDTO(review_title,review_content,review_score);
     }
 }

@@ -37,6 +37,7 @@ public class DetailPagerFragment extends Fragment {
                     .into(view);
 
 
+
         return rootView;
     }
 }

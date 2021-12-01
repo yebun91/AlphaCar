@@ -16,9 +16,10 @@ public class ReviewDTO implements Serializable {
     private String review_filepath        ;
     private String review_score           ;
 
-    public ReviewDTO(String review_title, String review_content) {
+    public ReviewDTO(String review_title, String review_content, String review_score) {
         this.review_title = review_title;
         this.review_content = review_content;
+        this.review_score = review_score;
     }
 
     public ReviewDTO(){}

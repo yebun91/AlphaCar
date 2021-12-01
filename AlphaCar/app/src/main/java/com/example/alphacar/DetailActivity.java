@@ -49,17 +49,18 @@ public class DetailActivity extends AppCompatActivity{
     FavoriteInsert favoriteInsert;
     ViewPager pager;
 
-    ArrayList<StoreDTO> store_list = new ArrayList<>();
+    ArrayList<StoreDTO> store_list;
 
     //ArrayList<String> review = new ArrayList<>();
     // List<String> review = new ArrayList<>();
     String[] review;
-    StoreDTO dto = new StoreDTO();
-    ReviewDTO rdto = new ReviewDTO();
+    StoreDTO dto;
+    ReviewDTO rdto;
     ArrayList<ReviewDTO> dtos ;
 
-    ImageButton like_btn;
-    ImageView detail_map;
+    //ImageButton like_btn;
+    ImageView like_btn;
+    ImageView detail_map, detail_star_point;
 
     MapFragment mapFragment;
 
@@ -108,9 +109,14 @@ public class DetailActivity extends AppCompatActivity{
 
         detail_now_btn = findViewById(R.id.detail_now_btn);
         detail_review_btn = findViewById(R.id.detail_review_btn);
+        detail_star_point = findViewById(R.id.detail_star_point);
         store_list = new ArrayList<>();
         pager = findViewById(R.id.image_container);
         dtos = new ArrayList<>();
+
+        dto = new StoreDTO();
+        rdto = new ReviewDTO();
+        store_list = new ArrayList<>();
 
         Intent intent = getIntent();
         store_number = intent.getIntExtra("store_number", 0);
@@ -149,6 +155,41 @@ public class DetailActivity extends AppCompatActivity{
             Toast.makeText(this, "인터넷이 연결되어 있지 않습니다.",
                     Toast.LENGTH_SHORT).show();
         }
+
+       //별점 가져오기
+        int avg = 0;
+        int sum =0;
+       for (int i = 0; i < dtos.size(); i++){
+          String score =dtos.get(i).getReview_score().substring(0,1);
+          int j = dtos.size();
+          int iScore = Integer.parseInt(score);
+          sum += iScore;
+          double dScore = sum/j;
+          avg = (int) Math.round(dScore);
+
+
+
+        //  avg += score;
+       }
+       switch (avg){
+           case 1:
+               detail_star_point.setImageResource(R.drawable.one_star);
+               break;
+           case 2:
+               detail_star_point.setImageResource(R.drawable.two_star);
+               break;
+           case 3:
+               detail_star_point.setImageResource(R.drawable.three_star);
+               break;
+           case 4:
+               detail_star_point.setImageResource(R.drawable.four_star);
+               break;
+           case 5:
+               detail_star_point.setImageResource(R.drawable.five_star);
+               break;
+       }
+
+        //////////
 
         scrollView = findViewById(R.id.detail_scroll);
 
@@ -192,6 +233,8 @@ public class DetailActivity extends AppCompatActivity{
                         //    reviewSelect = new ReviewSelect(customer_email,dtos,rdto);
                         try {
                             favoriteInsert.execute().get();
+                            Toast.makeText(DetailActivity.this, "즐겨찾기 추가 !!!", Toast.LENGTH_SHORT).show();
+                            like_btn.setImageResource(R.drawable.ic_baseline_favorite_red_24);
                             //    reviewSelect.execute().get();
                             //     reviewSelect.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         } catch (Exception e) {
@@ -210,25 +253,7 @@ public class DetailActivity extends AppCompatActivity{
             });
         }
 
-        //------------ViewPager Indicator-----------------------
-   /*     layout = findViewById(R.id.dots_container);
-        imageContainer = findViewById(R.id.image_container);*/
 
-
-        // 사업장 이미지를 가져와서 넣어야 함
-  //      list = new Object[3];
-        //list = new int[3];
-       /* list[0] = getResources().getColor(R.color.black);
-        list[1] = getResources().getColor(R.color.white);
-        list[2] = getResources().getColor(R.color.teal_200);*/
-
-     /*   for (int i = 0 ; i < store_list.size(); i ++){
-            list[i] = store_list.get(i).getImgpath();
-        }
-*/
-/*        list[0] = getResources().getColor(R.color.black);
-        list[1] = getResources().getColor(R.color.white);
-        list[2] = getResources().getColor(R.color.teal_200);*/
 
         ArrayList<Fragment> list = new ArrayList<>();
         for (int i = 0; i <store_list.size(); i++ ){
@@ -246,29 +271,6 @@ public class DetailActivity extends AppCompatActivity{
         getSupportFragmentManager().beginTransaction().replace(R.id.map_layout, mapFragment).commit();
 
 
-
-
-
-
-
-
-
-        //점 만드는거
-    //    dots = new TextView[3];
-
-        //점 만드는거
-     //   setIndicators();
-
-        //선택한 페이지의 변경 상태에 응답하기 위한 콜백 인터페이스
-     /*   imageContainer.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            //새 페이지를 선택하면 호출되는 메소드
-            @Override
-            public void onPageSelected(int position) {
-                selectedDots(position);
-                super.onPageSelected(position);
-            }
-        });*/
-        //------------------------ViewPager Indicator------------------
 
         //-----------------------expandableListView--------------------
 
@@ -378,33 +380,5 @@ public class DetailActivity extends AppCompatActivity{
 
     }
     //-----------------------expandableListView--------------------
-
-
-    //------------ViewPager Indicator-----------------------
-    //사진이 선택되었을때 점에 색깔 넣어주기
-/*
-    private void selectedDots(int position) {
-        for (int i = 0; i < dots.length; i++) {
-            if (i == position) {
-                dots[i].setTextColor((list[position]));
-            } else {
-                //   dots[i].setTextColor(getResources().getColor(R.color.grey));
-            }
-        }
-    }
-*/
-
-
-    //점 만들어주는 메소드
-/*    private void setIndicators() {
-        for (int i = 0; i < dots.length; i++) {
-            dots[i] = new TextView(this);
-            dots[i].setText(Html.fromHtml("&#9679;"));
-            dots[i].setTextSize(14);
-            layout.addView(dots[i]);
-        }
-
-    }*/
-    //------------ViewPager Indicator-----------------------
 
 }
