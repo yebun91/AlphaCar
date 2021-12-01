@@ -29,9 +29,9 @@ public class ReviewDAO implements ReviewService {
 	
 
 	@Override
-	public List<ReviewVO> review_list(String customer_email) {
+	public List<ReviewVO> review_list(int store_number) {
 		// TODO Auto-generated method stub
-		return sql.selectList("review.mapper.list", customer_email);
+		return sql.selectList("review.mapper.list", store_number);
 	}
 	
 

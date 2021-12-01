@@ -11,7 +11,8 @@
 		from favorite f left outer join store s on f.store_number = s.store_number
                 left outer join customer c on f.customer_email = c.customer_email 
                 left outer join store_file t on s.store_number = t.store_number  
-         where c.customer_email = #{customer_email}    
+         where c.customer_email = #{customer_email}   
+         and t.rank = 1 
 	</select> 
 	
 	<!-- 즐겨찾기 목록 지우기 -->
@@ -24,7 +25,7 @@
 
 <insert id="favorite_insert" >
 
-insert into favorite values (101, #{customer_email, jdbcType=VARCHAR}, #{store_number})
+insert into favorite values (seq_favorite.nextval, #{customer_email, jdbcType=VARCHAR}, #{store_number})
 
 
 </insert>

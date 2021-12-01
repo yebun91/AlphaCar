@@ -86,14 +86,15 @@ public class ReviewController {
 	
 
 	@ResponseBody
-	@RequestMapping("/anSelectReview")
+	@RequestMapping("anSelectReview")
 	public void anSelectReview(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");
 		req.setCharacterEncoding("UTF-8");
 	   
+		int store_number = Integer.parseInt(req.getParameter("store_number"));
 		
-		List<ReviewVO> list = service.review_list(req.getParameter("customer_email"));
+		List<ReviewVO> list = service.review_list(store_number);
 		
 		
 		PrintWriter out = res.getWriter();
