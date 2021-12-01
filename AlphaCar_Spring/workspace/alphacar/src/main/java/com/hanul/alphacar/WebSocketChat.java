@@ -1,0 +1,42 @@
+package com.hanul.alphacar;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.websocket.OnOpen;
+import javax.websocket.RemoteEndpoint.Basic;
+import javax.websocket.Session;
+import javax.websocket.server.ServerEndpoint;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+@Controller
+@ServerEndpoint(value="/echo.do")
+public class WebSocketChat{
+    private static final List<Session> sessionList = new ArrayList<Session>();
+    private static final Logger logger = LoggerFactory.getLogger(WebSocketChat.class);
+    
+    public WebSocketChat() {
+    	System.out.println("웹소켓(서버) 객체생성");
+    }
+    
+    @OnOpen
+    public void onOpen(Session session) {
+    	logger.info("open session id : "+ session.getId());
+    	try {
+			final Basic basic = session.getBasicRemote();
+			basic.sendText("대화방에 연결 되었습니다.");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+    	sessionList.add(session);
+    }
+
+}

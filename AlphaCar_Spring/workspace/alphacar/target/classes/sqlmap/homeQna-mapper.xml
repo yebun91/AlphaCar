@@ -23,6 +23,12 @@
 	
 		</insert>
 		
+		<!-- qna 답글 내용 수정 -->
+	<update id="homeQnaReplyUpdate">
+		update web_qna set qna_title = #{qna_title}, qna_content = #{qna_content}
+		where qna_id = #{qna_id}
+	</update>
+		
 		<!-- qna 글 목록 조회 -->	
 		<select id="homeQnaList" resultType="homeQna.QnaVO">
 			select *
@@ -103,7 +109,7 @@
 	<!-- qna 게시글 내용 수정 -->
 	<update id="homeQnaUpdate">
 		update web_qna set qna_title = #{qna_title}, qna_content = #{qna_content}, 
-		qna_attribute = #{qna_attribute}
+		qna_attribute = #{qna_attribute}, qna_password = #{qna_password}
 		where qna_id = #{qna_id}
 	</update>
 	
@@ -161,19 +167,19 @@
 		<include refid="where_member" />
 	</select>
 	
-	<!-- 고객과 점주일 경우 페이징 처리 된 qna 글 목록 조회 -->	
-	<select id="homeMemberQnaList" resultType="homeQna.QnaVO">
-		select *
-		from (select rownum no, w.*, ( select customer_name from customer c where c.customer_email = w.customer_email ) customer_name 
-				from ( select * 
-					   from web_qna
-					   
-					   where customer_email = #{customer_email}
-					   order by qna_root, qna_step desc ) w
-			  order by no desc)
-		where no between #{beginList} and #{endList}
-		
-	</select>
+   <!-- 고객과 점주일 경우 페이징 처리 된 qna 글 목록 조회 -->   
+   <select id="homeMemberQnaList" resultType="homeQna.QnaVO">
+      select *
+      from (select rownum no, w.*, ( select customer_name from customer c where c.customer_email = w.customer_email ) customer_name 
+            from ( select * 
+                  from web_qna
+                  
+                  where customer_email = #{customer_email} <include refid="where_search" />
+                  order by qna_root, qna_step desc ) w
+           order by no desc)
+      where no between #{page.beginList} and #{page.endList}
+      
+   </select>
 
 	
 </mapper>

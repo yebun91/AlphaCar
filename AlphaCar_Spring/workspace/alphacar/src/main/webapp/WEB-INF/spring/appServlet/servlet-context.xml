@@ -2,13 +2,24 @@
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
-
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/websocket 
+		http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 	
+	<!--  echoHandler 위치 지정 -->
+	<beans:bean id="echoHandler" class="com.hanul.alphacar.EchoHandler"></beans:bean>
+	
+	<!-- 웹소켓 설정 -->
+	<websocket:handlers>
+		<websocket:mapping handler="echoHandler" path="/echo" />
+		<websocket:sockjs />
+	</websocket:handlers>
+   
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
@@ -30,8 +41,6 @@
 		<beans:property name="maxUploadSize" value="100000000"></beans:property>
 	</beans:bean>
 	
-	
-	
 	<!-- 화면의 레이아웃을 지정하기 위한 tiles 라이브러리 설정
 	      view 의 순서(order) 를 지정 -->
 	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
@@ -39,13 +48,10 @@
 	</beans:bean>
 	
 	<!-- tiles 설정부를 별도 파일로 지정하여 정의하는 부분 -->
-	
 	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<beans:property name="definitions" value="/WEB-INF/views/tiles/config.xml" />
 	</beans:bean>
 	
 	<context:component-scan base-package="com.hanul.alphacar" />
-	
-	
-	
 </beans:beans>
+
