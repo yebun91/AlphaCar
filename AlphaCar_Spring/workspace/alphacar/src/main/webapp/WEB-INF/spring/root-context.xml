@@ -9,5 +9,6 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 	<import resource="classpath:data/default.xml" />
-	<context:component-scan base-package="member, store, state, homeNotice, common, homeMypage, review, favorite, homeBestQna, homeQna" />	
+	<context:component-scan base-package="member, store, state, homeNotice, common, 
+		homeChat, homeMypage, review, favorite, homeBestQna, homeQna" />	
 </beans>
