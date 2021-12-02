@@ -41,6 +41,10 @@ public class Storelist extends AsyncTask<Void, Void, Void> {
     HttpResponse httpResponse;   // 서버에서의 응답받는 부분
     HttpEntity httpEntity;       // 응답내용
 
+    public Storelist(ArrayList<StoreDTO> dtos) {
+        this.dtos = dtos;
+    }
+
     // doInBackground 하기전에 설정 및 초기화 : 여기서는 사용않함
     @Override
     protected void onPreExecute() {

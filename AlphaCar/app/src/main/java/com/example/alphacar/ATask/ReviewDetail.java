@@ -1,13 +1,10 @@
 package com.example.alphacar.ATask;
 
-
-
 import static com.example.alphacar.Common.CommonMethod.ipConfig;
 
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.JsonReader;
-
 
 import com.example.alphacar.DTOS.ReviewDTO;
 
@@ -23,26 +20,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Date;
 
-public class ReviewSelect extends AsyncTask<Void, Void, Void> {
-
-    //리뷰페이지 작동은 하나 dtos에 값이 안담김
-
-    /*public ListDetail(int store_number) {
-        this.store_number = store_number;
-    }*/
-    String customer_email = "";
-    int store_number = 0;
+public class ReviewDetail extends AsyncTask<Void, Void, ReviewDTO> {
+    String review_id;
     ReviewDTO dto;
-    ArrayList<ReviewDTO> dtos = new ArrayList<>();
 
-
-    public ReviewSelect(int store_number,ArrayList<ReviewDTO> dtos, ReviewDTO dto ) {
-        this.store_number = store_number;
-        this.dto = dto;
-        this.dtos = dtos;
+    public ReviewDetail(int review_id) {
+        this.review_id = Integer.toString(review_id);
     }
 
     // 반드시 선언해야 할것들 : 무조건 해야함  복,붙
@@ -58,7 +42,7 @@ public class ReviewSelect extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected ReviewDTO doInBackground(Void... voids) {
         try {
             // MultipartEntityBuilder 생성 : 무조건 해야함  복,붙
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
@@ -66,15 +50,13 @@ public class ReviewSelect extends AsyncTask<Void, Void, Void> {
             builder.setCharset(Charset.forName("UTF-8"));
 
             // 여기가 우리가 수정해야 하는 부분 : 서버로 보내는 데이터
-            // builder에 문자열 및 데이터 추가하기
-            builder.addTextBody("store_number", String.valueOf(store_number), ContentType.create("Multipart/related", "UTF-8"));
-            //builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
-
-
+            // builder 에 문자열 및 데이터 추가하기
+            //builder.addTextBody("store_number", String.valueOf(store_number), ContentType.create("Multipart/related", "UTF-8"));
+            builder.addTextBody("review_id", review_id, ContentType.create("Multipart/related", "UTF-8"));
 
             // 전송
             // 전송 url : 우리가 수정해야 하는 부분
-            String postURL = ipConfig + "/alphacar/anSelectReview";
+            String postURL = ipConfig + "/alphacar/reviewDetail";
             // 그대로 사용  복,붙
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");
@@ -85,8 +67,9 @@ public class ReviewSelect extends AsyncTask<Void, Void, Void> {
             inputStream = httpEntity.getContent();    // 응답내용을 inputStream 에 넣음
 
             // 응답 처리 : dto 형태
-            readJsonStream(inputStream);
+            dto = readMessage(inputStream);
 
+            inputStream.close();
 
         } catch (Exception e) {
             e.getMessage();
@@ -104,61 +87,49 @@ public class ReviewSelect extends AsyncTask<Void, Void, Void> {
                 httpClient = null;
             }
         }
-        return null;
+
+        return dto;
     }
-    // doInBackground 끝난후에 실행하는 부분
+
+    @Override
+    protected void onPostExecute(ReviewDTO reviewDTO) {
+        super.onPostExecute(reviewDTO);
+    }
 
 
-    public void readJsonStream(InputStream inputStream) throws IOException {
+    //하나의 DTO 형태로 데이터를 받을때 파싱하는 부분
+    private ReviewDTO readMessage(InputStream inputStream) throws IOException {
         JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
-        try {
-            reader.beginArray();
-            while (reader.hasNext()) {
-                dtos.add(readMessage(reader));
-            }
-            reader.endArray();
-        } finally {
-            reader.close();
-        }
 
-    }
-
-    //하나의 DTO형태로 데이터를 받을때 파싱하는 부분
-    private ReviewDTO readMessage(JsonReader reader) throws IOException {
-
-        // int review_id = 0, store_number = 0;
-        int review_id = 0, store_number = 0;
-        String customer_email = "", review_title = "", review_content ="" ,review_filename ="", review_score = "";
-        Date review_writedate = null;
-        int review_readcnt = 0;
+        int store_number = 0;
+        String customer_email = "", review_title = "", review_content = "", review_filepath = "", customer_picture = "", review_score="";
 
         reader.beginObject();
         while (reader.hasNext()) {
             String readStr = reader.nextName();
-            if (readStr.equals("review_id")) {
-                review_id = reader.nextInt();
-            } else if (readStr.equals("store_number")) {
+            if (readStr.equals("store_number")) {
                 store_number = reader.nextInt();
-            }else if (readStr.equals("customer_email")) {
+            } else if (readStr.equals("customer_email")) {
                 customer_email = reader.nextString();
             }
             else if (readStr.equals("review_title")) {
                 review_title = reader.nextString();
             } else if (readStr.equals("review_content")) {
                 review_content = reader.nextString();
-            } else if (readStr.equals("review_filename")) {
-                review_filename = reader.nextString();
-            }else if (readStr.equals("review_readcnt")) {
-                review_readcnt = reader.nextInt();
-            }  else if (readStr.equals("review_score")) {
+            } else if (readStr.equals("review_score")) {
                 review_score = reader.nextString();
-            }else {
+            } else if (readStr.equals("review_filepath")) {
+                review_filepath = reader.nextString();
+            } else if (readStr.equals("customer_picture")) {
+                customer_picture = reader.nextString();
+            }
+            else {
                 reader.skipValue();
             }
         }
         reader.endObject();
 
-        //  return new ReviewDTO(review_id,store_number, readcnt, title, content, filename ,customer_email);
-        return new ReviewDTO(review_id, customer_email, review_title, review_content , review_score);
+        return new ReviewDTO(customer_email, review_title, review_content, review_score, review_filepath, customer_picture);
     }
+
 }

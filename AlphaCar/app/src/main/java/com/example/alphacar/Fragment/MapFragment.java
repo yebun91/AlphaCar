@@ -34,7 +34,8 @@ import net.daum.mf.map.api.MapView;
 import java.io.IOException;
 import java.util.List;
 
-public class MapFragment extends Fragment implements MapView.MapViewEventListener, MapView.POIItemEventListener, MapView.OpenAPIKeyAuthenticationResultListener, View.OnClickListener, MapView.CurrentLocationEventListener {
+public class MapFragment extends Fragment implements MapView.MapViewEventListener, MapView.POIItemEventListener,
+        MapView.OpenAPIKeyAuthenticationResultListener, View.OnClickListener, MapView.CurrentLocationEventListener {
     Context mContext;
     Activity mActivity;
     MapView mapView;

@@ -31,6 +31,7 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.alphacar.ATask.ReviewInsert;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -45,7 +46,7 @@ public class ReviewActivity extends AppCompatActivity {
     String imgFilePath = "", state = "";
     // 이미지처리가 정상적으로 되었을때 onActivityResult 에서 데이터를 받기 위한 코드
     public int reqPicCode = 1004;
-
+    ReviewInsert reviewInsert ;
     Button btnBack;
     Button btnRegister;
     EditText editReview;
@@ -66,9 +67,9 @@ public class ReviewActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
         btnRegister = findViewById(R.id.btnRegister);
         editReview = findViewById(R.id.editReview);
-//        editTitle = findViewById(R.id.editTitle);
-//        addPhoto = findViewById(R.id.addPhoto);
-//        ratingBar = findViewById(R.id.ratingBar);
+        editTitle = findViewById(R.id.editTitle);
+        addPhoto = findViewById(R.id.addPhoto);
+        ratingBar = findViewById(R.id.ratingBar);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,8 +100,8 @@ public class ReviewActivity extends AppCompatActivity {
                     imgPath = imgFilePath;
                 }
                 // 이정보를 비동기 Task 로 넘겨 서버에게 전달한다
-                com.example.alphacar.ATask.ReviewInsert reviewInsert = new
-                        com.example.alphacar.ATask.ReviewInsert(email, rating, reviewTitle, reviewContent, imgPath);
+                reviewInsert = new
+                        ReviewInsert(email, rating, reviewTitle, reviewContent, imgPath);
                 try {
                     state = reviewInsert.execute().get().trim();
                 } catch (ExecutionException e) {

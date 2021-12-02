@@ -1,7 +1,7 @@
 package com.example.alphacar;
 
 import static com.example.alphacar.Common.CommonMethod.isNetworkConnected;
-import static com.example.alphacar.LoginPage.loginDTO;
+import static com.example.alphacar.LoginPageActivity.loginDTO;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MotionEvent;

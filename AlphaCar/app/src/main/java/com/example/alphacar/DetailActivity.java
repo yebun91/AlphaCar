@@ -21,8 +21,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 
@@ -167,8 +165,6 @@ public class DetailActivity extends AppCompatActivity{
           double dScore = sum/j;
           avg = (int) Math.round(dScore);
 
-
-
         //  avg += score;
        }
        switch (avg){
@@ -312,9 +308,9 @@ public class DetailActivity extends AppCompatActivity{
             //리뷰 눌렀을때 디테일하게 보기
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
-                String selected = expandableListAdapter.getChild(i,i1).toString();
-                Toast.makeText(getApplicationContext(), "Selected: " + selected, Toast.LENGTH_SHORT).show();
-                //리뷰 아이디를 가지고 reviewpageFragment로 간다
+                Intent intent = new Intent(getApplicationContext() , ReviewPageActivity.class);
+                intent.putExtra("review_id" , dtos.get(i1).getReview_id());
+                startActivity(intent);
                 return true;
             }
         });
@@ -323,7 +319,6 @@ public class DetailActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
-
                 startActivity(intent);
 
             }

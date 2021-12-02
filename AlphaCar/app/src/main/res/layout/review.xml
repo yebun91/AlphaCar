@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <FrameLayout
@@ -18,7 +18,7 @@
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
-            android:text="업체명"
+            android:text="리뷰"
             android:textSize="36dp" />
 
         <Button
@@ -37,14 +37,6 @@
 
         </com.google.android.material.floatingactionbutton.FloatingActionButton>-->
 
-        <Button
-            android:id="@+id/btnSearch"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/magnifier"
-            android:layout_gravity="right"
-            android:paddingRight="50dp"/>
 
     </FrameLayout>
 
@@ -59,7 +51,7 @@
             android:id="@+id/profileImg"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:src="@drawable/trash" />
+            android:src="@drawable/profile" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,7 +83,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/reviewTitle"
-        android:layout_marginLeft="15dp"/>
+        android:layout_marginLeft="15dp"
+        android:text="title"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/reviewContent"
+        android:layout_marginLeft="15dp"
+        android:text="content" />
 
     <ImageView
         android:id="@+id/reviewPhoto"
@@ -99,12 +99,14 @@
         android:layout_height="350dp"
         android:layout_gravity="center_horizontal" />
 
-    <TextView
+    <FrameLayout
+        android:id="@+id/forPhoto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/reviewContent"
-        android:layout_marginLeft="15dp"
-        android:text="Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1Text1" />
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
+
+
 
 </LinearLayout>
 

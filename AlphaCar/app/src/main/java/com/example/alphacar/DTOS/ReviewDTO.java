@@ -15,6 +15,7 @@ public class ReviewDTO implements Serializable {
     private String review_filename        ;
     private String review_filepath        ;
     private String review_score           ;
+    private String customer_picture;
 
     public ReviewDTO(String review_title, String review_content, String review_score) {
         this.review_title = review_title;
@@ -24,6 +25,31 @@ public class ReviewDTO implements Serializable {
 
     public ReviewDTO(){}
 
+    public ReviewDTO(String customer_email, String review_title, String review_content, String review_score, String review_filepath, String customer_picture) {
+        this.customer_email =customer_email;
+        this.review_title = review_title;
+        this.review_content = review_content;
+        this.review_score = review_score;
+        this.review_filepath = review_filepath;
+        this.customer_picture = customer_picture;
+
+    }
+
+    public ReviewDTO(int review_id, String customer_email, String review_title, String review_content, String review_score) {
+        this.review_id = review_id;
+        this.customer_email = customer_email;
+        this.review_title = review_title;
+        this.review_content = review_content;
+        this.review_score = review_score;
+    }
+
+    public String getCustomer_picture() {
+        return customer_picture;
+    }
+
+    public void setCustomer_picture(String customer_picture) {
+        this.customer_picture = customer_picture;
+    }
 
     public int getReview_id() {
         return review_id;

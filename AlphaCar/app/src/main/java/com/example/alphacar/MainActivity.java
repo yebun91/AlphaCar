@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     /* 뷰페이져 */
     public void viewpagerShow(String query){
         if(isNetworkConnected(this) == true){
-            storelist  = new Storelist( storeDTOArrayList , "anSelectFile");
+            storelist  = new Storelist( storeDTOArrayList);
             /* 뷰페이저 */
             try {
                 storelist.execute().get();
