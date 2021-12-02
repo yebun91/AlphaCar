@@ -124,6 +124,7 @@
 
 	</insert>
 	
+	<!-- 가게 이미지 저장 -->
 	<insert id="companyImg_insert">
 		insert into store_file (file_id, store_number, imgpath, imgname, rank)
 		values (seq_store_file.nextval, SEQ_STORE.currval, #{imgpath, jdbcType=VARCHAR}, #{imgname, jdbcType=VARCHAR}, #{rank, jdbcType=VARCHAR})
@@ -169,5 +170,6 @@
 		update store_file
 		set imgpath = #{imgpath, jdbcType=VARCHAR}, imgname = #{imgname, jdbcType=VARCHAR}, rank = #{rank, jdbcType=VARCHAR}
 		where store_number = #{store_number}
+		and rank = #{rank}
 	</update>
 </mapper>

@@ -1,11 +1,15 @@
 package com.hanul.alphacar;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 
 import common.CommonService;
 import homeMypage.CustomerPage;
@@ -42,9 +47,9 @@ public class HomeMyPageController {
 	@RequestMapping("/mypage.mp")
 	public String login(HttpSession session) {
 		
-//	  HashMap<String, String> map = new HashMap<String, String>();
-//	  map.put("customer_email", "e"); map.put("customer_pw", "e");
-//	  session.setAttribute("loginInfo", member.member_login(map));
+	  HashMap<String, String> map = new HashMap<String, String>();
+	  map.put("customer_email", "e"); map.put("customer_pw", "e");
+	  session.setAttribute("loginInfo", member.member_login(map));
 		 
 		
 		return "mypage/mypage";
@@ -165,13 +170,17 @@ public class HomeMyPageController {
     	HomeStoreFileVO fvo = new HomeStoreFileVO(); 
     	
     	if(mf.size() > 0 && !mf.get(0).getOriginalFilename().equals("")) {
+    		int rank = 0;
     		for(MultipartFile file:mf) {
-	    		fvo.setImgname(file.getOriginalFilename());
-	    		fvo.setImgpath(common.fileUpload("company", file, session));
-	    		fvo.setRank(mf.size());
-	    		homeService.companyImg_update(fvo);
+    			fvo.setStore_number(store_number);
+    			fvo.setImgname(file.getOriginalFilename());
+    			fvo.setImgpath(common.fileUpload("company", file, session));
+    			fvo.setRank(++rank);
+    			homeService.companyImg_update(fvo);
     		}
-    	}
+    	
+        }
+    	
 		
 		return "redirect:memberCompany.mp";
 	}
@@ -183,12 +192,9 @@ public class HomeMyPageController {
 	}
 	
 	//신규 가게 저장 요청
-	@ResponseBody
 	@RequestMapping(value = "/homeStoreRegister.mp", produces = "text/html; charset=utf-8")
 	public String homeStoreRegister(HttpSession session, HomeStoreVO vo, 
-			@RequestParam("article_file") List<MultipartFile> mf, String join_company, int inventory) {
-		//StringBuffer msg = new StringBuffer("<script>");
-		
+			@RequestParam("article_file") List<MultipartFile> mf, String join_company, int inventory, HttpServletRequest req) {
 		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
 		
 		ArrayList<String> storeInventory = new ArrayList<>();
@@ -206,30 +212,31 @@ public class HomeMyPageController {
         homeService.company_insert(vo);
         
         HomeStoreFileVO fvo = new HomeStoreFileVO(); 
-        
-        if(mf.size() > 0 && !mf.get(0).getOriginalFilename().equals("")) {
-        	for(MultipartFile file:mf) {
-	    		fvo.setImgname(file.getOriginalFilename());
-	    		fvo.setImgpath(common.fileUpload("company", file, session));
-	    		fvo.setRank(mf.size());
-	    		homeService.companyImg_insert(fvo);
+      
+        String uuid = session.getServletContext().getRealPath("resources")
+  				+ "/" + fvo.getImgname();
+        if ( fvo.getImgpath() != null ) {
+        	File f = new File ( uuid );
+				// 기존 첨부 파일 삭제
+			if (f.exists()) f.delete();
+	    	if(mf.size() > 0 && !mf.get(0).getOriginalFilename().equals("")) {
+	    		int rank = 0;
+	    		for(MultipartFile file:mf) {
+	    			fvo.setImgname(file.getOriginalFilename());
+	    			fvo.setImgpath(common.fileUpload("company", file, session));
+	    			fvo.setRank(++rank);
+	    			
+	      				
+      			} 
+    		homeService.companyImg_insert(fvo);
     		}
     	
         }
 
-        
-
-//		if (homeService.company_insert(vo) == 0) {
-//		//	msg.append("alert('회원가입을 축하드립니다.'); location='login' ")
-//			msg.append("alert('가게등록 실패'); location='memberCompanyInsert.mp' ");
-//		} else {
-//			msg.append("alert('가게 등록이 완료되었습니다!'); location='")
-//			.append(req.getContextPath()).append("'");
-//		}
-//		msg.append("</script>");
-		//return msg.toString();
-		return "redirect:mypage.mp";
+    	return "redirect:memberCompany.mp";
+       
 	}
+	
 	
 	//회원 정보 리스트로 반환
 	@RequestMapping("/masterMemberList.mp")
