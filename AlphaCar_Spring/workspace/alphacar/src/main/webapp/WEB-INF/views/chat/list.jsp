@@ -93,21 +93,34 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 	let revid = document.getElementById("revid").value;
 	let user_ref = 'users/' + userid + "/" + revid;
 	let rev_ref = 'users/' + revid + "/" + userid;
+	
 	if(userAdmin == 'A'){
 		if(revid != null){
-			/* initChat(); */
+			/* 관리자모드로 들어가 메세지를 보낼 사람을 고른 경우 */
+			initChat();
 		}else{
-			user_ref = 'users/' + userid + "/";
-			rev_ref = 'users/'+ userid + "/"
-		}			
+			/* 관리자모드로 들어가 메세지를 보낼 사람을 고르지 않은 경우 */
+			
+		}
+		
 	}else{
+		/* 관리자가 아닐 경우 보내는 사람이 관리자 이기 때문에 관리자와의 채팅 내용을 보여줌 */
 		initChat();
+	}
+	
+	function sessionChange(reciveId) {
+		$.ajax ({
+			//경로 형태로 url 지정
+			url : "chat/list/change",
+			data : { revid:reciveId } 	
+		});	
 	}
 
 	
 	function changeRevId(reciveId) {
-		user_ref = 'users/' + userid +"/"+reciveId;
-		rev_ref = 'users/' + reciveId+"/" + userid;
+		user_ref = 'users/' + userid + "/" + reciveId;
+		rev_ref = 'users/' + reciveId + "/" + userid;
+		document.getElementById('revid').value = reciveId;
 		sessionChange(reciveId);
 		initChat();
 	}
@@ -134,8 +147,6 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 		
 				$('#chatList').append(html);
 				scrollBottom();
-	
-		
 		}, callback());
 		
 	}
@@ -207,12 +218,6 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 		$('#chatList').scrollTop($('#chatList')[0].scrollHeight);
 	}
 	
-	function sessionChange(reciveId) {
-		$.ajax ({
-			//경로 형태로 url 지정
-			url : "chat/list/change",
-			data : { revid:reciveId } 	
-		});	
-	}
+	
 </script>
 </html>
