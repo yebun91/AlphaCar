@@ -14,14 +14,22 @@ import member.WebMemberVO;
 public class ChatController {
 	
 	@RequestMapping("/list.chat")
-	public String chatList(Model model, HttpSession session) {
-		HashMap<String, String> chatInfo = new HashMap<String, String>();
+	public String chatList(Model model, HttpSession session, String revid) {
 		WebMemberVO vo = (WebMemberVO) session.getAttribute("loginInfo");
-		chatInfo.put("id", vo.getCustomer_email());//userID  // revID
-		chatInfo.put("name", vo.getCustomer_name());
-		chatInfo.put("receiveId", "revID");
-		model.addAttribute("loginInfo", chatInfo);
-		
+		if(revid != null) {
+			session.setAttribute("revid", revid);
+		}
+		if(!vo.getAdmin().equals("A")) {
+			session.setAttribute("revid", "운영자입니다");
+		}
 		return "chat/list";
 	}
+	
+	@RequestMapping("/chat/list/change")
+	public void chatListChange(HttpSession session, String revid) {
+		if(revid != null) {
+			session.setAttribute("revid", revid);
+		}
+	}
+	
 }

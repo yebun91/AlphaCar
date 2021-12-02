@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,14 +43,21 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script>
+
 </head>
 <body>
-	<input type="hidden" id="userid" value="${chatInfo.id}" />
-	<input type="hidden" id="username" value="${chatInfo.name}" />
-	<%-- <input type="hidden" id="revid" value="${chatInfo.receiveId}" /> --%>
-	<input type="hidden" id="revid" value="a" />
+	<input type="hidden" id="userAdmin" value="${loginInfo.admin}" />
+	<input type="hidden" id="userid" value="${loginInfo.customer_email}" />
+	<input type="hidden" id="username" value="${loginInfo.customer_name}" />
+	<input type="hidden" id="revid" value="${revid}" />
+	<!-- revid 라는 아이디로 초기값 부여 -->
+	<div>
+		<a onclick="changeRevId('강동원')">강동원</a>
+		<a onclick="changeRevId('아이유')">아이유</a>
+	</div>
+	<div id="chatList" class="chatList">
 	
-	<div id="chatList" class="chatList"></div>
+	</div>
 	<div class="textContent">
 		<form onsubmit="return send_msg();" id="subSend">
 			<input type="text" id="usermsg" autocomplete="off" class="chk"
@@ -59,7 +66,7 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 				type="button" value="보내기" class="send"
 				onclick=" if(emptyCheck()){ $('#subSend').submit();}" />
 		</form>
-	</div>"
+	</div>
 </body>
 <!-- 파이어 베이스 초기화 하기 fireBase Web플랫폼 추가시 나옴.  -->
 <script type="text/javascript">
@@ -81,24 +88,34 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 
 <script type="text/javascript">
 	//전역변수 선언.
+	const userAdmin = document.getElementById("userAdmin").value;
+	const userid = document.getElementById("username").value;
+	let revid = document.getElementById("revid").value;
+	let user_ref = 'users/' + userid + "/" + revid;
+	let rev_ref = 'users/' + revid + "/" + userid;
+	if(userAdmin == 'A'){
+		if(revid != null){
+			/* initChat(); */
+		}else{
+			user_ref = 'users/' + userid + "/";
+			rev_ref = 'users/'+ userid + "/"
+		}			
+	}else{
+		initChat();
+	}
+
 	
-	var userid = document.getElementById("username").value;
-	var revid = document.getElementById("revid").value;
-	var user_ref = 'users/' + userid +"/" + revid;
-	var rev_ref = 'users/' + revid+"/" + userid;
-	
-	//initQnaList();
-	initChat();
-	
+	function changeRevId(reciveId) {
+		user_ref = 'users/' + userid +"/"+reciveId;
+		rev_ref = 'users/' + reciveId+"/" + userid;
+		sessionChange(reciveId);
+		initChat();
+	}
 
 	function initChat() {
 		firebase.database().ref(user_ref).once('value',
 				 function(snapshot) { 
-			 alert('Count: ' + snapshot.numChildren()); 
-
 			 });
-
-		
 		firebase.database().ref(user_ref).on('child_added', function(snapshot){
 			
 			
@@ -123,7 +140,8 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 		
 	}
 	function callback(){
-		alert('a');}
+		//alert('callback');
+	}
 	function rtnHtmlDiv(nickname,msg,date ,className){
 		
 			var temp_html = '<div class=' + className +'>'
@@ -143,8 +161,7 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 	function send_msg() {
 		send_fb(userid, user_ref);
 		send_fb(userid, rev_ref);
-		alert('전송 완료!');
-		scrollBottom();
+		//alert('전송 완료!');
 	}
 
 	function send_fb(userid, ref) {
@@ -189,6 +206,13 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 	function scrollBottom(){
 		$('#chatList').scrollTop($('#chatList')[0].scrollHeight);
 	}
+	
+	function sessionChange(reciveId) {
+		$.ajax ({
+			//경로 형태로 url 지정
+			url : "chat/list/change",
+			data : { revid:reciveId } 	
+		});	
+	}
 </script>
-
 </html>

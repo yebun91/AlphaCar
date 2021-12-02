@@ -28,7 +28,7 @@ public class HomeMemberController {
 	public String logout (HttpSession session) {
 		// 세션에 담긴 로그인 정보를 삭제한다.
 		session.removeAttribute("loginInfo");
-		
+		session.removeAttribute("revid");
 		// 로그아웃 시 루트(home.jsp)로 이동
 		return "redirect:/";	
 	}
