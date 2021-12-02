@@ -82,6 +82,7 @@
 		delete from customer
 		where customer_email = #{customer_email}	
 	</delete>
+	
 	<!-- 신규 가게 등록 -->
 	<insert id="company_register">
 		DECLARE
@@ -101,13 +102,7 @@
 				#{store_dayoff, jdbcType=VARCHAR}, #{introduce, jdbcType=VARCHAR}, 
 				#{inventory, jdbcType=VARCHAR}, #{store_price, jdbcType=VARCHAR}, 
 				#{store_master_name, jdbcType=VARCHAR}, #{store_registration_number, jdbcType=VARCHAR})
-				into store_file values (V_MAX_ID+1 , V_STORE_NUM , #{imgpath1}, #{imgname1} , 1)
-				into store_file values (V_MAX_ID+2 , V_STORE_NUM , #{imgpath2}, #{imgname2}, 2)
-				into store_file values (V_MAX_ID+3 , V_STORE_NUM , #{imgpath3}, #{imgname3}, 3)
-				<foreach collection="img" item="item"  >
-					insert into store_file (file_id, store_number, imgpath, imgname, rank)
-			  	values (V_MAX_ID+1 , V_STORE_NUM , #{imgpath1}, #{imgname1} , #{rank})
-				</foreach>
+				
 			SELECT 1
 	    FROM dual ;
 	    
@@ -127,6 +122,11 @@
 
 		END;
 
+	</insert>
+	
+	<insert id="companyImg_insert">
+		insert into store_file (file_id, store_number, imgpath, imgname, rank)
+		values (seq_store_file.nextval, SEQ_STORE.currval, #{imgpath, jdbcType=VARCHAR}, #{imgname, jdbcType=VARCHAR}, #{rank, jdbcType=VARCHAR})
 	</insert>
 	
 	<!-- 회사id를 기준으로 회사정보 조회 -->
@@ -164,9 +164,10 @@
 		end;  
 	</update>
 	
+	<!-- 가게 이미지 수정 -->
 	<update id="companyImg_update">
 		update store_file
-		set imgpath = #{imgpath}, imgname = #{imgname}, rank = #{rank}
+		set imgpath = #{imgpath, jdbcType=VARCHAR}, imgname = #{imgname, jdbcType=VARCHAR}, rank = #{rank, jdbcType=VARCHAR}
 		where store_number = #{store_number}
 	</update>
 </mapper>

@@ -5,7 +5,7 @@
     <img src="img/main_image.jpg" alt="">
   </div>
   <div class="service_buttons">
-  	<button onclick="location.href='chat.do'">실시간 채팅 문의</button>
+  	<button onclick="location.href='list.chat'">실시간 채팅 문의</button>
   	<button onclick="location.href='write.qna'">1:1 문의하기</button>
   </div>
 </nav>
