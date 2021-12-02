@@ -77,4 +77,10 @@ public class HomeMyPageServiceImpl implements HomeMyPageService {
 		dao.companyImg_update(vo);
 		
 	}
+
+	@Override
+	public void companyImg_insert(HomeStoreFileVO vo) {
+		 dao.companyImg_insert(vo);
+		
+	}
 }
