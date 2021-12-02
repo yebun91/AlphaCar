@@ -20,50 +20,7 @@ public class HomeStoreVO {
 	//private String imgpath  ;
 	private int store_favorite_cnt         ;
 	private ArrayList<String> now_state = new ArrayList<String>();
-	//private ArrayList<String> imgpath = new ArrayList<String>();
-	private ArrayList<String> imgname = new ArrayList<String>();
-	private List<String> imgpath = new ArrayList<String>();
-	private int file_id      ;
-	private int rank         ;
-
 	
-	public List<String> getImgpath() {
-		return imgpath;
-	}
-	public void setImgpath(List<String> imgpath) {
-		this.imgpath = imgpath;
-	}
-	//	public String getImgpath() {
-//		return imgpath;
-//	}
-//	public void setImgpath(String imgpath) {
-//		this.imgpath = imgpath;
-//	}
-//	public ArrayList<String> getImgpath() {
-//		return imgpath;
-//	}
-//	public void setImgpath(ArrayList<String> imgpath) {
-//		this.imgpath = imgpath;
-//	}
-	public ArrayList<String> getImgname() {
-		return imgname;
-	}
-	public void setImgname(ArrayList<String> imgname) {
-		this.imgname = imgname;
-	}
-	public int getFile_id() {
-		return file_id;
-	}
-	public void setFile_id(int file_id) {
-		this.file_id = file_id;
-	}
-	
-	public int getRank() {
-		return rank;
-	}
-	public void setRank(int rank) {
-		this.rank = rank;
-	}
 	public void setNow_state(ArrayList<String> now_state) {
 		this.now_state = now_state;
 	}

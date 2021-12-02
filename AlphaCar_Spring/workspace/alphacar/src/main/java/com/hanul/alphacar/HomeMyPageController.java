@@ -144,16 +144,9 @@ public class HomeMyPageController {
 	// 가게 수정 저장 처리 요청
 	
 	@RequestMapping ("/update_work.mp")
-	public String update_work(HomeStoreVO vo, HttpSession session, int inventory, int store_number, HomeStoreFileVO fileVo,
-			MultipartHttpServletRequest req) {
+	public String update_work(HomeStoreVO vo, HttpSession session, int inventory, int store_number, 
+			@RequestParam("article_file") List<MultipartFile> mf) {
 		ArrayList<String> storeInventory = new ArrayList<>();
-		MultipartFile multiFile =  (MultipartFile) req.getFile("file");
-		//MultipartFile multipartFile = multiFile.getFile("file");
-		
-		//HomeStoreVO store = homeService.companyId_list(store_number);
-		ArrayList<String> imgpath = new ArrayList<String>();
-		List<HomeStoreFileVO> fileListVO = homeService.company_img(store_number);
-		
 		
 		for (int i =0; i< 9; i++){
 			storeInventory.add("X");
@@ -169,67 +162,16 @@ public class HomeMyPageController {
     	
     	homeService.company_update(vo);
     	
-    	// 원래 첨부된 파일이 있었다면 물리적인 디스크에서 해당 파일 삭제
-    	// 서버에 파일이 있는지 파악
+    	HomeStoreFileVO fvo = new HomeStoreFileVO(); 
     	
-    	for (int i = 0; i < fileListVO.size(); i++) {
-    		String uuid = session.getServletContext().getRealPath("resources")
-    				+ "/" + fileListVO.get(i).getImgpath();
-//    		
-//    		// 원래 파일이 첨부된 경우 이전 파일을 삭제하고 변경한 파일을 저장
-//    		
-//    			//vo.setFilename(file.getOriginalFilename());
-//    			//vo.setFilepath( common.fileUpload("notice", file, session) );
-//    			fileVo.setImgname(multiFile.getOriginalFilename());
-//    			fileVo.setImgpath(common.fileUpload("company", multiFile, session));
-//    			
-//	    		if (fileListVO.get(i).getImgname() != null) {
-//	    			// 파일 정보를 File 형태의 f 에 할당
-//					File f = new File ( uuid );
-//					// 기존 첨부 파일이 있다면 삭제
-//					if (f.exists()) f.delete();
-//	    		} else {
-//	    			fileVo.setImgname(fileListVO.get(i).getImgname());
-//	    			fileVo.setImgpath(fileListVO.get(i).getImgpath());
-//	    		}
-//	    		fileVo.setRank(i);
-//	    		homeService.companyImg_update(fileVo);
-	    		
-	    		if (! multiFile.isEmpty()) {
-	    			// 원래 첨부 파일이 없었는데 수정시 첨부한 경우
-	    			fileVo.setImgname(multiFile.getOriginalFilename());
-	    			fileVo.setImgpath(common.fileUpload("company", multiFile, session));
-	    			
-	    			// 원래 첨부된 파일이 있었다면 물리적인 디스크에서 해당 파일 삭제
-	    			// 서버에 파일이 있는지 파악
-	    			if ( fileListVO.get(i).getImgname() != null ) {
-	    				// 파일 정보를 File 형태의 f 에 할당
-	    				File f = new File ( uuid );
-	    				// 기존 첨부 파일이 있다면 삭제
-	    				if (f.exists()) f.delete();
-	    			}
-	    		} else {
-	    			// 파일을 첨부하지 않은 경우
-	    			// 원래 첨부된 파일이 있었는데 삭제한 경우 
-	    			//if ( attach.isEmpty() ) {               // 첨부된 파일명이 없을 때
-	    				if (fileListVO.get(i).getImgpath() != null) {	// 원래 첨부된 파일이 있었다면
-	    					File f = new File (uuid);
-	    					if (f.exists()) f.delete();	// 물리 디스크의 파일을 삭제
-	    				} else {
-		    				// 원래 첨부된 파일을 그대로 사용하는 경우	
-	    					fileVo.setImgname(fileListVO.get(i).getImgname());
-	    	    			fileVo.setImgpath(fileListVO.get(i).getImgpath());
-		    			}
-	    			}
-		    		fileVo.setRank(i);
-		    		homeService.companyImg_update(fileVo);
-	    		}
-	    		
-    		
-    	
-		
-    	
-        
+    	if(mf.size() > 0 && !mf.get(0).getOriginalFilename().equals("")) {
+    		for(MultipartFile file:mf) {
+	    		fvo.setImgname(file.getOriginalFilename());
+	    		fvo.setImgpath(common.fileUpload("company", file, session));
+	    		fvo.setRank(mf.size());
+	    		homeService.companyImg_update(fvo);
+    		}
+    	}
 		
 		return "redirect:memberCompany.mp";
 	}
@@ -243,9 +185,9 @@ public class HomeMyPageController {
 	//신규 가게 저장 요청
 	@ResponseBody
 	@RequestMapping(value = "/homeStoreRegister.mp", produces = "text/html; charset=utf-8")
-	public String homeStoreRegister(HttpSession session, HomeStoreVO vo, HttpServletRequest req, String join_company,
-			MultipartFile file, int inventory, MultipartHttpServletRequest mtfRequest) {
-		StringBuffer msg = new StringBuffer("<script>");
+	public String homeStoreRegister(HttpSession session, HomeStoreVO vo, 
+			@RequestParam("article_file") List<MultipartFile> mf, String join_company, int inventory) {
+		//StringBuffer msg = new StringBuffer("<script>");
 		
 		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
 		
@@ -261,61 +203,32 @@ public class HomeMyPageController {
 			vo.setNow_state(storeInventory.get(i));
 			
 		}
+        homeService.company_insert(vo);
         
-        System.out.println(file);
+        HomeStoreFileVO fvo = new HomeStoreFileVO(); 
+        
+        if(mf.size() > 0 && !mf.get(0).getOriginalFilename().equals("")) {
+        	for(MultipartFile file:mf) {
+	    		fvo.setImgname(file.getOriginalFilename());
+	    		fvo.setImgpath(common.fileUpload("company", file, session));
+	    		fvo.setRank(mf.size());
+	    		homeService.companyImg_insert(fvo);
+    		}
+    	
+        }
 
-		
-//	        ArrayList<MultipartFile> file = new ArrayList<MultipartFile>();
-//			file.add(multi.getFile("imgpath1"));
-//			file.add(multi.getFile("imgpath2"));
-//			file.add(multi.getFile("imgpath3"));
-//			
-//			for (int i = 0; i < file.size(); i++) {
-//				if(file.get(i) != null) {
-//					fileName = file.get(i).getOriginalFilename();
-//					System.out.println("fileName : " + fileName);
-//					
-//					if(file.get(i).getSize() > 0) {
-//						realImgPath = req.getSession().getServletContext()
-//								.getRealPath("/resources/");
-//						
-//						System.out.println("realpath : " + realImgPath);
-//						System.out.println("fileSize : " + file.get(i).getSize());
-//						
-//						// 이미지 파일을 서버에 저장
-//						try {
-//							file.get(i).transferTo(new File(realImgPath, fileName));
-//						} catch (Exception e) {
-//							e.getMessage();
-//						} 
-//						
-//					}
-//				
-//				
-//				}
-//				if (i==0) {
-//					vo.setImgname1(fileName);
-//					vo.setImgpath1(realImgPath);
-//				}else if(i==1) {
-//
-//					vo.setImgname2(fileName);
-//					vo.setImgpath2(realImgPath);
-//				}else if(i==2) {
-//
-//					vo.setImgname3(fileName);
-//					vo.setImgpath3(realImgPath);
-//				}
-//			}
-//			
-		if (homeService.company_insert(vo) == 0) {
-		//	msg.append("alert('회원가입을 축하드립니다.'); location='login' ")
-			msg.append("alert('가게등록 실패'); location='memberCompanyInsert.mp' ");
-		} else {
-			msg.append("alert('가게 등록이 완료되었습니다!'); location='")
-			.append(req.getContextPath()).append("'");
-		}
-		msg.append("</script>");
-		return msg.toString();
+        
+
+//		if (homeService.company_insert(vo) == 0) {
+//		//	msg.append("alert('회원가입을 축하드립니다.'); location='login' ")
+//			msg.append("alert('가게등록 실패'); location='memberCompanyInsert.mp' ");
+//		} else {
+//			msg.append("alert('가게 등록이 완료되었습니다!'); location='")
+//			.append(req.getContextPath()).append("'");
+//		}
+//		msg.append("</script>");
+		//return msg.toString();
+		return "redirect:mypage.mp";
 	}
 	
 	//회원 정보 리스트로 반환

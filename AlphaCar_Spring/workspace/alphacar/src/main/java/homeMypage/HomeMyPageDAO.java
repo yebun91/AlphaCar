@@ -87,5 +87,11 @@ public class HomeMyPageDAO implements HomeMyPageService {
 		
 	}
 
+	@Override
+	public void companyImg_insert(HomeStoreFileVO vo) {
+		sql.insert("homeMyPage.mapper.companyImg_insert", vo);
+		
+	}
+
 
 }

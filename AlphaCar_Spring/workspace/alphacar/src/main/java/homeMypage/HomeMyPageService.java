@@ -21,6 +21,9 @@ public interface HomeMyPageService {
 	//신규 가게 등록
 	int company_insert(HomeStoreVO vo);
 	
+	//신규 가게 이미지 등록
+	void companyImg_insert(HomeStoreFileVO vo);
+	
 	//가게 수정
 	void company_update(HomeStoreVO vo);
 	//가게 이미지 수정
