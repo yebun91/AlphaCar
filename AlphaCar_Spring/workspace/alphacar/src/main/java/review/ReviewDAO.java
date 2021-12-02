@@ -23,8 +23,8 @@ public class ReviewDAO implements ReviewService {
 	}
 
 	@Override
-	public ReviewVO review_select(int review_id) {
-		return (ReviewVO) sql.selectList("review.mapper.select", review_id);
+	public ReviewVO review_detail(int review_id) {
+		return (ReviewVO) sql.selectOne("review.mapper.detail", review_id);
 	}
 	
 

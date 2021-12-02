@@ -5,6 +5,13 @@
 
 <mapper namespace="store.mapper">
 
+	<!-- 가게 검색 -->
+	<select id="name" resultType="store.StoreVO">
+		select s.*
+		from store s
+		where s.store_name like '%'||#{name}||'%'
+	</select>
+
 	<select id="file" resultType="store.Store_FileVO">
 		select s.*, f.*
 		from store s left

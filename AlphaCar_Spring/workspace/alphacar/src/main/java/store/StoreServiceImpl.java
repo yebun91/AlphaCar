@@ -60,6 +60,12 @@ public class StoreServiceImpl implements StoreService{
 		return dao.store_file();
 	}
 
+	@Override
+	public List<StoreVO> store_name(String name) {
+		// TODO Auto-generated method stub
+		return dao.store_name(name);
+	}
+
 
 
 }

@@ -61,6 +61,12 @@ public class StoreDAO implements StoreService{
 		// TODO Auto-generated method stub
 		return sql.insert("store.mapper.register", vo);
 	}
+
+	@Override
+	public List<StoreVO> store_name(String name) {
+		// TODO Auto-generated method stub
+		return sql.selectList("store.mapper.name", name);
+	}
 	
 	
 

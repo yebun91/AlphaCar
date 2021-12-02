@@ -15,8 +15,8 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public ReviewVO review_select(int review_id) {
-		return dao.review_select(review_id);
+	public ReviewVO review_detail(int review_id) {
+		return dao.review_detail(review_id);
 	}
 	
 	

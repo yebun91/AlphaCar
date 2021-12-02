@@ -33,6 +33,24 @@ public class ListController {
 	
 	
 	@ResponseBody
+	@RequestMapping("/anShowName")
+	public void anShowName(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		res.setCharacterEncoding("utf-8");
+		res.setContentType("text/html");
+		req.setCharacterEncoding("utf-8");
+		
+		System.out.println("anShowName");
+		
+		List<StoreVO> list = service.store_name(req.getParameter("name"));
+		
+		PrintWriter out = res.getWriter();
+		Gson gson = new Gson();
+		String data = gson.toJson(list);
+		out.println(data);
+		
+	}
+	
+	@ResponseBody
 	@RequestMapping("/anStoreRegister")
 	public void anStoreRegister(HttpServletRequest req, HttpServletResponse res)
 			throws Exception {
@@ -180,7 +198,6 @@ public class ListController {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");
 		req.setCharacterEncoding("UTF-8");
-		System.out.println(req.getParameter("customer_email"));
 		int store_number = Integer.parseInt(req.getParameter("store_number"));
 		System.out.println(store_number);
 		List<StoreVO> vo = service.store_detail(store_number);

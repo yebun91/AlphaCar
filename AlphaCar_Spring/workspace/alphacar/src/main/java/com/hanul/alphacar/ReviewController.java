@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,18 +30,18 @@ public class ReviewController {
 	
 	@ResponseBody
 	@RequestMapping(value="/review", method = {RequestMethod.GET, RequestMethod.POST})
-	public int review(HttpServletRequest req, Model model) {
+	public int review(HttpServletRequest req, HttpServletResponse res, Model model, HttpSession session) {
+		res.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html");
 		
-
+		// 안드로이드에서 보낸 데이터를 req로 받아서 변수에 저장
+		String email = req.getParameter("email");
 		String score = req.getParameter("rating");
 		String title = req.getParameter("reviewTitle");
 		String content = req.getParameter("reviewContent");
-		String email = req.getParameter("email");
-		
-
 		
 		ReviewVO vo = new ReviewVO();
-
+		
 		String fileName = "";
 		
 		MultipartRequest multi = (MultipartRequest)req;
@@ -52,10 +53,12 @@ public class ReviewController {
 			
 			if(file.getSize() > 0) {
 				String realImgPath = req.getSession().getServletContext()
-						.getRealPath("/resources/");
+						.getRealPath("/resources/img");
 				
 				System.out.println("realpath : " + realImgPath);
 				System.out.println("fileSize : " + file.getSize());
+				
+				vo.setReview_filepath("http://192.168.0.36:8080/alphacar/resources/img/"+fileName);
 				
 				try {
 					file.transferTo(new File(realImgPath, fileName));
@@ -66,22 +69,35 @@ public class ReviewController {
 			}
 		}
 		
-		
-//		vo.setScore(score);
-//		vo.setTitle(title);
-//		vo.setContent(content);
-//		vo.setFileName(fileName);
-//		vo.setFilePath("D:\\Study_Android_Spring\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\AlphaCar2\\resources\\"+fileName);
-
-		System.out.println(fileName);
+		vo.setCustomer_email(email);
+		vo.setReview_score(score);
+		vo.setReview_title(title);
+		vo.setReview_content(content);
+		vo.setReview_filename(fileName);
 		
 		return service.review_insert(vo);
 	}
 	
+	
 	@ResponseBody
-	@RequestMapping(value="/selectReview", method = {RequestMethod.GET, RequestMethod.POST})
-	public ReviewVO reviewSelect(int review_id) {
-		return service.review_select(review_id);
+	@RequestMapping(value="/reviewDetail", method = {RequestMethod.GET, RequestMethod.POST})
+	public void review_detail(HttpServletRequest req, HttpServletResponse res, String review_id) {
+		System.out.println(review_id);
+
+		ReviewVO vo = service.review_detail(Integer.parseInt(review_id));
+		System.out.println(vo.getCustomer_email());
+		
+		PrintWriter out = null;
+		try {
+			out = res.getWriter();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		Gson gson = new Gson();
+		String data = gson.toJson(vo);
+		out.println(data);
+		
 	}
 	
 
