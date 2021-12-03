@@ -93,12 +93,11 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 	
 	let revid = document.getElementById("revid").value;
 	let user_ref = 'users/' + userid + "/" + revid;
-	let rev_ref = 'users' + revid + "/" + userid;
+	let rev_ref = 'users/' + revid + "/" + userid;
 	
-	
+	chatSelect();
 	
 	if(userAdmin == 'A'){
-		chatSelect();
 		if(revid != ''){
 			/* 관리자모드로 들어가 메세지를 보낼 사람을 고른 경우 */
 			initChat();
@@ -112,10 +111,10 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 	}
 	
 	function chatSelect() {
-		firebase.database().ref('users/운영자입니다').once('value',
+		firebase.database().ref('users/관리자입니다').once('value',
 				 function(snapshot) { 
 			 });
-		firebase.database().ref('users/운영자입니다').on('child_added', function(snapshot){
+		firebase.database().ref('users/관리자입니다').on('child_added', function(snapshot){
 			
 			
 				var childKey = snapshot.key;
@@ -123,7 +122,7 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 				
 				console.log(childData.nickname);
 
-				var html = rtnHtmlDivSelect(childData.nickname, 'chatselectdiv');
+				var html = html = rtnHtmlDivSelect(childData.nickname, 'chatselectdiv');
 				$('#chatSelect').append(html);
 		}, callback());	
 	}
@@ -134,7 +133,6 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 			+ '<span class="span1">' 
 			+ nickname 
 			+ '</span>'
-			+ '</div>';
 	return temp_html;
 }
 	
