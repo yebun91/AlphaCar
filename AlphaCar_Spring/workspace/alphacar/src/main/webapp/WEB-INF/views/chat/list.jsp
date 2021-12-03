@@ -93,24 +93,26 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 	
 	let revid = document.getElementById("revid").value;
 	let user_ref = 'users/' + userid + "/" + revid;
-	let rev_ref = 'users' + revid + "/" + userid;
+	let rev_ref = 'users/' + revid + "/" + userid;
 	
 	
 	
 	if(userAdmin == 'A'){
+		// 관리자는 모든 채팅 상대를 볼 수 있다
 		chatSelect();
 		if(revid != ''){
-			/* 관리자모드로 들어가 메세지를 보낼 사람을 고른 경우 */
+			// 관리자모드로 들어가 메세지를 보낼 사람을 고른 경우
 			initChat();
 		}else{
-			/* 관리자모드로 들어가 메세지를 보낼 사람을 고르지 않은 경우 */
+			// 관리자모드로 들어가 메세지를 보낼 사람을 고르지 않은 경우
 		}
 		
 	}else{
-		/* 관리자가 아닐 경우 보내는 사람이 관리자이기 때문에 관리자와의 채팅 내용을 보여줌 */
+		// 관리자가 아닐 경우 보내는 사람이 관리자이기 때문에 관리자와의 채팅 내용을 보여줌 
 		initChat();
 	}
 	
+	//파이어베이스에서 user/운영자입니다에 있는 모든 childkey를 가져온다
 	function chatSelect() {
 		firebase.database().ref('users/운영자입니다').once('value',
 				 function(snapshot) { 
@@ -128,6 +130,7 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 		}, callback());	
 	}
 	
+	//사용자 리스트 보여주는 HTML 작성
 	function rtnHtmlDivSelect(childKey,className){
 		
 		var temp_html = '<div class=' + className +'>'
@@ -135,10 +138,6 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 			+ childKey
 			+ '</a>'
 			+ '</div>';
-			/* + '<span class="span1">' 
-			+ childKey 
-			+ '</span>'
-			+ '</div>'; */
 	return temp_html;
 }
 	
@@ -223,7 +222,6 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 		var updates = {};
 		updates['/' + ref + '/'+ key] = data;
 		firebase.database().ref().update(updates);
-
 	};
 
 	//채팅창에 아무것도 입력하지 않은 경우 전송을 막는다.
