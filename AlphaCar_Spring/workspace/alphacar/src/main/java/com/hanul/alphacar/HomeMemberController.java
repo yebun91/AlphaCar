@@ -2,14 +2,17 @@ package com.hanul.alphacar;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +25,8 @@ public class HomeMemberController {
 	
 	@Autowired private WebMemberServiceImpl service;
 	@Autowired private CommonService common;
+	
+	String kakao_client_id = "5c5deb7b4d423a3f31e34f160359f421";
 	
 	// 로그아웃 처리 요청
 	@RequestMapping ("/homeLogout")
@@ -83,5 +88,73 @@ public class HomeMemberController {
 		}
 		msg.append("</script>");
 		return msg.toString();
+	}
+	
+	// 카카오 로그인 요청
+	@RequestMapping ("/kakaoLogin")
+	public String kakaoLogin(HttpSession session) {
+		
+		
+		// 카카오 로그인 연동 URL 생성
+		String state = UUID.randomUUID().toString();
+		
+		session.setAttribute("state", state);
+		
+		StringBuffer url = new StringBuffer("https://kauth.kakao.com/oauth/authorize?response_type=code");
+		url.append("&client_id=").append(kakao_client_id);
+		url.append("&state=").append(state);
+		url.append("&redirect_uri=http://localhost:8989/alphacar/kakaocallback");
+		return "redirect:" + url.toString();
+	}
+	
+	// 카카오 Callback 메소드 선언
+	@RequestMapping("/kakaocallback")
+	public String kakaocallback(@RequestParam(required = false) String code, String state, 
+			@RequestParam(required = false) String error, HttpSession session) {
+		
+		// state 값이 맞지 않거나 error 가 발생하면 토큰 발급 불가
+		if (!state.equals( session.getAttribute("state")) || error != null) {
+			return "redirect:/"; 	// 메인 페이지로 이동
+		}
+		StringBuffer url = new StringBuffer("https://kauth.kakao.com/oauth/token?grant_type=authorization_code");
+		url.append("&client_id=").append(kakao_client_id);
+//		url.append("&client_secret=a8kmL1fLNB");
+		url.append("&code=").append(code);
+//		url.append("&state=").append(state);
+		
+		JSONObject json = new JSONObject( common.requestAPI(url));
+		
+		String token = json.getString("access_token");
+		String type = json.getString("token_type");
+		
+		
+		url = new StringBuffer("https://kapi.kakao.com/v2/user/me");
+		json = new JSONObject( common.requestAPI(url, type + " " + token) );
+		
+ 
+		if (! json.isEmpty()) {
+
+			// 회원정보 DB 에 값을 담아서 관리 _ MemberVO
+			MemberVO vo = new MemberVO();
+			vo.setSocial_type("kakao");			// 소셜 로그인 형태를 지정 ("kakao")
+			vo.setId(json.get("id").toString());
+			// 소셜 로그인을 했을 경우 해당 정보를 저장하여 소셜 구분을 위함.
+			
+			json = json.getJSONObject("kakao_account");
+			vo.setSocial_email(json.getString("email"));
+			vo.setName(json.getJSONObject("profile").getString("nickname"));
+			vo.setGender(json.has("gender") && json.getString("gender").equals("female") ? "여" : "남");
+			
+			// 네이버 최초 로그인인 경우 회원정보 저장 (insert)
+			// 네이버 로그인 이력이 있어 회원정보가 있다면 변경 저장
+			if (service.member_social_email(vo))
+				service.member_social_update(vo);
+			else
+				service.member_social_insert(vo);
+			
+			session.setAttribute("loginInfo", vo);
+		}
+		
+		return "redirect:/";	// 로그인 시 루트(home.jsp)로 이동
 	}
 }

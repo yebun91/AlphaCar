@@ -5,59 +5,27 @@
 <head>
 <meta charset="UTF-8">
 <title>채팅하기</title>
-<style type="text/css">
-
-#chatList{
-background:gray;
-overflow-y:scroll; width:500px; height:300px; padding:4px; border:1 solid #000000;
-}
-
-.chatuserdiv{
-	text-align:right;
-}
-.chatuserdiv .span1{
-display:block; color:white; margin-bottom:3px; font-size: 12px;
-}
-.chatuserdiv  .span2{
-background-color:#f8fc00; display:inline-block; max-width: 200px; min-width:50px; border-radius: 10px; margin: 5px 0px; font-size:20px; padding: 10px; color:black;
-}
-.chatuserdiv .span3{
-display: block;  color:white; margin-bottom:3px; font-size: 12px;
-}
-
-.chatrevdiv{
-	text-align:left;
-}
-.chatrevdiv .span1{
-display: block;  color:white; margin-bottom:3px; font-size: 12px;
-}
-.chatrevdiv .span2{
-background-color:#ffffff; display:inline-block; max-width: 200px; min-width:50px; border-radius: 10px; margin: 5px 0px; font-size:20px; padding: 10px; color:black;
-}
-.chatrevdiv .span3{
-display: block;  color:white; margin-bottom:3px; font-size: 12px;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="css/style.css?v=<%=new java.util.Date().getTime() %>" />
 <script type="text/javascript"src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script>
-
 </head>
 <body>
 	<input type="hidden" id="userAdmin" value="${loginInfo.admin}" />
 	<input type="hidden" id="userid" value="${loginInfo.customer_email}" />
 	<input type="hidden" id="username" value="${loginInfo.customer_name}" />
-	<input type="hidden" id="revid" value="${revid}" />
-	<!-- revid 라는 아이디로 초기값 부여 -->
-	<div id="chatSelect" class="chatSelect">
-		<!-- <a onclick="changeRevId('강동원')">강동원</a>
-		<a onclick="changeRevId('아이유')">아이유</a> -->
-	</div>
-	<div id="chatList" class="chatList">
 	
-	</div>
+	
+	<!-- revid 라는 아이디로 초기값 부여 -->
+	<input type="hidden" id="revid" value="${revid}" />
+	<!-- 채팅 리스트 불러오는 부분 -->
+	<div id="chatSelect" class="chatSelect"></div>
+	<!-- 채팅방 내용 불러오는 부분 -->
+	<div id="chatList" class="chatList"></div>
+	
+	
 	<div class="textContent">
 		<form onsubmit="return send_msg();" id="subSend">
 			<input type="text" id="usermsg" autocomplete="off" class="chk"
@@ -89,7 +57,8 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 <script type="text/javascript">
 	//전역변수 선언.
 	const userAdmin = document.getElementById("userAdmin").value;
-	const userid = document.getElementById("username").value;
+	const userid = document.getElementById("userid").value;
+	const username = document.getElementById("username").value;
 	
 	let revid = document.getElementById("revid").value;
 	let user_ref = 'users/' + userid + "/" + revid;
@@ -114,10 +83,10 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 	
 	//파이어베이스에서 user/운영자입니다에 있는 모든 childkey를 가져온다
 	function chatSelect() {
-		firebase.database().ref('users/운영자입니다').once('value',
+		firebase.database().ref('users/a').once('value',
 				 function(snapshot) { 
 			 });
-		firebase.database().ref('users/운영자입니다').on('child_added', function(snapshot){
+		firebase.database().ref('users/a').on('child_added', function(snapshot){
 			
 			
 				var childKey = snapshot.key;
@@ -125,13 +94,13 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 				
 				console.log(childData.nickname);
 
-				var html = rtnHtmlDivSelect(childKey, 'chatselectdiv');
+				var html = rtnHtmlDivSelect(childKey,'chatselectdiv');
 				$('#chatSelect').append(html);
 		}, callback());	
 	}
 	
 	//사용자 리스트 보여주는 HTML 작성
-	function rtnHtmlDivSelect(childKey,className){
+	function rtnHtmlDivSelect(childKey, className){
 		
 		var temp_html = '<div class=' + className +'>'
 			+ '<a onclick="changeRevId('+"'"+childKey+"'"+')">'
@@ -172,10 +141,10 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 				console.log(childData.nickname);
 
 				var html = '';
-				if(childData.nickname == userid){
-					html = rtnHtmlDiv(childData.nickname , childData.msg ,childData.date , 'chatuserdiv')
+				if(childData.id == userid){
+					html = rtnHtmlDiv(childData.nickname, childData.msg, childData.date, 'chatuserdiv');
 				}else{
-					html = rtnHtmlDiv(childData.nickname , childData.msg ,childData.date, 'chatrevdiv');
+					html = rtnHtmlDiv(childData.nickname, childData.msg, childData.date, 'chatrevdiv');
 				}
 			
 		
@@ -214,7 +183,8 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 		var msg = document.getElementById('usermsg').value;
 		var key = firebase.database().ref().child(ref).push().key;
 		var data = {
-			nickname : userid,
+			id : userid,
+			nickname : username,
 			msg : msg,
 			date : date,
 			selected : ''

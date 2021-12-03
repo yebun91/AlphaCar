@@ -5,7 +5,8 @@
     <img src="img/main_image.jpg" alt="">
   </div>
   <div class="service_buttons">
-  	<button onclick="location.href='list.chat'">실시간 채팅 문의</button>
+  	<c:if test="${empty loginInfo}"><button onclick="location.href='homeLogin'">실시간 채팅 문의</button></c:if>
+  	<c:if test="${!empty loginInfo}"><button onclick="go_chat()">실시간 채팅 문의</button></c:if>
   	<button onclick="location.href='write.qna'">1:1 문의하기</button>
   </div>
 </nav>
@@ -95,3 +96,15 @@
   
   </div>
 </main>
+<script type="text/javascript">
+function go_chat() {
+	var width = 500; 
+	var height = 420;
+	var left = (window.screen.width / 2) - (width/2); 
+	var top = (window.screen.height / 4);
+	var windowStatus = 'width='+width+', height='+height+
+		', left='+left+', top='+top+', scrollbars=yes, status=yes, resizable=yes, titlebar=yes';
+
+	window.open("list.chat", "실시간문의", windowStatus);
+}
+</script>

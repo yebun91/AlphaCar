@@ -11,6 +11,7 @@
         				onkeypress = "if (event.keyCode == 13) go_login()" />
         <label><input type="checkbox" name="alwaysLogin" value="" class="login_always">로그인 항상 유지</label>
         <button type="button" onclick="go_login()">로그인</button>
+        <a href='kakaoLogin'><img src='img/kakao_login_large_wide.png' class='social_login' /></a>
       </form>
       <div class="login_page_bottom_button">
         <button type="button" onclick="location.href='searchPw'">비밀번호 찾기</button>

@@ -544,8 +544,9 @@ input[type="checkbox"]:checked, input[type="radio"]:checked{
   font-size: var(--font-regular);
   font-weight: var(--weight-semi-bold);
   width: 400px;
-  padding: 10px 15px;
+  padding: 15px 15px;
   background-color: var(--blue-color);
+  border-radius: 10px;
 }
 
 .login_page_bottom_button>button{
@@ -560,6 +561,11 @@ input[type="checkbox"]:checked, input[type="radio"]:checked{
   font-size: var(--font-micro);
   font-weight: var(--weight-semi-bold);
   border: none;
+}
+
+.social_login{
+	width: 400px;
+	margin-top: 10px;
 }
 
 /* 회원가입 */
@@ -907,45 +913,60 @@ input[type="checkbox"]:checked, input[type="radio"]:checked{
 }
 
 /* 댓글기능 */
-.comment{
-	width: 100%
+#chatList{
+background:var(--gray-color);
+overflow-y:scroll; width:500px; height:300px; padding:4px; border:1 solid #000000;
 }
 
-.comment_insert{
-	padding-top:20px;
-	font-size: var(--font-regular);
-	font-weight: var(--weight-semi-bold);
-	float: right;
+.chatuserdiv{
+	text-align:right;
 }
-#comment_list{
-	padding-bottom: 10px;
+.chatuserdiv .span1{
+display:block; color:white; margin-bottom:3px; font-size: 12px;
 }
-.comment_detail{
-	padding: 10px 0;
-	border-bottom: 1px solid var(--gray-color);
+.chatuserdiv  .span2{
+background-color:var(--skyblue-color); display:inline-block; max-width: 200px; min-width:50px; border-radius: 10px; margin: 5px 0px; font-size:20px; padding: 10px; color:black;
 }
-.comment_name>p{
-	display: inline;	
-}
-.comment_name{
-	display: inline;	
-}
-.comment_date{
-	font-size: var(--font-micro);
-}
-.comment_write_name{
-	font-weight: var(--weight-semi-bold);
-}
-.comment_content{
-	padding-top:10px;
-}
-.comment_setting{
-	color: var(--gray-color);
+.chatuserdiv .span3{
+display: block;  color:white; margin-bottom:3px; font-size: 12px;
 }
 
+.chatrevdiv{
+	text-align:left;
+}
+.chatrevdiv .span1{
+display: block;  color:var(--real_white-color); margin-bottom:3px; font-size: 12px;
+}
+.chatrevdiv .span2{
+background-color:var(--real_white-color); display:inline-block; max-width: 200px; min-width:50px; border-radius: 10px; margin: 5px 0px; font-size:20px; padding: 10px; color:black;
+}
+.chatrevdiv .span3{
+display: block;  color:var(--real_white-color); margin-bottom:3px; font-size: 12px;
+}
 
-
-
+.textContent .chk{
+	width: 400px;
+	border: 1px solid var(--gray-color);
+	padding : 10px;
+	margin : 10px;
+}
+.textContent .send{
+	padding : 10px;
+	background-color: var(--skyblue-color);
+}
+.chatselectdiv{
+	display: inline-block;
+}
+.chatselectdiv>a{
+	padding : 5px 10px;
+	margin: 5px 5px 5px 0;
+	border : 1px solid var(--skyblue-color);
+	background-color: var(--skyblue-color);
+}
+.chatSelect{
+	padding:10px 0;
+}
+	
 
 
 
