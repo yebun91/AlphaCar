@@ -18,4 +18,25 @@
 		values (#{customer_email}, #{customer_pw}, #{customer_name}, #{customer_picture, jdbcType=VARCHAR}, #{admin},
 			#{city}, #{addr})
 	</insert>
+	
+	<!-- social_email 존재 여부 조회 (소셜 로그인 이력 조회) -->
+	<select id="social_email" resultType="integer">
+		select count(*) from customer
+		where kakao = #{kakao}
+	</select>
+	
+	<update id="social_update">
+		update customer set customer_name = #{customer_name}
+		where kakao = #{kakao}
+	</update>
+	
+	<insert id="social_insert">
+		insert into customer (customer_email, customer_name, kakao, social, admin)
+		values ( #{customer_email}, #{customer_name}, #{kakao}, #{social}, 'C')
+	</insert>
+	
+	<select id="social_login" resultType="member.WebMemberVO">
+		select * from customer
+		where kakao = #{kakao}
+	</select>
 </mapper>

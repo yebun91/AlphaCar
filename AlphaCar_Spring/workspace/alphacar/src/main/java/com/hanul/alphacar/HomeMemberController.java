@@ -1,6 +1,5 @@
 package com.hanul.alphacar;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,7 +32,6 @@ public class HomeMemberController {
 		// 세션에 담긴 로그인 정보를 삭제한다.
 		session.removeAttribute("loginInfo");
 		session.removeAttribute("revid");
-		// 로그아웃 시 루트(home.jsp)로 이동
 		return "redirect:/";	
 	}
 	
@@ -118,9 +115,7 @@ public class HomeMemberController {
 		}
 		StringBuffer url = new StringBuffer("https://kauth.kakao.com/oauth/token?grant_type=authorization_code");
 		url.append("&client_id=").append(kakao_client_id);
-//		url.append("&client_secret=a8kmL1fLNB");
 		url.append("&code=").append(code);
-//		url.append("&state=").append(state);
 		
 		JSONObject json = new JSONObject( common.requestAPI(url));
 		
@@ -135,26 +130,26 @@ public class HomeMemberController {
 		if (! json.isEmpty()) {
 
 			// 회원정보 DB 에 값을 담아서 관리 _ MemberVO
-			MemberVO vo = new MemberVO();
-			vo.setSocial_type("kakao");			// 소셜 로그인 형태를 지정 ("kakao")
-			vo.setId(json.get("id").toString());
+			WebMemberVO vo = new WebMemberVO();
+			vo.setSocial("K"); 
+			vo.setCustomer_email(json.get("id").toString());
+			
 			// 소셜 로그인을 했을 경우 해당 정보를 저장하여 소셜 구분을 위함.
-			
 			json = json.getJSONObject("kakao_account");
-			vo.setSocial_email(json.getString("email"));
-			vo.setName(json.getJSONObject("profile").getString("nickname"));
-			vo.setGender(json.has("gender") && json.getString("gender").equals("female") ? "여" : "남");
+			vo.setKakao(json.getString("email"));
+			vo.setCustomer_name(json.getJSONObject("profile").getString("nickname"));
 			
-			// 네이버 최초 로그인인 경우 회원정보 저장 (insert)
-			// 네이버 로그인 이력이 있어 회원정보가 있다면 변경 저장
+			// 카카오 최초 로그인인 경우 회원정보 저장 (insert)
+			// 카카오 로그인 이력이 있어 회원정보가 있다면 변경 저장
 			if (service.member_social_email(vo))
 				service.member_social_update(vo);
 			else
 				service.member_social_insert(vo);
 			
-			session.setAttribute("loginInfo", vo);
+			WebMemberVO login = service.member_social_login(vo.getKakao());
+			session.setAttribute("loginInfo", login);
 		}
 		
-		return "redirect:/";	// 로그인 시 루트(home.jsp)로 이동
+		return "redirect:/";
 	}
 }

@@ -3,10 +3,34 @@ package member;
 public class WebMemberVO {
 
 	String customer_email, customer_pw, customer_name, 
-		customer_picture, admin, city, addr, customer_filename;
+		customer_picture, admin, city, addr, customer_filename, social, kakao, naver;
 	
 	
 	
+	public String getKakao() {
+		return kakao;
+	}
+
+	public void setKakao(String kakao) {
+		this.kakao = kakao;
+	}
+
+	public String getNaver() {
+		return naver;
+	}
+
+	public void setNaver(String naver) {
+		this.naver = naver;
+	}
+
+	public String getSocial() {
+		return social;
+	}
+
+	public void setSocial(String social) {
+		this.social = social;
+	}
+
 	public String getCustomer_filename() {
 		return customer_filename;
 	}

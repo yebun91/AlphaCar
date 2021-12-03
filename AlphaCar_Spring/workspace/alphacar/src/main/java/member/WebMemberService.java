@@ -9,4 +9,15 @@ public interface WebMemberService {
 	
 	//회원가입
 	boolean member_join(WebMemberVO vo);
+	
+	// 소셜 회원 정보 존재여부 (R)
+	boolean member_social_email(WebMemberVO vo);	
+	
+	// 소셜 회원 정보 신규 저장(C)
+	boolean member_social_insert(WebMemberVO vo);
+	
+	// 소셜 회원 정보 변경 저장(U)
+	boolean member_social_update(WebMemberVO vo);
+	
+	WebMemberVO member_social_login(String kakao);
 }

@@ -23,4 +23,24 @@ public class WebMemberDAO implements WebMemberService {
 		// TODO Auto-generated method stub
 		return sql.insert("webmember.mapper.member_join", vo) == 1 ? true : false;
 	}
+
+	@Override
+	public boolean member_social_email(WebMemberVO vo) {
+		return (Integer) sql.selectOne("webmember.mapper.social_email", vo) == 0 ? false : true;
+	}
+
+	@Override
+	public boolean member_social_insert(WebMemberVO vo) {
+		return sql.insert("webmember.mapper.social_insert", vo) == 0 ? false : true;
+	}
+
+	@Override
+	public boolean member_social_update(WebMemberVO vo) {
+		return sql.update("webmember.mapper.social_update", vo) == 0 ? false : true;
+	}
+
+	@Override
+	public WebMemberVO member_social_login(String kakao) {
+		return sql.selectOne("webmember.mapper.social_login", kakao);
+	}
 }
