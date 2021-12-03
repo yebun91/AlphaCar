@@ -52,8 +52,8 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 	<input type="hidden" id="revid" value="${revid}" />
 	<!-- revid 라는 아이디로 초기값 부여 -->
 	<div id="chatSelect" class="chatSelect">
-		<a onclick="changeRevId('강동원')">강동원</a>
-		<a onclick="changeRevId('아이유')">아이유</a>
+		<!-- <a onclick="changeRevId('강동원')">강동원</a>
+		<a onclick="changeRevId('아이유')">아이유</a> -->
 	</div>
 	<div id="chatList" class="chatList">
 	
@@ -123,18 +123,22 @@ display: block;  color:white; margin-bottom:3px; font-size: 12px;
 				
 				console.log(childData.nickname);
 
-				var html = rtnHtmlDivSelect(childData.nickname, 'chatselectdiv');
+				var html = rtnHtmlDivSelect(childKey, 'chatselectdiv');
 				$('#chatSelect').append(html);
 		}, callback());	
 	}
 	
-	function rtnHtmlDivSelect(nickname,className){
+	function rtnHtmlDivSelect(childKey,className){
 		
 		var temp_html = '<div class=' + className +'>'
-			+ '<span class="span1">' 
-			+ nickname 
-			+ '</span>'
+			+ '<a onclick="changeRevId('+"'"+childKey+"'"+')">'
+			+ childKey
+			+ '</a>'
 			+ '</div>';
+			/* + '<span class="span1">' 
+			+ childKey 
+			+ '</span>'
+			+ '</div>'; */
 	return temp_html;
 }
 	
