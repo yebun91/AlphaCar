@@ -11,7 +11,12 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -38,6 +43,8 @@ import com.example.alphacar.Fragment.announceFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -100,7 +107,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
               .replace(R.id.contain,fragment).commit();
 
 
-
 /*        Intent intent = new Intent(MainActivity.this, LoadingPageActivity.class);
         startActivity(intent);*/
 
@@ -132,7 +138,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             public void onClick(View v) {
                 Fragment fragment = new FavoriteFragment();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contain, fragment).commit();
+                        .replace(R.id.contain, fragment).addToBackStack(null).commit();
 
             }
         });
@@ -141,7 +147,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         findViewById(R.id.tab3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getApplicationContext(), LoginJoinSelectActivity.class);
                 startActivity(intent);
             }
@@ -151,7 +156,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
        findViewById(R.id.tab4).setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-
                if(loginDTO != null){
                 //   login_image.setImageResource(loginDTO.getCustomer_picture());
                    Glide.with(MainActivity.this)
@@ -185,7 +189,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     }
 
 
-    /*사이드 네비게이션*/
+    /*네비게이션 드로워*/
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -205,10 +209,13 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 Intent intent = new Intent(getApplicationContext(), LoginPageActivity.class);
                 startActivity(intent);
             }
-        }else if (id == R.id.notify){
+        }else if (id == R.id.nav_noti){
             Fragment fragment = new announceFragment();
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.notify,fragment).commit();
+                    .replace(R.id.contain,fragment).addToBackStack(null).commit();
+
+
+
         }else if(id == R.id.nav_logout){
             loginDTO = null;
             Intent intent = getIntent();
@@ -267,7 +274,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         storeDTOArrayList = new ArrayList<>();
     }
-
 
 
     }

@@ -304,7 +304,7 @@ public class DetailActivity extends AppCompatActivity{
         });
 
 
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {////////////////
             //리뷰 눌렀을때 디테일하게 보기
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
