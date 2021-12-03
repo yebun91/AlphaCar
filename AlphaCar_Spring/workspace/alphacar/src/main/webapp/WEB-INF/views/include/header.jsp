@@ -16,6 +16,7 @@
     <ul>
       <li><a href="">AlphaCar</a></li>
       <li><a href="list.no">공지사항</a></li>
+      <li><a href="list.wa">세차장</a></li>
       <li><a href="list.se">고객센터</a></li>
     	<!-- 로그인을 하지 않은 경우 -->
 	  <c:if test="${empty loginInfo }">
