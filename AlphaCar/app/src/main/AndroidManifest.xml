@@ -66,6 +66,9 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="true" />
         <!--<activity
             android:exported="true">
 &lt;!&ndash;            <intent-filter>&ndash;&gt;
@@ -89,20 +92,20 @@
             android:name=".LoginPageActivity"
             android:exported="true" />
 
-        <activity
-            android:name=".NowActivity"
+        <activity android:name=".NowActivity"
         android:exported="true"/>
 
-        <activity
-            android:name=".ReviewPageActivity"
+        <activity android:name=".ReviewPageActivity"
             android:exported="true"/>
 
-        <activity
-            android:name=".ReviewActivity"
+        <activity android:name=".ReviewActivity"
             android:exported="true"/>
+        <activity android:name=".LoginJoinSelectActivity"
+            android:exported="true" />
 
-        <activity
-            android:name=".LoginJoinSelectActivity"
+        <activity android:name=".WebSearch"
+            android:exported="true"/>
+        <activity android:name=".RegisterUpdateActivity"
             android:exported="true" />
 
         <activity
@@ -119,7 +122,7 @@
                 android:resource="@xml/filepath" />
         </provider>
 
-    <meta-data android:name="com.kakao.sdk.AppKey" android:value="9e28b9cad03f86123dc54912519a9caf"/>
+    <meta-data android:name="com.kakao.sdk.AppKey" android:value="e93d14d8303fbd04350838af9fdbac83"/>
 
     </application>
 
