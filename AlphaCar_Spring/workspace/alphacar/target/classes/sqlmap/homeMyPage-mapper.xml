@@ -35,7 +35,7 @@
 		where s.store_number = #{store_number} 
 			and s.store_number = f.store_number
 	</select>
-
+	
 	<!-- 내 회사 지우기 -->
 	<delete id="company_delete">
 		delete from store
@@ -108,10 +108,11 @@
     SELECT SEQ_STORE.nextval  INTO  V_STORE_NUM from DUAL;
     SELECT NVL(MAX(SENSOR_ID),0)  INTO  V_SENSOR from SENSOR;
     INSERT ALL
-			into store (store_number, customer_email, store_name, store_addr, store_tel, store_time, 
-				store_dayoff, introduce, inventory, store_price, store_master_name, store_registration_number)
+			into store (store_number, customer_email, store_name, store_post, store_addr, store_detail_addr, store_tel, 
+				store_time, store_dayoff, introduce, inventory, store_price, store_master_name, store_registration_number)
 			values (V_STORE_NUM, #{customer_email, jdbcType=VARCHAR}, #{store_name, jdbcType=VARCHAR}, 
-				#{store_addr, jdbcType=VARCHAR}, #{store_tel, jdbcType=VARCHAR}, #{store_time, jdbcType=VARCHAR}, 
+				#{store_post, jdbcType=VARCHAR}, #{store_addr, jdbcType=VARCHAR}, #{store_detail_addr, jdbcType=VARCHAR}, 
+				#{store_tel, jdbcType=VARCHAR}, #{store_time, jdbcType=VARCHAR}, 
 				#{store_dayoff, jdbcType=VARCHAR}, #{introduce, jdbcType=VARCHAR}, 
 				#{inventory, jdbcType=VARCHAR}, #{store_price, jdbcType=VARCHAR}, 
 				#{store_master_name, jdbcType=VARCHAR}, #{store_registration_number, jdbcType=VARCHAR})
@@ -164,7 +165,8 @@
 		BEGIN
 	    
 			update store 
-			set store_name = #{store_name}, store_addr = #{store_addr}, 
+			set store_name = #{store_name}, store_post = #{store_post}, store_addr = #{store_addr},  
+				store_detail_addr = #{store_detail_addr},
 				store_tel = #{store_tel}, store_time = #{store_time}, store_dayoff = #{store_dayoff}, 
 				inventory = #{inventory}, store_price = #{store_price}, store_master_name = #{store_master_name}, 
 				store_registration_number = #{store_registration_number}

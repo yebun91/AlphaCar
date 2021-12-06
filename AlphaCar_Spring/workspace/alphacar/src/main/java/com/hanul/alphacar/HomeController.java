@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import homeMypage.HomeMyPageServiceImpl;
 import homeNotice.HomeNoticePage;
 import homeNotice.HomeNoticeServiceImpl;
 
@@ -24,6 +25,7 @@ import homeNotice.HomeNoticeServiceImpl;
 public class HomeController {
 	
 	@Autowired private HomeNoticeServiceImpl service;
+	@Autowired private HomeMyPageServiceImpl companyService;
 	@Autowired private HomeNoticePage page;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -33,6 +35,7 @@ public class HomeController {
 		
 		page.setCurPage(curPage);
 		model.addAttribute("page", service.notice_list(page));
+		model.addAttribute("wash", companyService.);
 		return "index";
 	}
 }
