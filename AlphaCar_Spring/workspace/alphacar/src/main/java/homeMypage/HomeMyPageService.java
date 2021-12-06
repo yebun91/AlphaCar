@@ -34,5 +34,6 @@ public interface HomeMyPageService {
 	List<HomeStoreFileVO> company_img(int store_number);
 	//모든 회사 조회
 	List<HomeCompanyVO> company_list_all();
-	
+	//회사 번호로 조회
+	List<HomeCompanyVO> company_select_number(int store_number);
 }

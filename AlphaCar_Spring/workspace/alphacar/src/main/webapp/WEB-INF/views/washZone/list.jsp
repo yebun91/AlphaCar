@@ -4,7 +4,7 @@
     </div>
     <div class="mypage_select">
       <div class="mypage_userinfo">
-        <a href=""><p class="mypage_userinfo_select">회원정보</p></a>
+        <a href=""><p class="mypage_userinfo_select">전체 세차장 지도</p></a>
         <a href=""><p>보안설정</p></a>
       </div>
     </div>
@@ -13,19 +13,17 @@
   <main class="mypage">
     <div id="page">
       <div class="wash_zone_boxs">
-        <div id="map" style="width:1000px;height:500px;"></div>
+        <div id="map" style="width:1200px;height:500px;"></div>
         <div>
-        	<c:forEach items="${wash_zone}" var="item">
-	        	<script type="text/javascript">
-	        		console.log("${item.store_name}, ${item.store_addr}, ${item.store_number}");
-	        	</script>	
-			</c:forEach>
+        	
         </div>
       </div>  
     </div>
   </main>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e147583a7db59a9ae45a17222b6e7203&libraries=services"></script>
 <script>
+	var positions = JSON.parse('${wash_zone}'); //model로 보낸 데이터를 json형태로 변환
+
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	mapOption = { 
 	    center: new kakao.maps.LatLng(35.153411178408, 126.88799074307386), // 지도의 중심좌표
@@ -36,32 +34,10 @@
 	// 주소-좌표 변환 객체를 생성합니다
 	var geocoder = new kakao.maps.services.Geocoder();
 	
-	var positions = [
-	    {
-	        content: '카카오', 
-	        addr: '상무대로 1129',
-	        store_number : 99
-	    },
-	    {
-	    	content: '생태연못', 
-	        addr: '대남대로472번길 4',
-	        store_number : 999
-	    },
-	    {
-	    	content: '텃밭', 
-	        addr: '경열로 6',
-	        store_number : 111
-	    },
-	    {
-	    	content: '근린공원',
-	        addr: '상무대로 1160',
-	        store_number : 112
-	    }
-	];
-
+	
 	// 주소로 좌표를 검색합니다
 	for (let i = 0; i < positions.length; i++) {
-		geocoder.addressSearch(positions[i].addr, function(result, status) {
+		geocoder.addressSearch(positions[i].store_addr, function(result, status) {
 		    // 정상적으로 검색이 완료됐으면 
 		    if (status === kakao.maps.services.Status.OK) {
 		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -75,7 +51,7 @@
 			    var iwRemoveable = true;
 		        // 인포윈도우로 장소에 대한 설명을 표시합니다
 		        var infowindow = new kakao.maps.InfoWindow({
-		        	content: '<div style="width:150px;text-align:center;padding:6px 0;">'+positions[i].content+'</div>',
+		        	content: '<div style="width:150px;text-align:center;padding:6px 0;"><a href="detail.wa?store_number='+positions[i].store_number+'">'+positions[i].store_name+'</a></div>',
 		            removable : iwRemoveable
 		        });
 
@@ -89,7 +65,5 @@
 			infowindow.open(map, marker);
 		};
 	}
-	
-	
    
 </script>

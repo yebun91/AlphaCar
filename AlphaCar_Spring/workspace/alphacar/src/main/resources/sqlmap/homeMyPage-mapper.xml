@@ -27,6 +27,14 @@
 		select * 
 		from store
 	</select>
+	
+	<!-- 회사를 번호로 조회하기 -->
+	<select id="company_select_number" resultType="homeMypage.HomeCompanyVO">
+		select * 
+		from store s, store_file f
+		where s.store_number = #{store_number} 
+			and s.store_number = f.store_number
+	</select>
 
 	<!-- 내 회사 지우기 -->
 	<delete id="company_delete">

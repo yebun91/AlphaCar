@@ -98,5 +98,11 @@ public class HomeMyPageDAO implements HomeMyPageService {
 		return sql.selectList("homeMyPage.mapper.company_list_all");
 	}
 
+	@Override
+	public List<HomeCompanyVO> company_select_number(int store_number) {
+		return sql.selectList("homeMyPage.mapper.company_select_number", store_number);
+		
+	}
+
 
 }

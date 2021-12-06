@@ -86,4 +86,9 @@ public class HomeMyPageServiceImpl implements HomeMyPageService {
 	public List<HomeCompanyVO> company_list_all() {
 		return dao.company_list_all();
 	}
+
+	@Override
+	public List<HomeCompanyVO> company_select_number(int store_number) {
+		return dao.company_select_number(store_number);	
+	}
 }
