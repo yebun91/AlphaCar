@@ -76,7 +76,9 @@ public class ListController {
 		RegisterVO vo = new RegisterVO();
 		vo.setCustomer_email(req.getParameter("customer_email"));
 		vo.setStore_name(req.getParameter("store_name"));
+		vo.setStore_post(req.getParameter("store_post"));
 		vo.setStore_addr(req.getParameter("store_addr"));
+		vo.setStore_detail_addr(req.getParameter("store_detail_addr"));
 		vo.setStore_tel(req.getParameter("store_tel"));
 		vo.setStore_time(req.getParameter("store_time"));
 		vo.setStore_dayoff(req.getParameter("store_dayoff"));

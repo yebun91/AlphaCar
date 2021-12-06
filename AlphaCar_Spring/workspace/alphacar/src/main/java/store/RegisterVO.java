@@ -5,7 +5,9 @@ import java.util.ArrayList;
 public class RegisterVO {
 	private String customer_email             ;
 	private String store_name                 ;
+	private String store_post                 ;
 	private String store_addr                 ;
+	private String store_detail_addr                 ;
 	private String store_tel                  ;
 	private String store_time                 ;
 	private String store_dayoff               ;
@@ -25,6 +27,19 @@ public class RegisterVO {
 	private ArrayList<String> now_state = new ArrayList<String>();
 	
 	
+	
+	public String getStore_post() {
+		return store_post;
+	}
+	public void setStore_post(String store_post) {
+		this.store_post = store_post;
+	}
+	public String getStore_detail_addr() {
+		return store_detail_addr;
+	}
+	public void setStore_detail_addr(String store_detail_post) {
+		this.store_detail_addr = store_detail_post;
+	}
 	public ArrayList<String> getNow_state() {
 		return now_state;
 	}
