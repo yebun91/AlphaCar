@@ -47,9 +47,9 @@ public class HomeMyPageController {
 	@RequestMapping("/mypage.mp")
 	public String login(HttpSession session) {
 		
-//	  HashMap<String, String> map = new HashMap<String, String>();
-//	  map.put("customer_email", "e"); map.put("customer_pw", "e");
-//	  session.setAttribute("loginInfo", member.member_login(map));
+	  HashMap<String, String> map = new HashMap<String, String>();
+	  map.put("customer_email", "e"); map.put("customer_pw", "e");
+	  session.setAttribute("loginInfo", member.member_login(map));
 		 
 		
 		return "mypage/mypage";
@@ -143,12 +143,13 @@ public class HomeMyPageController {
 	
 	//가게 수정 페이지 요청
 	@RequestMapping("/memberCompanyUpdate.mp")
-	public String memberCompanyUpdate(HttpSession session, Model model, int store_number ) {
-		System.out.println(store_number);
-		model.addAttribute("vo", homeService.companyId_list(store_number));
-		model.addAttribute("img", homeService.company_img(store_number));
+	public String memberCompanyUpdate(HttpSession session, Model model, int store_number, WebMemberVO vo ) {
 		
-		return "mypage/member_company_update";
+			model.addAttribute("vo", homeService.companyId_list(store_number));
+			model.addAttribute("img", homeService.company_img(store_number));
+			
+			return "mypage/member_company_update";
+		
 	}
 
 	// 가게 수정 저장 처리 요청
@@ -169,6 +170,7 @@ public class HomeMyPageController {
 			
 		}
     	vo.setStore_number(store_number);
+    	
     	
     	homeService.company_update(vo);
     	
@@ -198,8 +200,8 @@ public class HomeMyPageController {
 	
 	//신규 가게 저장 요청
 	@RequestMapping(value = "/homeStoreRegister.mp", produces = "text/html; charset=utf-8")
-	public String homeStoreRegister(HttpSession session, HomeStoreVO vo, 
-			@RequestParam("article_file") List<MultipartFile> mf, String join_company, int inventory, HttpServletRequest req) {
+	public String homeStoreRegister(HomeStoreVO vo, HttpSession session, int inventory,  
+			@RequestParam("article_file") List<MultipartFile> mf) {
 		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
 		
 		ArrayList<String> storeInventory = new ArrayList<>();
@@ -214,27 +216,22 @@ public class HomeMyPageController {
 			vo.setNow_state(storeInventory.get(i));
 			
 		}
+        
         homeService.company_insert(vo);
         
         HomeStoreFileVO fvo = new HomeStoreFileVO(); 
-      
-        String uuid = session.getServletContext().getRealPath("resources")
-  				+ "/" + fvo.getImgname();
-        if ( fvo.getImgpath() != null ) {
-        	File f = new File ( uuid );
-				// 기존 첨부 파일 삭제
-			if (f.exists()) f.delete();
-	    	if(mf.size() > 0 && !mf.get(0).getOriginalFilename().equals("")) {
-	    		int rank = 0;
-	    		for(MultipartFile file:mf) {
-	    			fvo.setImgname(file.getOriginalFilename());
-	    			fvo.setImgpath(common.fileUpload("company", file, session));
-	    			fvo.setRank(++rank);
-	    			
-	      				
-      			} 
-    		homeService.companyImg_insert(fvo);
-    		}
+        
+    	if(mf.size() > 0 && !mf.get(0).getOriginalFilename().equals("")) {
+    		int rank = 0;
+    		for(MultipartFile file:mf) {
+    			fvo.setImgname(file.getOriginalFilename());
+    			fvo.setImgpath(common.fileUpload("company", file, session));
+    			fvo.setRank(++rank);
+    			homeService.companyImg_insert(fvo);
+  			} 
+		
+		
+		
     	
         }
 
@@ -324,15 +321,19 @@ public class HomeMyPageController {
 	@RequestMapping("/masterContact.mp")
 	public String masterContact(HttpSession session, Model model, 
 			@RequestParam (defaultValue = "1") int curPage,
-			String search, String keyword) {
-		
-		page.setCurPage(curPage);
-		page.setSearch(search);
-		page.setKeyword(keyword);
-		
-		//DB에서 공지글 목록을 조회한 후 목록화면에 출력
-		model.addAttribute("page", service.qna_list(page));
-		return "mypage/master_contact";
+			String search, String keyword, WebMemberVO vo) {
+		if (((WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email().equals(null) ||
+				((WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() != vo.getCustomer_email()) {
+			return "member/login";
+		} else {
+			page.setCurPage(curPage);
+			page.setSearch(search);
+			page.setKeyword(keyword);
+			
+			//DB에서 공지글 목록을 조회한 후 목록화면에 출력
+			model.addAttribute("page", service.qna_list(page));
+			return "mypage/master_contact";
+		}
 	}
 	
 }

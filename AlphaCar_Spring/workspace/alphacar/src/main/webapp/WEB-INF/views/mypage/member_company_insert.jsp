@@ -22,11 +22,18 @@
             <input type="text" name="store_name">
           </div>
           <div>
-            <h3>주소</h3>
-            <button type="button" onclick='daum_post()'>우편번호 찾기</button>
-            <input type="text" name="store_post"><br/>		
-            <input type="text" name="store_addr">	
-          </div>
+	            <h3>우편번호</h3>
+	            <button type="button" onclick='daum_post()'>우편번호 찾기</button>
+	            <input type="text" name="store_post" value="${vo.store_post }"><br/>		
+	          </div>
+	          <div>
+	            <h3>주소</h3>
+	            <input type="text" name="store_addr" value="${vo.store_addr }">	
+	          </div>
+	          <div>
+	            <h3>상세주소</h3>
+	            <input type="text" name="store_detail_addr" value="${vo.store_detail_addr }">	
+	          </div>
           <div>
             <h3>전화번호</h3>
             <input type="text" name="store_tel">
@@ -65,7 +72,7 @@
 	          <div class="mypage_user_image" >
 			      	<label>
 								<a><img src='imgs/select.png' id="attach-file" class='file-img' /></a>
-								<input multiple="multiple" type="file" id='input_file' name="file" />
+								<input multiple="multiple" type="file" id='input_file' name="file" accept="image/*" />
 							</label>
 							<span style="font-size:12px; color: gray;" id='file-name' ></span>
 							<div id="articlefileChange"></div>

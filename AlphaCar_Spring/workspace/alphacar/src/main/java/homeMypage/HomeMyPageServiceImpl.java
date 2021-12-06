@@ -50,6 +50,7 @@ public class HomeMyPageServiceImpl implements HomeMyPageService {
 
 	@Override
 	public HomeStoreVO companyId_list(int store_number) {
+		// TODO Auto-generated method stub
 		return dao.companyId_list(store_number);
 	}
 
@@ -66,6 +67,7 @@ public class HomeMyPageServiceImpl implements HomeMyPageService {
 	}
 	@Override
 	public List<HomeStoreFileVO> company_img(int store_number) {
+		// TODO Auto-generated method stub
 		return dao.company_img(store_number);
 	}
 
@@ -84,11 +86,13 @@ public class HomeMyPageServiceImpl implements HomeMyPageService {
 
 	@Override
 	public List<HomeCompanyVO> company_list_all() {
+		// TODO Auto-generated method stub
 		return dao.company_list_all();
 	}
 
 	@Override
 	public List<HomeCompanyVO> company_select_number(int store_number) {
-		return dao.company_select_number(store_number);	
+		// TODO Auto-generated method stub
+		return dao.company_select_number(store_number);
 	}
 }

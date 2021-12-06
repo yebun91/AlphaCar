@@ -8,7 +8,9 @@ public class HomeStoreVO {
 	private int store_number               ;
 	private String customer_email             ;
 	private String store_name                 ;
+	private String store_post                 ;
 	private String store_addr                 ;
+	private String store_detail_addr                 ;
 	private String store_tel                  ;
 	private String store_time                 ;
 	private String store_dayoff               ;
@@ -21,6 +23,19 @@ public class HomeStoreVO {
 	private int store_favorite_cnt         ;
 	private ArrayList<String> now_state = new ArrayList<String>();
 	
+	
+	public String getStore_post() {
+		return store_post;
+	}
+	public void setStore_post(String store_post) {
+		this.store_post = store_post;
+	}
+	public String getStore_detail_addr() {
+		return store_detail_addr;
+	}
+	public void setStore_detail_addr(String store_detail_addr) {
+		this.store_detail_addr = store_detail_addr;
+	}
 	public void setNow_state(ArrayList<String> now_state) {
 		this.now_state = now_state;
 	}
