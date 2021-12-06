@@ -22,7 +22,12 @@
 		where s.customer_email = #{customer_email} 
 			and s.store_number = f.store_number
 	</select>
-	
+	<!-- 전체 회사 리스트 뽑아오기 -->
+	<select id="company_list_all" resultType="homeMypage.HomeCompanyVO">
+		select * 
+		from store
+	</select>
+
 	<!-- 내 회사 지우기 -->
 	<delete id="company_delete">
 		delete from store

@@ -93,5 +93,10 @@ public class HomeMyPageDAO implements HomeMyPageService {
 		
 	}
 
+	@Override
+	public List<HomeCompanyVO> company_list_all() {
+		return sql.selectList("homeMyPage.mapper.company_list_all");
+	}
+
 
 }
