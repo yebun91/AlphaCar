@@ -32,6 +32,20 @@ public class FavoriteServiceImpl implements FavoriteService {
 		// TODO Auto-generated method stub
 		return dao.favorite_delete(fav_number);
 	}
+
+
+	@Override
+	public int favorite_update(int store_number) {
+		// TODO Auto-generated method stub
+		return dao.favorite_update(store_number);
+	}
+
+
+	@Override
+	public int favorite_check(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.favorite_check(map);
+	}
 	
 
 }

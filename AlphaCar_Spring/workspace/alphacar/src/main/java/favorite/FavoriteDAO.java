@@ -32,5 +32,17 @@ public class FavoriteDAO implements FavoriteService {
 		return sql.delete("favorite.mapper.delete",fav_number);
 	}
 
+	@Override
+	public int favorite_update(int store_number) {
+		// TODO Auto-generated method stub
+		return sql.update("favorite.mapper.update", store_number);
+	}
+
+	@Override
+	public int favorite_check(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sql.selectOne("favorite.mapper.check", map);
+	}
+
 
 }

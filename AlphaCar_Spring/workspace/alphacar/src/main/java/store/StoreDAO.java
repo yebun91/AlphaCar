@@ -67,6 +67,12 @@ public class StoreDAO implements StoreService{
 		// TODO Auto-generated method stub
 		return sql.selectList("store.mapper.name", name);
 	}
+
+	@Override
+	public List<Store_FileVO> master_store_file(String customer_email) {
+		// TODO Auto-generated method stub
+		return sql.selectList("store.mapper.master",customer_email);
+	}
 	
 	
 

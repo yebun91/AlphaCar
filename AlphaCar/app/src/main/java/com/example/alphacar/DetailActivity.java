@@ -6,8 +6,11 @@ package com.example.alphacar;
 import static com.example.alphacar.Common.CommonMethod.isNetworkConnected;
 import static com.example.alphacar.LoginPageActivity.loginDTO;
 
+
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +28,10 @@ import androidx.viewpager.widget.ViewPager;
 
 
 import com.example.alphacar.ATask.DetailSelect;
+import com.example.alphacar.ATask.FavoriteCheck;
+import com.example.alphacar.ATask.FavoriteCntUpdate;
 import com.example.alphacar.ATask.FavoriteInsert;
+import com.example.alphacar.ATask.FavoriteSelect;
 import com.example.alphacar.ATask.ReviewSelect;
 import com.example.alphacar.Adapter.DetailAdapter;
 import com.example.alphacar.Adapter.Detail_SliderAdapter;
@@ -39,12 +45,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class DetailActivity extends AppCompatActivity{
     //사업장 정보를 id값 기준으로 가져와야함
     DetailSelect detailSelect;
     ReviewSelect reviewSelect;
     FavoriteInsert favoriteInsert;
+    FavoriteCntUpdate favoriteCntUpdate;
+    FavoriteCheck favoriteCheck;
     ViewPager pager;
 
     ArrayList<StoreDTO> store_list;
@@ -103,11 +112,12 @@ public class DetailActivity extends AppCompatActivity{
      /*   MapView mapView = new MapView(this);
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
-*/
+*/     String state = "";
 
         detail_now_btn = findViewById(R.id.detail_now_btn);
         detail_review_btn = findViewById(R.id.detail_review_btn);
         detail_star_point = findViewById(R.id.detail_star_point);
+        like_btn = findViewById(R.id.detail_favorite_btn);
         store_list = new ArrayList<>();
         pager = findViewById(R.id.image_container);
         dtos = new ArrayList<>();
@@ -153,6 +163,29 @@ public class DetailActivity extends AppCompatActivity{
             Toast.makeText(this, "인터넷이 연결되어 있지 않습니다.",
                     Toast.LENGTH_SHORT).show();
         }
+    if(loginDTO != null) {
+        if (isNetworkConnected(DetailActivity.this) == true) {
+            favoriteCheck = new FavoriteCheck(loginDTO.getCustomer_email(), store_list.get(0).getStore_number());
+            //listDetail = new ListDetail(store_number);
+            try {
+                state = favoriteCheck.execute().get().trim();
+                state = state.substring(11, 12);
+                //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(DetailActivity.this, "인터넷이 연결되어 있지 않습니다.",
+                    Toast.LENGTH_SHORT).show();
+        }
+        if (state.equals("1")) {
+            like_btn.setImageResource(R.drawable.ic_baseline_favorite_red_24);
+        }else{
+            like_btn.setImageResource(R.drawable.ic_baseline_favorite_24);
+        }
+    }
 
        //별점 가져오기
         int avg = 0;
@@ -185,6 +218,8 @@ public class DetailActivity extends AppCompatActivity{
                break;
        }
 
+
+
         //////////
 
         scrollView = findViewById(R.id.detail_scroll);
@@ -215,10 +250,11 @@ public class DetailActivity extends AppCompatActivity{
         });
 
 
+        //이메일과 스토어 넘버 비교 loginDTO email == favdto email && store_number == favdto_store_number  => 색 바뀜
 
 
-        like_btn = findViewById(R.id.detail_favorite_btn);
         //좋아요 버튼 누르면 FAV_NUMBER, CUSTOMER_EMAIL, STORE_NUMBER값을 Favorite테이블에 넣어줌
+
 
         if(loginDTO != null) {
             like_btn.setOnClickListener(new View.OnClickListener() {
@@ -240,6 +276,23 @@ public class DetailActivity extends AppCompatActivity{
                         Toast.makeText(DetailActivity.this, "인터넷이 연결되어 있지 않습니다.",
                                 Toast.LENGTH_SHORT).show();
                     }
+
+                    if (isNetworkConnected(DetailActivity.this) == true) {
+                        favoriteCntUpdate = new FavoriteCntUpdate(store_list.get(0).getStore_number());
+                        //listDetail = new ListDetail(store_number);
+                        try {
+                            favoriteCntUpdate.execute().get();
+                            //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Toast.makeText(DetailActivity.this, "인터넷이 연결되어 있지 않습니다.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
                     //유저 메일 = dd 인 사람이 현재 가게를 등록한다
                     //1. 즐겨찾기 버튼은 로그인 된 상태에서만 활성화 된다
                     //2. 즐겨찾기 버튼을 누르면 사용자의 이메일을 기준으로 favorite에 값이 담긴다
@@ -304,7 +357,7 @@ public class DetailActivity extends AppCompatActivity{
         });
 
 
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {////////////////
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             //리뷰 눌렀을때 디테일하게 보기
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {

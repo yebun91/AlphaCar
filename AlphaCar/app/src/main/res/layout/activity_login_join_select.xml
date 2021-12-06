@@ -76,21 +76,4 @@
         app:srcCompat="@drawable/ic_backicon"
         tools:ignore="VectorDrawableCompat" />
 
-    <Button
-        android:id="@+id/btn_find"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:background="#00FFFFFF"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text="아이디/비밀번호 찾기"
-        android:textSize="10dp"
-        android:visibility="visible"
-        app:iconPadding="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginjoin_bt_join"
-        android:gravity="center"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
