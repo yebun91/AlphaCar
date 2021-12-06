@@ -108,11 +108,11 @@
 	    
 	    
 		
-			<foreach collection="now_state" item="item"  >
+			<foreach collection="now_state" item="item" index="i" >
 			  SELECT V_SENSOR + 1 INTO V_SENSOR FROM dual ;
 			  
-	      INSERT INTO SENSOR (SENSOR_ID, LATITUDE, LONGITUDE, STORE_NUMBER)
-			 	VALUES (V_SENSOR  , 1 , 2 ,V_STORE_NUM );
+	      INSERT INTO SENSOR (SENSOR_ID, LATITUDE, LONGITUDE, STORE_NUMBER, sensor_number)
+			 	VALUES (V_SENSOR  , 1 , 2 ,V_STORE_NUM, #{i, jdbcType=VARCHAR}+1 );
 	      INSERT INTO STATE(INVENTORY_NUMBER, STORE_NUMBER, SENSOR_ID, NOW_STATE, CREATE_DATE, CHANGE_DATE)
 			  VALUES (V_SENSOR  , V_STORE_NUM , V_SENSOR , #{item, jdbcType=VARCHAR}, sysdate, sysdate );
 			
