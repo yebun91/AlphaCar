@@ -64,7 +64,7 @@
      SELECT SEQ_STORE.nextval  INTO  V_STORE_NUM from DUAL;
      SELECT NVL(MAX(SENSOR_ID),0)  INTO  V_SENSOR from SENSOR;
     INSERT ALL
-			into store (store_number, customer_email, store_name, store_addr, store_addr, store_detail_addr, 
+			into store (store_number, customer_email, store_name, store_post, store_addr, store_detail_addr, 
 			store_tel, store_time, 
 			store_dayoff, introduce, inventory, store_price, store_master_name, store_registration_number)
 			values (V_STORE_NUM, #{customer_email, jdbcType=VARCHAR}, #{store_name, jdbcType=VARCHAR}, 
