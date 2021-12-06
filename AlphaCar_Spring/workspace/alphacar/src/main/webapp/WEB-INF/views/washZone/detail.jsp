@@ -52,7 +52,6 @@
 			<c:forEach items="${wash_zone}" var="vo">	
         		<div class="company_info_imgpath">
         			<img alt="세차장 이미지" src="${vo.imgpath}">
-        			
         		</div>
 			</c:forEach>
 		</div>

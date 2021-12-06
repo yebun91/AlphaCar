@@ -32,11 +32,12 @@ public class CommonService {
 	// 파일 업로드 처리
 	public String fileUpload(String category, MultipartFile file, HttpSession session) {
 		// 업로드 할 위치
-		String resources = session.getServletContext().getRealPath("resources");
+		String resources = session.getServletContext().getRealPath("/resources");
 		// D:\TeamProject\AteamAlphaCar\AlphaCar_Spring\.metadata\.plugins\org.eclipse.wst.server.core\tmp0
 		// \wtpwebapps\alphacar\resources\pictures\profiles\00.jpg
 
 		String folder = resources + "/pictures/" + category;
+		String save = "http://192.168.0.30:8989/alphacar/resources/pictures/"+category;
 		String uuid =  UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 		
 		File dir = new File ( folder );
@@ -48,7 +49,8 @@ public class CommonService {
 				e.printStackTrace();
 			}
 		// pictures\profiles\00.jpg
-		return folder.substring(resources.length() + 1) + "/" + uuid;	
+		//return folder.substring(resources.length() + 1) + "/" + uuid;
+		return save + "/" + uuid;	
 	}
 	
 	

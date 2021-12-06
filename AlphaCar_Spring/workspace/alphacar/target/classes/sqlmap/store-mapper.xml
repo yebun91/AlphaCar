@@ -18,6 +18,14 @@
 		outer join store_file f on s.store_number = f.store_number
 		where f.rank
 		= 1
+		order by s.store_favorite_cnt desc
+	</select>
+	
+	<select id="master" resultType="store.Store_FileVO">
+		select s.*, f.*
+		from store s left
+		outer join store_file f on s.store_number = f.store_number
+		where s.customer_email = #{customer_email} and f.rank = 1
 	</select>
 	
 
@@ -56,10 +64,12 @@
      SELECT SEQ_STORE.nextval  INTO  V_STORE_NUM from DUAL;
      SELECT NVL(MAX(SENSOR_ID),0)  INTO  V_SENSOR from SENSOR;
     INSERT ALL
-			into store (store_number, customer_email, store_name, store_addr, store_tel, store_time, 
+			into store (store_number, customer_email, store_name, store_post, store_addr, store_detail_addr, 
+			store_tel, store_time, 
 			store_dayoff, introduce, inventory, store_price, store_master_name, store_registration_number)
 			values (V_STORE_NUM, #{customer_email, jdbcType=VARCHAR}, #{store_name, jdbcType=VARCHAR}, 
-			#{store_addr, jdbcType=VARCHAR}, #{store_tel, jdbcType=VARCHAR}, #{store_time, jdbcType=VARCHAR}, 
+			#{store_post, jdbcType=VARCHAR}, #{store_addr, jdbcType=VARCHAR}, #{store_detail_addr, jdbcType=VARCHAR},
+			#{store_tel, jdbcType=VARCHAR}, #{store_time, jdbcType=VARCHAR}, 
 			#{store_dayoff, jdbcType=VARCHAR}, #{introduce, jdbcType=VARCHAR}, 
 			#{inventory, jdbcType=VARCHAR}, #{store_price, jdbcType=VARCHAR}, 
 			#{store_master_name, jdbcType=VARCHAR}, #{store_registration_number, jdbcType=VARCHAR})
@@ -71,7 +81,7 @@
 		
 			<foreach collection="now_state" item="item" index="i" >
 			  SELECT V_SENSOR + 1 INTO V_SENSOR FROM dual ;
-		      INSERT INTO SENSOR (SENSOR_ID, LATITUDE, LONGITUDE, STORE_NUMBER, SENSOR_NUMBER)
+		      INSERT INTO SENSOR (SENSOR_ID, LATITUDE, LONGITUDE, STORE_NUMBER, sensor_number)
 				 	VALUES (V_SENSOR  , 1 , 2 ,V_STORE_NUM, #{i, jdbcType=VARCHAR}+1 );
 		      INSERT INTO STATE(INVENTORY_NUMBER, STORE_NUMBER, SENSOR_ID, NOW_STATE, CREATE_DATE, CHANGE_DATE)
 				  VALUES (V_SENSOR  , V_STORE_NUM , V_SENSOR , #{item, jdbcType=VARCHAR}, sysdate, sysdate );
