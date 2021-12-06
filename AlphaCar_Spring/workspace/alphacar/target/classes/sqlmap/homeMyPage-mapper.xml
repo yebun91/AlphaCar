@@ -22,7 +22,12 @@
 		where s.customer_email = #{customer_email} 
 			and s.store_number = f.store_number
 	</select>
-	
+	<!-- 전체 회사 리스트 뽑아오기 -->
+	<select id="company_list_all" resultType="homeMypage.HomeCompanyVO">
+		select * 
+		from store
+	</select>
+
 	<!-- 내 회사 지우기 -->
 	<delete id="company_delete">
 		delete from store
@@ -108,11 +113,11 @@
 	    
 	    
 		
-			<foreach collection="now_state" item="item"  >
+			<foreach collection="now_state" item="item" index="i" >
 			  SELECT V_SENSOR + 1 INTO V_SENSOR FROM dual ;
 			  
-	      INSERT INTO SENSOR (SENSOR_ID, LATITUDE, LONGITUDE, STORE_NUMBER)
-			 	VALUES (V_SENSOR  , 1 , 2 ,V_STORE_NUM );
+	      INSERT INTO SENSOR (SENSOR_ID, LATITUDE, LONGITUDE, STORE_NUMBER, sensor_number)
+			 	VALUES (V_SENSOR  , 1 , 2 ,V_STORE_NUM, #{i, jdbcType=VARCHAR}+1 );
 	      INSERT INTO STATE(INVENTORY_NUMBER, STORE_NUMBER, SENSOR_ID, NOW_STATE, CREATE_DATE, CHANGE_DATE)
 			  VALUES (V_SENSOR  , V_STORE_NUM , V_SENSOR , #{item, jdbcType=VARCHAR}, sysdate, sysdate );
 			
