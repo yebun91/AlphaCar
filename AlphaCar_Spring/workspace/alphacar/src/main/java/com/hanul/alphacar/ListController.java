@@ -189,6 +189,25 @@ public class ListController {
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping("/anSelectMaster")
+	public void anSelectMaster(HttpServletRequest req , HttpServletResponse res) throws Exception {
+		res.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html");
+		req.setCharacterEncoding("UTF-8");
+		String customer_email = req.getParameter("customer_email");
+		
+		List<Store_FileVO> file = service.master_store_file(customer_email);
+		
+		
+		PrintWriter out = res.getWriter();
+		Gson gson = new Gson();
+		String data = gson.toJson(file);
+		out.println(data);
+		
+	}
+	
+	
 	
 	
 	@ResponseBody

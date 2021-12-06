@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +32,7 @@ import com.example.alphacar.ATask.Storename;
 import com.example.alphacar.Adapter.StoreAdapter;
 import com.example.alphacar.Adapter.ViewpagerAdapter;
 import com.example.alphacar.DTOS.StoreDTO;
+import com.example.alphacar.Fragment.ButtonFragment;
 import com.example.alphacar.Fragment.FavoriteFragment;
 import com.example.alphacar.Fragment.Main_search_bar_Fragment;
 import com.example.alphacar.Fragment.ViewpagerFragment;
@@ -44,21 +46,20 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "main:MainActivity";
 
+    FrameLayout search_bar;
+    Button btn_cp_reg;
+
     NavigationView nav_view;
+    SearchView searchView;
     DrawerLayout draw_layout;
     ViewPager pager;
+
     ArrayList<StoreDTO> storeDTOArrayList;
-    BottomNavigationView bottomNavigationView;
-    SearchView searchView;
-    StoreDTO dto;
+
+
     Storelist storelist;
-    Storename storename;
-    LottieAnimationView animationView;
-    ArrayAdapter<StoreDTO> storeAdapter;
-    ListView listView ;
-    StoreAdapter sAdapter;
-    LinearLayout searchV;
-    FrameLayout search_bar;
+
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         search_bar = findViewById(R.id.search_bar);
 
         pager = findViewById(R.id.pager);
+        btn_cp_reg = findViewById(R.id.btn_cp_reg);
 
         searchView = findViewById(R.id.searchView);
         nav_view = findViewById(R.id.nav_view);
@@ -84,8 +86,13 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         ImageView login_image = headerView.findViewById(R.id.loginImage);
         TextView login_text =headerView.findViewById(R.id.loginID);
         TextView login_str =  headerView.findViewById(R.id.loginStr);
-
-
+        if(loginDTO != null) {
+            if (!loginDTO.getAdmin().equals("M")) {
+                btn_cp_reg.setVisibility(View.INVISIBLE);
+            }
+        }else {
+            btn_cp_reg.setVisibility(View.INVISIBLE);
+        }
 
         /* 사이드 네비게이션 로그인 할떄 안할떄 보여지는 글자 */
         if (loginDTO == null){
@@ -98,6 +105,17 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         Fragment fragment = new Main_search_bar_Fragment();
         getSupportFragmentManager().beginTransaction()
               .replace(R.id.contain,fragment).commit();
+
+
+        btn_cp_reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_cp_reg.setVisibility(View.INVISIBLE);
+                Fragment fragment = new ButtonFragment();
+                getSupportFragmentManager().beginTransaction().add(R.id.contain, fragment).addToBackStack(null).commit();
+            }
+        });
+
 
 
 
@@ -132,8 +150,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             public void onClick(View v) {
                 Fragment fragment = new FavoriteFragment();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contain, fragment).commit();
-
+                        .replace(R.id.contain, fragment).addToBackStack(null).commit();
             }
         });
 
@@ -141,7 +158,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         findViewById(R.id.tab3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getApplicationContext(), LoginJoinSelectActivity.class);
                 startActivity(intent);
             }
@@ -174,6 +190,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
         /*바텀 네비게이션*/
         bottomNavigationView = findViewById(R.id.bottom_navi);
+        if(loginDTO != null){
+            bottomNavigationView.getMenu().findItem(R.id.tab3).setTitle("로그아웃");
+        }
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

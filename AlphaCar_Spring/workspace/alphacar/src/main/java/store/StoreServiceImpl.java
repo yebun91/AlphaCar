@@ -66,6 +66,11 @@ public class StoreServiceImpl implements StoreService{
 		return dao.store_name(name);
 	}
 
+	public List<Store_FileVO> master_store_file(String customer_email) {
+		// TODO Auto-generated method stub
+		return dao.master_store_file(customer_email);
+	}
+
 
 
 }

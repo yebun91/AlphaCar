@@ -103,6 +103,15 @@
         <activity android:name=".LoginJoinSelectActivity"
             android:exported="true" />
 
+        <activity android:name=".WebSearch"
+            android:exported="true"/>
+        <activity android:name=".RegisterUpdateActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".Announce_detail_Activity"
+            android:exported="true"/>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

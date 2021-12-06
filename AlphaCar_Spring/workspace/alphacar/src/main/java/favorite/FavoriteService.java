@@ -15,6 +15,8 @@ public interface FavoriteService {
 	
 	int favorite_insert(HashMap<String, Object> map);
 	
+	int favorite_update(int store_number);
 	
+	int favorite_check(HashMap<String, Object> map);
 	
 }
