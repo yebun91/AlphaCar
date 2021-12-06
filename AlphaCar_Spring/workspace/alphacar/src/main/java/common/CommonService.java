@@ -182,15 +182,9 @@ public class CommonService {
 			
 		} catch (EmailException e) {
 			System.out.println(e.getMessage());;
-		}
-		
-		
+		}	
 	}
-	
-	
-	
-	
-	
+
 	// 접근 토큰을 이용하여 프로필 API 호출하기 위하여 {access_token 과 token_type 값을 파라미터 전달}
 	public String requestAPI(StringBuffer url, String property) {
 		String result = "";		// result 변수 초기화 선언

@@ -36,6 +36,14 @@
 			and s.store_number = f.store_number
 	</select>
 	
+	<!-- 회사정보를 조회하고 좋아요 순으로 정렬 -->
+	<select id="company_list_all_fv" resultType="homeMypage.HomeCompanyVO">
+		select * 
+		from store s, (select imgpath, store_number from store_file where rank = 1) f
+		where s.store_number = f.store_number
+		order by store_favorite_cnt desc
+	</select>
+	
 	<!-- 내 회사 지우기 -->
 	<delete id="company_delete">
 		delete from store

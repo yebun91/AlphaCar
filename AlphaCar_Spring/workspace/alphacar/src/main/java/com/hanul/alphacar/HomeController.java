@@ -1,5 +1,7 @@
 package com.hanul.alphacar;
 
+import java.net.MulticastSocket;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import homeMypage.HomeCompanyVO;
 import homeMypage.HomeMyPageServiceImpl;
 import homeNotice.HomeNoticePage;
 import homeNotice.HomeNoticeServiceImpl;
@@ -35,7 +38,12 @@ public class HomeController {
 		
 		page.setCurPage(curPage);
 		model.addAttribute("page", service.notice_list(page));
-		model.addAttribute("wash", companyService.);
+		model.addAttribute("wash", companyService.company_list_all_fv());
+		List<HomeCompanyVO> vo = companyService.company_list_all_fv();
+		for (int i = 0; i < vo.size(); i++) {
+			System.out.println(vo.get(i).getImgpath());
+		}
+		
 		return "index";
 	}
 }

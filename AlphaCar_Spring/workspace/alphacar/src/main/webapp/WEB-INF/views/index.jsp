@@ -12,12 +12,13 @@
   <div id="recommend">
     <h1>추천 세차장</h1>
     <div class="recommend_box">
-      <div><a href=""></a></div>
-      <div><a href=""></a></div>
-      <div><a href=""></a></div>
-      <div><a href=""></a></div>
-      <div><a href=""></a></div>
-      <div><a href=""></a></div>
+    	<c:forEach items="${wash}" var="vo" begin="0" end="5">
+    		<div>
+    			<a href="detail.wa?store_number=${vo.store_number }">
+    				<img alt="세차장 이미지" src="${vo.imgpath }">
+    			</a>
+    		</div>
+		</c:forEach>
       <div>
         <a href="">
           <p>세차장 전체보기</p>
