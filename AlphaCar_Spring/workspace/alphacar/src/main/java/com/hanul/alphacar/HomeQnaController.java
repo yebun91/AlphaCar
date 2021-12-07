@@ -62,16 +62,13 @@ public class HomeQnaController {
 	//qna 글 자세히 보기
 	@RequestMapping("/detail.qna")
 	public String detail(int qna_id, Model model, WebMemberVO mvo, HttpSession session) {
-		if (((WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email().equals(null) ||
-				((WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() != mvo.getCustomer_email()) {
-			return "member/login";
-		} else {
+		
 			service.qna_read(qna_id);
 			
 			model.addAttribute("vo", service.qna_detail(qna_id));
 			model.addAttribute("crlf", "\r\n");
 			return "qna/detail";
-		}
+		
 	}
 	
 	//qna 비밀번호 확인 화면 요청

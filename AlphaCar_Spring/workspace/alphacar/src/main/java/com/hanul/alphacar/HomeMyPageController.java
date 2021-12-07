@@ -324,10 +324,7 @@ public class HomeMyPageController {
 	public String masterContact(HttpSession session, Model model, 
 			@RequestParam (defaultValue = "1") int curPage,
 			String search, String keyword, WebMemberVO vo) {
-		if (((WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email().equals(null) ||
-				((WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() != vo.getCustomer_email()) {
-			return "member/login";
-		} else {
+		
 			page.setCurPage(curPage);
 			page.setSearch(search);
 			page.setKeyword(keyword);
@@ -335,7 +332,7 @@ public class HomeMyPageController {
 			//DB에서 공지글 목록을 조회한 후 목록화면에 출력
 			model.addAttribute("page", service.qna_list(page));
 			return "mypage/master_contact";
-		}
+		
 	}
 	
 }
