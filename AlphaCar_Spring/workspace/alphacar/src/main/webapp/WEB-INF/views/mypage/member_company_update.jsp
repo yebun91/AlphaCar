@@ -69,21 +69,38 @@
 	            <h3>사업자 번호</h3>
 	            <input type="text" name="store_registration_number" value="${vo.store_registration_number }">
 	          </div>
-	          <div> 
-	            <h3>사진</h3>
-	            <c:forEach items="${img }" var="img">
-	            	<input class="image_upload" accept="image/*" value="${img.imgname }" />
-	            </c:forEach>
-		            <div class="company_images">
-		              <div class="join_profile_image">
-			            <label>
-										<a><img src='imgs/select.png' id="attach-file" class='file-img' /></a>
-										<input multiple="multiple" type="file" id='input_file' name="file" accept="image/*" />
-									</label>
-									<span style="font-size:12px; color: gray;" id='file-name' ></span>
-									<div id="articlefileChange"></div>
-		              </div>
-	              </div>
+              <div> 
+                <h3>사진</h3>
+                <div>
+                    <c:forEach items="${img }" var="img">
+                    <div class="join_profile_image">
+                        <img alt="" src="${img.imgpath }">
+                    </div>
+                        <%-- <input class="image_upload"  value="${img.imgpath }" /> --%>
+                    </c:forEach>
+                </div>
+                
+                <c:forEach items="${img }" var="img">
+                    <input class="image_upload" accept="image/*" value="${img.imgname }" />
+                </c:forEach>
+                    <div class="company_images">
+                      <div class="join_profile_image">
+                        <!-- <label>
+                            <a><img src='imgs/select.png' id="attach-file" class='file-img' /></a>
+                            <input multiple="multiple" type="file" id='input_file' name="file" accept="image/*" />
+                        </label> 
+                        <span style="font-size:12px; color: gray;" id='file-name' ></span>
+                        
+                        
+                        <div id="articlefileChange"></div>
+                        <label>
+                            <a><img src='imgs/select.png' id="attach-file" class='file-img' /></a>
+                            <input multiple="multiple" type="file" id='input_file' name="file" accept="image/*" />
+                        </label>
+                        <span style="font-size:12px; color: gray;" id='file-name' ></span>
+                        <div id="articlefileChange"></div>-->
+
+                  </div>
 	          </div>
 	        </div>
 	        <button type="button" onclick='$("form").submit()'>수정하기</button>

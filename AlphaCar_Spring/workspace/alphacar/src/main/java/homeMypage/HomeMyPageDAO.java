@@ -103,6 +103,11 @@ public class HomeMyPageDAO implements HomeMyPageService {
 		return sql.selectList("homeMyPage.mapper.company_select_number", store_number);
 		
 	}
+    @Override
+    public List<HomeCompanyVO> company_list_all_fv() {
+        // TODO Auto-generated method stub
+        return sql.selectList("homeMyPage.mapper.company_list_all_fv");
+    }
 
 
 }
