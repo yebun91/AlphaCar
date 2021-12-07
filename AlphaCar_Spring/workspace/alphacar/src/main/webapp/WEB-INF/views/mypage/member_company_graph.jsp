@@ -12,137 +12,143 @@
   <!-- 메인 시작 -->
   <main class="mypage">
     <div id="page">
-      <h1>가게 이름이 나타나는 곳</h1>
+      <h3>가게 이름이 나타나는 곳</h3>
       <div class="company_graph">
       	<canvas  id="myChart"></canvas>
       </div>
     </div>
   </main>
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+	<script type="text/javascript" src='js/chart.js'></script>
   
-  <script type="text/javascript">
-	//canvas 가져오기
-  const canvas = document.querySelector("#myChart");
+  <script type="text/javascript"  charset="UTF-8">
+		
+	  var arrLabel ;
+			var arrData ;
+			var arrtitle ;
+			var arrcolor ;
+			$.ajax({
+				   type: "POST",
+				   dataType: "json",
+				   url: "month_list",
+				   success: function( response ) 
+				   { 
+					 
+					    arrLabel = new Array(response.length);
+					    arrData = new Array(response.length);
+					    arrtitle= new Array(response.length);
+					    arrcolor= new Array(response.length);
+					    for (var i=0; i<response.length; i++) {
+							var data = ""
+							var cnt = 0;
+							arrLabel[i] = new Array(13);
+							arrData[i] = new Array(13);
+							for (key in response[i]) {
+								if(key == 'title'){
+									arrtitle[i]= response[i][key];
+								}else if(key == 'color'){
+									arrcolor[i]= response[i][key];
+								}else{
+									arrLabel[i][cnt] = key;
+									arrData[i][cnt] = response[i][key];
+									cnt ++ ;
+								}
+							
+							
+								
+								
+						  }
+						
+						}
+					
+					    initChart();
+			      
+				   },
+				   error: function( error )
+				   {
+				     alert( error );
+				   }
+				});
+			
+			
+			function initChart(){
+			    var GraphDatasetsArray = [];
+			    for (i=0; i < arrtitle.length; i++)
+			    {
+			    
+			    GraphDatasetsArray[i] = 
+			                        {
+			                        label: arrtitle[i],
+			                        data: arrData[i], 
+			                        fill: false, 
+			                        borderColor: 'rgba(255, 99, 132, 1)', 
+			                        backgroundColor: arrcolor[i],
+			                        pointBackgroundColor: '#ffffff', 
+			                        tension: 0,
+			                        }   
+			    }
+				var chartdata = {
+					    labels:  arrLabel[0],
+					    datasets: GraphDatasetsArray
+					    	
+					    
+					};
+			
+					 
+			
+					//차트 옵션 설정(X,Y축)
+					var chartOptions = {
+					    scales: {
+					        xAxes: [
+					            {
+					                ticks: {
+					                    beginAtZero: true
+					                },
+					                scaleLabel: {
+					                    display: true,
+					                    labelString: "x축 텍스트",
+					                    fontColor: "red"
+					                },
+					                stacked: true
+					            }
+					        ],
+					        yAxes: [
+					            {
+					                scaleLabel: {
+					                    display: true,
+					                    labelString: "y축 텍스트",
+					                    fontColor: "green"
+					                },
+					                ticks: {
+					                    // max: 7000,
+					                    min: 0,
+					                    // stepSize: 1000,
+					                    autoSkip: true
+					                },
+					                stacked: true
+					            }
+					        ]
+					    },
+					    responsive: true,
+					    onClick: function(point, event) {
+					          if(event.length <= 0) return;
+			
+					          console.log(event[0]['_index'])
+					        }
+					};
+			
+					 
+			
+					//차트 추가
+					var ctx = document.getElementById("myChart");
+					JsChartBar = new Chart(ctx, {
+					    type: 'bar',
+					    data: chartdata
+					});
+				
+			}
+		
 
-  // context 등록!
-  const context = canvas.getContext("2d");
-  const ctx = document.getElementById('myChart');
-  
-  const DATA_COUNT = 7;
-  const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
-
-  const labels = Utils.months({count: DATA_COUNT});
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: Utils.numbers(NUMBER_CFG),
-        borderColor: Utils.CHART_COLORS.red,
-        backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
-        tension: 0.4,
-      },
-      {
-        label: 'Dataset 2',
-        data: Utils.numbers(NUMBER_CFG),
-        borderColor: Utils.CHART_COLORS.blue,
-        backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
-        tension: 0.2,
-      }
-    ]
-  };
-  
-  const actions = [
-	  {
-	    name: 'Randomize',
-	    handler(chart) {
-	      chart.data.datasets.forEach(dataset => {
-	        dataset.data = Utils.numbers({count: chart.data.labels.length, min: -100, max: 100});
-	      });
-	      chart.update();
-	    }
-	  },
-	  {
-	    name: 'Add Dataset',
-	    handler(chart) {
-	      const data = chart.data;
-	      const dsColor = Utils.namedColor(chart.data.datasets.length);
-	      const newDataset = {
-	        label: 'Dataset ' + (data.datasets.length + 1),
-	        backgroundColor: Utils.transparentize(dsColor, 0.5),
-	        borderColor: dsColor,
-	        data: Utils.numbers({count: data.labels.length, min: -100, max: 100}),
-	      };
-	      chart.data.datasets.push(newDataset);
-	      chart.update();
-	    }
-	  },
-	  {
-	    name: 'Add Data',
-	    handler(chart) {
-	      const data = chart.data;
-	      if (data.datasets.length > 0) {
-	        data.labels = Utils.months({count: data.labels.length + 1});
-
-	        for (let index = 0; index < data.datasets.length; ++index) {
-	          data.datasets[index].data.push(Utils.rand(-100, 100));
-	        }
-
-	        chart.update();
-	      }
-	    }
-	  },
-	  {
-	    name: 'Remove Dataset',
-	    handler(chart) {
-	      chart.data.datasets.pop();
-	      chart.update();
-	    }
-	  },
-	  {
-	    name: 'Remove Data',
-	    handler(chart) {
-	      chart.data.labels.splice(-1, 1); // remove the label first
-
-	      chart.data.datasets.forEach(dataset => {
-	        dataset.data.pop();
-	      });
-
-	      chart.update();
-	    }
-	  }
-	];
-  
-  const config = {  
-		  type: 'line',
-		  data: data,
-		  options: {
-		    animations: {
-		      radius: {
-		        duration: 400,
-		        easing: 'linear',
-		        loop: (context) => context.active
-		      }
-		    },
-		    hoverRadius: 12,
-		    hoverBackgroundColor: 'yellow',
-		    interaction: {
-		      mode: 'nearest',
-		      intersect: false,
-		      axis: 'x'
-		    },
-		    plugins: {
-		      tooltip: {
-		        enabled: false
-		      }
-		    }
-		  },
-		};
-  const chart = new Chart(ctx, config, actions);
-  
-  
-  
-  </script>
-  
+	</script>

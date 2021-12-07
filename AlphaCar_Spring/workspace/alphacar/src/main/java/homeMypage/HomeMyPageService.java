@@ -40,7 +40,4 @@ public interface HomeMyPageService {
 	//회사 번호로 조회
 	List<HomeCompanyVO> company_select_number(int store_number);
 	
-	//회사 조회 후 좋아요 순으로 정렬
-	List<HomeCompanyVO> company_list_all_fv();
-	
 }

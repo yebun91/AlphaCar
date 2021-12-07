@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="homeChart.mapper">
+
+	<!-- 월별 이용자수 조회 -->
+	<select id="month_list" resultType="homeChart.ChartVO">
+	
+		<foreach collection="month_log" item="item" index="i" >
+			select count(log) from state_log where in_out = 'I' and to_char(log, 'MM') = #{i, jdbcType=VARCHAR}+1;
+	  </foreach>
+	  
+	</select>
+	
+</mapper>

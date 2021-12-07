@@ -42,32 +42,32 @@
 		</select>
 		
 		<sql id = 'where_search'>
-		<if test="search == 'user-info' ">
+		<if test='search == "user-info" '>
 			where qna_ATTRIBUTE = 'C' 
 			<if test="keyword != null">
 	  				and qna_title like '%'||#{keyword}||'%'
 	  		</if>
 		</if>
-		<if test="search == 'store' ">
+		<if test='search == "store" '>
 			where qna_ATTRIBUTE = 'S' 
 			<if test="keyword != null">
 	  				and qna_title like '%'||#{keyword}||'%'
 	  			</if>
 		</if>
 	
-		<if test="search == 'app_web' ">
+		<if test='search == "app_web" '>
 			where qna_ATTRIBUTE = 'M' 
 			<if test="keyword != null">
 	  				and qna_title like '%'||#{keyword}||'%'
 	  			</if>
 		</if>
-		<if test="search == 'alphacar' ">
+		<if test='search == "alphacar" '>
 			where qna_ATTRIBUTE = 'A' 
 			<if test="keyword != null">
 	  				and qna_title like '%'||#{keyword}||'%'
 	  			</if>
 		</if>
-		<if test="search == 'all' ">
+		<if test='search == "all" '>
 			
 	  			<if test="keyword != null">
 	  				where qna_title like '%'||#{keyword}||'%'
@@ -127,32 +127,32 @@
 	</select>
 	
 	<sql id = 'where_member'>
-		<if test="search == 'user-info' ">
+		<if test='search == "user-info" '>
 			and qna_ATTRIBUTE = 'C' 
 			<if test="keyword != null">
 	  				and qna_title like '%'||#{keyword}||'%'
 	  		</if>
 		</if>
-		<if test="search == 'store' ">
+		<if test='search == "store" '>
 			and qna_ATTRIBUTE = 'S' 
 			<if test="keyword != null">
 	  				and qna_title like '%'||#{keyword}||'%'
 	  			</if>
 		</if>
 	
-		<if test="search == 'app_web' ">
+		<if test='search == "app_web" '>
 			and qna_ATTRIBUTE = 'M' 
 			<if test="keyword != null">
 	  				and qna_title like '%'||#{keyword}||'%'
 	  			</if>
 		</if>
-		<if test="search == 'alphacar' ">
+		<if test='search == "alphacar" '>
 			and qna_ATTRIBUTE = 'A' 
 			<if test="keyword != null">
 	  				and qna_title like '%'||#{keyword}||'%'
 	  			</if>
 		</if>
-		<if test="search == 'all' ">
+		<if test='search == "all" '>
 			
 	  			<if test="keyword != null">
 	  				and qna_title like '%'||#{keyword}||'%'
@@ -174,7 +174,7 @@
             from ( select * 
                   from web_qna
                   
-                  where customer_email = #{customer_email} <include refid="where_search" />
+                  where customer_email = #{customer_email} <include refid="where_member" />
                   order by qna_root, qna_step desc ) w
            order by no desc)
       where no between #{page.beginList} and #{page.endList}
