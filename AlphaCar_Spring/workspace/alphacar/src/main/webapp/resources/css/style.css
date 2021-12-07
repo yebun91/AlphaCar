@@ -672,13 +672,24 @@ input[type="checkbox"]:checked, input[type="radio"]:checked{
   font-size: var(--font-small);
   font-weight: var(--weight-semi-bold);
 }
-
+.join_profile_images>div{
+	display:flex;
+}
 .join_profile_image{
+  
   height: 100px;
   width: 100px;
   background-color: #0054a3;
   cursor: pointer;
   margin-bottom: 50px;
+  overflow: hidden;
+  margin-right: 10px;
+}
+.join_profile_image>img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  cursor: pointer;
 }
 
 .join_profile_image>p{
