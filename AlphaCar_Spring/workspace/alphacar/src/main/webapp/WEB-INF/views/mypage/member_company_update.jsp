@@ -71,24 +71,6 @@
 	          </div>
 	          <div> 
 	            <h3>사진</h3>
-<<<<<<< HEAD
-	            <div>
-	            	<c:forEach items="${img }" var="img">
-					<div class="join_profile_image">
-						<img alt="" src="${img.imgpath }">
-					</div>
-		            	<%-- <input class="image_upload"  value="${img.imgpath }" /> --%>
-		            </c:forEach>
-	            </div>
-		             <!--<div class="company_images">
-		             <div class="join_profile_image">
-			             <label>
-							<a><img src='imgs/select.png' id="attach-file" class='file-img' /></a>
-							<input multiple="multiple" type="file" id='input_file' name="file" accept="image/*" />
-						</label> 
-						<span style="font-size:12px; color: gray;" id='file-name' ></span>
-						<div id="articlefileChange"></div>
-=======
 	            <c:forEach items="${img }" var="img">
 	            	<input class="image_upload" accept="image/*" value="${img.imgname }" />
 	            </c:forEach>
@@ -100,14 +82,8 @@
 									</label>
 									<span style="font-size:12px; color: gray;" id='file-name' ></span>
 									<div id="articlefileChange"></div>
->>>>>>> d8d111c8de6e1d087a17e8264c90774ebfbf2358
 		              </div>
-		              <div id="articlefileChange" style="display: none"></div>
-		              <input multiple="multiple" type="file" id='input_file' name="file" accept="image/*"  style="display: none"/>
-	              </div>-->
-	              <div id="articlefileChange" style="display: none"></div>
-		          <input multiple="multiple" type="file" id='input_file' name="file" accept="image/*"  style="display: none"/>
-	              
+	              </div>
 	          </div>
 	        </div>
 	        <button type="button" onclick='$("form").submit()'>수정하기</button>
