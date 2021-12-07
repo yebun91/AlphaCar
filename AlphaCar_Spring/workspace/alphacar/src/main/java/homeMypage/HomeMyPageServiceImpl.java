@@ -95,10 +95,4 @@ public class HomeMyPageServiceImpl implements HomeMyPageService {
 		// TODO Auto-generated method stub
 		return dao.company_select_number(store_number);
 	}
-
-	@Override
-	public List<HomeCompanyVO> company_list_all_fv() {
-		// TODO Auto-generated method stub
-		return dao.company_list_all_fv();
-	}
 }

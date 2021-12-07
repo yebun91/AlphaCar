@@ -47,9 +47,9 @@ public class HomeMyPageController {
 	@RequestMapping("/mypage.mp")
 	public String login(HttpSession session) {
 		
-//	  HashMap<String, String> map = new HashMap<String, String>();
-//	  map.put("customer_email", "e"); map.put("customer_pw", "e");
-//	  session.setAttribute("loginInfo", member.member_login(map));
+	  HashMap<String, String> map = new HashMap<String, String>();
+	  map.put("customer_email", "e"); map.put("customer_pw", "e");
+	  session.setAttribute("loginInfo", member.member_login(map));
 		 
 		
 		return "mypage/mypage";
@@ -158,17 +158,19 @@ public class HomeMyPageController {
 	public String update_work(HomeStoreVO vo, HttpSession session, int inventory, int store_number, 
 			@RequestParam("article_file") List<MultipartFile> mf) {
 		ArrayList<String> storeInventory = new ArrayList<>();
+		HomeStoreVO hvo = homeService.companyId_list(store_number);
 		
 		for (int i =0; i< 9; i++){
 			storeInventory.add("X");
-       	}
+		}
 		for(int i =0; i<inventory; i++){
 			storeInventory.set(i, "Y");
-   		}
-    	for (int i = 0; i < storeInventory.size(); i++) {
+		}
+		for (int i = 0; i < storeInventory.size(); i++) {
 			vo.setNow_state(storeInventory.get(i));
 			
-		}
+		} 
+		
     	vo.setStore_number(store_number);
     	
     	

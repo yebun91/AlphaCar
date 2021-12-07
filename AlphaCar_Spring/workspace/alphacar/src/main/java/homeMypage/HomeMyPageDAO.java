@@ -104,11 +104,5 @@ public class HomeMyPageDAO implements HomeMyPageService {
 		
 	}
 
-	@Override
-	public List<HomeCompanyVO> company_list_all_fv() {
-		// TODO Auto-generated method stub
-		return sql.selectList("homeMyPage.mapper.company_list_all_fv");
-	}
-
 
 }

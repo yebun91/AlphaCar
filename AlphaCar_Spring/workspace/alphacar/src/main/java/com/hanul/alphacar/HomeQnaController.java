@@ -1,4 +1,8 @@
 package com.hanul.alphacar;
+
+
+
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +21,7 @@ public class HomeQnaController {
 	
 	@Autowired private QnaServiceImpl service;
 	
-	//채팅방 들어가기
-	@RequestMapping("/chat.do")
-	public String chat(HttpSession session, Model model) {
-		WebMemberVO vo = new WebMemberVO();
-		vo.setCustomer_name( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_name() );
-		session.setAttribute("id", vo.getCustomer_name());
-		return "chat/chat";
-	}
-	
+
 	//qna 새글쓰기
 	@RequestMapping("/write.qna")
 	public String write(HttpSession session, Model model) {
@@ -65,12 +61,17 @@ public class HomeQnaController {
 	
 	//qna 글 자세히 보기
 	@RequestMapping("/detail.qna")
-	public String detail(int qna_id, Model model) {
-		service.qna_read(qna_id);
-		
-		model.addAttribute("vo", service.qna_detail(qna_id));
-		model.addAttribute("crlf", "\r\n");
-		return "qna/detail";
+	public String detail(int qna_id, Model model, WebMemberVO mvo, HttpSession session) {
+		if (((WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email().equals(null) ||
+				((WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() != mvo.getCustomer_email()) {
+			return "member/login";
+		} else {
+			service.qna_read(qna_id);
+			
+			model.addAttribute("vo", service.qna_detail(qna_id));
+			model.addAttribute("crlf", "\r\n");
+			return "qna/detail";
+		}
 	}
 	
 	//qna 비밀번호 확인 화면 요청
