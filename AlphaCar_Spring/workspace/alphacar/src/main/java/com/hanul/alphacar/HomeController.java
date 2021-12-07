@@ -39,10 +39,10 @@ public class HomeController {
 		page.setCurPage(curPage);
 		model.addAttribute("page", service.notice_list(page));
 		model.addAttribute("wash", companyService.company_list_all_fv());
-		List<HomeCompanyVO> vo = companyService.company_list_all_fv();
-		for (int i = 0; i < vo.size(); i++) {
-			System.out.println(vo.get(i).getImgpath());
-		}
+//		List<HomeCompanyVO> vo = companyService.company_list_all_fv();
+//		for (int i = 0; i < vo.size(); i++) {
+//			System.out.println(vo.get(i).getImgpath());
+//		}
 		
 		return "index";
 	}
