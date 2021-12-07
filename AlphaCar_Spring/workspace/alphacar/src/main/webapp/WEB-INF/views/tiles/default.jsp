@@ -11,12 +11,16 @@
 <head>
 <meta charset="UTF-8">
 <title>${title }</title>
+
+<link rel="stylesheet" type="text/css" 
+			href="css/style.css?v=<%=new java.util.Date().getTime() %>" />
+<<<<<<< HEAD
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" 
-			href="css/style.css?v=<%=new java.util.Date().getTime() %>" />
+=======
 
+>>>>>>> parent of b0f536e (ㄴㄴㅇㄴ)
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>

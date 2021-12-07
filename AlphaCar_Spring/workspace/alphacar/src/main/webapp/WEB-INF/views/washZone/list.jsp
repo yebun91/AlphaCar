@@ -22,22 +22,8 @@
   </main>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e147583a7db59a9ae45a17222b6e7203&libraries=services"></script>
 <script>
-	const positions = JSON.parse('${wash_zone}'); //model로 보낸 데이터를 json형태로 변환
-	// 주소-좌표 변환 객체를 생성합니다
-	const geocoder = new kakao.maps.services.Geocoder();
-	
-	let x = '';
-	let y = '';
-	geocoder.addressSearch('광주광역시 서구', function(result, status){
-		if (status === kakao.maps.services.Status.OK) {
-			x = result[0].x;
-			y = result[0].y;
-			console.log(x);
-			console.log(y);
-	    }
-	});
-	console.log(x);
-	console.log(y);
+	var positions = JSON.parse('${wash_zone}'); //model로 보낸 데이터를 json형태로 변환
+
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	mapOption = { 
 	    center: new kakao.maps.LatLng(35.153411178408, 126.88799074307386), // 지도의 중심좌표
@@ -45,6 +31,8 @@
 	};
 	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성
 	
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
 	
 	
 	// 주소로 좌표를 검색합니다

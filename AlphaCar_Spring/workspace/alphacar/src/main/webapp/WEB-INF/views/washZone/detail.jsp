@@ -14,58 +14,47 @@
   <main class="mypage">
     <div id="page">
       <div class="wash_zone_boxs">
+        <div id="map" style="width:50%;height:500px;">
+        
+        </div>
         <div class="company_info">
         	<c:forEach items="${wash_zone}" var="vo" begin="0" end="0">
         		<div class="company_info_name">
-        			<h1>${vo.store_name}</h1>
+        			${vo.store_name}
         		</div>
         		<div class="company_info_favorite_cnt">
-        			<p class="favorite_cnt_h">♥</p>
-        			<span>${vo.store_favorite_cnt}</span>
+        			${vo.store_favorite_cnt}
+        		</div>
+        		<div class="company_info_master_name">
+        			${vo.store_master_name}
         		</div>
         		<div class="company_info_addr">
-        			<span>주소</span>
-        			<span>${vo.store_addr}</span>
+        			${vo.store_addr}
         		</div>
         		<div class="company_info_tel">
-        			<span>전화번호</span>
-        			<span>${vo.store_tel}</span>
-        			
+        			${vo.store_tel}
         		</div>
         		<div class="company_info_time">
-        			<span>운영시간</span>
-        			<span>${vo.store_time}</span>
-        			
+        			${vo.store_time}
         		</div>
         		<div class="company_info_dayoff">
-        			<span>휴무일</span>
-        			<span>${vo.store_dayoff}</span>
-        			
+        			${vo.store_dayoff}
         		</div>
         		<div class="company_info_introduce">
-        			<span>소개</span>
-        			<span>${vo.introduce}</span>
-        			
+        			${vo.introduce}
         		</div>
         		<div class="company_info_price">
-        			<span>가격</span>
-        			<span>${vo.store_price}</span>
+        			${vo.store_price}
         		</div>
         		<input type="hidden" value="${vo.store_addr}" class="addr"/> 
         		<input type="hidden" value="${vo.store_name}" class="name"/> 
 			</c:forEach>
-			<div class="company_info_imgs">
-				<c:forEach items="${wash_zone}" var="vo">	
+			<c:forEach items="${wash_zone}" var="vo">	
         		<div class="company_info_imgpath">
         			<img alt="세차장 이미지" src="${vo.imgpath}">
         		</div>
-				</c:forEach>
-			</div>
-			
+			</c:forEach>
 		</div>
-		<div id="map" style="width:50%;height:500px;">
-        
-        </div>
       </div>  
     </div>
   </main>
