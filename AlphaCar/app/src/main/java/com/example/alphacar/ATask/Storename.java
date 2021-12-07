@@ -29,11 +29,10 @@ public class Storename extends AsyncTask<Void, Void, Void> {
     /* 스토어 정보 AsyncTask */
     ArrayList<StoreDTO> dtos;
     StoreDTO dto;
-    String type;
+
     String name;
 
-    public Storename(ArrayList<StoreDTO> dtos , String type, String name ){
-        this.type = type;
+    public Storename(ArrayList<StoreDTO> dtos , String name ){
         this.dtos = dtos;
         this.name = name;
     }
@@ -67,7 +66,7 @@ public class Storename extends AsyncTask<Void, Void, Void> {
             // 전송
             // 전송 url : 우리가 수정해야 하는 부분
             String postURL ="";
-            postURL = ipConfig +"/" +type;
+            postURL = ipConfig +"/alphacar/anShowName";
 
             // 그대로 사용  복,붙
             InputStream inputStream = null;
