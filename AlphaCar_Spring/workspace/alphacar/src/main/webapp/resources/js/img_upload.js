@@ -55,7 +55,7 @@
 	    });
 	    console.log(content_files);
 	    //초기화 한다.
-	    $("#input_file").val("");
+	    //$("#input_file").val("");
 	  }
 	
 	// 파일 부분 삭제 함수

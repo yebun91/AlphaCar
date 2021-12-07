@@ -69,42 +69,23 @@
 	            <h3>사업자 번호</h3>
 	            <input type="text" name="store_registration_number" value="${vo.store_registration_number }">
 	          </div>
-              <div> 
-                <h3>사진</h3>
-                <div>
-                    <c:forEach items="${img }" var="img">
-                    <div class="join_profile_image">
-                        <img alt="" src="${img.imgpath }">
-                    </div>
-                        <%-- <input class="image_upload"  value="${img.imgpath }" /> --%>
-                    </c:forEach>
-                </div>
-                
-                <c:forEach items="${img }" var="img">
-                    <input class="image_upload" accept="image/*" value="${img.imgname }" />
-                </c:forEach>
-                    <div class="company_images">
-                      <div class="join_profile_image">
-                        <!-- <label>
-                            <a><img src='imgs/select.png' id="attach-file" class='file-img' /></a>
-                            <input multiple="multiple" type="file" id='input_file' name="file" accept="image/*" />
-                        </label> 
-                        <span style="font-size:12px; color: gray;" id='file-name' ></span>
-                        
-                        
-                        <div id="articlefileChange"></div>
-                        <label>
-                            <a><img src='imgs/select.png' id="attach-file" class='file-img' /></a>
-                            <input multiple="multiple" type="file" id='input_file' name="file" accept="image/*" />
-                        </label>
-                        <span style="font-size:12px; color: gray;" id='file-name' ></span>
-                        <div id="articlefileChange"></div>-->
-
-                  </div>
+	          <div class="join_profile_images"> 
+	            <h3>사진</h3>
+	            <div>
+	            	<c:forEach items="${img }" var="img">
+					<div class="join_profile_image" >
+						<img alt="" src="${img.imgpath }" onclick="choose_image()" class="join_profile_image${img.rank }">
+					</div>
+		            </c:forEach>
+	            </div>
 	          </div>
 	        </div>
+	        <!-- style="display: none" -->
+	        <div id="articlefileChange" style="display: none"></div>
+	        <input multiple="multiple" type="file" class='input_file' id='input_file' name="file" accept="image/*" style="display: none" >
 	        <button type="button" onclick='$("form").submit()'>수정하기</button>
       </form>
+      <input multiple="multiple">
     </div>
   </main>
   
@@ -112,17 +93,57 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   
   <!-- 파일 업로드 스크립트 -->
-  
   <script type="text/javascript">
+  const image = document.querySelector('.join_profile_image');
+  const input_file = document.querySelector('#input_file');
+  //이미지 파일 누를 때 input_file도 같이 클릭
+  function choose_image() {
+	input_file.click();
+  }
+//첨부파일 선택시 처리
+  $(document).on('change', '#input_file', function() {
+  	var attached1 = this.files[0];
+  	if (attached1) { // 첨부된 파일이 있을 경우
+  		$('.join_profile_image1').html('<img src="" />');
+  		var reader = new FileReader();
+  		reader.onload = function(e) {
+  			$('.join_profile_image1').attr('src', e.target.result);
+  		}
+  		reader.readAsDataURL(attached1);
+  	}
+  })
+   $(document).on('change', '#input_file', function() {
+  	var attached2 = this.files[1];
+  	if (attached2) { // 첨부된 파일이 있을 경우
+  		$('.join_profile_image2').html('<img src="" />');
+  		var reader = new FileReader();
+  		reader.onload = function(e) {
+  			$('.join_profile_image2').attr('src', e.target.result);
+  		}
+  		reader.readAsDataURL(attached2);
+  	}
+  })
+  $(document).on('change', '#input_file', function() {
+  	var attached3 = this.files[2];
+  	if (attached3) { // 첨부된 파일이 있을 경우
+  		$('.join_profile_image3').html('<img src="" />');
+  		var reader = new FileReader();
+  		reader.onload = function(e) {
+  			$('.join_profile_image3').attr('src', e.target.result);
+  		}
+  		reader.readAsDataURL(attached3);
+  	}
+  })
+  
+  
+  
   $(document).ready(function()
 			// input file 파일 첨부시 fileCheck 함수 실행
 			{
 				$("#input_file").on("change", fileCheck);
 			});
-	
-	/**
-	 * 첨부파일로직
-	 */
+
+	//첨부파일로직
 	$(function () {
 	    $('#btn-upload').click(function (e) {
 	        e.preventDefault();
@@ -171,7 +192,7 @@
 	    });
 	    console.log(content_files);
 	    //초기화 한다.
-	    $("#input_file").val("");
+	    //$("#input_file").val("");
 	  }
 	
 	// 파일 부분 삭제 함수

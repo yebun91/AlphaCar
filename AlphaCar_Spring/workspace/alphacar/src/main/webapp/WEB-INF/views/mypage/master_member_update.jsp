@@ -64,9 +64,10 @@ const input_file = document.querySelector('.image_upload');
 
 //이미지 파일 누를 때 input_file도 같이 클릭
 function choose_image() {
-	image.addEventListener('click', () => {
+	input_file.click();
+	/* image.addEventListener('click', () => {
 		input_file.click();
-	});
+	}); */
 }
 
 //첨부파일 선택시 처리
