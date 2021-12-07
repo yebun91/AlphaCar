@@ -60,9 +60,7 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "main:MainActivity";
 
-    private ISessionCallback mSessionCallback;
-    private String strNick, strProfileImg, strEmail, strid;
-
+    private String strNick, strProfileImg, strEmail;
 
     FrameLayout search_bar;
     Button btn_cp_reg;

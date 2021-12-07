@@ -54,7 +54,7 @@ public class Main_search_bar_Fragment extends Fragment {
         searchView =rootView.findViewById(R.id.searchView);
 
 
-
+        mainActivity = (MainActivity) getActivity();
 
         searchBar("");
 
@@ -63,9 +63,9 @@ public class Main_search_bar_Fragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 storeDTO = (StoreDTO) sAdapter.getItem(position);
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                Intent intent = new Intent(mainActivity, DetailActivity.class);
 //                intent.putExtra("storeDTO",storeDTO.getStore_name());
-                intent.putExtra("store_number",storeDTO.getStore_number());
+                intent.putExtra("store_number",storeDTOArrayList.get(position).getStore_number());
                 startActivity(intent);
             }
         });
@@ -113,7 +113,7 @@ public class Main_search_bar_Fragment extends Fragment {
         storeDTOArrayList = new ArrayList<>();
         /* 검색바 */
         if(isNetworkConnected(getContext()) == true){
-            storename = new Storename(storeDTOArrayList,"anShowName",query);
+            storename = new Storename(storeDTOArrayList,query);
             try {
                 storename.execute().get();
                 //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
