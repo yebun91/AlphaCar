@@ -14,6 +14,8 @@ import com.example.alphacar.LoginPageActivity;
 import com.example.alphacar.MainActivity;
 import com.example.alphacar.MemberUpdatePageActivity;
 import com.example.alphacar.R;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 public class LoginJoinSelectActivity extends AppCompatActivity {
     TextView  loginjoin_bt_join;
@@ -31,6 +33,11 @@ public class LoginJoinSelectActivity extends AppCompatActivity {
         loginjoin_bt_login = findViewById(R.id.loginjoin_bt_login);
         if(loginDTO != null){ loginjoin_bt_login.setText("정보 수정");
             loginjoin_bt_join.setText("로그 아웃");
+            UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
+                @Override
+                public void onCompleteLogout() {
+                }
+            });
         }
 
 
@@ -51,10 +58,11 @@ public class LoginJoinSelectActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent;
                 if(loginDTO != null){
-                     intent = new Intent(getApplicationContext(), MemberUpdatePageActivity.class);
+                     intent = new Intent(LoginJoinSelectActivity.this, MemberUpdatePageActivity.class);
                     startActivity(intent);
+                    loginjoin_bt_join.setText("로그아웃");
                 }else{
-                     intent = new Intent(getApplicationContext(), LoginPageActivity.class);
+                     intent = new Intent(LoginJoinSelectActivity.this, LoginPageActivity.class);
                     startActivity(intent);
                 }
 
@@ -77,5 +85,7 @@ public class LoginJoinSelectActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 }

@@ -33,7 +33,7 @@ public class FavoriteActivity extends AppCompatActivity {
         FavoriteDTO dto;
         FavoriteSelect favoriteSelect;
         RecyclerView recyclerView;
-         FavoriteAdapter favoriteAdapter;
+        FavoriteAdapter favoriteAdapter;
 
 
     @Override
@@ -41,7 +41,7 @@ public class FavoriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favoriteinside);
         recyclerView = findViewById(R.id.recyclerView);
-
+        imageButton = findViewById(R.id.fav_back_Button);
 
         arrayList = new ArrayList<>();
         if(loginDTO != null) {
@@ -76,7 +76,7 @@ public class FavoriteActivity extends AppCompatActivity {
         recyclerView.setAdapter(favoriteAdapter);
 
 
-        imageButton = findViewById(R.id.imageButton2);
+
         /* 백버튼 */
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +94,6 @@ public class FavoriteActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-                 super.onBackPressed();
-
+        super.onBackPressed();
     }
 }

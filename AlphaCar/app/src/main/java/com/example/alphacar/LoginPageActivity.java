@@ -12,17 +12,29 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.alphacar.ATask.LoginSelect;
 import com.example.alphacar.DTOS.MemberVO;
+import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.Session;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.kakao.usermgmt.callback.MeV2ResponseCallback;
+import com.kakao.usermgmt.response.MeV2Response;
+import com.kakao.util.exception.KakaoException;
 
 
 import java.util.concurrent.ExecutionException;
 
 public class LoginPageActivity extends AppCompatActivity {
+
+    //카카오로그인에 필요한 ISession
+    private ISessionCallback mSessionCallback;
 
     // 로그인이 성공하면 static 로그인DTO 변수에 담아서
     // 어느곳에서나 접근할 수 있게 한다
@@ -30,7 +42,7 @@ public class LoginPageActivity extends AppCompatActivity {
 
     EditText memberlogin_et_email, memberlogin_et_pw;
     TextView memberlogin_bt_login;
-       Button memberlogin_bt_join;
+    Button memberlogin_bt_join;
     ImageButton btn_back;
 
     @Override
@@ -110,8 +122,56 @@ public class LoginPageActivity extends AppCompatActivity {
             }
         });
 
+        //카카오 로그인 시작
+            mSessionCallback = new ISessionCallback() {
 
-    }
+                @Override
+                public void onSessionOpened() {
+                    //로그인 요청
+                    UserManagement.getInstance().me(new MeV2ResponseCallback() {
+                        @Override
+                        public void onFailure(ErrorResult errorResult) {
+                            //로그인 실패
+                        }
+
+                        @Override
+                        public void onSessionClosed(ErrorResult errorResult) {
+                            //세션이 닫힘...
+                            Toast.makeText(LoginPageActivity.this, "로그인 도중 오류가 발생했습니다.. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onSuccess(MeV2Response result) {
+
+                            //로그인 성공
+                            Intent intent = new Intent(LoginPageActivity.this, MainActivity.class);
+                            intent.putExtra("name", result.getKakaoAccount().getProfile().getNickname());
+                            intent.putExtra("profileImg", result.getKakaoAccount().getProfile().getProfileImageUrl());
+                            intent.putExtra("email", result.getKakaoAccount().getEmail());
+                            startActivity(intent);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            Toast.makeText(LoginPageActivity.this, "환영 합니다. !", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                });
+                }
+                @Override
+                public void onSessionOpenFailed(KakaoException exception) {
+                    Toast.makeText(LoginPageActivity.this, "onSessionOpenFailed", Toast.LENGTH_SHORT).show();
+                }
+            };
+            Session.getCurrentSession().addCallback(mSessionCallback);
+            Session.getCurrentSession().checkAndImplicitOpen();
+
+
+
+        //카카오 로그인 끝
+
+            }
+
+
+
 
     //권한설정
     private void checkDangerousPermissions() {
@@ -159,5 +219,18 @@ public class LoginPageActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        if(Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data))
+            super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Session.getCurrentSession().removeCallback(mSessionCallback);
+        loginDTO = null;
     }
 }
