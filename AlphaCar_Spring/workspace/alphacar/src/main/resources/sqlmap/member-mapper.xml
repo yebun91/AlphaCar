@@ -5,6 +5,18 @@
 
 <mapper namespace="member.mapper">
 
+	<!-- 카카오 로그인 -->
+	<select id="kakao_select" resultType="member.MemberVO">
+		select * from customer
+		where customer_email = #{customer_email}	
+	</select>
+	
+	<insert id="kakaoLogin">
+	<!-- 카카오 로그인 저장 -->
+		insert into customer (customer_email, customer_name)
+		values (#{customer_email} , #{customer_name})
+	</insert>
+
 	<!-- 안드로이드 로그인 (id, pw 일치 여부 조회) -->
 	<select id="anLogin" resultType="member.MemberVO">
 		select * from customer

@@ -25,6 +25,46 @@ public class MemberController {
 
 	@Autowired private MemberServiceImpl service;
 	
+	//카카오 로그인
+		@ResponseBody
+		@RequestMapping("kakao_login")
+		public void kakao_login (HttpServletRequest req, HttpServletResponse res) throws IOException {
+			res.setCharacterEncoding("UTF-8");
+			res.setContentType("text/html");
+			req.setCharacterEncoding("UTF-8");
+			System.out.println(req.getParameter("customer_name"));
+			System.out.println(req.getParameter("kakao"));
+			
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("customer_name", (String) req.getParameter("customer_name"));
+			map.put("customer_email", (String) req.getParameter("customer_email"));	
+			map.put("kakao", (String) req.getParameter("kakao"));
+			
+			int result = service.kakaoLogin(map);
+			PrintWriter out = res.getWriter();
+			Gson gson = new Gson();
+			String data = gson.toJson(map);
+			out.println(data);
+		}
+		
+		@ResponseBody
+		@RequestMapping("kakaoselect")
+		public void kakao_select (HttpServletRequest req, HttpServletResponse res) throws IOException {
+			res.setCharacterEncoding("UTF-8");
+			res.setContentType("text/html");
+			req.setCharacterEncoding("UTF-8");
+			System.out.println(req.getParameter("customer_name"));
+			System.out.println(req.getParameter("kakao"));
+			
+			String customer_email = req.getParameter("customer_email");
+			
+			MemberVO vo = service.kakao_select(customer_email);
+			PrintWriter out = res.getWriter();
+			Gson gson = new Gson();
+			String data = gson.toJson(vo);
+			out.println(data);
+		}
+	
 	//안드로이드 로그인
 	@ResponseBody
 	@RequestMapping("and_login")

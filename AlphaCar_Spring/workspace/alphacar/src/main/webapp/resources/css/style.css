@@ -6,7 +6,6 @@
   --light_gray-color : #c4c2c5;
   --white-color: #f0f0f0;
   --real_white-color: #ffffff;
-  --depblue-color: #1d3381;
   --blue-color: #0054a3;
   --skyblue-color: #aad6ff;
 
@@ -53,11 +52,11 @@ ul,ol {
   right: 10%;
   color: var(--white-color);
   text-align: center;
-  z-index: 3;
-  line-height: 60px;
+  z-index: 1;
 }
 .fa-arrow-up{
-  font-size: var(--font-medium);
+  line-height: 50px;
+  font-size: var(--font-medium)
 }
 
 
@@ -130,10 +129,9 @@ main{
   width: 24%;
   height: 300px;
   background-color: var(--black-color);
-  margin : 0 10px 10px 0;
-  overflow: hidden;
+  margin : 0 10px 10px 0
 }
-.recommend_box>div:last-child{
+.recommend_box div:last-child{
   background-color:var(--blue-color);
   color: var(--white-color);
   text-align: center;
@@ -142,45 +140,6 @@ main{
   font-weight: var(--weight-semi-bold);
 }
 
-.recommend_box>div>a>img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.best_company{
-  background-color: var(--black-color);
-  position: relative;
-}
-
-.best_company_back{
-  background-color: var(--black-color);
-  opacity: 50%;
-  position: absolute;
-  z-index: 2;
-  width: 100%;
-  text-align: center;
-  bottom: 0px;
-  height: 500px;
-  
-}
-
-.best_company_select{
-  position: absolute;
-  z-index: 2;
-  width: 100%;
-  text-align: center;
-  bottom: 0px;
-  line-height: 300px;
-  cursor: pointer;
-}
-.best_company_select>p{
-  color: var(--white-color);
-  margin:0 10px;
-  font-size: var(--font-regular);
-  font-weight: var(--weight-semi-bold);
-  opacity: 100%;
-}
 
 /* distinction */
 #distinction {
@@ -199,34 +158,11 @@ main{
   display: flex;
 }
 
-.distinction_box>div{
+.distinction_box div{
   width: 33%;
   height: 400px;
-  background-color: var(--background-color);
-  margin : 0 10px 10px 0;
-  padding : 30px;
-}
-.distinction_box>div:nth-child(1){
-	color: #2d50ff;
-}
-.distinction_box>div:nth-child(2){
-	color: #782ffe;
-}
-.distinction_box>div:nth-child(3){
-	color: #0faac8;
-}
-
-.distinction_header{
-	display:inline-block;
-	font-weight: 400;
-	font-size : 32px;
-	margin-bottom: 30px;
-	color: var(--real_white-color);
-}
-.distinction_box>div>p:nth-child(2){
-	padding-bottom: 30px;
-	color: gray;
-	font-size: var(--font-regular);
+  background-color: var(--black-color);
+  margin : 0 10px 10px 0
 }
 
 /* notice */
@@ -280,34 +216,13 @@ main{
     display: flex;
 }
 
-.news_box>div{
+.news_box div{
   width: 33%;
   height: 400px;
-  margin : 0 10px 10px 0;
-  
-}
-.news_box>div:nth-child(1){
-  background-color: var(--depblue-color);
-}
-.news_box>div:nth-child(2){
-  background-color: #305ab4;
-}
-.news_box>div:nth-child(3){
-  background-color: #2f79c4;
+  background-color: var(--black-color);
+  margin : 0 10px 10px 0
 }
 
-.news_box>div>img{
-  width: 100%;
-  height: 50%;
-}
-.news_box>div>h3{
-	color: var(--skyblue-color);
-	padding: 20px;
-}
-.news_box>div>h2{
-	color: var(--real_white-color);
-	padding: 0 20px;
-}
 /* footer */
 
 footer{
@@ -381,12 +296,11 @@ footer{
   padding: 5px 10px;
   margin-right: 5px;
   height: 32px;
-  line-height: 12px;
 }
 .page_search_box{
   border: 1px solid var(--gray-color);
   padding: 5px 10px;
-  width: 250px;
+  width: 200px;
   height: 32px;
   display: flex;
   justify-content: space-between;
@@ -998,7 +912,7 @@ input[type="checkbox"]:checked, input[type="radio"]:checked{
 	padding-top: 20px
 }
 
-/* 채팅기능 */
+/* 댓글기능 */
 #chatList{
 background:var(--gray-color);
 overflow-y:scroll; width:500px; height:300px; padding:4px; border:1 solid #000000;
@@ -1052,103 +966,7 @@ display: block;  color:var(--real_white-color); margin-bottom:3px; font-size: 12
 .chatSelect{
 	padding:10px 0;
 }
-
-/* 댓글기능 */
-.comment{
-	width: 100%
-}
-
-.comment_insert{
-	padding-top:20px;
-	font-size: var(--font-regular);
-	font-weight: var(--weight-semi-bold);
-	float: right;
-}
-#comment_list{
-	padding-bottom: 10px;
-}
-.comment_detail{
-	padding: 10px 0;
-	border-bottom: 1px solid var(--gray-color);
-}
-.comment_name>p{
-	display: inline;	
-}
-.comment_name{
-	display: inline;	
-}
-.comment_date{
-	font-size: var(--font-micro);
-}
-.comment_write_name{
-	font-weight: var(--weight-semi-bold);
-}
-.comment_content{
-	padding-top:10px;
-}
-.comment_setting{
-	color: var(--gray-color);
-}
-
-/* 세차장 디테일 */
-.company_info_imgpath{
-	width: 150px;
-	height: 150px;
-	overflow: hidden;
-}
-.company_info_imgpath>img{
-	width: 100%;
-	height: 100%;
-	object-fit:cover;
-}
-.wash_zone_boxs{
-	display: flex;
-	justify-content: space-between;
 	
-}
-.company_info_imgs{
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: center;
-	margin-top: 30px;
-}
-.company_info_imgpath{
-	padding: 10px 10px 10px 0;
-	cursor: pointer;
-}
-.company_info>div{
-	display: flex;
-	align-items: center;
-}
-.company_info>div>span:nth-child(1){
-	width: 100px;
-	margin-right: 10px;
-	font-weight: var(--weight-semi-bold);
-	color: var(--blue-color);
-	text-align: center;
-}
-.company_info_name{
-	margin-bottom: 5px;
-}
-.favorite_cnt_h{
-	display:inline;
-	color: red;
-}
-.company_info_favorite_cnt{
-	margin-bottom: 30px;
-}
-.company_info_name, .company_info_favorite_cnt{
-	justify-content: center;
-}
-.company_info_addr, .company_info_tel, .company_info_time, .company_info_dayoff, .company_info_introduce, .company_info_price{
-	justify-content: flex-start;
-}
-.company_info{
-	width: 50%;
-	margin-right: 20px;
-	padding:20px;
-	display: flex;
-	justify-content: space-between;
-	flex-direction: column;
-}
+
+
+

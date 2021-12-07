@@ -36,4 +36,16 @@ public class MemberServiceImpl implements MemberService {
 		return dao.anJoinNoImg(vo);
 	}
 
+	@Override
+	public int kakaoLogin(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return dao.kakaoLogin(map);
+	}
+
+	@Override
+	public MemberVO kakao_select(String customer_email) {
+		// TODO Auto-generated method stub
+		return dao.kakao_select(customer_email);
+	}
+
 }
