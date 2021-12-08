@@ -4,6 +4,9 @@ import java.net.MulticastSocket;
 import java.util.List;
 import java.util.Locale;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +36,8 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, 
-			@RequestParam (defaultValue = "1") int curPage,
-			String search, String keyword) {
-		
+			@RequestParam (defaultValue = "1") int curPage, HttpSession session) {
+		session.removeAttribute("category");
 		page.setCurPage(curPage);
 		model.addAttribute("page", service.notice_list(page));
 		model.addAttribute("wash", companyService.company_list_all_fv());

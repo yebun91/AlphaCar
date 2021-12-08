@@ -57,20 +57,69 @@
 			<div class="company_info_imgs">
 				<c:forEach items="${wash_zone}" var="vo">	
         		<div class="company_info_imgpath">
-        			<img alt="세차장 이미지" src="${vo.imgpath}">
+        			<img alt="세차장 이미지" src="${vo.imgpath}" class="preview-img${vo.rank}">
         		</div>
 				</c:forEach>
 			</div>
-			
 		</div>
-		<div id="map" style="width:50%;height:500px;">
+		<div id="map" style="width:50%;height:500px; z-index: 0;">
         
         </div>
       </div>  
     </div>
+    <div id='popup-background'></div>
+    <div id='popup' class='center'></div>
+    
+  
   </main>
+<style type="text/css">
+	#popup-background {
+		position: absolute; left:0; top: 0; width: 100%; height: 100%;
+		background-color : black;
+		opacity: 0.3;
+		display: none;	
+	}
+	
+	#popup { 
+		position: absolute; 
+		left:50%; top:50%;
+ 		height: 800px;  
+		width: 800px;
+		z-index: 1;
+		display: none;
+	}
+	.popup { 
+		width: auto; 
+		height: 100%; 
+		object-fit:cover;
+		transform:translate(-50%, -50%);
+		
+	}
+	
+</style>  
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e147583a7db59a9ae45a17222b6e7203&libraries=services"></script>
 <script>
+	$(document).on('click', '.preview-img1', function () {
+		$('#popup, #popup-background').css('display', 'block');
+		$('#popup').html('<img src="${wash_zone[0].imgpath}" class="popup" /> ');
+	}).on('click', '#popup-background', function () {
+		$('#popup, #popup-background').css('display', 'none');
+	})
+	$(document).on('click', '.preview-img2', function () {
+		$('#popup, #popup-background').css('display', 'block');
+		$('#popup').html('<img src="${wash_zone[1].imgpath}" class="popup" /> ');
+	}).on('click', '#popup-background', function () {
+		$('#popup, #popup-background').css('display', 'none');
+	})
+	$(document).on('click', '.preview-img3', function () {
+		$('#popup, #popup-background').css('display', 'block');
+		$('#popup').html('<img src="${wash_zone[2].imgpath}" class="popup" /> ');
+	}).on('click', '#popup-background', function () {
+		$('#popup, #popup-background').css('display', 'none');
+	})
+
+
+
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	mapOption = { 
 	    center: new kakao.maps.LatLng(35.153411178408, 126.88799074307386), // 지도의 중심좌표
