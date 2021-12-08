@@ -22,11 +22,11 @@
 			<exclusions>
 				<!-- Exclude Commons Logging in favor of SLF4j -->
 				<exclusion>
-					<groupId>commons-logging</groupId>
+					<groupId>commons-logging</groupId>  
 					<artifactId>commons-logging</artifactId>
 				 </exclusion>
 			</exclusions>
-		</dependency>
+		</dependency> 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -209,13 +209,46 @@
 		    <version>20210307</version>
 		</dependency>
 		
+		
+
+		
 		<!-- 이메일을 전송하기 위한 라이브러리 -->
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-email</artifactId>
 		    <version>1.5</version>
 		</dependency>
-		      
+		
+		<!-- 스프링 시큐리티 -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-core</artifactId>
+		    <version>5.3.9.RELEASE</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-web</artifactId>
+		    <version>5.3.9.RELEASE</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-config</artifactId>
+		    <version>5.3.9.RELEASE</version>
+		</dependency>
+		
+		<dependency> 
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-taglibs</artifactId> 
+				<version>5.3.9.RELEASE</version> 
+		</dependency>
+
+				 
+		
+		        
 		</dependencies>
 	    <build>
 	        <plugins>
