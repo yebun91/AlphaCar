@@ -1,12 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-  <div class="main_image">
-    <a href="">
-      <img src="img/main_image.jpg" alt="">
-    </a>
+  <div class="nav_shadow"></div>
+  <div class="slide_box">
+	  <div class="slide_wrap">
+	    <img src="img/main_image3.png" alt="" class="inner">     
+	    <img src="img/main_image2.png" alt="" class="inner">
+	    <img src="img/main_image1.png" alt="" class="inner">
+	  </div>
   </div>
 </nav>
+<div class="button-list">
+  <button class="button-left">← Left</button>
+  <button class="button-right">Right →</button>
+</div>
 
+<script type="text/javascript">
+/*
+div사이즈 동적으로 구하기
+*/
+var outer = document.querySelector('.slide_box');
+var innerList = document.querySelector('.slide_wrap');
+var inners = document.querySelectorAll('.inner');
+let currentIndex = 0; // 현재 슬라이드 화면 인덱스
+
+inners.forEach((inner) => {
+	inner.style.width = outer.clientWidth+'px'; // inner의 width를 모두 outer의 width로 만들기
+	console.log(`${outer.clientWidth}px`);
+	console.log(outer.clientWidth);
+	console.log(outer.clientWidth+'px');
+})
+
+innerList.style.width = outer.clientWidth * inners.length+'px'; // innerList의 width를 inner의 width * inner의 개수로 만들기
+
+/*
+버튼에 이벤트 등록하기
+*/
+const buttonLeft = document.querySelector('.button-left');
+const buttonRight = document.querySelector('.button-right');
+
+buttonLeft.addEventListener('click', () => {
+	currentIndex--;
+	currentIndex = currentIndex < 0 ? 0 : currentIndex; // index값이 0보다 작아질 경우 0으로 변경
+	innerList.style.marginLeft = -outer.clientWidth * currentIndex+'px'; // index만큼 margin을 주어 옆으로 밀기
+});
+
+buttonRight.addEventListener('click', () => {
+	currentIndex++;
+	currentIndex = currentIndex >= inners.length ? inners.length - 1 : currentIndex; // index값이 inner의 총 개수보다 많아질 경우 마지막 인덱스값으로 변경
+	innerList.style.marginLeft = -outer.clientWidth * currentIndex+'px'; // index만큼 margin을 주어 옆으로 밀기
+});
+</script>
 <!-- 메인 콘텐츠 -->
 <main>
   <div id="recommend">
