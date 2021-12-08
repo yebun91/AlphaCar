@@ -1,14 +1,15 @@
 package homeChart;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ChartVO{
 	
 	String title ;
 	String color;
 	
-	private String log;
 	private ArrayList<Integer> month_log = new ArrayList<Integer>();
+	
 	
 	public ArrayList<Integer> getMonth_log() {
 		return month_log;
@@ -16,11 +17,14 @@ public class ChartVO{
 	public void setMonth_log(ArrayList<Integer> month_log) {
 		this.month_log = month_log;
 	}
-	public String getLog() {
-		return log;
+	private int store_number;
+	
+	
+	public int getStore_number() {
+		return store_number;
 	}
-	public void setLog(String log) {
-		this.log = log;
+	public void setStore_number(int store_number) {
+		this.store_number = store_number;
 	}
 	public String getColor() {
 		return color;
@@ -113,36 +117,40 @@ public class ChartVO{
 		this.m12 = m12;
 	}
 	int tt ;
-	public ChartVO(int tt , String title , String color) {
-		this.tt = tt;
-		this.title = title;
-		this.color = color;
-		m01=1+tt;
-		m02=11+tt;
-		m03=21+tt;
-		m04=31+tt;
-		m05=41+tt;
-		m06=51+tt;
-		m07=61+tt;
-		m08=71+tt;
-		m09=81+tt;
-		m10=91+tt;
-		m11=101+tt;
-		m12=1+tt;
-	}
+//	public ChartVO(int tt , String title , String color) {
+//		this.tt = tt;
+//		this.title = title;
+//		this.color = color;
+//		m01=1+tt;
+//		m02=11+tt;
+//		m03=21+tt;
+//		m04=31+tt;
+//		m05=41+tt;
+//		m06=51+tt;
+//		m07=61+tt;
+//		m08=71+tt;
+//		m09=81+tt;
+//		m10=91+tt;
+//		m11=101+tt;
+//		m12=1+tt;
+//		for (int i = 0 ; i < 12 ; i ++) {
+//			month_log.add(i);
+//			
+//		}
+//	}
 	int 
-		m01=1+tt,
-	 m02=11+tt,
-	 m03=21+tt,
-	 m04=31+tt,
-	 m05=41+tt,
-	 m06=51+tt,
-	 m07=61+tt,
-	 m08=71+tt,
-	 m09=81+tt,
-	 m10=91+tt,
-	 m11=101+tt,
-	 m12=1+tt;
+	m01,
+	 m02,
+	 m03,
+	 m04,
+	 m05,
+	 m06,
+	 m07,
+	 m08,
+	 m09,
+	 m10,
+	 m11,
+	 m12;
 	
 	
 	

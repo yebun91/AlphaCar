@@ -15,7 +15,7 @@ public class HomeChartDAO implements HomeChartService {
 	@Override
 	public List<ChartVO> month_list(ChartVO vo) {
 		// TODO Auto-generated method stub
-		return sql.selectList("homeChart.mapper.month_list");
+		return sql.selectList("homeChart.mapper.month_list", vo);
 	}
 
 	
