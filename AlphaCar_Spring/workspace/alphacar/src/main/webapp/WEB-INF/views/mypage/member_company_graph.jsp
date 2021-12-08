@@ -13,15 +13,13 @@
   <main class="mypage">
     <div id="page">
       <h3>가게 이름이 나타나는 곳</h3>
-      <div class="company_graph">
+      
       	<canvas  id="myChart"></canvas>
-      </div>
     </div>
   </main>
   
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
-	<script type="text/javascript" src='js/chart.js'></script>
   
   <script type="text/javascript"  charset="UTF-8">
 		

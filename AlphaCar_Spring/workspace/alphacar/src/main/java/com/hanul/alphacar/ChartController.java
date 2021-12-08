@@ -38,20 +38,12 @@ public class ChartController {
 	public String month_list(Model model) {
 		Gson gson = new Gson();
 		List<ChartVO> list = new ArrayList<ChartVO>();
-		ArrayList<Integer> log = new ArrayList<Integer>();
-		ChartVO vo = new ChartVO(0, null, null);
-		for (int i =0; i< 12; i++){
-			log.add(i);
-			vo.setMonth_log(log);
-			
-		}
-		list = service.month_list(vo);
-		for (int i = 0; i < list.size(); i++) {
-			
-			list.add(new ChartVO(1,i+"월","rgba(255, 99, 132, 1)"));
-		}
+		ChartVO vo = new ChartVO();
+		vo.setStore_number(234);
+		List<ChartVO> list222  =service.month_list(vo);
+	
 		
 		
-		return gson.toJson(list);
+		return gson.toJson(list222);
 	}
 }
