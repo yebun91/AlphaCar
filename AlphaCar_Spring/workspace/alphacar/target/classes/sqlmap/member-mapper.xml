@@ -13,8 +13,8 @@
 	
 	<insert id="kakaoLogin">
 	<!-- 카카오 로그인 저장 -->
-		insert into customer (customer_email, customer_name)
-		values (#{customer_email} , #{customer_name})
+		insert into customer (customer_email, customer_name, social)
+		values (#{customer_email} , #{customer_name}, K)
 	</insert>
 
 	<!-- 안드로이드 로그인 (id, pw 일치 여부 조회) -->

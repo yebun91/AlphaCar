@@ -18,7 +18,7 @@
 		store_number, review_title, review_content, review_score,
 		review_filename, review_filepath)
 		values(seq_review.nextval,
-		#{customer_email}, 99, #{review_title}, #{review_content},
+		#{customer_email}, #{store_number}, #{review_title}, #{review_content},
 		#{review_score}
 		, #{review_filename, jdbcType=VARCHAR}, #{review_filepath,
 		jdbcType=VARCHAR})

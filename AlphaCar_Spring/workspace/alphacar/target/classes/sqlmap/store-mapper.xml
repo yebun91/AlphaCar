@@ -25,9 +25,17 @@
 		select s.*, f.*
 		from store s left
 		outer join store_file f on s.store_number = f.store_number
-		where s.customer_email = #{customer_email} and f.rank = 1
+		where s.customer_email = #{customer_email,jdbcType=VARCHAR}
+		and f.rank = 1
+		order by s.store_number
 	</select>
 	
+	
+	<select id="img_file" resultType="store.RegFileVO">
+		select *
+		from store_file
+		where store_number = #{store_number}
+	</select>
 
 	<select id="list" resultType="store.StoreVO">
 		select * from store
@@ -40,9 +48,10 @@
 	</select>  -->
 	
 	<select id="detail" resultType="store.StoreVO">
-		select s.*, f.*
+		select s.*, sf.* , f.fav_number 
 		from store s left
-		outer join store_file f on s.store_number = f.store_number
+		outer join store_file sf on s.store_number = sf.store_number left
+		outer join favorite f on s.store_number = f.store_number
 			where s.store_number = #{store_number}
 	</select> 
 	
@@ -89,14 +98,33 @@
 			  COMMIT;
 	    </foreach>
 
-	
-   
-
 		END;
 
-
-
-
-
 	</insert>
+	
+	<update id="update_store">
+	update store
+	set store_name = #{store_name, jdbcType=VARCHAR}, 
+		store_master_name = #{store_master_name, jdbcType=VARCHAR},
+		store_post = #{store_post, jdbcType=VARCHAR}, 
+		store_tel =  #{store_tel, jdbcType=VARCHAR}, 
+		store_time = #{store_time, jdbcType=VARCHAR},
+		store_dayoff = #{store_dayoff, jdbcType=VARCHAR},
+		introduce = #{introduce, jdbcType=VARCHAR},
+	 	inventory = #{inventory},
+	 	store_price = #{store_price,  jdbcType=VARCHAR},
+		store_registration_number = #{store_registration_number, jdbcType=VARCHAR},
+		store_detail_addr = #{store_detail_addr,  jdbcType=VARCHAR},
+		store_addr =#{store_addr,  jdbcType=VARCHAR}
+	where store_number = #{store_number}
+	</update>
+	
+	<update id="img_update">
+	update store_file
+	set imgpath= #{imgpath,  jdbcType=VARCHAR} ,imgname = #{imgname, jdbcType=VARCHAR}
+	where store_number = #{store_number}
+	and rank = #{rank}
+	</update>
+	
+	
 </mapper>
