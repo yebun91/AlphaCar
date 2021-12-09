@@ -8,24 +8,6 @@ public class ChartVO{
 	String title ;
 	String color;
 	
-	private ArrayList<Integer> month_log = new ArrayList<Integer>();
-	
-	
-	public ArrayList<Integer> getMonth_log() {
-		return month_log;
-	}
-	public void setMonth_log(ArrayList<Integer> month_log) {
-		this.month_log = month_log;
-	}
-	private int store_number;
-	
-	
-	public int getStore_number() {
-		return store_number;
-	}
-	public void setStore_number(int store_number) {
-		this.store_number = store_number;
-	}
 	public String getColor() {
 		return color;
 	}
@@ -139,7 +121,7 @@ public class ChartVO{
 //		}
 //	}
 	int 
-	m01,
+	 m01,
 	 m02,
 	 m03,
 	 m04,

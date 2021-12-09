@@ -12,9 +12,9 @@ public class HomeChartServiceImpl implements HomeChartService {
 	@Autowired private HomeChartDAO dao;
 
 	@Override
-	public List<ChartVO> month_list(ChartVO vo) {
+	public List<ChartVO> month_list(int store_number) {
 		// TODO Auto-generated method stub
-		return dao.month_list(vo);
+		return dao.month_list(store_number);
 	}
 
 	@Override
