@@ -11,14 +11,15 @@
 	<security:http pattern="/**/*.js" security="none"/>
 	<security:http pattern="/**/*.css" security="none"/>
 	<security:http pattern="/img/**" security="none"/>		
-	<security:http pattern="/**/*.mp" security="none"/>		
+	<security:http pattern="/ioTCarWash" security="none"/>		
 	
 	<security:http> 
 		<security:intercept-url pattern="/homeLogin" access="permitAll"/>
 		<security:intercept-url pattern="/" access="permitAll"/>
-		<security:intercept-url pattern="/**/*.mp" access="permitAll"/>
+	
+<!-- 		<security:intercept-url pattern="/**/*.mp" access="hasIpAddress('192.168.0.**')"/> -->
 		<security:intercept-url pattern="/**/*.no" access="hasRole('ROLE_MEMBER')"/>
-
+		
 		<security:form-login login-page="/homeLogin"/>
 
 	</security:http> 
@@ -27,7 +28,7 @@
 		
 		<security:authentication-provider>
     <security:user-service>
-      <security:user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
+      <security:user name="a" password="{noop}a" authorities="ROLE_MEMBER"/>
 			<security:user name="admin" password="{noop}admin" authorities="ROLE_ADMIN"/>
     </security:user-service>
   </security:authentication-provider>
