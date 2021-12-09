@@ -3,6 +3,7 @@
   <div class="nav_shadow"></div>
   <div class="slide_box">
 	  <div class="slide_wrap">
+	  	<div class="img_divs"><img src="img/main_image1.png" alt="" class="inner"></div>
 	    <div class="img_divs"><img src="img/main_image3.png" alt="" class="inner"></div>     
 	    <div class="img_divs"><img src="img/main_image2.png" alt="" class="inner"></div>
 	    <div class="img_divs"><img src="img/main_image1.png" alt="" class="inner"></div>
@@ -23,47 +24,90 @@ const oneinner = document.querySelector('.inner');
 const innerList = document.querySelector('.slide_wrap');
 const inners = document.querySelectorAll('.inner');
 const img_divs = document.querySelectorAll('.img_divs');
-let currentIndex = 0; // 현재 슬라이드 화면 인덱스
-
+const one_div = document.querySelector('.img_divs');
+let currentIndex = 1; // 현재 슬라이드 화면 인덱스
+let slideSpeed = 300;
+											
 /* inners.forEach((inner) => {
 	inner.style.width = outer.clientWidth+'px'; // inner의 width를 모두 outer의 width로 만들기
-	console.log(`${outer.clientWidth}px`);
-	console.log(outer.clientWidth);
-	console.log(outer.clientWidth+'px');
 }) */
 
 innerList.style.width = outer.clientWidth * inners.length+'px'; // innerList의 width를 inner의 width * inner의 개수로 만들기
-
+innerList.style.transform = 'translate3d(-'+ (one_div.clientWidth* (currentIndex)) + 'px'+', 0px, 0px)';
 
 //버튼에 이벤트 등록하기
 const buttonLeft = document.querySelector('.button-left');
 const buttonRight = document.querySelector('.button-right');
 
-
-const one_div = document.querySelector('.img_divs');
 buttonLeft.addEventListener('click', () => {
 	currentIndex--;
-	currentIndex = currentIndex < 0 ? 0 : currentIndex; // index값이 0보다 작아질 경우 0으로 변경
+	console.log(currentIndex);
+	if (currentIndex >= 0) {
+		innerList.style.transition = slideSpeed+"ms";
+		innerList.style.transform = 'translate3d(-'+ one_div.clientWidth*currentIndex+'px'+', 0px, 0px)';
+	}
+	if (currentIndex < 0) {
+		setTimeout(function() {
+		innerList.style.transition = "0ms";
+		innerList.style.transform = 'translate3d(-'+ one_div.clientWidth*4+'px'+', 0px, 0px)';
+		}, slideSpeed);
+		currentIndex = 4;
+		}
+	//currentIndex = currentIndex < 0 ? currentIndex*-3 : currentIndex;
+	//currentIndex = currentIndex < inners.length ? currentIndex*3 : currentIndex;
+	//currentIndex = currentIndex < 0 ? 0 : currentIndex; // index값이 0보다 작아질 경우 0으로 변경
 	//innerList.style.marginLeft = -outer.clientWidth * currentIndex+'px'; // index만큼 margin을 주어 옆으로 밀기
-	innerList.style.transform = 'translate3d('+ -one_div.clientWidth*currentIndex+'px'+', 0px, 0px)';
+	//innerList.style.transform = 'translate3d(-'+ one_div.clientWidth*currentIndex+'px'+', 0px, 0px)';
 	//innerList.style.marginLeft = -one_div.clientWidth * currentIndex+'px'; // index만큼 margin을 주어 옆으로 밀기
 });
 
 buttonRight.addEventListener('click', () => {
 	currentIndex++;
-	currentIndex = currentIndex >= inners.length ? inners.length - 1 : currentIndex; // index값이 inner의 총 개수보다 많아질 경우 마지막 인덱스값으로 변경
+	console.log(currentIndex);
+	if (currentIndex > 0) {
+		innerList.style.transition = slideSpeed+"ms";
+		//slideList.style.transform = "translate3d(-" + (slideWidth * curIndex) + "px, 0px, 0px)";
+		innerList.style.transform = 'translate3d(-'+ one_div.clientWidth*currentIndex+'px'+', 0px, 0px)';
+	}
+	if (currentIndex === 4) {
+		setTimeout(function() {
+		innerList.style.transition = "0ms";
+		innerList.style.transform = 'translate3d(-'+ one_div.clientWidth*1+'px'+', 0px, 0px)';
+		}, slideSpeed);
+		currentIndex = 1;
+		}
+	//currentIndex = currentIndex >= inners.length ? 0 : currentIndex;
+	//currentIndex = currentIndex >= inners.length ? inners.length - 1 : currentIndex; // index값이 inner의 총 개수보다 많아질 경우 마지막 인덱스값으로 변경
 	//innerList.style.marginLeft = -outer.clientWidth * currentIndex+'px'; // index만큼 margin을 주어 옆으로 밀기
-	innerList.style.transform = 'translate3d('+ -one_div.clientWidth*currentIndex+'px'+', 0px, 0px)';
+	//innerList.style.transform = 'translate3d('+ -one_div.clientWidth*currentIndex+'px'+', 0px, 0px)';
 	//innerList.style.marginLeft = -one_div.clientWidth * currentIndex+'px'; // index만큼 margin을 주어 옆으로 밀기
+	
+	clearInterval(interval); // 기존 동작되던 interval 제거
+    interval = getInterval(); // 새로운 interval 등록
+	
 });
 
 window.addEventListener('resize', function() {
 	img_divs.forEach((img_div) => {
 		img_div.style.width = outer.clientWidth+'px';
 	});
-	console.log(outer.clientWidth*-4);
-	innerList.style.width = outer.clientWidth*4+'px'; // inner의 width를 모두 outer의 width로 만들기
+	innerList.style.transition = "0ms";
+	innerList.style.width = outer.clientWidth*5+'px'; // inner의 width를 모두 outer의 width로 만들기
+	innerList.style.transform = 'translate3d(-'+ one_div.clientWidth*currentIndex+'px'+', 0px, 0px)';
 }, true);
+
+//주기적으로 화면 넘기기
+const getInterval = () => {
+	return setInterval(() => {
+	  currentIndex++;
+	  innerList.style.transition = slideSpeed+"ms";
+	  currentIndex = currentIndex >= inners.length ? 0 : currentIndex;
+	  innerList.style.transform = 'translate3d(-'+ one_div.clientWidth*currentIndex+'px'+', 0px, 0px)';
+	}, 10000000);
+}
+let interval = getInterval(); // interval 등록
+
+
 </script>
 <!-- 메인 콘텐츠 -->
 <main>

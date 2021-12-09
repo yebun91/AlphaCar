@@ -68,13 +68,12 @@ ul,ol {
 }
 .slide_wrap{
     display: flex;
-    transition: .3s ease-out;
 } 
 .img_divs{
 	overflow-x: hidden;
 	display: flex;
 	justify-content: center;
-
+	
 }
 
 .img_divs>img{
