@@ -31,20 +31,7 @@ public class ChartController {
 //	}
 	
 	
-	@ResponseBody
-	@RequestMapping("/month_list")
-<<<<<<< HEAD
-	public String month_list(Model model)  throws Exception{
-		Gson gson = new Gson();
-//		List<ChartVO> list = new ArrayList<ChartVO>();
-//		ChartVO vo = new ChartVO();
-//		vo.setStore_number(234);
-		List<ChartVO2> list = service.month_list();
-		ObjectMapper mapper = new ObjectMapper();
-		String datas = mapper.writeValueAsString(list);
-		
-		return gson.toJson(datas);
-=======
+
 	public String month_list(Model model, int store_number) {
 		Gson gson = new Gson();
 		ChartVO vo = new ChartVO();
@@ -106,7 +93,7 @@ public class ChartController {
 		
 		
 		return gson.toJson(list);
->>>>>>> 80f8d626b91336384f9dfbcdc2d76531ca5d3f29
+
 	}
 	
 	
