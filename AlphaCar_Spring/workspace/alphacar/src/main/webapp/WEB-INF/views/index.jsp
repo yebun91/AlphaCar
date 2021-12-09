@@ -2,6 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
   <div class="nav_shadow"></div>
   <div class="slide_box">
+  	  <div class="button-list">
+		  <button class="button-left"><i class="fas fa-arrow-circle-left"></i></button>
+		  <button class="button-right"><i class="fas fa-arrow-circle-right"></i></button>
+	  </div>
 	  <div class="slide_wrap">
 	  	<div class="img_divs"><img src="img/main_image1.png" alt="" class="inner"></div>
 	    <div class="img_divs"><img src="img/main_image3.png" alt="" class="inner"></div>     
@@ -11,10 +15,7 @@
 	  </div>
   </div>
 </nav>
-<div class="button-list">
-  <button class="button-left">← Left</button>
-  <button class="button-right">Right →</button>
-</div>
+
 
 <script type="text/javascript">
 
