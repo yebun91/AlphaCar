@@ -82,7 +82,7 @@ ul,ol {
 	width:100%;
 	height:100%;
 	position: absolute;
-	z-index: 6;
+	z-index: 1;
 	display: flex;
 	justify-content: space-between;
 }
@@ -113,10 +113,10 @@ ul,ol {
 
 /* --------------------- */
 
-/* .sub_image img{
+ .sub_image img{
   width: 100%;
   height: 400px;
-} */
+}
 .nav_shadow {
 	position: absolute;
 	width: 100%;
