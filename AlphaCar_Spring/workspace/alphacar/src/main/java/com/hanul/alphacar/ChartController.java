@@ -12,9 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import homeChart.ChartVO;
+import homeChart.ChartVO2;
 import homeChart.HomeChartServiceImpl;
 	
 
@@ -35,15 +37,15 @@ public class ChartController {
 	
 	@ResponseBody
 	@RequestMapping("/month_list")
-	public String month_list(Model model) {
+	public String month_list(Model model)  throws Exception{
 		Gson gson = new Gson();
-		List<ChartVO> list = new ArrayList<ChartVO>();
-		ChartVO vo = new ChartVO();
-		vo.setStore_number(234);
-		List<ChartVO> list222  =service.month_list(vo);
-	
+//		List<ChartVO> list = new ArrayList<ChartVO>();
+//		ChartVO vo = new ChartVO();
+//		vo.setStore_number(234);
+		List<ChartVO2> list = service.month_list();
+		ObjectMapper mapper = new ObjectMapper();
+		String datas = mapper.writeValueAsString(list);
 		
-		
-		return gson.toJson(list222);
+		return gson.toJson(datas);
 	}
 }
