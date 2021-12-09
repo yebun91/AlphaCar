@@ -18,95 +18,95 @@
 
 <script type="text/javascript">
 
-//div사이즈 동적으로 구하기
 const outer = document.querySelector('.slide_box');
 const oneinner = document.querySelector('.inner');
 const innerList = document.querySelector('.slide_wrap');
 const inners = document.querySelectorAll('.inner');
 const img_divs = document.querySelectorAll('.img_divs');
 const one_div = document.querySelector('.img_divs');
-let currentIndex = 1; // 현재 슬라이드 화면 인덱스
-let slideSpeed = 300;
-											
-/* inners.forEach((inner) => {
-	inner.style.width = outer.clientWidth+'px'; // inner의 width를 모두 outer의 width로 만들기
-}) */
 
-innerList.style.width = outer.clientWidth * inners.length+'px'; // innerList의 width를 inner의 width * inner의 개수로 만들기
-innerList.style.transform = 'translate3d(-'+ (one_div.clientWidth* (currentIndex)) + 'px'+', 0px, 0px)';
+let currentIndex = 1; // 현재 슬라이드 화면 인덱스
+let slideSpeed = 300; // translate 속도 조절
+const slideLen = img_divs.length; //img_divs가 몇개 있는지 구함
+const time = 5000; // 슬라이드 시간
+
+
+//전체 슬라이드를 감싸는 innerList의 width를 inner의 width * inner의 개수로 만들기
+innerList.style.width = outer.clientWidth * inners.length+'px';
+//처음 시작 시 currentIndex = 1 화면을 보여주기 위해 transform 수정함.
+innerList.style.transform = 'translate3d(-'+ (one_div.clientWidth * currentIndex) + 'px'+', 0px, 0px)';
 
 //버튼에 이벤트 등록하기
 const buttonLeft = document.querySelector('.button-left');
 const buttonRight = document.querySelector('.button-right');
 
 buttonLeft.addEventListener('click', () => {
+	//왼쪽 버튼을 클릭 시 currentIndex을 1 감소시킴
 	currentIndex--;
-	console.log(currentIndex);
 	if (currentIndex >= 0) {
+		//currentIndex가 0이거나 0보다 크면 transition을 추가하고 이전 슬라이드를 보여줌
 		innerList.style.transition = slideSpeed+"ms";
-		innerList.style.transform = 'translate3d(-'+ one_div.clientWidth*currentIndex+'px'+', 0px, 0px)';
-	}
-	if (currentIndex < 0) {
-		setTimeout(function() {
-		innerList.style.transition = "0ms";
-		innerList.style.transform = 'translate3d(-'+ one_div.clientWidth*4+'px'+', 0px, 0px)';
-		}, slideSpeed);
-		currentIndex = 4;
+		innerList.style.transform = 'translate3d(-'+ (one_div.clientWidth * currentIndex) + 'px'+', 0px, 0px)';
 		}
-	//currentIndex = currentIndex < 0 ? currentIndex*-3 : currentIndex;
-	//currentIndex = currentIndex < inners.length ? currentIndex*3 : currentIndex;
-	//currentIndex = currentIndex < 0 ? 0 : currentIndex; // index값이 0보다 작아질 경우 0으로 변경
-	//innerList.style.marginLeft = -outer.clientWidth * currentIndex+'px'; // index만큼 margin을 주어 옆으로 밀기
-	//innerList.style.transform = 'translate3d(-'+ one_div.clientWidth*currentIndex+'px'+', 0px, 0px)';
-	//innerList.style.marginLeft = -one_div.clientWidth * currentIndex+'px'; // index만큼 margin을 주어 옆으로 밀기
+	if (currentIndex === 0) {
+		//currentIndex가 0이라면 transition을 제거하고 slideLen-2번째 이미지로 전환시킴
+		setTimeout(function() {
+		innerList.style.transition = "0ms";		
+		currentIndex = slideLen-2;
+		innerList.style.transform = 'translate3d(-'+ (one_div.clientWidth * currentIndex) + 'px'+', 0px, 0px)';
+		}, slideSpeed);
+	}
+	clearInterval(interval); // 기존 동작되던 interval 제거
+    interval = getInterval(); // 새로운 interval 등록	
 });
 
 buttonRight.addEventListener('click', () => {
-	currentIndex++;
-	console.log(currentIndex);
-	if (currentIndex > 0) {
-		innerList.style.transition = slideSpeed+"ms";
-		//slideList.style.transform = "translate3d(-" + (slideWidth * curIndex) + "px, 0px, 0px)";
-		innerList.style.transform = 'translate3d(-'+ one_div.clientWidth*currentIndex+'px'+', 0px, 0px)';
-	}
-	if (currentIndex === 4) {
-		setTimeout(function() {
-		innerList.style.transition = "0ms";
-		innerList.style.transform = 'translate3d(-'+ one_div.clientWidth*1+'px'+', 0px, 0px)';
-		}, slideSpeed);
-		currentIndex = 1;
-		}
-	//currentIndex = currentIndex >= inners.length ? 0 : currentIndex;
-	//currentIndex = currentIndex >= inners.length ? inners.length - 1 : currentIndex; // index값이 inner의 총 개수보다 많아질 경우 마지막 인덱스값으로 변경
-	//innerList.style.marginLeft = -outer.clientWidth * currentIndex+'px'; // index만큼 margin을 주어 옆으로 밀기
-	//innerList.style.transform = 'translate3d('+ -one_div.clientWidth*currentIndex+'px'+', 0px, 0px)';
-	//innerList.style.marginLeft = -one_div.clientWidth * currentIndex+'px'; // index만큼 margin을 주어 옆으로 밀기
-	
+	goRight();	
 	clearInterval(interval); // 기존 동작되던 interval 제거
-    interval = getInterval(); // 새로운 interval 등록
-	
+    interval = getInterval(); // 새로운 interval 등록	
 });
 
 window.addEventListener('resize', function() {
+	//브라우저 창을 변화시키면 
 	img_divs.forEach((img_div) => {
+		//img_divs안의 img_div들의 크기가 outer의 크기로 변화된다.
 		img_div.style.width = outer.clientWidth+'px';
 	});
+	//transition을 제거함
 	innerList.style.transition = "0ms";
-	innerList.style.width = outer.clientWidth*5+'px'; // inner의 width를 모두 outer의 width로 만들기
+	//innerList의 값을 outer의 길이 * slideLen로 변화시킨다.
+	innerList.style.width = outer.clientWidth*slideLen+'px'; 
+	//보여줄 곳을 다시 재정의 한다.
 	innerList.style.transform = 'translate3d(-'+ one_div.clientWidth*currentIndex+'px'+', 0px, 0px)';
 }, true);
 
 //주기적으로 화면 넘기기
 const getInterval = () => {
 	return setInterval(() => {
-	  currentIndex++;
-	  innerList.style.transition = slideSpeed+"ms";
-	  currentIndex = currentIndex >= inners.length ? 0 : currentIndex;
-	  innerList.style.transform = 'translate3d(-'+ one_div.clientWidth*currentIndex+'px'+', 0px, 0px)';
-	}, 10000000);
+		goRight();
+	}, time);
 }
-let interval = getInterval(); // interval 등록
 
+const goRight = () =>{
+	//오른쪽 버튼을 클릭 시 currentIndex을 1 증가시킴
+	currentIndex++;
+	//console.log('currentIndex : '+currentIndex);
+	if (currentIndex > 0) {
+		//currentIndex가 0보다 크면 transition을 추가하고 다음 슬라이드를 보여줌
+		innerList.style.transition = slideSpeed+"ms";
+		innerList.style.transform = 'translate3d(-'+ one_div.clientWidth * currentIndex+'px'+', 0px, 0px)';
+	}
+	if (currentIndex === slideLen-1) {
+		//currentIndex가 slideLen-1 라면 transition을 제거하고 currentIndex가 1인 이미지로 전환시킴
+		setTimeout(function() {
+		innerList.style.transition = "0ms";
+		innerList.style.transform = 'translate3d(-'+ one_div.clientWidth + 'px'+', 0px, 0px)';
+		}, slideSpeed);
+		currentIndex = 1;
+	}
+}
+
+let interval = getInterval(); // interval 등록
 
 </script>
 <!-- 메인 콘텐츠 -->
