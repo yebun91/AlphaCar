@@ -1,6 +1,7 @@
 package store;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public interface StoreService {
@@ -23,4 +24,10 @@ public interface StoreService {
 	List<StoreVO> store_name(String name);	// 가게 이름 검색
 	
 	List<Store_FileVO> master_store_file(String customer_email);
+	
+	int store_update_register(RegisterVO vo);
+	
+	List<RegFileVO> master_store_img(int store_number); 
+	
+	int store_img_update(HashMap<String, Object> map);
 }

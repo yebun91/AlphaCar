@@ -22,6 +22,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -30,6 +31,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.alphacar.ATask.DetailSelect;
 import com.example.alphacar.ATask.FavoriteCheck;
 import com.example.alphacar.ATask.FavoriteCntUpdate;
+import com.example.alphacar.ATask.FavoriteDelect;
 import com.example.alphacar.ATask.FavoriteInsert;
 import com.example.alphacar.ATask.FavoriteSelect;
 import com.example.alphacar.ATask.ReviewSelect;
@@ -39,6 +41,10 @@ import com.example.alphacar.DTOS.ReviewDTO;
 import com.example.alphacar.DTOS.StoreDTO;
 import com.example.alphacar.Fragment.DetailPagerFragment;
 import com.example.alphacar.Fragment.MapFragment;
+import com.lakue.lakuepopupactivity.PopupActivity;
+import com.lakue.lakuepopupactivity.PopupGravity;
+import com.lakue.lakuepopupactivity.PopupResult;
+import com.lakue.lakuepopupactivity.PopupType;
 
 
 import java.util.ArrayList;
@@ -54,6 +60,7 @@ public class DetailActivity extends AppCompatActivity{
     FavoriteInsert favoriteInsert;
     FavoriteCntUpdate favoriteCntUpdate;
     FavoriteCheck favoriteCheck;
+    FavoriteDelect favoriteDelect;
     ViewPager pager;
 
     ArrayList<StoreDTO> store_list;
@@ -104,6 +111,19 @@ public class DetailActivity extends AppCompatActivity{
     //-----------expandableListView------
 
     public static String store_address = null;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            PopupResult result = (PopupResult) data.getSerializableExtra("result");
+            if(result == PopupResult.LEFT){
+                Intent intent = new Intent(DetailActivity.this, LoginPageActivity.class);
+                startActivity(intent);
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,9 +202,94 @@ public class DetailActivity extends AppCompatActivity{
         }
         if (state.equals("1")) {
             like_btn.setImageResource(R.drawable.ic_baseline_favorite_red_24);
+            like_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(isNetworkConnected(DetailActivity.this) == true){
+
+                        favoriteDelect = new FavoriteDelect(store_list.get(0).getFav_number());
+                        //listDetail = new ListDetail(store_number);
+                        try {
+                            favoriteDelect.execute().get();
+                            like_btn.setImageResource(R.drawable.ic_baseline_favorite_24);
+                            //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+
+                    }
+
+                    if (isNetworkConnected(DetailActivity.this) == true) {
+                        favoriteCntUpdate = new FavoriteCntUpdate(store_list.get(0).getStore_number());
+                        //listDetail = new ListDetail(store_number);
+                        try {
+                            favoriteCntUpdate.execute().get();
+                            //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Toast.makeText(DetailActivity.this, "인터넷이 연결되어 있지 않습니다.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+
         }else{
             like_btn.setImageResource(R.drawable.ic_baseline_favorite_24);
+            if(loginDTO != null) {
+                like_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(isNetworkConnected(DetailActivity.this) == true){
+                            favoriteInsert  = new FavoriteInsert(loginDTO.getCustomer_email(), store_list.get(0).getStore_number());
+                            //    reviewSelect = new ReviewSelect(customer_email,dtos,rdto);
+                            try {
+                                favoriteInsert.execute().get();
+                                Toast.makeText(DetailActivity.this, "즐겨찾기 추가 !!!", Toast.LENGTH_SHORT).show();
+                                like_btn.setImageResource(R.drawable.ic_baseline_favorite_red_24);
+                                //    reviewSelect.execute().get();
+                                //     reviewSelect.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }else {
+                            Toast.makeText(DetailActivity.this, "인터넷이 연결되어 있지 않습니다.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        if (isNetworkConnected(DetailActivity.this) == true) {
+                            favoriteCntUpdate = new FavoriteCntUpdate(store_list.get(0).getStore_number());
+                            //listDetail = new ListDetail(store_number);
+                            try {
+                                favoriteCntUpdate.execute().get();
+                                //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Toast.makeText(DetailActivity.this, "인터넷이 연결되어 있지 않습니다.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        //유저 메일 = dd 인 사람이 현재 가게를 등록한다
+                        //1. 즐겨찾기 버튼은 로그인 된 상태에서만 활성화 된다
+                        //2. 즐겨찾기 버튼을 누르면 사용자의 이메일을 기준으로 favorite에 값이 담긴다
+                        //insert into favorite values (FAV_NUMBER ,CUSTOMER_EMAIL ,STORE_NUMBER)
+                        //select * from favorite where customer_email
+                    }
+                });
+            }
         }
+
     }
 
        //별점 가져오기
@@ -256,51 +361,6 @@ public class DetailActivity extends AppCompatActivity{
         //좋아요 버튼 누르면 FAV_NUMBER, CUSTOMER_EMAIL, STORE_NUMBER값을 Favorite테이블에 넣어줌
 
 
-        if(loginDTO != null) {
-            like_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(isNetworkConnected(DetailActivity.this) == true){
-                        favoriteInsert  = new FavoriteInsert(loginDTO.getCustomer_email(), store_list.get(0).getStore_number());
-                        //    reviewSelect = new ReviewSelect(customer_email,dtos,rdto);
-                        try {
-                            favoriteInsert.execute().get();
-                            Toast.makeText(DetailActivity.this, "즐겨찾기 추가 !!!", Toast.LENGTH_SHORT).show();
-                            like_btn.setImageResource(R.drawable.ic_baseline_favorite_red_24);
-                            //    reviewSelect.execute().get();
-                            //     reviewSelect.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }else {
-                        Toast.makeText(DetailActivity.this, "인터넷이 연결되어 있지 않습니다.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-
-                    if (isNetworkConnected(DetailActivity.this) == true) {
-                        favoriteCntUpdate = new FavoriteCntUpdate(store_list.get(0).getStore_number());
-                        //listDetail = new ListDetail(store_number);
-                        try {
-                            favoriteCntUpdate.execute().get();
-                            //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        Toast.makeText(DetailActivity.this, "인터넷이 연결되어 있지 않습니다.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-
-                    //유저 메일 = dd 인 사람이 현재 가게를 등록한다
-                    //1. 즐겨찾기 버튼은 로그인 된 상태에서만 활성화 된다
-                    //2. 즐겨찾기 버튼을 누르면 사용자의 이메일을 기준으로 favorite에 값이 담긴다
-                    //insert into favorite values (FAV_NUMBER ,CUSTOMER_EMAIL ,STORE_NUMBER)
-                    //select * from favorite where customer_email
-                }
-            });
-        }
 
 
 
@@ -371,9 +431,21 @@ public class DetailActivity extends AppCompatActivity{
         detail_review_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
-                startActivity(intent);
-
+                if(loginDTO != null) {
+                    Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
+                    intent.putExtra("store_number", store_list.get(0).getStore_number());
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent = new Intent(getBaseContext(), PopupActivity.class);
+                    intent.putExtra("type", PopupType.SELECT);
+                    intent.putExtra("gravity", PopupGravity.LEFT);
+                    intent.putExtra("title", "알림");
+                    intent.putExtra("content", "로그인이 필요한 서비스 입니다");
+                    intent.putExtra("buttonLeft", "로그인");
+                    intent.putExtra("buttonRight", "뒤로가기");
+                    startActivityForResult(intent, 2);
+                }
             }
         });
 

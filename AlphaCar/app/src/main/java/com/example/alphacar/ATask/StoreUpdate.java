@@ -4,10 +4,6 @@ import static com.example.alphacar.Common.CommonMethod.ipConfig;
 
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
-import android.util.JsonReader;
-import android.util.Log;
-
-import com.example.alphacar.DTOS.RegisterDTO;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -20,20 +16,18 @@ import org.apache.http.entity.mime.content.FileBody;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-public class StoreRegister extends AsyncTask<Void, Void, String> {
+public class StoreUpdate extends AsyncTask<Void, Void, String> {
     private static final String TAG = "main:StoreRegister";
 
+    int store_number ;
     String customer_email             ;
     String store_name                 ;
-    String store_post                 ;
     String store_addr                 ;
-    String store_detail_addr          ;
     String store_tel                  ;
     String store_time                 ;
     String store_dayoff               ;
@@ -44,7 +38,8 @@ public class StoreRegister extends AsyncTask<Void, Void, String> {
     String store_registration_number  ;
     ArrayList<String> storePic;
 
-    public StoreRegister(String customer_email, String store_name, String store_addr, String store_tel, String store_time, String store_dayoff, String introduce, String store_price, String store_master_name, String store_registration_number, ArrayList<String> storePic) {
+    public StoreUpdate( String customer_email, String store_name, String store_addr, String store_tel, String store_time, String store_dayoff, String introduce, String store_price, String store_master_name, String store_registration_number, ArrayList<String> storePic) {
+
         this.customer_email = customer_email;
         this.store_name = store_name;
         this.store_addr = store_addr;
@@ -58,12 +53,10 @@ public class StoreRegister extends AsyncTask<Void, Void, String> {
         this.storePic = storePic;
     }
 
-    public StoreRegister(String customer_email, String store_name,String store_post, String store_addr,String store_detail_addr, String store_tel, String store_time, String store_dayoff, String introduce, int inventory, String store_price, String store_master_name, String store_registration_number, ArrayList<String> storePic) {
-        this.customer_email = customer_email;
+    public StoreUpdate(int store_number, String store_name, String store_addr, String store_tel, String store_time, String store_dayoff, String introduce, int inventory, String store_price, String store_master_name, String store_registration_number, ArrayList<String> storePic) {
+        this.store_number = store_number;
         this.store_name = store_name;
-        this.store_post = store_post;
         this.store_addr = store_addr;
-        this.store_detail_addr = store_detail_addr;
         this.store_tel = store_tel;
         this.store_time = store_time;
         this.store_dayoff = store_dayoff;
@@ -94,16 +87,16 @@ public class StoreRegister extends AsyncTask<Void, Void, String> {
             builder.setCharset(Charset.forName("UTF-8"));
 
             // 문자열 및 데이터 추가
-            builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
+            builder.addTextBody("store_number", String.valueOf(store_number), ContentType.create("Multipart/related", "UTF-8"));
+         //   builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
             builder.addTextBody("store_name", store_name, ContentType.create("Multipart/related", "UTF-8"));
-            builder.addTextBody("store_post", store_post, ContentType.create("Multipart/related", "UTF-8"));
             builder.addTextBody("store_addr", store_addr, ContentType.create("Multipart/related", "UTF-8"));
-            builder.addTextBody("store_detail_addr", store_detail_addr, ContentType.create("Multipart/related", "UTF-8"));
             builder.addTextBody("store_tel", store_tel, ContentType.create("Multipart/related", "UTF-8"));
             builder.addTextBody("store_time", store_time, ContentType.create("Multipart/related", "UTF-8"));
             builder.addTextBody("store_dayoff", store_dayoff, ContentType.create("Multipart/related", "UTF-8"));
             builder.addTextBody("introduce", introduce, ContentType.create("Multipart/related", "UTF-8"));
             builder.addTextBody("inventory", String.valueOf(inventory), ContentType.create("Multipart/related", "UTF-8"));
+
             builder.addTextBody("store_price", store_price, ContentType.create("Multipart/related", "UTF-8"));
             builder.addTextBody("store_master_name", store_master_name, ContentType.create("Multipart/related", "UTF-8"));
             builder.addTextBody("store_registration_number", store_registration_number, ContentType.create("Multipart/related", "UTF-8"));
@@ -112,7 +105,7 @@ public class StoreRegister extends AsyncTask<Void, Void, String> {
                 builder.addPart("imgpath"+(i+1), new FileBody(new File(storePic.get(i))));
             }
 
-            String postURL = ipConfig + "/alphacar/anStoreRegister";
+            String postURL = ipConfig + "/alphacar/anStoreUpdate";
             // 전송
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");

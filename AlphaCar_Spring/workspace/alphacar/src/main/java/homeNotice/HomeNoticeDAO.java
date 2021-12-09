@@ -74,6 +74,14 @@ public class HomeNoticeDAO implements HomeNoticeService {
 		return sql.selectList("homeNotice.mapper.commentList", notice_id);
 	}
 	
+	@Override
+	public List<HomeNoticeVO> an_notice_list() {
+		// TODO Auto-generated method stub
+		return sql.selectList("homeNotice.mapper.an_notice_select");
+	}
+	
+
+	
 	
 
 }

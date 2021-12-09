@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.util.JsonReader;
 
 import com.example.alphacar.DTOS.NotiftDTO;
-import com.example.alphacar.DTOS.ReviewDTO;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -21,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -120,7 +120,7 @@ public class NotiSelect extends AsyncTask<Void, Void, Void> {
         // int review_id = 0, store_number = 0;
         int notice_id = 0, notice_readcnt = 0, notice_root = 0, notice_step = 0, notice_indent = 0;
          String customer_email = "", notice_title = "", notice_content = "", notice_filename = "", notice_filepath = "", notice_attribute = "";
-         Date notice_writedate = null;
+         String notice_writedate = "";
 
         reader.beginObject();
         while (reader.hasNext()) {
@@ -133,6 +133,8 @@ public class NotiSelect extends AsyncTask<Void, Void, Void> {
                 notice_title = reader.nextString();
             } else if (readStr.equals("notice_content")) {
                 notice_content = reader.nextString();
+            }else if (readStr.equals("notice_writedate")) {
+                notice_writedate = reader.nextString();
             } else {
                 reader.skipValue();
             }
@@ -140,6 +142,6 @@ public class NotiSelect extends AsyncTask<Void, Void, Void> {
         reader.endObject();
 
         //  return new ReviewDTO(review_id,store_number, readcnt, title, content, filename ,customer_email);
-        return new NotiftDTO(notice_id, customer_email, notice_title, notice_content);
+        return new NotiftDTO(notice_id, customer_email, notice_title, notice_content, notice_writedate);
     }
 }

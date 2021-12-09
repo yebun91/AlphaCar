@@ -15,11 +15,12 @@ public class StoreDTO implements Serializable {
     private String now_state        ;
     private Date create_date      ;
     private Date change_date      ;
+    private int fav_number;
 
 
 
 
-    public StoreDTO(int store_number, String customer_email, String store_name, String store_addr, String store_tel, String store_time, String store_dayoff, String introduce, String imgpath, int inventory, String store_price, String store_master_name, String store_registration_number, int store_favorite_cnt) {
+    public StoreDTO(int store_number, String customer_email, String store_name, String store_addr, String store_tel, String store_time, String store_dayoff, String introduce, String imgpath, int inventory, String store_price, String store_master_name, String store_registration_number, int store_favorite_cnt, int fav_number) {
         this.store_number = store_number;
         this.inventory = inventory;
         this.store_favorite_cnt = store_favorite_cnt;
@@ -34,6 +35,7 @@ public class StoreDTO implements Serializable {
         this.store_price = store_price;
         this.store_master_name = store_master_name;
         this.store_registration_number = store_registration_number;
+        this.fav_number = fav_number;
 
     }
 
@@ -64,7 +66,13 @@ public class StoreDTO implements Serializable {
     }
 
 
+    public int getFav_number() {
+        return fav_number;
+    }
 
+    public void setFav_number(int fav_number) {
+        this.fav_number = fav_number;
+    }
 
     public int getInventory_number() {
         return inventory_number;

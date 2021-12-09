@@ -116,7 +116,7 @@ public class JoinPageActivity extends AppCompatActivity {
             }
         }
         if(requestCode == GALLEY_CODE){
-            profile = getRealPathFromUri(data.getData());
+                    profile = getRealPathFromUri(data.getData());
             RequestOptions cropOptions = new RequestOptions();
             Glide.with(getApplicationContext())
                     .load(profile)  //사진의 절대 경로
@@ -334,7 +334,7 @@ public class JoinPageActivity extends AppCompatActivity {
                 //회원가입 처리 시작
                 JoinInsert joinInsert = null;
                 JoinNoImgInsert joinNoImgInsert = null;
-                if(imgFile == null){
+                if(profile == null){
                     joinNoImgInsert = new JoinNoImgInsert(id, passwd, name, admin);
                 }else{
                     joinInsert = new JoinInsert(id, passwd, name, admin, profile);
@@ -344,7 +344,7 @@ public class JoinPageActivity extends AppCompatActivity {
                 //가입 성공 여부
                 String state = "";
                 try {
-                    if(imgFile == null){
+                    if(profile == null){
                         state = joinNoImgInsert.execute().get().trim();
 
                     }else{

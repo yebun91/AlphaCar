@@ -3,11 +3,12 @@ package store;
 import java.util.ArrayList;
 
 public class RegisterVO {
+	private int store_number ;
 	private String customer_email             ;
 	private String store_name                 ;
 	private String store_post                 ;
 	private String store_addr                 ;
-	private String store_detail_addr                 ;
+	private String store_detail_addr          ;
 	private String store_tel                  ;
 	private String store_time                 ;
 	private String store_dayoff               ;
@@ -28,6 +29,14 @@ public class RegisterVO {
 	
 	
 	
+	
+	
+	public int getStore_number() {
+		return store_number;
+	}
+	public void setStore_number(int store_number) {
+		this.store_number = store_number;
+	}
 	public String getStore_post() {
 		return store_post;
 	}

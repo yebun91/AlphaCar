@@ -17,7 +17,7 @@
 
 
                 <FrameLayout
-                    android:id="@+id/contain"
+                    android:id="@+id/contain_btn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#00000000"

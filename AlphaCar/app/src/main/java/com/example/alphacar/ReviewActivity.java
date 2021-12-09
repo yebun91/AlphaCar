@@ -58,11 +58,15 @@ public class ReviewActivity extends AppCompatActivity {
     // constant to compare
     // the activity result code
     int SELECT_PICTURE = 200;
+    int store_number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_register);
+
+        Intent intent = getIntent();
+        store_number = intent.getIntExtra("store_number", 0);
 
         btnBack = findViewById(R.id.btnBack);
         btnRegister = findViewById(R.id.btnRegister);
@@ -100,8 +104,7 @@ public class ReviewActivity extends AppCompatActivity {
                     imgPath = imgFilePath;
                 }
                 // 이정보를 비동기 Task 로 넘겨 서버에게 전달한다
-                reviewInsert = new
-                        ReviewInsert(email, rating, reviewTitle, reviewContent, imgPath);
+                reviewInsert = new ReviewInsert(store_number,email, rating, reviewTitle, reviewContent, imgPath);
                 try {
                     state = reviewInsert.execute().get().trim();
                 } catch (ExecutionException e) {

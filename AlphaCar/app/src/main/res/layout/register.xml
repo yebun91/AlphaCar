@@ -229,6 +229,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+
                     >
 
                     <Button
@@ -240,17 +241,18 @@
                         android:textSize="15dp"
                         android:layout_marginLeft="10dp"
                         />
-
-
-                        <EditText
-                        android:id="@+id/register_et_store_addr1"
+                    <EditText
+                        android:id="@+id/register_et_store_addr0"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:background="@drawable/btn_round"
                         android:textColor="@color/white"
                         android:layout_marginLeft="10dp"
-                        android:paddingLeft="20dp" />
+                        android:paddingLeft="20dp"
+                        />
+
+
 
                     </LinearLayout>
 
@@ -260,9 +262,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:layout_marginTop="5dp"
                 >
 
-            <EditText
+                <EditText
+                    android:id="@+id/register_et_store_addr1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/btn_round"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="5dp"
+                    android:paddingLeft="20dp"
+                    />
+
+
+                <EditText
                 android:id="@+id/register_et_store_addr2"
                 android:layout_width="match_parent"
                 android:textColor="@color/white"

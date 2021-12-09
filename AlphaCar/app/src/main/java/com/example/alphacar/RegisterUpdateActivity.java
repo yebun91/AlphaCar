@@ -1,5 +1,8 @@
 package com.example.alphacar;
 
+import static com.example.alphacar.Common.CommonMethod.isNetworkConnected;
+import static com.example.alphacar.LoginPageActivity.loginDTO;
+
 import android.Manifest;
 import android.content.ClipData;
 import android.content.ContentResolver;
@@ -31,7 +34,12 @@ import androidx.core.content.FileProvider;
 import androidx.loader.content.CursorLoader;
 
 import com.bumptech.glide.Glide;
+import com.example.alphacar.ATask.MasterStoreFile;
+import com.example.alphacar.ATask.MasterStoreSelect;
 import com.example.alphacar.ATask.StoreRegister;
+import com.example.alphacar.ATask.StoreUpdate;
+import com.example.alphacar.DTOS.FileDTO;
+import com.example.alphacar.Fragment.ViewpagerFragment;
 import com.lakue.lakuepopupactivity.PopupActivity;
 import com.lakue.lakuepopupactivity.PopupGravity;
 import com.lakue.lakuepopupactivity.PopupResult;
@@ -66,11 +74,15 @@ public class RegisterUpdateActivity extends AppCompatActivity {
     ImageButton btn_back;
 
     File imgFile = null;
+    ArrayList<FileDTO> fileDTOArrayList;
+
+    MasterStoreFile masterStoreFile;
+    ArrayList<String> storePic;
 
     private int GALLEY_CODE = 10;
     private int CAMERA_CODE = 1004;
 
-    private ArrayList<String> storePic = new ArrayList<>();
+
     private String profile;
 
     private ArrayList<String> storeInventory = new ArrayList<String>();
@@ -144,11 +156,10 @@ public class RegisterUpdateActivity extends AppCompatActivity {
         if(requestCode == GALLEY_CODE){
 
             if (resultCode == RESULT_OK) {
+                storePic = new ArrayList<>();
 
                 //기존 이미지 지우기
-                iv_pic1.setImageResource(0);
-                iv_pic2.setImageResource(0);
-                iv_pic3.setImageResource(0);
+
 
                 //ClipData 또는 Uri를 가져온다
                 Uri uri = data.getData();
@@ -306,16 +317,31 @@ public class RegisterUpdateActivity extends AppCompatActivity {
         String prev_store_name = intent.getStringExtra("store_name");
         String prev_customer_name = intent.getStringExtra("customer_name");
         String prev_store_registration_number = intent.getStringExtra("store_registration_number");
-        String prev_inventory = String.valueOf(intent.getIntExtra("store_registration_number", 0));
+        String prev_inventory = String.valueOf(intent.getIntExtra("inventory", 0));
         String prev_store_price = intent.getStringExtra("store_price");
         String prev_introduce = intent.getStringExtra("introduce");
         String prev_store_addr = intent.getStringExtra("store_addr");
         String prev_store_tel = intent.getStringExtra("store_tel");
         String prev_store_time = intent.getStringExtra("store_time");
         String prev_store_dayoff = intent.getStringExtra("store_dayoff");
+        int store_number = intent.getIntExtra("store_number", 0);
 
-
-
+        fileDTOArrayList = new ArrayList<>();
+        if (isNetworkConnected(RegisterUpdateActivity.this) == true) {
+             masterStoreFile = new MasterStoreFile(store_number, fileDTOArrayList);
+            //listDetail = new ListDetail(store_number);
+            try {
+                masterStoreFile.execute().get();
+                //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(RegisterUpdateActivity.this, "인터넷이 연결되어 있지 않습니다.",
+                    Toast.LENGTH_SHORT).show();
+        }
 
         checkDangerousPermissions();
 
@@ -367,7 +393,6 @@ public class RegisterUpdateActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String customer_email = "";
                 String store_name = et_store_name.getText().toString();
                 String store_master_name = et_store_master_name.getText().toString();
                 String store_registration_number = et_store_registration_number.getText().toString();
@@ -378,13 +403,12 @@ public class RegisterUpdateActivity extends AppCompatActivity {
                 String store_tel = et_store_tel.getText().toString();
                 String store_time = et_store_time.getText().toString();
                 String store_dayoff = et_store_dayoff.getText().toString();
-
-                StoreRegister register = new StoreRegister(customer_email, store_name, store_addr,
+                StoreUpdate storeUpdate = new StoreUpdate(store_number, store_name, store_addr,
                         store_tel, store_time, store_dayoff, introduce, inventory, store_price,
                         store_master_name, store_registration_number, storePic);
                 String state = "";
                 try {
-                    state = register.execute().get().trim();
+                    state = storeUpdate.execute().get().trim();
                     Log.d("main:joinact0 : ", state);
                     state = state.substring(11, 12);
                     Log.d("main:joinact1 : ", state);
@@ -416,7 +440,20 @@ public class RegisterUpdateActivity extends AppCompatActivity {
         iv_pic1 = findViewById(R.id.register_iv_pic1);
         iv_pic2 = findViewById(R.id.register_iv_pic2);
         iv_pic3 = findViewById(R.id.register_iv_pic3);
-
+        if(fileDTOArrayList.get(0).getImgpath() != null) {
+            Glide.with(RegisterUpdateActivity.this)
+                    .load(fileDTOArrayList.get(0).getImgpath())
+                    .into(iv_pic1);
+        }else if(fileDTOArrayList.get(1).getImgpath() != null) {
+            Glide.with(RegisterUpdateActivity.this)
+                    .load(fileDTOArrayList.get(1).getImgpath())
+                    .into(iv_pic2);
+        }
+        else if(fileDTOArrayList.get(2).getImgpath() != null) {
+            Glide.with(RegisterUpdateActivity.this)
+                    .load(fileDTOArrayList.get(2).getImgpath())
+                    .into(iv_pic3);
+        }
         ArrayList<ImageView> list = new ArrayList<>();
         list.add(iv_pic1);
         list.add(iv_pic2);

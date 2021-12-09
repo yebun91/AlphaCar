@@ -70,6 +70,7 @@ dependencies {
     //Add LakuePopupActivity Library
     implementation 'com.github.lakue119:LakuePopupActivity:1.0.1'
 
+    implementation 'com.kakao.sdk:plusfriend:+'
     //프로필 사진 둥글게
     implementation "com.kakao.sdk:usermgmt:1.30.4"
     implementation files('libs/libDaumMapAndroid.jar')

@@ -98,7 +98,7 @@
 
             <EditText
                 android:id="@+id/editReview"
-                android:layout_width="400dp"
+                android:layout_width="match_parent"
                 android:layout_height="360dp"
                 android:paddingLeft="2.5dp"
                 android:layout_gravity="center_horizontal"

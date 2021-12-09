@@ -1,9 +1,12 @@
 package com.example.alphacar.DTOS;
 
 public class RegisterDTO {
+    private int store_number;
     private String customer_email             ;
     private String store_name                 ;
+    private String store_post                 ;
     private String store_addr                 ;
+    private String store_detail_addr          ;
     private String store_tel                  ;
     private String store_time                 ;
     private String store_dayoff               ;
@@ -15,10 +18,13 @@ public class RegisterDTO {
     private String imgpath ;
     private String imgname ;
 
-    public RegisterDTO(String customer_email, String store_name, String store_addr, String store_tel, String store_time, String store_dayoff, String introduce, int inventory, String store_price, String store_master_name, String store_registration_number, String imgpath, String imgname) {
+    public RegisterDTO(int store_number, String customer_email, String store_name,String store_post, String store_addr,String store_detail_addr , String store_tel, String store_time, String store_dayoff, String introduce, int inventory, String store_price, String store_master_name, String store_registration_number, String imgpath, String imgname) {
+        this.store_number = store_number;
         this.customer_email = customer_email;
         this.store_name = store_name;
+        this.store_post = store_post;
         this.store_addr = store_addr;
+        this.store_detail_addr = store_detail_addr;
         this.store_tel = store_tel;
         this.store_time = store_time;
         this.store_dayoff = store_dayoff;
@@ -29,6 +35,30 @@ public class RegisterDTO {
         this.store_registration_number = store_registration_number;
         this.imgpath = imgpath;
         this.imgname = imgname;
+    }
+
+    public int getStore_number() {
+        return store_number;
+    }
+
+    public void setStore_number(int store_number) {
+        this.store_number = store_number;
+    }
+
+    public String getStore_post() {
+        return store_post;
+    }
+
+    public void setStore_post(String store_post) {
+        this.store_post = store_post;
+    }
+
+    public String getStore_detail_addr() {
+        return store_detail_addr;
+    }
+
+    public void setStore_detail_addr(String store_detail_addr) {
+        this.store_detail_addr = store_detail_addr;
     }
 
     public String getCustomer_email() {

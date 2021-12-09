@@ -28,12 +28,11 @@ public class MasterStoreSelect extends AsyncTask<Void, Void, Void> {
     private static final String TAG = "main:Storelist";
 
     String customer_email;
-
     /* 스토어 정보 AsyncTask */
     ArrayList<RegisterDTO> dtos;
     StoreDTO dto;
 
-    public MasterStoreSelect (String customer_email, StoreDTO dto, ArrayList<RegisterDTO> dtos){
+    public MasterStoreSelect ( String customer_email, StoreDTO dto, ArrayList<RegisterDTO> dtos){
         this.customer_email = customer_email;
         this.dto = dto;
         this.dtos = dtos;
@@ -67,6 +66,7 @@ public class MasterStoreSelect extends AsyncTask<Void, Void, Void> {
             // builder에 문자열 및 데이터 추가하기
             //builder.addTextBody("store_number", String.valueOf(store_number), ContentType.create("Multipart/related", "UTF-8"));
             builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
+
 
 
             // 전송
@@ -139,7 +139,9 @@ public class MasterStoreSelect extends AsyncTask<Void, Void, Void> {
         int store_number = 0;
         String customer_email = "";
        String store_name="";
+        String store_post="";
          String store_addr ="";
+        String store_detail_addr="";
          String store_tel  ="" ;
          String store_time = "";
          String store_dayoff = "";
@@ -162,6 +164,10 @@ public class MasterStoreSelect extends AsyncTask<Void, Void, Void> {
                 store_name = reader.nextString();
             } else if (readStr.equals("store_addr")) {
                 store_addr = reader.nextString();
+            } else if (readStr.equals("store_detail_addr")) {
+                store_name = reader.nextString();
+            } else if (readStr.equals("store_post")) {
+                store_addr = reader.nextString();
             }  else if (readStr.equals("store_tel")) {
                 store_tel = reader.nextString();
             }  else if (readStr.equals("store_time")) {
@@ -183,7 +189,7 @@ public class MasterStoreSelect extends AsyncTask<Void, Void, Void> {
             }
         }
         reader.endObject();
-        return new RegisterDTO(customer_email,store_name,store_addr, store_tel,store_time,store_dayoff,introduce,inventory,store_price,store_master_name,store_registration_number,imgpath,imgname);
+        return new RegisterDTO(store_number, customer_email,store_name,store_post,store_addr,store_detail_addr, store_tel,store_time,store_dayoff,introduce,inventory,store_price,store_master_name,store_registration_number,imgpath,imgname);
         //return new StoreDTO(store_number, imgpath, inventory);
 
     }

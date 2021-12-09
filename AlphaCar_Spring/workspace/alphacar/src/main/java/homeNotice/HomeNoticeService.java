@@ -35,6 +35,9 @@ public interface HomeNoticeService {
 	
 	//댓글 목록 조회
 	List<HomeNoticeCommentVO> board_comment_list(int pid);
+
+	//안드 공지사항 조회
+	List<HomeNoticeVO> an_notice_list();
 	
 	
 	

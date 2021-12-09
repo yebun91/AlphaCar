@@ -64,6 +64,7 @@ public class MasterStoreFragment extends Fragment {
                     Toast.LENGTH_SHORT).show();
         }
 
+
         masterStoreAdapter = new MasterStoreAdapter(mainActivity.getApplicationContext(), registerDTOArrayList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 mainActivity.getApplicationContext(), RecyclerView.VERTICAL, false

@@ -1,5 +1,6 @@
 package store;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,23 @@ public class StoreServiceImpl implements StoreService{
 	public List<Store_FileVO> master_store_file(String customer_email) {
 		// TODO Auto-generated method stub
 		return dao.master_store_file(customer_email);
+	}
+
+	public int store_update_register(RegisterVO vo) {
+		// TODO Auto-generated method stub
+		return dao.store_update_register(vo);
+	}
+
+	@Override
+	public List<RegFileVO> master_store_img(int store_number) {
+		// TODO Auto-generated method stub
+		return dao.master_store_img(store_number);
+	}
+
+	@Override
+	public int store_img_update(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.store_img_update(map);
 	}
 
 

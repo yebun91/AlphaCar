@@ -4,19 +4,26 @@ import static com.example.alphacar.Common.CommonMethod.isNetworkConnected;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.alphacar.ATask.FavoriteCntUpdate;
 import com.example.alphacar.ATask.FavoriteDelect;
 import com.example.alphacar.DTOS.FavoriteDTO;
+import com.example.alphacar.DetailActivity;
+import com.example.alphacar.Fragment.FavoriteFragment;
 import com.example.alphacar.R;
 
 import java.util.ArrayList;
@@ -29,8 +36,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ItemVi
     Context mContext;
     ArrayList<FavoriteDTO> favoriteDTOS;
     FavoriteDelect favoriteDelect;
-
-    int fav_number;
+    FavoriteCntUpdate favoriteCntUpdate;
 
 
     public FavoriteAdapter(Context mContext, ArrayList<FavoriteDTO> favoriteDTOS) {
@@ -99,6 +105,17 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ItemVi
         holder.setItem(item);
 
 
+        holder.store_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra("store_number", item.getStore_number());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+            }
+        });
+
+        
 
         holder.del_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +134,22 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ItemVi
                     }
                 }else {
 
+                }
+
+                if (isNetworkConnected(mContext) == true) {
+                    favoriteCntUpdate = new FavoriteCntUpdate(item.getStore_number());
+                    //listDetail = new ListDetail(store_number);
+                    try {
+                        favoriteCntUpdate.execute().get();
+                        //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(mContext, "인터넷이 연결되어 있지 않습니다.",
+                            Toast.LENGTH_SHORT).show();
                 }
                 // 특정위치에 있는 항목 지우기
                 //dtos.remove(position);
@@ -141,6 +174,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ItemVi
         public TextView storeName;
         public TextView fabt;
         public ImageButton del_btn;
+        public LinearLayout store_layout;
+        public ImageView fav_back_Button;
 
 
 
@@ -154,6 +189,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ItemVi
             storeName = itemView.findViewById(R.id.faTv);
             fabt = itemView.findViewById(R.id.fabt);
             del_btn = itemView.findViewById(R.id.fadel);
+            store_layout = itemView.findViewById(R.id.fav_layout);
+            fav_back_Button = itemView.findViewById(R.id.fav_back_Button);
 
 
 

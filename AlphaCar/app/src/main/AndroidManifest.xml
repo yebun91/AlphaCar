@@ -112,7 +112,8 @@
         <activity
             android:name=".JoinPageActivity"
             android:exported="true" />
-
+        <activity android:name=".DetailImageActivity"
+            android:exported="true"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

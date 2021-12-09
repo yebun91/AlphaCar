@@ -5,12 +5,15 @@ import android.content.Context;
 import java.io.Serializable;
 import java.util.Date;
 
+
 public class NotiftDTO implements Serializable {
   private int notice_id, notice_readcnt, notice_root, notice_step, notice_indent;
    private String customer_email, notice_title, notice_content, notice_filename, notice_filepath, notice_attribute;
-   private Date notice_writedate;
+   //private Date notice_writedate;
+   private String notice_writedate;
 
-    public NotiftDTO(int notice_id, String customer_email, String notice_title, String notice_content, String notice_filename, String notice_filepath, Date notice_writedate) {
+
+    public NotiftDTO(int notice_id, String customer_email, String notice_title, String notice_content, String notice_filename, String notice_filepath, String notice_writedate) {
         this.notice_id = notice_id;
         this.customer_email = customer_email;
         this.notice_title = notice_title;
@@ -20,15 +23,24 @@ public class NotiftDTO implements Serializable {
         this.notice_writedate = notice_writedate;
     }
 
-    public NotiftDTO(int notice_id, String customer_email, String notice_title, String notice_content){
+    public NotiftDTO(int notice_id, String customer_email, String notice_title, String notice_content , String notice_writedate){
         this.notice_id = notice_id;
         this.customer_email = customer_email;
         this.notice_title = notice_title;
         this.notice_content = notice_content;
+        this.notice_writedate = notice_writedate;
     }
 
     public NotiftDTO() {
 
+    }
+
+    public String getNotice_writedate() {
+        return notice_writedate;
+    }
+
+    public void setNotice_writedate(String notice_writedate) {
+        this.notice_writedate = notice_writedate;
     }
 
     public int getNotice_id() {
@@ -119,11 +131,11 @@ public class NotiftDTO implements Serializable {
         this.notice_attribute = notice_attribute;
     }
 
-    public Date getNotice_writedate() {
+/*   public Date getNotice_writedate() {
         return notice_writedate;
     }
 
     public void setNotice_writedate(Date notice_writedate) {
         this.notice_writedate = notice_writedate;
-    }
+    }*/
 }

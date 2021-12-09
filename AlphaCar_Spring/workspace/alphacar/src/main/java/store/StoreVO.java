@@ -22,8 +22,17 @@ public class StoreVO {
 	private Date create_date      ;
 	private Date change_date      ;
 	private String imgpath ;
+	private int fav_number;
 	
 	
+	
+	
+	public int getFav_number() {
+		return fav_number;
+	}
+	public void setFav_number(int fav_number) {
+		this.fav_number = fav_number;
+	}
 	public String getImgpath() {
 		return imgpath;
 	}

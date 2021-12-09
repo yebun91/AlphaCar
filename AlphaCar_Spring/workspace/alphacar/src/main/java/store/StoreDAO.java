@@ -1,5 +1,6 @@
 package store;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -72,6 +73,24 @@ public class StoreDAO implements StoreService{
 	public List<Store_FileVO> master_store_file(String customer_email) {
 		// TODO Auto-generated method stub
 		return sql.selectList("store.mapper.master",customer_email);
+	}
+
+	@Override
+	public int store_update_register(RegisterVO vo) {
+		// TODO Auto-generated method stub
+		return sql.update("store.mapper.update_store", vo);
+	}
+
+	@Override
+	public List<RegFileVO> master_store_img(int store_number) {
+		// TODO Auto-generated method stub
+		return sql.selectList("store.mapper.img_file", store_number);
+	}
+
+	@Override
+	public int store_img_update(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sql.update("store.mapper.img_update", map);
 	}
 	
 	

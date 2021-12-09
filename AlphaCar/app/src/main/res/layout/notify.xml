@@ -5,20 +5,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="100"
+    android:background="@color/white"
     >
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="5"
-        android:textSize="40dp"
+        android:textSize="35dp"
         android:text="공지사항"
+        android:textColor="@color/black"
+        android:gravity="center"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#9C9C9C"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         />
 
 
 
 
     <ListView
-        android:id="@+id/notify"
+        android:id="@+id/notify_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="75"

@@ -56,8 +56,8 @@ public class NotifyAdapter extends BaseAdapter {
             // 붙인 화면과 아래에 생성한 뷰홀더를 연결한다.
             viewHolder.title = convertView.findViewById(R.id.noti_title);
             viewHolder.content = convertView.findViewById(R.id.noti_content);
-            viewHolder.customer_email = convertView.findViewById(R.id.noti_customer_email);
-            viewHolder.noti_id = convertView.findViewById(R.id.noti_id);
+     //       viewHolder.customer_email = convertView.findViewById(R.id.noti_customer_email);
+     //       viewHolder.noti_id = convertView.findViewById(R.id.noti_id);
 
             convertView.setTag(viewHolder);
         }else {  // 캐시된 뷰가 있을경우 이미 생성된 뷰홀더를 사용한다.
@@ -65,21 +65,21 @@ public class NotifyAdapter extends BaseAdapter {
         }
 
         NotiftDTO dto = notiftDTOS.get(position);
-        String id = String.valueOf(dto.getNotice_id());
+    //    String id = String.valueOf(dto.getNotice_id());
         String title = dto.getNotice_title();
-        String content = dto.getNotice_content();
-        String customer_email = dto.getCustomer_email();
+        String content = dto.getNotice_writedate();
+   //     String customer_email = dto.getCustomer_email();
 
-        viewHolder.noti_id.setText(id);
+    //    viewHolder.noti_id.setText(id);
         viewHolder.title.setText(title);
         viewHolder.content.setText(content);
-        viewHolder.customer_email.setText(customer_email);
+   //     viewHolder.customer_email.setText(customer_email);
 
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, id , Toast.LENGTH_SHORT).show();
+  //              Toast.makeText(mContext, id , Toast.LENGTH_SHORT).show();
                 /* 공지사항 클릭시 상세정보 */
 
                Intent intent = new Intent(mContext, Announce_detail_Activity.class);

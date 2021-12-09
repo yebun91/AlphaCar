@@ -118,6 +118,8 @@ public class MemberController {
 		res.setContentType("text/html");
 		req.setCharacterEncoding("UTF-8");
 		
+		String filePath = "http://192.168.0.122:8080/alphacar/resources/img/";
+		
 		String fileName = "";
 		
 		MultipartRequest multi = (MultipartRequest)req;
@@ -129,10 +131,11 @@ public class MemberController {
 			
 			if(file.getSize() > 0) {
 				String realImgPath = req.getSession().getServletContext()
-						.getRealPath("/resources/");
+						.getRealPath("/resources/img");
 				
 				System.out.println("realpath : " + realImgPath);
 				System.out.println("fileSize : " + file.getSize());
+				
 				
 				// 이미지 파일을 서버에 저장
 				try {
@@ -145,7 +148,8 @@ public class MemberController {
 		}		
 		
 		MemberVO vo = new MemberVO(req.getParameter("customer_email"), req.getParameter("customer_pw"), 
-				req.getParameter("customer_name"), req.getParameter("admin"), fileName);
+				req.getParameter("customer_name"), req.getParameter("admin"), filePath+fileName);
+		
 
 		int result = service.anJoin(vo);
 		HashMap<String, String> map = new HashMap<String, String>();

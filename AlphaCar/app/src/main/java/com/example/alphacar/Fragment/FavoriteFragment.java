@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +35,7 @@ public class FavoriteFragment extends Fragment {
     FavoriteSelect favoriteSelect;
     RecyclerView recyclerView;
     FavoriteAdapter favoriteAdapter;
+    ImageView fav_back_Button;
 
     @Nullable
     @Override
@@ -42,7 +45,18 @@ public class FavoriteFragment extends Fragment {
                 container,false);
         mActivity = (MainActivity) getActivity();
         arrayList = new ArrayList<>();
-        if(loginDTO != null) {
+
+        fav_back_Button = rootView.findViewById(R.id.fav_back_Button);
+        fav_back_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().remove(FavoriteFragment.this).commit();
+                fragmentManager.popBackStack();
+
+            }
+        });
+
             if (isNetworkConnected(mActivity) == true) {
                 favoriteSelect = new FavoriteSelect(dto, arrayList);
                 //listDetail = new ListDetail(store_number);
@@ -58,7 +72,7 @@ public class FavoriteFragment extends Fragment {
                 Toast.makeText(mActivity, "인터넷이 연결되어 있지 않습니다.",
                         Toast.LENGTH_SHORT).show();
             }
-        }
+
         favoriteAdapter = new FavoriteAdapter(mActivity.getApplicationContext(), arrayList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 mActivity.getApplicationContext(), RecyclerView.VERTICAL, false

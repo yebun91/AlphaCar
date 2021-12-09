@@ -69,6 +69,11 @@ public class HomeNoticeServiceImpl implements HomeNoticeService {
 		return dao.board_comment_list(notice_id);
 	}
 	
+	@Override
+	public List<HomeNoticeVO> an_notice_list() {
+		// TODO Auto-generated method stub
+		return dao.an_notice_list();
+	}
 	
 
 }

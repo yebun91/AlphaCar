@@ -54,8 +54,9 @@ public class MasterStoreAdapter extends RecyclerView.Adapter<MasterStoreAdapter.
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, RegisterUpdateActivity.class);
+                intent.putExtra("store_number", item.getStore_number());
                 intent.putExtra("store_name", item.getStore_name());
-                intent.putExtra("customer_name",loginDTO.getCustomer_name());
+                intent.putExtra("customer_name",item.getStore_master_name());
                 intent.putExtra("store_registration_number", item.getStore_registration_number());
                 intent.putExtra("inventory", item.getInventory());
                 intent.putExtra("store_price", item.getStore_price());
@@ -64,6 +65,7 @@ public class MasterStoreAdapter extends RecyclerView.Adapter<MasterStoreAdapter.
                 intent.putExtra("store_tel", item.getStore_tel());
                 intent.putExtra("store_time", item.getStore_time());
                 intent.putExtra("store_dayoff", item.getStore_dayoff());
+                intent.putExtra("image_path", item.getImgpath());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }

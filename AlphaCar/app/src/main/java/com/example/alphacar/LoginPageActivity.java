@@ -36,14 +36,19 @@ public class LoginPageActivity extends AppCompatActivity {
     //카카오로그인에 필요한 ISession
     private ISessionCallback mSessionCallback;
 
+
+
     // 로그인이 성공하면 static 로그인DTO 변수에 담아서
     // 어느곳에서나 접근할 수 있게 한다
     public static MemberVO loginDTO = null;
+
+    MainActivity mainActivity;
 
     EditText memberlogin_et_email, memberlogin_et_pw;
     TextView memberlogin_bt_login;
     Button memberlogin_bt_join;
     ImageButton btn_back;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,7 @@ public class LoginPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_page);
 
         checkDangerousPermissions();
+
 
         memberlogin_et_email = findViewById(R.id.memberlogin_et_email);
         memberlogin_et_pw = findViewById(R.id.memberlogin_et_pw);
@@ -71,7 +77,7 @@ public class LoginPageActivity extends AppCompatActivity {
         memberlogin_bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(memberlogin_et_email.getText().toString().length() != 0 && memberlogin_et_pw.getText().toString().length() != 0){
+                if (memberlogin_et_email.getText().toString().length() != 0 && memberlogin_et_pw.getText().toString().length() != 0) {
                     String customer_email = memberlogin_et_email.getText().toString();
                     String customer_pw = memberlogin_et_pw.getText().toString();
 
@@ -91,17 +97,17 @@ public class LoginPageActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(loginDTO != null){
+                if (loginDTO != null) {
                     Toast.makeText(LoginPageActivity.this, "로그인 되었습니다.", Toast.LENGTH_SHORT).show();
                     Log.d("main:login", loginDTO.getCustomer_name() + "님 로그인 되었습니다.");
 
                     // 로그인 정보에 값이 있으면 로그인이 되었으므로 메인화면으로 이동
-                    if(loginDTO != null){
+                    if (loginDTO != null) {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                     }
 
-                }else {
+                } else {
                     Toast.makeText(LoginPageActivity.this, "아이디나 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                     Log.d("main:login", "아이디나 비밀번호가 일치하지 않습니다.");
                     memberlogin_et_email.setText("");
@@ -122,53 +128,62 @@ public class LoginPageActivity extends AppCompatActivity {
             }
         });
 
+
         //카카오 로그인 시작
-            mSessionCallback = new ISessionCallback() {
-
-                @Override
-                public void onSessionOpened() {
-                    //로그인 요청
-                    UserManagement.getInstance().me(new MeV2ResponseCallback() {
-                        @Override
-                        public void onFailure(ErrorResult errorResult) {
-                            //로그인 실패
-                        }
-
-                        @Override
-                        public void onSessionClosed(ErrorResult errorResult) {
-                            //세션이 닫힘...
-                            Toast.makeText(LoginPageActivity.this, "로그인 도중 오류가 발생했습니다.. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onSuccess(MeV2Response result) {
-
-                            //로그인 성공
-                            Intent intent = new Intent(LoginPageActivity.this, MainActivity.class);
-                            intent.putExtra("name", result.getKakaoAccount().getProfile().getNickname());
-                            intent.putExtra("profileImg", result.getKakaoAccount().getProfile().getProfileImageUrl());
-                            intent.putExtra("email", result.getKakaoAccount().getEmail());
-                            startActivity(intent);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                            Toast.makeText(LoginPageActivity.this, "환영 합니다. !", Toast.LENGTH_SHORT).show();
-
-                        }
-
-                });
-                }
-                @Override
-                public void onSessionOpenFailed(KakaoException exception) {
-                    Toast.makeText(LoginPageActivity.this, "onSessionOpenFailed", Toast.LENGTH_SHORT).show();
-                }
-            };
-            Session.getCurrentSession().addCallback(mSessionCallback);
-            Session.getCurrentSession().checkAndImplicitOpen();
 
 
 
-        //카카오 로그인 끝
+                mSessionCallback = new ISessionCallback() {
+
+                    @Override
+                    public void onSessionOpened() {
+                        //로그인 요청
+                        UserManagement.getInstance().me(new MeV2ResponseCallback() {
+                            @Override
+                            public void onFailure(ErrorResult errorResult) {
+                                //로그인 실패
+                            }
+
+                            @Override
+                            public void onSessionClosed(ErrorResult errorResult) {
+                                //세션이 닫힘...
+                                Toast.makeText(LoginPageActivity.this, "로그인 도중 오류가 발생했습니다.. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onSuccess(MeV2Response result) {
+
+                                //로그인 성공
+
+                                Intent intent = new Intent(LoginPageActivity.this, MainActivity.class);
+                                intent.putExtra("name", result.getKakaoAccount().getProfile().getNickname());
+                                intent.putExtra("profileImg", result.getKakaoAccount().getProfile().getProfileImageUrl());
+                                intent.putExtra("email", result.getKakaoAccount().getEmail());
+                                startActivity(intent);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                Toast.makeText(LoginPageActivity.this, "환영 합니다. !", Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        });
+                    }
+
+                    @Override
+                    public void onSessionOpenFailed(KakaoException exception) {
+                        Toast.makeText(LoginPageActivity.this, "onSessionOpenFailed", Toast.LENGTH_SHORT).show();
+                    }
+                };
+                Session.getCurrentSession().addCallback(mSessionCallback);
+                Session.getCurrentSession().checkAndImplicitOpen();
+
+
+                //카카오 로그인 끝
 
             }
+
+
+
 
 
 
@@ -232,5 +247,11 @@ public class LoginPageActivity extends AppCompatActivity {
         super.onDestroy();
         Session.getCurrentSession().removeCallback(mSessionCallback);
         loginDTO = null;
+        UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
+            @Override
+            public void onCompleteLogout() {
+
+            }
+        });
     }
 }

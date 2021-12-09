@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.zip.Inflater;
 
-public class announceFragment extends Fragment implements AbsListView.OnScrollListener {
+public class AnnounceFragment extends Fragment implements AbsListView.OnScrollListener {
 
     MainActivity mActivity;
     NotiSelect notiSelect;
@@ -58,7 +58,7 @@ public class announceFragment extends Fragment implements AbsListView.OnScrollLi
         mActivity = (MainActivity)  getActivity();
         notiftDTOS = new ArrayList<>();
 
-        listView = rootview.findViewById(R.id.notify);
+        listView = rootview.findViewById(R.id.notify_listView);
         progressBar = rootview.findViewById(R.id.noti_progressbar);
         noti_item = rootview.findViewById(R.id.noti_item);
 

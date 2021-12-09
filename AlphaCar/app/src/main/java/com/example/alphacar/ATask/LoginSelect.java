@@ -107,7 +107,7 @@ public class LoginSelect extends AsyncTask<Void, Void, MemberVO> {
             } else if (readStr.equals("admin")) {
                 admin = reader.nextString();
             } else if (readStr.equals("customer_picture")) {
-                customer_picture = ipConfig + "/alphacar/resources/" + reader.nextString();
+                customer_picture = reader.nextString();
             }else {
                 reader.skipValue();
             }
