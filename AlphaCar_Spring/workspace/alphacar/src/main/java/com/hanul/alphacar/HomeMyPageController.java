@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 
 import common.CommonService;
+import homeChart.ChartVO;
 import homeMypage.CustomerPage;
 import homeMypage.HomeMyPageServiceImpl;
 import homeMypage.HomeStoreFileVO;
@@ -137,13 +138,16 @@ public class HomeMyPageController {
 	
 	//가게 그래프 보러가기
 	@RequestMapping("/memberCompanyGraph.mp")
-	public String memberCompanyGraph(HttpSession session, Model model) {
+	public String memberCompanyGraph(HttpSession session, Model model, int store_number ) {
+		
+		model.addAttribute("store_number", store_number);
+		model.addAttribute("vo", homeService.companyId_list(store_number));
 		return "mypage/member_company_graph";
 	}
 	
 	//가게 수정 페이지 요청
 	@RequestMapping("/memberCompanyUpdate.mp")
-	public String memberCompanyUpdate(HttpSession session, Model model, int store_number, WebMemberVO vo ) {
+	public String memberCompanyUpdate(HttpSession session, Model model, int store_number) {
 		
 			model.addAttribute("vo", homeService.companyId_list(store_number));
 			model.addAttribute("img", homeService.company_img(store_number));
