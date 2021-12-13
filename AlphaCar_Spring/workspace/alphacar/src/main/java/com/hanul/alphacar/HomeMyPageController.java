@@ -48,9 +48,9 @@ public class HomeMyPageController {
 	@RequestMapping("/mypage.mp")
 	public String login(HttpSession session) {
 		
-	  HashMap<String, String> map = new HashMap<String, String>();
-	  map.put("customer_email", "e"); map.put("customer_pw", "e");
-	  session.setAttribute("loginInfo", member.member_login(map));
+//	  HashMap<String, String> map = new HashMap<String, String>();
+//	  map.put("customer_email", "e"); map.put("customer_pw", "e");
+//	  session.setAttribute("loginInfo", member.member_login(map));
 		 
 		
 		return "mypage/mypage";

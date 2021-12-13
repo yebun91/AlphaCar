@@ -12,6 +12,10 @@
 	<security:http pattern="/**/*.css" security="none"/>
 	<security:http pattern="/img/**" security="none"/>		
 	<security:http pattern="/ioTCarWash" security="none"/>		
+	<security:http pattern="/**/*.mp" security="none"/>	
+	<security:http pattern="/email_dupl" security="none"/>
+	<security:http pattern="/homeRegister" security="none"/>
+	
 	
 	<security:http> 
 		<security:intercept-url pattern="/homeLogin" access="permitAll"/>

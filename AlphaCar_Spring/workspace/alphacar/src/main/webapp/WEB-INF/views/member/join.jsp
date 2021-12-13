@@ -44,6 +44,7 @@
   </div>
   
 <script type="text/javascript">
+
 const image = document.querySelector('.mypage_user_image');
 const input_file = document.querySelector('.image_upload');
 
@@ -82,12 +83,18 @@ let pwToken = false;
 let p2Token = false;
 let nmToken = false;
 
+var csrfHeaderName = "${_csrf.headerName}";
+var csrfTokenValue = "${_csrf.token}";
+
 function duplicate() {
 	$.ajax({
 		url : 'email_dupl'
 		, data : {id:email.value}
 		, type : 'post'
 		, async : false
+		, beforeSend: function(xhr){
+	           xhr.setRequestHeader(csrfHeaderName, csrfTokenValue)
+	       }
 		, success : function (res) {
 			if (res == true) {
 				alert("사용 가능한 이메일 주소입니다.");
