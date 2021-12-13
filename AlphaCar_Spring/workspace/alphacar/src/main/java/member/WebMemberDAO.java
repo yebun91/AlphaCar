@@ -25,6 +25,12 @@ public class WebMemberDAO implements WebMemberService {
 	}
 
 	@Override
+	public boolean member_id_check(String id) {
+		// TODO Auto-generated method stub
+		return (Integer) sql.selectOne("webmember.mapper.id_check", id) == 0 ? true : false;
+	}
+
+	@Override
 	public boolean member_social_email(WebMemberVO vo) {
 		return (Integer) sql.selectOne("webmember.mapper.social_email", vo) == 0 ? false : true;
 	}

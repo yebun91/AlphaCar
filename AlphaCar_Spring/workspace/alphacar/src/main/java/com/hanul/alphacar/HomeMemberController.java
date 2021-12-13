@@ -63,6 +63,13 @@ public class HomeMemberController {
 		return "member/join";
 	}
 	
+	//이메일 주소 중복 검사
+	@ResponseBody
+	@RequestMapping("/email_dupl")
+	public boolean id_check(String id) {
+		return service.member_id_check(id);
+	}
+
 	//회원가입 요청
 	@ResponseBody
 	@RequestMapping(value = "/homeRegister", produces = "text/html; charset=utf-8")

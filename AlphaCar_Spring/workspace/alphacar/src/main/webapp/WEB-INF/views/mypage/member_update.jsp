@@ -15,15 +15,17 @@
 		<form action="memberSubmit.mp" enctype="multipart/form-data"
 			class="customer_update_form form" method="post">
 			<h1>회원 정보 수정</h1>
-			<input type="text" name="customer_email"
-				value="${loginInfo.customer_email}" class="join_email" readonly>
-			<input type="password" placeholder="기존 비밀번호를 작성해주세요."
-				class="old_join_pw"> <input type="password"
-				name="customer_pw" value="${loginInfo.customer_pw}"
-				placeholder="변경할 비밀번호" class="join_pw"> <input
-				type="password" placeholder="변경할 비밀번호 확인" class="join_pw2">
+			<input type="text" name="customer_email" value="${loginInfo.customer_email}" class="join_email" id="email" readonly>
+			<input type="hidden" id="old_pw" value="${loginInfo.customer_pw}">
+			<input type="password" placeholder="기존 비밀번호를 작성해주세요." class="old_join_pw" id="written_pw" onkeyup="checkOldPw()">
+			<div id="oldPwError"></div>
+			<input type="password" name="customer_pw" placeholder="변경할 비밀번호" class="join_pw" id="new_pw" onkeyup="checkPw()">
+			<div id="pwError"></div>
+			<input type="password" placeholder="변경할 비밀번호 확인" class="join_pw2" id="new_pw2" onkeyup="checkPw2()">
+			<div id="pw2Error"></div>
 			<input type="text" name="customer_name"
-				value="${loginInfo.customer_name}" class="join_name">
+				value="${loginInfo.customer_name}" class="join_name" id="new_name" onkeyup="checkName()">
+			<div id="nameError"></div>
 			<div class="join_company">
 				<h3>사업자 이신가요?</h3>
 				<div>
@@ -96,10 +98,88 @@ $(document).on('change', '.image_upload', function() {
 		reader.readAsDataURL(attached);
 	}
 })
+</script>
+<script type="text/javascript">
+let email = document.getElementById("email");
+let oldPw = document.getElementById("old_pw");
+let wrtPw = document.getElementById("written_pw");
+let pw    = document.getElementById("new_pw");
+let pw2   = document.getElementById("new_pw2");
+let name  = document.getElementById("new_name");
+
+let wpToken = false;
+let pwToken = false;
+let p2Token = false;
+let nmToken = false;
+
+const regPw    = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/
+const regName  = /^[가-힣]{2,4}$/
+
+function checkOldPw() {
+	alert(oldPw.value);
+	if(oldPw.value != wrtPw.value) {
+		document.getElementById("oldPwError").innerText = "기존의 비밀번호가 아닙니다.";
+		document.getElementById("oldPwError").style.color = "red";
+	}else {
+		document.getElementById("oldPwError").innerText = "기존의 비밀번호가 맞습니다.";
+		document.getElementById("oldPwError").style.color = "green";
+		wpToken = true;
+		
+	}
+}
+
+function checkPw() {
+	if(!regPw.test(pw.value)) {
+		document.getElementById("pwError").innerText = "영문 대소문자와 숫자, 특수문자를 모두 포함하는 8자리 이상의 비밀번호를 입력하세요.";
+		document.getElementById("pwError").style.color = "red";
+	}else {
+		document.getElementById("pwError").innerText = "비밀번호가 입력되었습니다.";
+		document.getElementById("pwError").style.color = "green";
+		pwToken = true;
+	}
+}
+function checkPw2() {
+	if(!pw2.value) {
+		document.getElementById("pw2Error").innerText = "비밀번호를 한번 더 입력해주세요.";
+		document.getElementById("pw2Error").style.color = "red";
+	}else if(pw.value != pw2.value) {
+		document.getElementById("pw2Error").innerText = "비밀번호가 일치하지 않습니다.";
+		document.getElementById("pw2Error").style.color = "red";
+	}else {
+		document.getElementById("pw2Error").innerText = "비밀번호가 일치합니다.";
+		document.getElementById("pw2Error").style.color = "green";
+		p2Token = true;
+	}
+}
+function checkName() {
+	if(!regName.test(name.value)) {
+		document.getElementById("nameError").innerText = "2-4자의 한글만 가능합니다.";
+		document.getElementById("nameError").style.color = "red";
+	}else {
+		document.getElementById("nameError").innerText = "이름이 입력되었습니다.";
+		document.getElementById("nameError").style.color = "green";
+		nmToken = true;
+	}
+}
 
 //회원정보 수정 버튼 누를 시
 function member_update() {
 
-	$("form").submit()
+	if(!wpToken) {
+		alert("기존 비밀번호를 입력하세요.");
+		wrtPw.focus();
+	}else if(!pwToken) {
+		alert("변경할 비밀번호를 입력하세요.");
+		pw.focus();
+	}else if(!p2Token) {
+		alert("변경할 비밀번호 확인을 해주세요.");
+		pw2.focus();
+	}else if(!nmToken) {
+		alert("이름을 입력하세요.");
+		name.focus();
+	}else {
+		$('form').submit();
+	}
+	
 }
 </script>

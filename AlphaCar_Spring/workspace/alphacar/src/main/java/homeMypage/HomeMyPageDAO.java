@@ -94,6 +94,12 @@ public class HomeMyPageDAO implements HomeMyPageService {
 	}
 
 	@Override
+	public Boolean memberCompanyDuplicate(String id) {
+		// TODO Auto-generated method stub
+		return (Integer) sql.selectOne("homeMyPage.mapper.memberCompanyDuplicate", id) == 0 ? true : false;
+	}
+
+	@Override
 	public List<HomeCompanyVO> company_list_all() {
 		return sql.selectList("homeMyPage.mapper.company_list_all");
 	}

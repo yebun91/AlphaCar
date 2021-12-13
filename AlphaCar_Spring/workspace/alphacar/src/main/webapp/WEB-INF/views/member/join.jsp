@@ -6,10 +6,18 @@
       <img src="img/alphacarLogo_text_black_500px.png" alt="alphaCar">
     </div>
     <form action="homeRegister" class="form" method="post" enctype="multipart/form-data">
-      <input type="text" placeholder="이메일" class="join_email" name="customer_email">
-      <input type="password" placeholder="비밀번호" class="join_pw" name="customer_pw">
-      <input type="password" placeholder="비밀번호 확인" class="join_pw2" >
-      <input type="text" placeholder="이름" class="join_name" name="customer_name">
+      <input type="text" placeholder="이메일" class="join_email" name="customer_email" id="customer_email" onkeyup="checkEmail()">
+      <a id='btn_email' onclick="duplicate()">이메일 중복검사</a>
+      <div type="text" class="valid" name="emailError" id="emailError"></div>
+      
+      <input type="password" placeholder="비밀번호" class="join_pw" name="customer_pw" id="customer_pw" onkeyup="checkPw()">
+      <div type="text" class="valid" name="pwError" id="pwError"></div>
+      <input type="password" placeholder="비밀번호 확인" class="join_pw2" name="customer_pw2" id="customer_pw2" onkeyup="checkPw2()">
+      <div type="text" class="valid" name="pwError2" id="pwError2"></div>
+      
+      <input type="text" placeholder="이름" class="join_name" name="customer_name" id="customer_name" onkeyup="checkName()">
+      <div type="text" class="valid" name="nameError" id="nameError"></div>
+
       <div class="join_company">
         <h3>사업자 이신가요?</h3>
         <div>
@@ -58,11 +66,106 @@ $(document).on('change', '.image_upload', function() {
 	}
 })
 
-function member_update() {
+const regEmail = /^[a-z0-9\.\-_]+@([a-z0-9\-]+\.)+[a-z]{2,6}$/
+const regPw    = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/
+const regName  = /^[가-힣]{2,4}$/
 
-	$("form").submit()
+let email = document.getElementById("customer_email");
+let pw    = document.getElementById("customer_pw");
+let pw2   = document.getElementById("customer_pw2");
+let name  = document.getElementById("customer_name");
+
+let emToken = false;
+let edToken = false;
+let pwToken = false;
+let p2Token = false;
+let nmToken = false;
+
+function duplicate() {
+	$.ajax({
+		url : 'email_dupl'
+		, data : {id:email.value}
+		, type : 'post'
+		, async : false
+		, success : function (res) {
+			if (res == true) {
+				alert("사용 가능한 이메일 주소입니다.");
+				edToken = true;
+			} else {
+				alert("중복되는 이메일 주소가 있습니다.");
+			}
+		}, error : function ( req, text ) {
+			alert(text + ':' + req.status);
+		}
+	});
 }
 
+function checkEmail() {
+	if(!regEmail.test(email.value)) {
+		document.getElementById("emailError").innerText = "이메일 형식(예:abc@def.com)에 맞게 입력하세요.";
+		document.getElementById("emailError").style.color = "red";
+	}else {
+		document.getElementById("emailError").innerText = "이메일이 입력되었습니다.";
+		document.getElementById("emailError").style.color = "green";
+		emToken = true;
+	}
+}
+
+function checkPw() {
+	if(!regPw.test(pw.value)) {
+		document.getElementById("pwError").innerText = "영문 대소문자와 숫자, 특수문자를 모두 포함하는 8자리 이상의 비밀번호를 입력하세요.";
+		document.getElementById("pwError").style.color = "red";
+	}else {
+		document.getElementById("pwError").innerText = "비밀번호가 입력되었습니다.";
+		document.getElementById("pwError").style.color = "green";
+		pwToken = true;
+	}
+}
+function checkPw2() {
+	if(pw2.value != pw.value) {
+		document.getElementById("pwError2").innerText = "비밀번호가 일치하지 않습니다.";
+		document.getElementById("pwError2").style.color = "red";
+	}else {
+		document.getElementById("pwError2").innerText = "비밀번호가 일치합니다.";
+		document.getElementById("pwError2").style.color = "green";
+		p2Token = true;
+	}
+}
+function checkName() {
+	if(!regName.test(name.value)) {
+		document.getElementById("nameError").innerText = "2-4자의 한글만 가능합니다.";
+		document.getElementById("nameError").style.color = "red";
+	}else {
+		document.getElementById("nameError").innerText = "이름이 입력되었습니다.";
+		document.getElementById("nameError").style.color = "green";
+		nmToken = true;
+	}
+}
+
+	function member_update() {
+
+		if(!emToken) {
+			alert("이메일을 입력하세요.");
+			email.focus();
+		}else if(!edToken) {
+			alert("이메일 중복검사를 통과하세요.");
+		}else if(!pwToken) {
+			alert("비밀번호를 입력하세요.");
+			pw.focus();
+		}else if(!p2Token) {
+			alert("비밀번호 확인을 해주세요.");
+			pw2.focus();
+		}else if(!nmToken) {
+			alert("이름을 입력하세요.");
+			name.focus();
+		}else {
+			$('form').submit();
+		}
+		
+	}
+</script>
+
+<script>
 /*지역 선택*/
 $('document').ready(function() {
 	var area0 = ["시/도 선택", "서울특별시", "인천광역시", "대전광역시", "광주광역시", "대구광역시", "울산광역시", "부산광역시", "경기도", "강원도", "충청북도", "충청남도", "전라북도", "전라남도", "경상북도", "경상남도", "제주도"];

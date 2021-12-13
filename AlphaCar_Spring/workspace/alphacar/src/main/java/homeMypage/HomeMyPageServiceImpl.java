@@ -85,6 +85,12 @@ public class HomeMyPageServiceImpl implements HomeMyPageService {
 	}
 
 	@Override
+	public Boolean memberCompanyDuplicate(String id) {
+		// TODO Auto-generated method stub
+		return dao.memberCompanyDuplicate(id);
+	}
+
+	@Override
 	public List<HomeCompanyVO> company_list_all() {
 		// TODO Auto-generated method stub
 		return dao.company_list_all();

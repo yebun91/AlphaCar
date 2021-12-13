@@ -10,6 +10,9 @@ public interface WebMemberService {
 	//회원가입
 	boolean member_join(WebMemberVO vo);
 	
+	//아이디 유효성 검사
+	boolean member_id_check(String id);
+
 	// 소셜 회원 정보 존재여부 (R)
 	boolean member_social_email(WebMemberVO vo);	
 	

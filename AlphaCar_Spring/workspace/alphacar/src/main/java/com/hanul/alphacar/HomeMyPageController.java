@@ -200,6 +200,14 @@ public class HomeMyPageController {
 		return "mypage/member_company_insert";
 	}
 	
+	// 사업자 등록번호 중복검사
+	@ResponseBody
+	@RequestMapping("/regiDupl.mp")
+	public boolean memberCompanyDuplicate(String id) {
+		System.out.println(id);
+		return memberCompanyDuplicate(id);
+	}
+
 	//신규 가게 저장 요청
 	@RequestMapping(value = "/homeStoreRegister.mp", produces = "text/html; charset=utf-8")
 	public String homeStoreRegister(HomeStoreVO vo, HttpSession session, int inventory,  

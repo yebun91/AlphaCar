@@ -18,6 +18,12 @@
 		values (#{customer_email}, #{customer_pw}, #{customer_name}, #{customer_picture, jdbcType=VARCHAR}, #{admin},
 			#{city}, #{addr})
 	</insert>
+
+	<!-- 아이디 중복 체크 -->
+	<select id="id_check" resultType="integer">
+		select count(*) from customer
+		where customer_email = #{id}
+	</select>
 	
 	<!-- social_email 존재 여부 조회 (소셜 로그인 이력 조회) -->
 	<select id="social_email" resultType="integer">

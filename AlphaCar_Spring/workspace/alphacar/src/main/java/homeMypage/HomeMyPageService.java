@@ -21,6 +21,9 @@ public interface HomeMyPageService {
 	//신규 가게 등록
 	int company_insert(HomeStoreVO vo);
 	
+	//사업자 등록번호 중복검사
+	Boolean memberCompanyDuplicate(String id);
+
 	//신규 가게 이미지 등록
 	void companyImg_insert(HomeStoreFileVO vo);
 	

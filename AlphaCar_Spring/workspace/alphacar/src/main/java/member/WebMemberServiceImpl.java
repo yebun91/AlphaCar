@@ -22,6 +22,11 @@ public class WebMemberServiceImpl implements WebMemberService {
 	}
 
 	@Override
+	public boolean member_id_check(String id) {
+		return dao.member_id_check(id);
+	}
+
+	@Override
 	public boolean member_social_email(WebMemberVO vo) {
 		return dao.member_social_email(vo);
 	}
