@@ -1,8 +1,13 @@
 package com.example.alphacar;
 
+import static com.example.alphacar.R.color.red;
+
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.loader.content.CursorLoader;
@@ -44,6 +50,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Pattern;
 
 public class JoinPageActivity extends AppCompatActivity {
 
@@ -74,16 +81,52 @@ public class JoinPageActivity extends AppCompatActivity {
         return url;
     }
 
+    private void takePicture(){
+        int permissionCheck = ContextCompat.checkSelfPermission(JoinPageActivity.this, Manifest.permission.CAMERA);
+
+        if(permissionCheck == PackageManager.PERMISSION_DENIED){
+            // 권한없음
+            ActivityCompat.requestPermissions(JoinPageActivity.this, new String[]{Manifest.permission.CAMERA},0);
+        }else{
+            // 암묵적인텐트 : 사진찍기(카메라를 불러옴)
+            Intent picIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            // 일단 이 인텐트가 사용가능한지 체크
+            if(picIntent.resolveActivity(getPackageManager()) != null){
+                imgFile = null;
+                // createFile 매소드를 이용하여 임시파일을 만듬
+                imgFile = creatFile();
+
+                if(imgFile != null){
+                    // API24 이상부터는 FileProvider 를 제공해야함
+                    Uri imgUri = FileProvider.getUriForFile(getApplicationContext(),
+                            getApplicationContext().getPackageName()+".fileprovider",
+                            imgFile);
+                    // 만약에 API24 이상이면
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){ // API24
+                        picIntent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
+                    }else {
+                        picIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imgFile));
+                    }
+
+                    startActivityForResult(picIntent, CAMERA_CODE);
+                }
+
+            }
+        }
+
+    }
+
     //팝업으로 받아온 프로필 사진 처리 방법
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         memberjoin_iv_profile = findViewById(R.id.memberjoin_iv_profile);
 
-        if (resultCode == RESULT_OK) {
+   //     if (resultCode == RESULT_OK) {
             PopupResult result = (PopupResult) data.getSerializableExtra("result");
             if(result == PopupResult.LEFT){
-                // 사진 찍기
+                takePicture();
+              /*  // 사진 찍기
                 Intent picIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if(picIntent.resolveActivity(getPackageManager()) != null){
                     // imgFile = null;
@@ -106,7 +149,7 @@ public class JoinPageActivity extends AppCompatActivity {
                         startActivityForResult(picIntent, CAMERA_CODE);
                     }
 
-                }
+                }*/
 
             } else if(result == PopupResult.RIGHT){
                 // 사진첩 접근
@@ -114,7 +157,7 @@ public class JoinPageActivity extends AppCompatActivity {
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                 startActivityForResult(intent, GALLEY_CODE);
             }
-        }
+//        }
         if(requestCode == GALLEY_CODE){
                     profile = getRealPathFromUri(data.getData());
             RequestOptions cropOptions = new RequestOptions();
@@ -227,6 +270,7 @@ public class JoinPageActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -251,7 +295,6 @@ public class JoinPageActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
         //프로필 사진 클릭시
         memberjoin_iv_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -402,6 +445,13 @@ public class JoinPageActivity extends AppCompatActivity {
                     memberjoin_et_email.setTextColor(red);
                     emailCheck = false;
                 }
+
+                if(!android.util.Patterns.EMAIL_ADDRESS.matcher(id).matches())
+                {
+                    memberjoin_et_email.setTextColor(red);
+                }
+
+
             }
             @Override
             public void afterTextChanged(Editable s) {
@@ -434,7 +484,7 @@ public class JoinPageActivity extends AppCompatActivity {
         });
 
         //비밀번호 유효성 검사 할때 틀리면 빨간색으로 변경
-        /*memberjoin_et_pw.addTextChangedListener(new TextWatcher() {
+        memberjoin_et_pw.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -455,6 +505,24 @@ public class JoinPageActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
             }
-        });*/
+        });
+
+     //   memberjoin_et_email
+        CharSequence cs  = memberjoin_et_pw.getText().toString();
+        /*memberjoin_et_pw2
+        memberjoin_et_name
+        memberjoin_cb_company
+        memberjoin_iv_profile
+        memberjoin_bt_join*/
+
+
+
+
+
+
+
+
     }
+
+
 }

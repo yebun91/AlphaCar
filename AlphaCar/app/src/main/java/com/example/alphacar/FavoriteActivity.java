@@ -2,6 +2,8 @@ package com.example.alphacar;
 
 import static com.example.alphacar.Common.CommonMethod.isNetworkConnected;
 import static com.example.alphacar.LoginPageActivity.loginDTO;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -36,6 +38,7 @@ public class FavoriteActivity extends AppCompatActivity {
         FavoriteAdapter favoriteAdapter;
 
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

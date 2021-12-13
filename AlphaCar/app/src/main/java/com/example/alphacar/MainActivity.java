@@ -9,14 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -44,11 +43,7 @@ import com.example.alphacar.Fragment.ViewpagerFragment;
 import com.example.alphacar.Fragment.AnnounceFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.kakao.auth.ISessionCallback;
-import com.kakao.auth.Session;
 import com.kakao.plusfriend.PlusFriendService;
-import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.util.exception.KakaoException;
 import com.lakue.lakuepopupactivity.PopupActivity;
 import com.lakue.lakuepopupactivity.PopupGravity;
@@ -67,7 +62,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     FrameLayout search_bar;
     Button btn_cp_reg;
-    ImageView kakao_ch, kakao_chat;
+    ImageView kakao_ch, kakao_chat, web_alphacar;
 
 
     NavigationView nav_view;
@@ -122,6 +117,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         kakao_ch = findViewById(R.id.btn_kakao_ch);
         kakao_chat = findViewById(R.id.btn_kakao_chat);
 
+        web_alphacar = findViewById(R.id.web_alphacar);
 
         storeDTOArrayList = new ArrayList<>();
         /* 메인 뷰페이저에 데이터 집어넣기 */
@@ -150,6 +146,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         Fragment fragment = new Main_search_bar_Fragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.contain, fragment).commit();
+
+
 
 
         btn_cp_reg.setOnClickListener(new View.OnClickListener() {
@@ -184,6 +182,15 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             }
         });
 
+        web_alphacar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://192.168.0.122:8080/alphacar/"));
+                //intent.setPackage("com.android.chrome");   // 브라우저가 여러개 인 경우 콕 찍어서 크롬을 지정할 경우
+                startActivity(intent);
+
+            }
+        });
 
 
 /*        Intent intent = new Intent(MainActivity.this, LoadingPageActivity.class);
@@ -374,7 +381,12 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                     Intent intent = new Intent(this, LoginPageActivity.class);
                  startActivity(intent);
                     }
-        }else if (id == R.id.nav_noti){
+        }else if(id == R.id.nav_setting){
+                Intent intent = new Intent(this, SettingActivity.class);
+                startActivity(intent);
+                }
+
+                else if (id == R.id.nav_noti){
             Fragment fragment = new AnnounceFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.contain,fragment).commit();

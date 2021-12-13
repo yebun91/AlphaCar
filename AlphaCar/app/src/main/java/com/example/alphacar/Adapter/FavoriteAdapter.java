@@ -126,6 +126,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ItemVi
                     //listDetail = new ListDetail(store_number);
                     try {
                         favoriteDelect.execute().get();
+                        Toast.makeText(mContext, "즐겨찾기 삭제 됨 !!!", Toast.LENGTH_SHORT).show();
                         //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
                     } catch (ExecutionException e) {
                         e.printStackTrace();

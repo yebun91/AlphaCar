@@ -5,14 +5,32 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-
     >
-    <!--상단 검색 창-->
-    <androidx.fragment.app.FragmentContainerView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/detail_frag"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:weightSum="100"
+
+        >
+        <ImageView
+            android:id="@+id/detail_back"
+            android:src="@drawable/ic_backicon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="90"
+            />
+        <ImageView
+            android:id="@+id/detail_home"
+            android:src="@drawable/ic_home"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="80"
+            />
+
+
+    </LinearLayout>
 
 
     <!--전체 화면-->

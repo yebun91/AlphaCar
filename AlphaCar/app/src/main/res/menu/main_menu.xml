@@ -11,13 +11,14 @@
             android:icon="@drawable/ic_baseline_create"
             android:title="회원가입"/>
         <item
-            android:id="@+id/nav_favorite"
-            android:icon="@drawable/ic_baseline_favorite_24"
-            android:title="즐겨찾기"/>
-        <item
             android:id="@+id/nav_noti"
             android:icon="@drawable/ic_bookmark"
             android:title="공지 사항"/>
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="설정"/>
+
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/logout_icon"

@@ -104,6 +104,8 @@ public class LoginPageActivity extends AppCompatActivity {
                     // 로그인 정보에 값이 있으면 로그인이 되었으므로 메인화면으로 이동
                     if (loginDTO != null) {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    //    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                     //   finish();
                         startActivity(intent);
                     }
 

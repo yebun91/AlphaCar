@@ -103,6 +103,20 @@ public class ReviewActivity extends AppCompatActivity {
                 if (imgFilePath!="") {
                     imgPath = imgFilePath;
                 }
+
+                if(reviewTitle.length() == 0){
+                    Toast.makeText(ReviewActivity.this, "제목을 입력하세요", Toast.LENGTH_SHORT).show();
+                    editTitle.requestFocus();
+                    return;
+                }
+
+                if(reviewContent.length() == 0){
+                    Toast.makeText(ReviewActivity.this, "내용을 입력하세요", Toast.LENGTH_SHORT).show();
+                    editReview.requestFocus();
+                    return;
+                }
+
+
                 // 이정보를 비동기 Task 로 넘겨 서버에게 전달한다
                 reviewInsert = new ReviewInsert(store_number,email, rating, reviewTitle, reviewContent, imgPath);
                 try {
@@ -114,7 +128,11 @@ public class ReviewActivity extends AppCompatActivity {
                 }
                 if (state.equals("1")){
                     Toast.makeText(ReviewActivity.this, "리뷰가 정상적으로 등록되었습니다", Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(ReviewActivity.this, DetailActivity.class);
+                    intent1.putExtra("store_number", store_number);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     finish();
+                    startActivity(intent1);
                 }else {
                     Toast.makeText(ReviewActivity.this, "리뷰 등록에 실패하였습니다, 다시 시도해주세요", Toast.LENGTH_SHORT).show();
                 }

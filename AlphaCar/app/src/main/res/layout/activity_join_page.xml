@@ -99,6 +99,7 @@
                     android:layout_marginBottom="20dp"
                     android:hint="숫자, 문자, 특수문자 포함(6~15자)"
                     android:textColorHint="#A8A8A8"
+                    android:maxLength="15"
                     />
 
             </LinearLayout>
@@ -126,7 +127,9 @@
                     android:paddingLeft="20dp"
                     android:layout_marginBottom="20dp"
                     android:hint="숫자, 문자, 특수문자 포함(6~15자)"
-                    android:textColorHint="#A8A8A8"/>
+                    android:textColorHint="#A8A8A8"
+                    android:maxLength="15"
+                    />
 
             </LinearLayout>
 

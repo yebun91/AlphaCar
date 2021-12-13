@@ -97,6 +97,7 @@
                     android:paddingLeft="20dp"
                     android:layout_marginBottom="20dp"
                     android:layout_height="40dp"
+
                     />
 
             </LinearLayout>
@@ -112,7 +113,9 @@
                     android:layout_height="wrap_content"
                     android:text="사업자등록번호"
                     android:textColor="#FFFFFF"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp"
+
+                    />
 
                 <EditText
                     android:id="@+id/register_et_store_registration_number"
@@ -123,8 +126,9 @@
                     android:paddingLeft="20dp"
                     android:layout_marginBottom="20dp"
                     android:layout_height="40dp"
-                    android:hint="123-45-67890"
+                    android:hint="입력 시 '-'는 제외 하고 입력해 주세요"
                     android:textColorHint="#A8A8A8"
+                    android:maxLength="10"
                     />
 
             </LinearLayout>
@@ -152,6 +156,7 @@
                     android:layout_marginBottom="20dp"
                     android:layout_height="40dp"
                     android:inputType="number"
+                    android:maxLength="1"
                     />
 
             </LinearLayout>
@@ -338,6 +343,7 @@
                     android:paddingLeft="20dp"
                     android:layout_marginBottom="20dp"
                     android:layout_height="40dp"
+                    android:hint="00:00 ~ 24:00"
                     />
 
             </LinearLayout>

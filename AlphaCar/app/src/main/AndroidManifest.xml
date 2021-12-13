@@ -115,6 +115,9 @@
         <activity android:name=".DetailImageActivity"
             android:exported="true"/>
 
+        <activity android:name=".SettingActivity"
+            android:exported="true" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

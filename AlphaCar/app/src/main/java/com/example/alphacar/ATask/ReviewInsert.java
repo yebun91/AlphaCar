@@ -64,7 +64,11 @@ public class ReviewInsert extends AsyncTask<Void, Void, String> {
             builder.addTextBody("reviewContent", reviewContent, ContentType.create("Multipart/related", "UTF-8"));
 
             // 파일을 전송할때 추가하기
-            builder.addPart("imgRealPath", new FileBody(new File(imgPath)));
+            if(imgPath.equals("")){
+                builder.addTextBody("imgRealPath", imgPath, ContentType.create("Multipart/related", "UTF-8"));
+            }else{
+                builder.addPart("imgRealPath", new FileBody(new File(imgPath)));
+            }
 
             // 전송
             // 전송 url : 우리가 수정해야 하는 부분

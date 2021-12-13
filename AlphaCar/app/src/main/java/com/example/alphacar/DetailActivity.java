@@ -74,7 +74,7 @@ public class DetailActivity extends AppCompatActivity{
 
     //ImageButton like_btn;
     ImageView like_btn;
-    ImageView detail_map, detail_star_point;
+    ImageView detail_map, detail_star_point, detail_back,detail_home;
 
     MapFragment mapFragment;
 
@@ -138,10 +138,12 @@ public class DetailActivity extends AppCompatActivity{
         detail_review_btn = findViewById(R.id.detail_review_btn);
         detail_star_point = findViewById(R.id.detail_star_point);
         like_btn = findViewById(R.id.detail_favorite_btn);
-        store_list = new ArrayList<>();
         pager = findViewById(R.id.image_container);
-        dtos = new ArrayList<>();
+        detail_back = findViewById(R.id.detail_back);
+        detail_home = findViewById(R.id.detail_home);
 
+        dtos = new ArrayList<>();
+        store_list = new ArrayList<>();
         dto = new StoreDTO();
         rdto = new ReviewDTO();
         store_list = new ArrayList<>();
@@ -354,6 +356,23 @@ public class DetailActivity extends AppCompatActivity{
             }
         });
 
+        detail_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(DetailActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                finish();
+                startActivity(intent1);
+            }
+        });
+
+        detail_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         //이메일과 스토어 넘버 비교 loginDTO email == favdto email && store_number == favdto_store_number  => 색 바뀜
 
@@ -452,6 +471,23 @@ public class DetailActivity extends AppCompatActivity{
 
 
         //-----------------------expandableListView--------------------
+    }
+
+    private long backpressedTime = 0;
+
+    @Override
+    public void onBackPressed() {
+
+
+        finish();
+
+        /*if (System.currentTimeMillis() > backpressedTime + 2000) {
+            backpressedTime = System.currentTimeMillis();
+            Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        } else if (System.currentTimeMillis() <= backpressedTime + 2000) {
+            finish();
+        }*/
+
     }
     //-----------------------expandableListView--------------------
     private void createCollection() {

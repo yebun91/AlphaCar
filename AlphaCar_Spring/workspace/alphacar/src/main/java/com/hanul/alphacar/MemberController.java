@@ -99,7 +99,7 @@ public class MemberController {
 		req.setCharacterEncoding("UTF-8");
 		
 		MemberVO vo = new MemberVO(req.getParameter("customer_email"), req.getParameter("customer_pw"), 
-				req.getParameter("customer_name"), req.getParameter("admin"), "");
+				req.getParameter("customer_name"), req.getParameter("admin"), "http://192.168.0.122:8080/alphacar/resources/img/guest2.png");
 
 		int result = service.anJoinNoImg(vo);
 		HashMap<String, String> map = new HashMap<String, String>();
