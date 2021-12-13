@@ -46,4 +46,16 @@ public class WebMemberServiceImpl implements WebMemberService {
 		return dao.member_social_login(kakao);
 	}
 
+	@Override
+	public boolean login_info(WebMemberVO vo) {
+		// TODO Auto-generated method stub
+		return dao.login_info(vo);
+	}
+
+	@Override
+	public WebMemberVO auto_login(WebMemberVO auto) {
+		// TODO Auto-generated method stub
+		return dao.auto_login(auto);
+	}
+
 }

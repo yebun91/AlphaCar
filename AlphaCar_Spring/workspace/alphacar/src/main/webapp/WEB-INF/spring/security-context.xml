@@ -22,7 +22,7 @@
 		<security:intercept-url pattern="/" access="permitAll"/>
 	
 <!-- 		<security:intercept-url pattern="/**/*.mp" access="hasIpAddress('192.168.0.**')"/> -->
-		<!-- <security:intercept-url pattern="/**/*.no" access="hasRole('ROLE_MEMBER')"/> -->
+		<security:intercept-url pattern="/**/*.no" access="hasRole('ROLE_MEMBER')"/>
 		
 		<security:form-login login-page="/homeLogin"/>
 
