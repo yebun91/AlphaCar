@@ -116,7 +116,7 @@ const regPw    = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*
 const regName  = /^[가-힣]{2,4}$/
 
 function checkOldPw() {
-	alert(oldPw.value);
+	//alert(oldPw.value);
 	if(oldPw.value != wrtPw.value) {
 		document.getElementById("oldPwError").innerText = "기존의 비밀번호가 아닙니다.";
 		document.getElementById("oldPwError").style.color = "red";

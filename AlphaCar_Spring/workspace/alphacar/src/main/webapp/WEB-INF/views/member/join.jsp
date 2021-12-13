@@ -1,9 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
   <div class="join_page">
     <h1>회원가입</h1>
     <div class="text_logo">
-      <img src="img/alphacarLogo_text_black_500px.png" alt="alphaCar">
+      <img src="img/alphacarLogo_text_black_500px.png" alt="alphaCar" onclick="location.href='<c:url value="/" />'"
+      	style="cursor: pointer;">
     </div>
     <form action="homeRegister" class="form" method="post" enctype="multipart/form-data">
       <input type="text" placeholder="이메일" class="join_email" name="customer_email" id="customer_email" onkeyup="checkEmail()">

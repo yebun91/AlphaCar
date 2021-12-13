@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <div class="login_page">
       <div class="text_logo">
-        <img src="img/alphacarLogo_text_black_500px.png" alt="alphaCar">
+        <img src="img/alphacarLogo_text_black_500px.png" alt="alphaCar" onclick="location.href='<c:url value="/" />'"
+      	style="cursor: pointer;">
       </div>
       <form class="form" method="post" action="webLogin">
         <input type="text" placeholder="이메일" class="customer_email" id="customer_email" />
@@ -21,6 +21,9 @@
     </div>
     
     <script type="text/javascript">
+		    var csrfHeaderName = "${_csrf.headerName}";
+		    var csrfTokenValue = "${_csrf.token}";
+    
 			function go_login() {
 				// 아이디 입력값이 없으면
 				if($('#customer_email').val() == '') {
@@ -38,6 +41,9 @@
 				$.ajax({
 					url : 'webLogin',
 					data : {customer_email:$('#customer_email').val(), customer_pw:$('#customer_pw').val() },
+					beforeSend: function(xhr){
+				           xhr.setRequestHeader(csrfHeaderName, csrfTokenValue)
+				       },
 					success : function(response) {
 						if ( response ) {
 							location = '<c:url value ="/" />';
