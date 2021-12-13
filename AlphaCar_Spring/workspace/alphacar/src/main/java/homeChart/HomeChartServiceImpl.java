@@ -17,12 +17,6 @@ public class HomeChartServiceImpl implements HomeChartService {
 		return dao.month_list(store_number);
 	}
 
-	@Override
-	public List<ChartVO2> month_list() {
-		// TODO Auto-generated method stub
-		return dao.month_list();
-	}
-
 	
 
 }

@@ -18,12 +18,6 @@ public class HomeChartDAO implements HomeChartService {
 		return sql.selectList("homeChart.mapper.month_list", store_number);
 	}
 
-	@Override
-	public List<ChartVO2> month_list() {
-		// TODO Auto-generated method stub
-		return sql.selectList("homeChart.mapper.month_list2");
-	}
-
 	
 
 
