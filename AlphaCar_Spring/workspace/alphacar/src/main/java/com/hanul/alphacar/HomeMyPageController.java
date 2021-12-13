@@ -209,7 +209,7 @@ public class HomeMyPageController {
 	@RequestMapping("/regiDupl.mp")
 	public boolean memberCompanyDuplicate(String id) {
 		System.out.println(id);
-		return memberCompanyDuplicate(id);
+		return homeService.memberCompanyDuplicate(id);
 	}
 
 	//신규 가게 저장 요청

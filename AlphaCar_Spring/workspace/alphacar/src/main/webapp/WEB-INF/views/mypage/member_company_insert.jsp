@@ -93,7 +93,7 @@
 			</div>
 			<div style="display: none" id="articlefileChange"></div>
 	        <input style="display: none" multiple="multiple" type="file" class='input_file' id='input_file' name="file" accept="image/*" >
-			<button type="button" onclick='$("form").submit()'>등록하기</button>
+			<button type="button" onclick="check()">등록하기</button>
 		</form>
 	</div>
 </main>

@@ -89,7 +89,8 @@
 	        <!-- style="display: none" -->
 	        <div id="articlefileChange" style="display: none"></div>
 	        <input multiple="multiple" type="file" class='input_file' id='input_file' name="file" accept="image/*" style="display: none" >
-	        <button type="button" onclick='$("form").submit()'>수정하기</button>
+	        <!-- <button type="button" onclick='$("form").submit()'>수정하기</button> -->
+	        <button type="button" onclick="check()">수정하기</button>
       </form>
       <input multiple="multiple">
     </div>
@@ -204,7 +205,6 @@
 	}
 	
 	function check() {
-		
 		if(name.value == "") {
 			alert("세차장 이름을 입력하세요.");
 			name.focus();
@@ -257,7 +257,6 @@
 		}else {
 			$('form').submit();
 		}
-		
 	}
 	</script>
   
