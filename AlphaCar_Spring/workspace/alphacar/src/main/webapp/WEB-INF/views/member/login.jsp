@@ -3,7 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <div class="login_page">
       <div class="text_logo">
-        <img src="img/alphacarLogo_text_black_500px.png" alt="alphaCar">
+        <img src="img/alphacarLogo_text_black_500px.png" alt="alphaCar" onclick="location.href='<c:url value="/" />'"
+      	style="cursor: pointer;">
       </div>
       <form class="form" method="post" action="webLogin">
         <input type="text" placeholder="이메일" class="customer_email" id="customer_email" />
