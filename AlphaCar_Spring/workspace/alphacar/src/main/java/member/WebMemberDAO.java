@@ -49,4 +49,16 @@ public class WebMemberDAO implements WebMemberService {
 	public WebMemberVO member_social_login(String kakao) {
 		return sql.selectOne("webmember.mapper.social_login", kakao);
 	}
+
+	@Override
+	public boolean login_info(WebMemberVO vo) {
+		
+		return sql.update("webmember.mapper.login_info", vo)== 0 ? false : true;
+	}
+
+	@Override
+	public WebMemberVO auto_login(WebMemberVO auto) {
+		
+		return sql.selectOne("webmember.mapper.auto_login", auto);
+	}
 }

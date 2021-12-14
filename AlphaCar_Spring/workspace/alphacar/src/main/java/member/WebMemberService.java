@@ -23,4 +23,10 @@ public interface WebMemberService {
 	boolean member_social_update(WebMemberVO vo);
 	
 	WebMemberVO member_social_login(String kakao);
+	
+	// 자동 로그인 정보 저장
+	boolean login_info(WebMemberVO vo);
+	
+	// 자동 로그인 하기
+	WebMemberVO auto_login(WebMemberVO auto);
 }

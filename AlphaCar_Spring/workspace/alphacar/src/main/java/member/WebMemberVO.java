@@ -1,12 +1,49 @@
 package member;
 
+import java.sql.Date;
+
 public class WebMemberVO {
 
 	String customer_email, customer_pw, customer_name, 
 		customer_picture, admin, city, addr, customer_filename, social, kakao, naver;
 	
+	String ip_addr, com_name,auto_login;
+	Date login_time;
 	
 	
+	
+	public String getIp_addr() {
+		return ip_addr;
+	}
+
+	public void setIp_addr(String ip_addr) {
+		this.ip_addr = ip_addr;
+	}
+
+	public String getCom_name() {
+		return com_name;
+	}
+
+	public void setCom_name(String com_name) {
+		this.com_name = com_name;
+	}
+
+	public String getAuto_login() {
+		return auto_login;
+	}
+
+	public void setAuto_login(String auto_login) {
+		this.auto_login = auto_login;
+	}
+
+	public Date getLogin_time() {
+		return login_time;
+	}
+
+	public void setLogin_time(Date login_time) {
+		this.login_time = login_time;
+	}
+
 	public String getKakao() {
 		return kakao;
 	}

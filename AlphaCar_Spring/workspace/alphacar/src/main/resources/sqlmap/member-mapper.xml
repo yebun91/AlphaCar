@@ -32,8 +32,8 @@
 	
 	<!-- 안드로이드 회원가입 이미지 없이 -->
 	<insert id="anJoinNoImg">
-		insert into customer (customer_email, customer_pw, customer_name, admin, customer_picture)
-		values ( #{customer_email}, #{customer_pw}, #{customer_name}, #{admin}, #{customer_picture, jdbcType=VARCHAR})	
+		insert into customer (customer_email, customer_pw, customer_name, admin)
+		values ( #{customer_email}, #{customer_pw}, #{customer_name}, #{admin})	
 	</insert>
 	
 	<!-- 아이디 중복검사 -->

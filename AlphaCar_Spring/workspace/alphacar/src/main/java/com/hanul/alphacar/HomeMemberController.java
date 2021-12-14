@@ -1,5 +1,7 @@
 package com.hanul.alphacar;
 
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -38,12 +40,29 @@ public class HomeMemberController {
 	//로그인 처리 요청
 	@ResponseBody
 	@RequestMapping("/webLogin")
-	public Boolean webLogin(HttpSession session, String customer_email, String customer_pw) {
+	public Boolean webLogin(HttpSession session, String customer_email, String customer_pw,
+							String chk) throws Exception {
+		
+		// ip 주소와 컴퓨터 네임을 찾는다.
+		String ip_addr = Inet4Address.getLocalHost().getHostAddress();
+		String com_name = Inet4Address.getLocalHost().getHostName();
+		
+		System.out.println(ip_addr+com_name+chk);
 		HashMap<String, String> map = new HashMap<String, String>();
+		
 		map.put("customer_email", customer_email);
 		map.put("customer_pw", customer_pw);
+		map.put("chk", chk);
 		WebMemberVO vo = service.member_login(map);
 		session.setAttribute("loginInfo", vo);
+		
+		// 체크박스가 true 이면 vo에 값을 저장 서비스 실행
+		if (chk.equals("true") ) {
+			vo.setIp_addr(ip_addr);
+			vo.setCom_name(com_name);
+			service.login_info(vo);
+			service.auto_login(vo);
+		}
 		
 		return vo == null ? false : true;
 	}
