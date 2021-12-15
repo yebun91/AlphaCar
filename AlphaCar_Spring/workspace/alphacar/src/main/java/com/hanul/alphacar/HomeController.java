@@ -1,10 +1,12 @@
 package com.hanul.alphacar;
 
+import java.net.Inet4Address;
 import java.net.MulticastSocket;
 import java.util.List;
 import java.util.Locale;
 
 import javax.mail.Session;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -21,6 +23,8 @@ import homeMypage.HomeCompanyVO;
 import homeMypage.HomeMyPageServiceImpl;
 import homeNotice.HomeNoticePage;
 import homeNotice.HomeNoticeServiceImpl;
+import member.WebMemberServiceImpl;
+import member.WebMemberVO;
 
 
 
@@ -33,10 +37,11 @@ public class HomeController {
 	@Autowired private HomeNoticeServiceImpl service;
 	@Autowired private HomeMyPageServiceImpl companyService;
 	@Autowired private HomeNoticePage page;
+	@Autowired private WebMemberServiceImpl webmember;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, 
-			@RequestParam (defaultValue = "1") int curPage, HttpSession session) {
+			@RequestParam (defaultValue = "1") int curPage, HttpSession session , HttpServletRequest req) throws Exception {
 
 		page.setCurPage(curPage);
 		model.addAttribute("page", service.notice_list(page));
@@ -45,7 +50,33 @@ public class HomeController {
 //		for (int i = 0; i < vo.size(); i++) {
 //			System.out.println(vo.get(i).getImgpath());
 //		}
+		// 체크박스가 true 이면 vo에 값을 저장 서비스 실행
+//		if (chk.equals("true") ) {
+//			vo.setIp_addr(ip_addr);
+//			vo.setCom_name(com_name);
+//			service.login_info(vo);
+//			service.auto_login(vo);
+//		}
 		
+		
+		String ip_addr = Inet4Address.getLocalHost().getHostAddress();
+		String com_name = Inet4Address.getLocalHost().getHostName();
+		
+		if(req.getAttribute("logout") == null) {
+		
+		WebMemberVO member = new WebMemberVO();
+		
+		member.setCom_name(com_name);
+		member.setIp_addr(ip_addr);
+		//webmember.login_info(member);
+		WebMemberVO vo = webmember.auto_login(member); 
+		if(vo != null) {
+			
+		session.setAttribute("loginInfo", vo);
+		}
+	}
+
+			
 		return "index";
 	}
 }

@@ -24,9 +24,12 @@ public interface WebMemberService {
 	
 	WebMemberVO member_social_login(String kakao);
 	
-	// 자동 로그인 정보 저장
-	boolean login_info(WebMemberVO vo);
+	// 로그아웃시 자동로그인이 풀리는 맵퍼
+	boolean auto_logout(WebMemberVO vo);
 	
 	// 자동 로그인 하기
 	WebMemberVO auto_login(WebMemberVO auto);
+	
+	// 로그인시 chk가 Y이면 자동로그인 N이면 안되는 서비스
+	int auto_update(HashMap<String, String> map);
 }

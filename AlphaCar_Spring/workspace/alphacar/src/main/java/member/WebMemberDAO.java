@@ -51,14 +51,20 @@ public class WebMemberDAO implements WebMemberService {
 	}
 
 	@Override
-	public boolean login_info(WebMemberVO vo) {
+	public boolean auto_logout(WebMemberVO vo) {
 		
-		return sql.update("webmember.mapper.login_info", vo)== 0 ? false : true;
+		return sql.update("webmember.mapper.auto_logout", vo)== 0 ? false : true;
 	}
 
 	@Override
 	public WebMemberVO auto_login(WebMemberVO auto) {
 		
 		return sql.selectOne("webmember.mapper.auto_login", auto);
+	}
+
+	@Override
+	public int auto_update(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sql.update("webmember.mapper.update_auto" , map);
 	}
 }

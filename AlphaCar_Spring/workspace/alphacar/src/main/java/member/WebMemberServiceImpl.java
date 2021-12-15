@@ -47,15 +47,21 @@ public class WebMemberServiceImpl implements WebMemberService {
 	}
 
 	@Override
-	public boolean login_info(WebMemberVO vo) {
+	public boolean auto_logout(WebMemberVO vo) {
 		// TODO Auto-generated method stub
-		return dao.login_info(vo);
+		return dao.auto_logout(vo);
 	}
 
 	@Override
 	public WebMemberVO auto_login(WebMemberVO auto) {
 		// TODO Auto-generated method stub
 		return dao.auto_login(auto);
+	}
+
+	@Override
+	public int auto_update(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return dao.auto_update(map);
 	}
 
 }
