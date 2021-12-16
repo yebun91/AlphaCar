@@ -21,17 +21,14 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
  
 	<script type="text/javascript"  charset="UTF-8">         
-	var csrfHeaderName = "${_csrf.headerName}";
-	var csrfTokenValue = "${_csrf.token}";
+	
 	const number = '${store_number}';
 	$.ajax({
 	   type: "POST",
 	    dataType: "json",
 	    data: {store_number:number},
 	    url: "month_list",
-	    beforeSend: function(xhr){
-	        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue)
-	    },
+	    
 	   success : function( datas ) 
 	      {             
 	      tt = JSON.parse(datas);

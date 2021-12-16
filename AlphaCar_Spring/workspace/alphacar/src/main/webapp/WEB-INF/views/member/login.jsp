@@ -23,6 +23,10 @@
     </div>
     
     <script type="text/javascript">
+    const elementToken = document.querySelector('meta[name="_csrf"]');
+    const token = elementToken && elementToken.getAttribute("content");
+    const elementHeader = document.querySelector('meta[name="_csrf_header"]');
+    const header = elementHeader && elementHeader.getAttribute("content");
 	// 자동 로그인 체크박스		
 
 			function login_check(){
@@ -36,6 +40,7 @@
 			}
 			
 			function go_login() {
+				
 				var checked = $('#login_always').prop("checked");
 				// 아이디 입력값이 없으면
 				if($('#customer_email').val() == '') {
@@ -63,7 +68,6 @@
 					success : function(response) {
 						if ( response ) {
 							location = '<c:url value ="/" />';
-
 						} else {
 							alert("이메일이나 비밀번호가 일치하지 않습니다.")
 						}
