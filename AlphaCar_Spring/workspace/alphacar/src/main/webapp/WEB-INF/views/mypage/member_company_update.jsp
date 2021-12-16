@@ -106,6 +106,7 @@
 	const regDigit = /[0-9]/g;
 	const regRegi = /[0-9]{10}/g;
 	const regTel = /^010([0-9]{3,4})([0-9]{4})$/;
+	const regInven = /^[1-9]{1}$/
 	
 	let name = document.getElementById("new_store");
 	let post = document.getElementById("new_post");
@@ -120,12 +121,12 @@
 	let master = document.getElementById("new_master");
 	let regi = document.getElementById("new_regi");
 	
-	let teToken = false;
-	let inToken = false;
-	let prToken = false;
-	let maToken = false;
-	let reToken = false;
-	let r2Token = false;
+	let teToken = true;
+	let inToken = true;
+	let prToken = true;
+	let maToken = true;
+	let reToken = true;
+	let r2Token = true;
 	
 	function regiDupl() {
 		$.ajax({
@@ -153,6 +154,7 @@
 		if(!regTel.test(tel.value)) {
 			document.getElementById("telError").innerText = "-를 제외한 휴대폰번호를 입력해주세요.";
 			document.getElementById("telError").style.color = "red";
+			teToken = false;
 		}else {
 			document.getElementById("telError").innerText = "전화번호가 입력되었습니다.";
 			document.getElementById("telError").style.color = "green";
@@ -161,9 +163,10 @@
 	}
 
 	function checkInventory() {
-		if(!regDigit.test(inventory.value)) {
-			document.getElementById("invenError").innerText = "숫자만 입력이 가능합니다.";
+		if(!regInven.test(inventory.value)) {
+			document.getElementById("invenError").innerText = "숫자만 입력해주세요.";
 			document.getElementById("invenError").style.color = "red";
+			inToken = false;
 		}else {
 			document.getElementById("invenError").innerText = "베이수가 입력되었습니다.";
 			document.getElementById("invenError").style.color = "green";
@@ -173,8 +176,9 @@
 
 	function checkPrice() {
 		if(!regDigit.test(price.value)) {
-			document.getElementById("priceError").innerText = "숫자만 입력이 가능합니다.";
+			document.getElementById("priceError").innerText = "숫자만 입력해주세요.";
 			document.getElementById("priceError").style.color = "red";
+			prToken = false;
 		}else {
 			document.getElementById("priceError").innerText = "가격이 입력되었습니다.";
 			document.getElementById("priceError").style.color = "green";
@@ -184,8 +188,9 @@
 
 	function checkMaster() {
 		if(!regName.test(master.value)) {
-			document.getElementById("masterError").innerText = "2~4자의 한글만 입력가능합니다.";
+			document.getElementById("masterError").innerText = "2~4자의 한글만 입력해주세요.";
 			document.getElementById("masterError").style.color = "red";
+			maToken = false;
 		}else {
 			document.getElementById("masterError").innerText = "이름이 입력되었습니다.";
 			document.getElementById("masterError").style.color = "green";
@@ -194,9 +199,11 @@
 	}
 
 	function checkRegi() {
+		r2Token = false;
 		if(!regRegi.test(regi.value)) {
 			document.getElementById("regiError").innerText = "-를 제외한 등록번호(10자리)를 입력해주세요.";
 			document.getElementById("regiError").style.color = "red";
+			reToken = false;
 		}else {
 			document.getElementById("regiError").innerText = "사업자 등록번호가 입력되었습니다.";
 			document.getElementById("regiError").style.color = "green";
