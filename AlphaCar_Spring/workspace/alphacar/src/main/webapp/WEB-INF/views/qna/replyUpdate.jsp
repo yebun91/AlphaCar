@@ -18,16 +18,16 @@
 			<input type="hidden" name='attach' />
 			<div class="page_write_index">
 				<div class="page_write_title">
-					<input type="text" name="qna_title" value="${vo.qna_title }">
+					<input type="text" name="qna_title" id="qna_title" value="${vo.qna_title }">
 				</div>
 			</div>
 			<div class="page_write_space">
-				<textarea id="summernote" name="qna_content" cols="100" >${vo.qna_content }</textarea>
+				<textarea id="summernote" name="qna_content" id="qna_content" cols="100" >${vo.qna_content }</textarea>
 				
 			</div>
 			
 			<div class="page_write_button">
-				<button>수정완료</button>
+				<button type="button" onclick='check()'>수정완료</button>
 				<button type="button" onclick="if(confirm('정말 취소 하시겠습니까?')) { 
 					location.href='masterContact.mp'}">취소</button>
 			</div>
@@ -35,6 +35,22 @@
     </div>
   </main>
   
+  <script type="text/javascript">
+	let title   = document.getElementById("qna_title");
+	let content = document.getElementById("qna_content");
+	
+	function check() {
+		if(title.value == "") {
+		alert("제목을 입력하세요.");
+		title.focus();
+		}else if(content.value == "") {
+		alert("내용을 입력하세요.");
+		content.focus();
+		}else {
+			$('form').submit();
+		}
+	}
+
   <!-- 서머노트를 위해 추가해야할 부분 -->
   <script src="resources/js/summernote-lite.js"></script>
   <script src="resources/js/summernote.js"></script>

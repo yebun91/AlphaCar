@@ -22,11 +22,11 @@
 					</select>
 				</div>
 				<div class="page_write_title">
-					<input type="text" placeholder="제목" name="notice_title">
+					<input type="text" placeholder="제목" name="notice_title" id="notice_title">
 				</div>
 			</div>
 			<div class="page_write_space">
-				<textarea id="summernote" name="notice_content" cols="100" >
+				<textarea id="summernote" name="notice_content" cols="100" id="notice_content">
 				</textarea>
 			</div>
 			<div class="page_write_button">
@@ -40,6 +40,24 @@
   <script src="resources/js/summernote-lite.js"></script>
   <script src="resources/js/lang/summernote-ko-KR.js"></script>
   <link rel="stylesheet" href="resources/css/summernote-lite.css">
+
+  <!-- 제목, 내용 필수입력 -->
+  <script type="text/javascript">
+  	let title   = document.getElementById("notice_title");
+  	let content = document.getElementById("notice_content");
+  	
+  	function check() {
+  		if(title.value == "") {
+			alert("제목을 입력하세요.");
+			title.focus();
+  		}else if(content.value == "") {
+			alert("내용을 입력하세요.");
+			content.focus();
+  		}else {
+			$('form').submit();
+		}
+  	}
+  </script>
 
   <script>
 	$('#summernote').summernote({

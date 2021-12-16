@@ -109,6 +109,7 @@ const regName =  /^[가-힣]{2,4}$/
 const regDigit = /[0-9]/g;
 const regRegi = /[0-9]{10}/g;
 const regTel = /^010([0-9]{3,4})([0-9]{4})$/;
+const regInven = /^[1-9]{1}$/
 
 let name = document.getElementById("store_name");
 let post = document.getElementById("store_post");
@@ -161,7 +162,7 @@ function checkTel() {
 }
 
 function checkInventory() {
-	if(!regDigit.test(inventory.value)) {
+	if(!regInven.test(inventory.value)) {
 		document.getElementById("invenError").innerText = "숫자만 입력해주세요.";
 		document.getElementById("invenError").style.color = "red";
 	}else {

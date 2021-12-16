@@ -26,11 +26,11 @@
 					</select>
 				</div>
 				<div class="page_write_title">
-					<input type="text" name="qna_title" value="${vo.qna_title }">
+					<input type="text" name="qna_title" id="qna_title" value="${vo.qna_title }">
 				</div>
 			</div>
 			<div class="page_write_space">
-				<textarea id="summernote" name="qna_content" cols="100" >${vo.qna_content }</textarea>
+				<textarea id="summernote" name="qna_content" cols="100" id="qna_content">${vo.qna_content }</textarea>
 				
 			</div>
 			<div class="page_password_space">
@@ -45,6 +45,23 @@
     </div>
   </main>
   
+  <!-- 제목, 내용 필수입력 -->
+  <script type="text/javascript">
+	let title   = document.getElementById("qna_title");
+	let content = document.getElementById("qna_content");
+	
+	function check() {
+		if(title.value == "") {
+		alert("제목을 입력하세요.");
+		title.focus();
+		}else if(content.value == "") {
+		alert("내용을 입력하세요.");
+		content.focus();
+		}else {
+			$('form').submit();
+		}
+	}
+
   <!-- 서머노트를 위해 추가해야할 부분 -->
   <script src="resources/js/summernote-lite.js"></script>
   <script src="resources/js/summernote.js"></script>

@@ -19,9 +19,9 @@
 			<input type="hidden" id="old_pw" value="${loginInfo.customer_pw}">
 			<input type="password" placeholder="기존 비밀번호를 작성해주세요." class="old_join_pw" id="written_pw" onkeyup="checkOldPw()">
 			<div id="oldPwError"></div>
-			<input type="password" name="customer_pw" placeholder="변경할 비밀번호" class="join_pw" id="new_pw" onkeyup="checkPw()">
+			<input type="password" name="customer_pw" placeholder="변경할 비밀번호" value="${loginInfo.customer_pw}" class="join_pw" id="new_pw" onkeyup="checkPw()">
 			<div id="pwError"></div>
-			<input type="password" placeholder="변경할 비밀번호 확인" class="join_pw2" id="new_pw2" onkeyup="checkPw2()">
+			<input type="password" placeholder="변경할 비밀번호 확인" value="${loginInfo.customer_pw}" class="join_pw2" id="new_pw2" onkeyup="checkPw2()">
 			<div id="pw2Error"></div>
 			<input type="text" name="customer_name"
 				value="${loginInfo.customer_name}" class="join_name" id="new_name" onkeyup="checkName()">
@@ -108,9 +108,9 @@ let pw2   = document.getElementById("new_pw2");
 let name  = document.getElementById("new_name");
 
 let wpToken = false;
-let pwToken = false;
-let p2Token = false;
-let nmToken = false;
+let pwToken = true;
+let p2Token = true;
+let nmToken = true;
 
 const regPw    = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/
 const regName  = /^[가-힣]{2,4}$/
@@ -132,6 +132,7 @@ function checkPw() {
 	if(!regPw.test(pw.value)) {
 		document.getElementById("pwError").innerText = "영문 대소문자와 숫자, 특수문자를 모두 포함하는 8자리 이상의 비밀번호를 입력하세요.";
 		document.getElementById("pwError").style.color = "red";
+		pwToken = false;
 	}else {
 		document.getElementById("pwError").innerText = "비밀번호가 입력되었습니다.";
 		document.getElementById("pwError").style.color = "green";
@@ -142,9 +143,11 @@ function checkPw2() {
 	if(!pw2.value) {
 		document.getElementById("pw2Error").innerText = "비밀번호를 한번 더 입력해주세요.";
 		document.getElementById("pw2Error").style.color = "red";
+		p2Token = false;
 	}else if(pw.value != pw2.value) {
 		document.getElementById("pw2Error").innerText = "비밀번호가 일치하지 않습니다.";
 		document.getElementById("pw2Error").style.color = "red";
+		p2Token = false;
 	}else {
 		document.getElementById("pw2Error").innerText = "비밀번호가 일치합니다.";
 		document.getElementById("pw2Error").style.color = "green";
@@ -155,6 +158,7 @@ function checkName() {
 	if(!regName.test(name.value)) {
 		document.getElementById("nameError").innerText = "2-4자의 한글만 가능합니다.";
 		document.getElementById("nameError").style.color = "red";
+		nmToken = false;
 	}else {
 		document.getElementById("nameError").innerText = "이름이 입력되었습니다.";
 		document.getElementById("nameError").style.color = "green";
