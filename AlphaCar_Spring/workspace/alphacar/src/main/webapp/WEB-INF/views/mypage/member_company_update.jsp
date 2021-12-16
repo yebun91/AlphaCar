@@ -100,8 +100,6 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   
   	<script type="text/javascript">
-  	var csrfHeaderName = "${_csrf.headerName}";
-    var csrfTokenValue = "${_csrf.token}";
 	const regName =  /^[가-힣]{2,4}$/
 	const regDigit = /[0-9]/g;
 	const regRegi = /[0-9]{10}/g;
@@ -133,9 +131,6 @@
 			, data : {id:regi.value}
 			, type : 'post'
 			, async : false
-			, beforeSend: function(xhr){
-		           xhr.setRequestHeader(csrfHeaderName, csrfTokenValue)
-		    }
 			, success : function (res) {
 				if (res == true) {
 					alert("사용 가능한 사업자등록번호입니다.");
