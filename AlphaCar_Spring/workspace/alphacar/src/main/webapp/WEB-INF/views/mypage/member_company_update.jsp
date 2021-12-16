@@ -100,7 +100,10 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   
   	<script type="text/javascript">
+<<<<<<< HEAD
 
+=======
+>>>>>>> f53fa32ce0c0cb1253379b0df37b3f9553ae6f50
 	const regName =  /^[가-힣]{2,4}$/
 	const regDigit = /[0-9]/g;
 	const regRegi = /[0-9]{10}/g;
