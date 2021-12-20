@@ -4,7 +4,7 @@
 <div class="mypage_image"></div>
 <div class="mypage_select">
 	<div class="mypage_userinfo">
-		<a href=""><p class="mypage_userinfo_select">회원정보</p></a> <a href=""><p>보안설정</p></a>
+		<a href=""><p class="mypage_userinfo_select">회원정보</p></a> 
 	</div>
 </div>
 </nav>

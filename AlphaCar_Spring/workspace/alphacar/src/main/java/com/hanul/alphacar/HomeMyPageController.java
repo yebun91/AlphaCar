@@ -82,6 +82,11 @@ public class HomeMyPageController {
 			vo.setCustomer_picture(memberVO.getCustomer_picture());
 		}
 		
+		//비밀번호를 바꾸지 않았을 경우 기존 비밀번호로 교체
+		if (vo.getCustomer_pw().isEmpty()) {
+			vo.setCustomer_pw(memberVO.getCustomer_pw());
+		}
+		
 		//화면에서 변경 입력한 정보를 db에 변경 저장한 후 상세화면으로 연결
 		homeService.home_member_update(vo);	
 		session.setAttribute("loginInfo", vo);
@@ -157,12 +162,17 @@ public class HomeMyPageController {
 	}
 
 	// 가게 수정 저장 처리 요청
-	
 	@RequestMapping ("/update_work.mp")
 	public String update_work(HomeStoreVO vo, HttpSession session, int inventory, int store_number, 
 			@RequestParam("article_file") List<MultipartFile> mf) {
 		ArrayList<String> storeInventory = new ArrayList<>();
 		HomeStoreVO hvo = homeService.companyId_list(store_number);
+		if(mf.isEmpty()) {
+			System.out.println("엠티먹음");
+		}
+		if(mf.equals(null)) {
+			System.out.println("이퀄 (null) 먹음");
+		}
 		
 		for (int i =0; i< 9; i++){
 			storeInventory.add("X");
@@ -172,8 +182,9 @@ public class HomeMyPageController {
 		}
 		for (int i = 0; i < storeInventory.size(); i++) {
 			vo.setNow_state(storeInventory.get(i));
-			
 		} 
+		
+		
 		
     	vo.setStore_number(store_number);
     	

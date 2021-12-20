@@ -7,7 +7,7 @@
     <div class="mypage_select">
       <div class="mypage_userinfo">
         <a href=""><p class="mypage_userinfo_select">회원정보</p></a>
-        <a href=""><p>보안설정</p></a>
+
       </div>
     </div>
   </nav>
@@ -100,10 +100,7 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   
   	<script type="text/javascript">
-<<<<<<< HEAD
 
-=======
->>>>>>> f53fa32ce0c0cb1253379b0df37b3f9553ae6f50
 	const regName =  /^[가-힣]{2,4}$/
 	const regDigit = /[0-9]/g;
 	const regRegi = /[0-9]{10}/g;
@@ -309,8 +306,6 @@
   	}
   })
   
-  
-  
   $(document).ready(function()
 			// input file 파일 첨부시 fileCheck 함수 실행
 			{
@@ -339,7 +334,7 @@
 	    
 	    // 파일 배열 담기
 	    var filesArr = Array.prototype.slice.call(files);
-	    
+	    filesArr.sort();
 	    // 파일 개수 확인 및 제한
 	    if (fileCount + filesArr.length != totalCount) {
 	      alert('파일은 '+totalCount+'개만 업로드 할 수 있습니다.');
@@ -401,15 +396,10 @@
 	       	  data : formData,
 	       	  processData: false,
 	   	      contentType: false,
-		   	  beforeSend: function(xhr){
-		          xhr.setRequestHeader(csrfHeaderName, csrfTokenValue)
-		      },
 	   	      success: function (data) {
-	   	    	  window.location.replace("memberCompany.mp");
-	   	    	
+	   	    	  window.location.replace("memberCompany.mp");	   	    	
 	   	    		alert("가게수정 성공");
-//						} else
-//							alert("서버내 오류로 처리가 지연되고있습니다. 잠시 후 다시 시도해주세요");
+
 	   	      },
 	   	      error: function (xhr, status, error) {
 	   	    		alert("서버오류로 지연되고있습니다. 잠시 후 다시 시도해주시기 바랍니다.");

@@ -16,8 +16,8 @@
         <a href='kakaoLogin'><img src='img/kakao_login_large_wide.png' class='social_login' /></a>
       </form>
       <div class="login_page_bottom_button">
-        <button type="button" onclick="location.href='searchPw'">비밀번호 찾기</button>
-        <button type="button" onclick="location.href='searchId'">아이디 찾기</button>
+        <!-- <button type="button" onclick="location.href='searchPw'">비밀번호 찾기</button>
+        <button type="button" onclick="location.href='searchId'">아이디 찾기</button> -->
         <button type="button" onclick="location.href='homeJoin'">회원가입</button>
       </div>
     </div>

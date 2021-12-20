@@ -5,7 +5,7 @@
 <div class="mypage_image"></div>
 <div class="mypage_select">
 	<div class="mypage_userinfo">
-		<a href=""><p class="mypage_userinfo_select">회원정보</p></a> <a href=""><p>보안설정</p></a>
+		<a href=""><p class="mypage_userinfo_select">회원정보</p></a>
 	</div>
 </div>
 </nav>
@@ -19,9 +19,9 @@
 			<input type="hidden" id="old_pw" value="${loginInfo.customer_pw}">
 			<input type="password" placeholder="기존 비밀번호를 작성해주세요." class="old_join_pw" id="written_pw" onkeyup="checkOldPw()">
 			<div id="oldPwError"></div>
-			<input type="password" name="customer_pw" placeholder="변경할 비밀번호" value="${loginInfo.customer_pw}" class="join_pw" id="new_pw" onkeyup="checkPw()">
+			<input type="password" name="customer_pw" placeholder="변경할 비밀번호" class="join_pw" id="new_pw" onkeyup="checkPw()">
 			<div id="pwError"></div>
-			<input type="password" placeholder="변경할 비밀번호 확인" value="${loginInfo.customer_pw}" class="join_pw2" id="new_pw2" onkeyup="checkPw2()">
+			<input type="password" placeholder="변경할 비밀번호 확인" class="join_pw2" id="new_pw2" onkeyup="checkPw2()">
 			<div id="pw2Error"></div>
 			<input type="text" name="customer_name"
 				value="${loginInfo.customer_name}" class="join_name" id="new_name" onkeyup="checkName()">
