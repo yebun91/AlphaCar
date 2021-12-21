@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +26,14 @@ import com.example.alphacar.DTOS.MemberVO;
 import com.example.alphacar.DTOS.StoreDTO;
 import com.example.alphacar.retro.StoreService;
 import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.KakaoSDK;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
+import com.kakao.sdk.user.UserApiClient;
+import com.kakao.usermgmt.LoginButton;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.callback.MeV2ResponseCallback;
 import com.kakao.usermgmt.response.MeV2Response;
 import com.kakao.util.exception.KakaoException;
@@ -57,15 +62,15 @@ public class LoginPageActivity extends AppCompatActivity {
     public static MemberVO loginDTO;
 
 
-    SharedPreferences mPreferences;
-    String SharedPrefFile = "com.example.alphacar.SharedPreferences";
 
-    MainActivity mainActivity;
 
     EditText memberlogin_et_email, memberlogin_et_pw;
     TextView memberlogin_bt_login;
     Button memberlogin_bt_join;
     ImageButton btn_back;
+
+   // LoginButton loginButton;
+    ImageButton kakao_login_btn;
 
 
     @Override
@@ -77,15 +82,14 @@ public class LoginPageActivity extends AppCompatActivity {
 
         loginDTO = new MemberVO();
 
-
+  //      kakao_login_btn = findViewById(R.id.kakao_login_btn);
+      //  loginButton = findViewById(R.id.loginButton);
         memberlogin_et_email = findViewById(R.id.memberlogin_et_email);
         memberlogin_et_pw = findViewById(R.id.memberlogin_et_pw);
 
         memberlogin_bt_login = findViewById(R.id.memberlogin_bt_login);
         memberlogin_bt_join = findViewById(R.id.memberlogin_bt_join);
         btn_back = findViewById(R.id.btn_back);
-        mPreferences = getSharedPreferences(SharedPrefFile, MODE_PRIVATE);
-
         //상단 뒤로가기
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,14 +106,16 @@ public class LoginPageActivity extends AppCompatActivity {
                     String customer_email = memberlogin_et_email.getText().toString();
                     String customer_pw = memberlogin_et_pw.getText().toString();
 
-              /*      loginAtask = new LoginAtask(customer_email,customer_pw);
+                    loginAtask = new LoginAtask(customer_email, customer_pw);
                     try {
                         loginDTO = (MemberVO) loginAtask.execute().get();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-*/
-                    /* LoginSelect loginSelect = new LoginSelect(customer_email, customer_pw);
+
+
+
+              /*       LoginSelect loginSelect = new LoginSelect(customer_email, customer_pw);
                     try {
                          loginSelect.execute().get();
                     } catch (ExecutionException e) {
@@ -118,7 +124,8 @@ public class LoginPageActivity extends AppCompatActivity {
                         e.getMessage();
                     }*/
                     //레트로핏
-                      Call<MemberVO> call = RetrofitCommon.getClient().getAnLogin(customer_email,customer_pw);
+                    /*
+                    Call<MemberVO> call = RetrofitCommon.getClient().getAnLogin(customer_email,customer_pw);
                     call.enqueue(new Callback<MemberVO>() {
                         @Override
                         public void onResponse(Call<MemberVO> call, Response<MemberVO> response) {
@@ -130,6 +137,8 @@ public class LoginPageActivity extends AppCompatActivity {
 
                         }
                     });
+
+                     */
 
                 } else {
                     Toast.makeText(LoginPageActivity.this, "아이디와 암호를 모두 입력하세요.", Toast.LENGTH_SHORT).show();
@@ -143,9 +152,9 @@ public class LoginPageActivity extends AppCompatActivity {
 
                     // 로그인 정보에 값이 있으면 로그인이 되었으므로 메인화면으로 이동
                     if (loginDTO != null) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    //    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                     //   finish();
+                        Intent intent = new Intent(LoginPageActivity.this, MainActivity.class);
+                        //    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        //   finish();
                         startActivity(intent);
                     }
 
@@ -165,64 +174,63 @@ public class LoginPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 회원가입 화면
-                Intent intent = new Intent(getApplicationContext(), JoinPageActivity.class);
+                Intent intent = new Intent(LoginPageActivity.this, JoinPageActivity.class);
                 startActivity(intent);
             }
         });
 
 
+
         //카카오 로그인 시작
 
+        mSessionCallback = new ISessionCallback() {
+
+            @Override
+            public void onSessionOpened() {
+                //로그인 요청
 
 
-                mSessionCallback = new ISessionCallback() {
-
+                UserManagement.getInstance().me(new MeV2ResponseCallback() {
                     @Override
-                    public void onSessionOpened() {
-                        //로그인 요청
-                        UserManagement.getInstance().me(new MeV2ResponseCallback() {
-                            @Override
-                            public void onFailure(ErrorResult errorResult) {
-                                //로그인 실패
-                            }
-
-                            @Override
-                            public void onSessionClosed(ErrorResult errorResult) {
-                                //세션이 닫힘...
-                                Toast.makeText(LoginPageActivity.this, "로그인 도중 오류가 발생했습니다.. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onSuccess(MeV2Response result) {
-
-                                //로그인 성공
-
-                                Intent intent = new Intent(LoginPageActivity.this, MainActivity.class);
-                                intent.putExtra("name", result.getKakaoAccount().getProfile().getNickname());
-                                intent.putExtra("profileImg", result.getKakaoAccount().getProfile().getProfileImageUrl());
-                                intent.putExtra("email", result.getKakaoAccount().getEmail());
-                                startActivity(intent);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                Toast.makeText(LoginPageActivity.this, "환영 합니다. !", Toast.LENGTH_SHORT).show();
-
-                            }
-
-                        });
+                    public void onFailure(ErrorResult errorResult) {
+                        //로그인 실패
                     }
 
                     @Override
-                    public void onSessionOpenFailed(KakaoException exception) {
-                        Toast.makeText(LoginPageActivity.this, "onSessionOpenFailed", Toast.LENGTH_SHORT).show();
+                    public void onSessionClosed(ErrorResult errorResult) {
+                        //세션이 닫힘...
+                        Toast.makeText(LoginPageActivity.this, "로그인 도중 오류가 발생했습니다.. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                     }
-                };
-                Session.getCurrentSession().addCallback(mSessionCallback);
-                Session.getCurrentSession().checkAndImplicitOpen();
+
+                    @Override
+                    public void onSuccess(MeV2Response result) {
+                        Intent intent = new Intent(LoginPageActivity.this, MainActivity.class);
+                        intent.putExtra("name", result.getKakaoAccount().getProfile().getNickname());
+                        intent.putExtra("profileImg", result.getKakaoAccount().getProfile().getProfileImageUrl());
+                        intent.putExtra("email", result.getKakaoAccount().getEmail());
+                        startActivity(intent);
+
+                    }
+
+                });
+            }
+
+            @Override
+            public void onSessionOpenFailed(KakaoException exception) {
+                Toast.makeText(LoginPageActivity.this, "onSessionOpenFailed", Toast.LENGTH_SHORT).show();
+            }
+        };
+        Session.getCurrentSession().addCallback(mSessionCallback);
+        Session.getCurrentSession().checkAndImplicitOpen();
+
+
+    }
 
 
                 //카카오 로그인 끝
 
-            }
+
+
 
     @Override
     public void onPause() {
@@ -287,7 +295,6 @@ public class LoginPageActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Session.getCurrentSession().removeCallback(mSessionCallback);
-        loginDTO = null;
         UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
             @Override
             public void onCompleteLogout() {
@@ -295,4 +302,24 @@ public class LoginPageActivity extends AppCompatActivity {
             }
         });
     }
+
+ /*   private class SessionCallback implements ISessionCallback{
+
+        @Override
+        public void onSessionOpened() {
+            String email =
+            redirectSignupActivity();
+        }
+
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+
+        }
+    }
+
+    protected void redirectSignupActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }*/
 }

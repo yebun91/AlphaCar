@@ -47,6 +47,7 @@ import com.example.alphacar.retro.StoreService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.kakao.plusfriend.PlusFriendService;
+import com.kakao.sdk.user.UserApiClient;
 import com.kakao.util.exception.KakaoException;
 import com.lakue.lakuepopupactivity.PopupActivity;
 import com.lakue.lakuepopupactivity.PopupGravity;
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
 
         if (loginDTO != null) {
-            if (!loginDTO.getAdmin().equals("M")) {
+            if (loginDTO.getAdmin() != null && !loginDTO.getAdmin().equals("M")) {
                 btn_cp_reg.setVisibility(View.INVISIBLE);
             }
             nav_view.getMenu().findItem(R.id.nav_join).setVisible(false);
@@ -191,7 +192,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 try {
                     PlusFriendService.getInstance().addFriend(MainActivity.this, "_XuZTb");
                 } catch (KakaoException e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+
                 }
             }
         });
@@ -203,7 +204,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 try {
                     PlusFriendService.getInstance().chat(MainActivity.this, "_XuZTb");
                 } catch (KakaoException e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+
                 }
             }
         });
@@ -228,7 +229,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         findViewById(R.id.tab1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -265,7 +266,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
                 }
                 else if(loginDTO == null){
-                    Intent intent = new Intent(getApplicationContext(), LoginJoinSelectActivity.class);
+                    Intent intent = new Intent(MainActivity.this, LoginJoinSelectActivity.class);
                     startActivity(intent);
                 }
             }
@@ -487,6 +488,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     @Override
     public void onDestroy() {
         super.onDestroy();
+
        finish();
 
     }
@@ -496,6 +498,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     public void refresh(){
         Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 

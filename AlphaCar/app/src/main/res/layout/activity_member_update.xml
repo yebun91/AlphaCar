@@ -226,7 +226,7 @@
                     android:id="@+id/memberupdate_iv_profile"
                     android:layout_width="74dp"
                     android:layout_height="76dp"
-                    android:src="@mipmap/ic_launcher_round"
+                    android:src="@drawable/add_photo"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
 

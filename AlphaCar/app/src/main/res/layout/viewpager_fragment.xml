@@ -24,19 +24,39 @@
             app:cardCornerRadius="16dp"
             android:elevation="8dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
 
-            <RelativeLayout
-                android:id="@id/parentRelative"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                <TextView
+                android:id="@+id/storeName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="세차장"
+                android:textColor="@color/black"
+                android:textSize="26dp"
+                android:textStyle="bold" />
 
-                <ImageView
-                    android:id="@+id/imagePath"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:scaleType="centerCrop" />
+                <RelativeLayout
+                    android:id="@id/parentRelative"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/imagePath"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:scaleType="centerCrop" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+
+
 
 
         </androidx.cardview.widget.CardView>
@@ -51,14 +71,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 >
-                <TextView
-                    android:id="@+id/storeName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="세차장"
-                    android:textColor="@color/black"
-                    android:textSize="26dp"
-                    android:textStyle="bold" />
+
 
                 <TextView
                     android:id="@+id/introduce"

@@ -128,13 +128,23 @@
                 android:hapticFeedbackEnabled="false" />-->
 
             <com.kakao.usermgmt.LoginButton
-                android:id="@+id/kakaoBtn"
+                android:id="@+id/loginButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:backgroundTintMode="add"
-                android:hapticFeedbackEnabled="false" />
+                android:hapticFeedbackEnabled="false" >
+            </com.kakao.usermgmt.LoginButton>
+
+
+          <!--  <ImageButton
+                android:id="@+id/kakao_login_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/kakao_login_medium_narrow"/>-->
+
 
             <LinearLayout
                 android:layout_width="wrap_content"

@@ -40,6 +40,14 @@
 
     </FrameLayout>
 
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/noti_detail_title"
+        android:layout_marginLeft="15dp"
+        android:textSize="30dp"
+        android:text="title"/>
 
 
 
@@ -50,13 +58,7 @@
         android:layout_height="350dp"
         android:layout_gravity="center_horizontal" />
 
-    <TextView
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/noti_detail_title"
-        android:layout_marginLeft="15dp"
-        android:text="title"/>
 
     <TextView
         android:layout_width="match_parent"
