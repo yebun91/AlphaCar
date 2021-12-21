@@ -77,7 +77,7 @@ public class JoinInsert extends AsyncTask<Void, Void, String> {
 
 
 
-            String postURL = ipConfig + "/alphacar/and_join";
+            String postURL = ipConfig + "/alphacar/android/and_join";
             // 전송
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");

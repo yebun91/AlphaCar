@@ -13,16 +13,24 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.alphacar.Common.RetrofitCommon;
 import com.example.alphacar.DTOS.StoreDTO;
 import com.example.alphacar.DetailActivity;
 import com.example.alphacar.MainActivity;
 import com.example.alphacar.R;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ViewpagerFragment extends Fragment {
     MainActivity mActivity;
     ImageView pagerimage;
     TextView pagerstoreName, pagerintroduce;
     StoreDTO dto ;
+    ArrayList<StoreDTO> store_list;
 
     /* 뷰페이저 프래그먼트 뷰페이저 화면 만드는 장소 */
     
@@ -63,8 +71,11 @@ public class ViewpagerFragment extends Fragment {
         pagerintroduce.setText(dto.getIntroduce());
         }
         pagerimage.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+
+
                 Intent intent = new Intent(mActivity, DetailActivity.class);
                 intent.putExtra("store_number", dto.getStore_number());
                 startActivity(intent);

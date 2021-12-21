@@ -29,7 +29,7 @@ public class ReviewController {
 	@Autowired private ReviewServiceImpl service;
 	
 	@ResponseBody
-	@RequestMapping(value="/review", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/android/review", method = {RequestMethod.GET, RequestMethod.POST})
 	public int review(HttpServletRequest req, HttpServletResponse res, Model model, HttpSession session) {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");
@@ -39,6 +39,7 @@ public class ReviewController {
 		String score = req.getParameter("rating");
 		String title = req.getParameter("reviewTitle");
 		String content = req.getParameter("reviewContent");
+		int store_number = Integer.parseInt(req.getParameter("store_number"));
 		
 		ReviewVO vo = new ReviewVO();
 		
@@ -69,6 +70,7 @@ public class ReviewController {
 			}
 		}
 		
+		vo.setStore_number(store_number);
 		vo.setCustomer_email(email);
 		vo.setReview_score(score);
 		vo.setReview_title(title);
@@ -80,7 +82,7 @@ public class ReviewController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/reviewDetail", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/android/reviewDetail", method = {RequestMethod.GET, RequestMethod.POST})
 	public void review_detail(HttpServletRequest req, HttpServletResponse res, String review_id) {
 		System.out.println(review_id);
 
@@ -102,7 +104,7 @@ public class ReviewController {
 	
 
 	@ResponseBody
-	@RequestMapping("anSelectReview")
+	@RequestMapping("/android/anSelectReview")
 	public void anSelectReview(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");

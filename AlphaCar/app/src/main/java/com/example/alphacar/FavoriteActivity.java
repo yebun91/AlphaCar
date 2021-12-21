@@ -4,24 +4,17 @@ import static com.example.alphacar.Common.CommonMethod.isNetworkConnected;
 import static com.example.alphacar.LoginPageActivity.loginDTO;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alphacar.ATask.FavoriteSelect;
-import com.example.alphacar.ATask.Storelist;
 import com.example.alphacar.Adapter.FavoriteAdapter;
 import com.example.alphacar.DTOS.FavoriteDTO;
 

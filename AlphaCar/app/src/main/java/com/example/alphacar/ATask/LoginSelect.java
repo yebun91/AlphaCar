@@ -3,6 +3,7 @@ package com.example.alphacar.ATask;
 import static com.example.alphacar.Common.CommonMethod.ipConfig;
 import static com.example.alphacar.LoginPageActivity.loginDTO;
 
+
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.util.JsonReader;
@@ -27,6 +28,8 @@ public class LoginSelect extends AsyncTask<Void, Void, MemberVO> {
 
     String customer_email, customer_pw;
 
+
+
     public LoginSelect(String customer_email, String customer_pw) {
         this.customer_email = customer_email;
         this.customer_pw = customer_pw;
@@ -50,7 +53,7 @@ public class LoginSelect extends AsyncTask<Void, Void, MemberVO> {
             builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
             builder.addTextBody("customer_pw", customer_pw, ContentType.create("Multipart/related", "UTF-8"));
 
-            String postURL = ipConfig + "/alphacar/and_login";
+            String postURL = ipConfig + "/alphacar/android/and_login";
             // 전송
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");
@@ -61,7 +64,7 @@ public class LoginSelect extends AsyncTask<Void, Void, MemberVO> {
             inputStream = httpEntity.getContent();
 
             // 로그인 된 정보를 가져옴
-            loginDTO = readMessage(inputStream);
+          loginDTO =  readMessage(inputStream);
             inputStream.close();
 
 

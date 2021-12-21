@@ -31,14 +31,14 @@ public class LoginJoinSelectActivity extends AppCompatActivity {
         loginjoin_bt_join = findViewById(R.id.loginjoin_bt_join);
         btn_back = findViewById(R.id.btn_back);
         loginjoin_bt_login = findViewById(R.id.loginjoin_bt_login);
-        if(loginDTO != null){ loginjoin_bt_login.setText("정보 수정");
+     /*   if(loginDTO != null){ loginjoin_bt_login.setVisibility(View.INVISIBLE);
             loginjoin_bt_join.setText("로그 아웃");
             UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
                 @Override
                 public void onCompleteLogout() {
                 }
             });
-        }
+        }*/
 
 
         //상단 뒤로가기
@@ -57,14 +57,14 @@ public class LoginJoinSelectActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent;
-                if(loginDTO != null){
+             /*   if(loginDTO != null){
                      intent = new Intent(LoginJoinSelectActivity.this, MemberUpdatePageActivity.class);
                     startActivity(intent);
                     loginjoin_bt_join.setText("로그아웃");
-                }else{
+                }else{*/
                      intent = new Intent(LoginJoinSelectActivity.this, LoginPageActivity.class);
                     startActivity(intent);
-                }
+
 
             }
         });
@@ -73,14 +73,14 @@ public class LoginJoinSelectActivity extends AppCompatActivity {
         loginjoin_bt_join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(loginDTO != null){
+         /*       if(loginDTO != null){
                    loginDTO = null;
                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                    startActivity(intent);
-                }else{
+                }else{*/
                     Intent intent = new Intent(getApplicationContext(), JoinPageActivity.class);
                     startActivity(intent);
-                }
+
 
 
             }

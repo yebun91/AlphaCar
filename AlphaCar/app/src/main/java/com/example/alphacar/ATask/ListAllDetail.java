@@ -73,7 +73,7 @@ public class ListAllDetail extends AsyncTask<Void, Void, Void> {
 
             // 전송
             // 전송 url : 우리가 수정해야 하는 부분
-            String postURL = ipConfig + "/alphacar//anSelectAllDetail";
+            String postURL = ipConfig + "/alphacar/android/anSelectAllDetail";
             // 그대로 사용  복,붙
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");

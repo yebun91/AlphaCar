@@ -25,9 +25,11 @@ public class MemberController {
 
 	@Autowired private MemberServiceImpl service;
 	
+	Gson gson = new Gson();
+	
 	//카카오 로그인
 		@ResponseBody
-		@RequestMapping("kakao_login")
+		@RequestMapping("/android/kakao_login")
 		public void kakao_login (HttpServletRequest req, HttpServletResponse res) throws IOException {
 			res.setCharacterEncoding("UTF-8");
 			res.setContentType("text/html");
@@ -48,7 +50,7 @@ public class MemberController {
 		}
 		
 		@ResponseBody
-		@RequestMapping("kakaoselect")
+		@RequestMapping("/android/kakaoselect")
 		public void kakao_select (HttpServletRequest req, HttpServletResponse res) throws IOException {
 			res.setCharacterEncoding("UTF-8");
 			res.setContentType("text/html");
@@ -67,7 +69,7 @@ public class MemberController {
 	
 	//안드로이드 로그인
 	@ResponseBody
-	@RequestMapping("and_login")
+	@RequestMapping("/android/and_login")
 	public void and_login(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");
@@ -84,7 +86,7 @@ public class MemberController {
 		MemberVO vo = service.anLogin(map);
 		
 		PrintWriter out = res.getWriter();
-		Gson gson = new Gson();
+		
 		String data = gson.toJson(vo);
 		out.println(data);
 	}
@@ -92,7 +94,7 @@ public class MemberController {
 
 	//안드로이드 이미지 없이 회원가입
 	@ResponseBody
-	@RequestMapping("and_join_no_img")
+	@RequestMapping("/android/and_join_no_img")
 	public void and_join_no_img(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");
@@ -112,7 +114,7 @@ public class MemberController {
 	
 	//안드로이드 회원가입
 	@ResponseBody
-	@RequestMapping("and_join")
+	@RequestMapping("/android/and_join")
 	public void and_join(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");
@@ -162,16 +164,19 @@ public class MemberController {
 	
 	//멤버 정보 수정
 		@ResponseBody
-		@RequestMapping("and_member_update")
+		@RequestMapping("/android/and_member_update")
 		public void and_member_update(HttpServletRequest req, HttpServletResponse res) throws IOException {
 			res.setCharacterEncoding("UTF-8");
 			res.setContentType("text/html");
 			req.setCharacterEncoding("UTF-8");
-	
+			
+			
+			String filePath = "http://192.168.0.122:8080/alphacar/resources/img/";
+			
 			String fileName = "";
+			
 			MultipartRequest multi = (MultipartRequest)req;
 			MultipartFile file = multi.getFile("customer_picture");
-			
 			
 			if(file != null) {
 				fileName = file.getOriginalFilename();
@@ -179,10 +184,11 @@ public class MemberController {
 				
 				if(file.getSize() > 0) {
 					String realImgPath = req.getSession().getServletContext()
-							.getRealPath("/resources/");
+							.getRealPath("/resources/img");
 					
 					System.out.println("realpath : " + realImgPath);
 					System.out.println("fileSize : " + file.getSize());
+					
 					
 					// 이미지 파일을 서버에 저장
 					try {
@@ -190,10 +196,11 @@ public class MemberController {
 					} catch (Exception e) {
 						e.getMessage();
 					} 
+					
 				}
 			}
 			MemberVO vo = new MemberVO(req.getParameter("customer_email"), req.getParameter("customer_pw"), 
-					req.getParameter("customer_name"), req.getParameter("admin"), fileName);
+					req.getParameter("customer_name"), req.getParameter("admin"), filePath+fileName);
 
 			int result = service.anMemberUpdate(vo);
 			HashMap<String, String> map = new HashMap<String, String>();
@@ -206,7 +213,7 @@ public class MemberController {
 
 	//사용중인 아이디 인지 체크하는것
 	@ResponseBody
-	@RequestMapping("and_id_check")
+	@RequestMapping("/android/and_id_check")
 	public void and_chkec_id(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");

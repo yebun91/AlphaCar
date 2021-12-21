@@ -48,7 +48,7 @@ public class FavoriteCntUpdate extends AsyncTask<Void, Void,String> {
 
             builder.addTextBody("store_number", String.valueOf(store_number), ContentType.create("Multipart/related", "UTF-8"));
 
-            String postURL = ipConfig + "/alphacar/fav_cnt_update";
+            String postURL = ipConfig + "/alphacar/android/fav_cnt_update";
             // 전송
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");

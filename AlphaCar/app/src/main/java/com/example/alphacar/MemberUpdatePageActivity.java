@@ -31,8 +31,10 @@ import androidx.loader.content.CursorLoader;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.alphacar.ATask.LoginAtask;
 import com.example.alphacar.ATask.LoginSelect;
 import com.example.alphacar.ATask.MemberUpdate;
+import com.example.alphacar.DTOS.MemberVO;
 import com.lakue.lakuepopupactivity.PopupActivity;
 import com.lakue.lakuepopupactivity.PopupGravity;
 import com.lakue.lakuepopupactivity.PopupResult;
@@ -387,7 +389,7 @@ public class MemberUpdatePageActivity extends AppCompatActivity {
                 if(name.isEmpty()){ name = loginDTO.getCustomer_name(); }
 
                 //회원가입 처리 시작
-                MemberUpdate memberUpdatePage = new MemberUpdate(email, passwd, name, admin, profile);
+                MemberUpdate memberUpdatePage = new MemberUpdate(email, passwd, name, admin, loginDTO.getCustomer_picture());
 
                 //가입 성공 여부
                 String state = "";
@@ -403,13 +405,20 @@ public class MemberUpdatePageActivity extends AppCompatActivity {
                 }
 
                 if(state.equals("1")){
-                    LoginSelect loginSelect = new LoginSelect(email, passwd);
+                   /* LoginSelect loginSelect = new LoginSelect(email, passwd);
                     try {
                         loginSelect.execute().get();
                     } catch (ExecutionException e) {
                         e.getMessage();
                     } catch (InterruptedException e) {
                         e.getMessage();
+                    }
+*/
+                    LoginAtask loginAtask = new LoginAtask(email, passwd);
+                    try {
+                        loginDTO = (MemberVO) loginAtask.execute().get();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
                     Toast.makeText(MemberUpdatePageActivity.this, "수정되었습니다.", Toast.LENGTH_SHORT).show();

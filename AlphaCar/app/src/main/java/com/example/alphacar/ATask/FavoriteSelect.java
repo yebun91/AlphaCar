@@ -67,7 +67,7 @@ public class FavoriteSelect extends AsyncTask<Void,Void, FavoriteDTO> {
 
             // 전송
             // 전송 url : 우리가 수정해야 하는 부분
-            String postURL = ipConfig + "/alphacar/anFavorite";
+            String postURL = ipConfig + "/alphacar/android/anFavorite";
             // 그대로 사용  복,붙
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");

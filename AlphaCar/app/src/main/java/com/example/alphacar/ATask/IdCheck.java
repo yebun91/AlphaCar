@@ -45,7 +45,7 @@ public class IdCheck extends AsyncTask<Void, Void, String> {
             // 문자열 및 데이터 추가
             builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
 
-            String postURL = ipConfig + "/alphacar/and_id_check";
+            String postURL = ipConfig + "/alphacar/android/and_id_check";
             // 전송
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");

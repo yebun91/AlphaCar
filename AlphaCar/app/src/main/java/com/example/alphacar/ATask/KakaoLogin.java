@@ -49,7 +49,7 @@ public class KakaoLogin extends AsyncTask<Void, Void, MemberVO> {
             // 문자열 및 데이터 추가
             builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
 
-            String postURL = ipConfig + "/alphacar/kakaoselect";
+            String postURL = ipConfig + "/alphacar/android/kakaoselect";
             // 전송
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");

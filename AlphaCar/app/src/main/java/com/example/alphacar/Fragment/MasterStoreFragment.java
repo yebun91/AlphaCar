@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alphacar.ATask.MasterStoreSelect;
-import com.example.alphacar.ATask.Storelist;
 import com.example.alphacar.Adapter.MasterStoreAdapter;
 import com.example.alphacar.DTOS.RegisterDTO;
 import com.example.alphacar.DTOS.StoreDTO;

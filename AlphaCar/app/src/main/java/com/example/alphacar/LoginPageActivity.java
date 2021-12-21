@@ -2,6 +2,7 @@ package com.example.alphacar;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,8 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.alphacar.ATask.LoginAtask;
 import com.example.alphacar.ATask.LoginSelect;
+import com.example.alphacar.Common.RetrofitCommon;
 import com.example.alphacar.DTOS.MemberVO;
+import com.example.alphacar.DTOS.StoreDTO;
+import com.example.alphacar.retro.StoreService;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
@@ -29,18 +34,31 @@ import com.kakao.usermgmt.response.MeV2Response;
 import com.kakao.util.exception.KakaoException;
 
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class LoginPageActivity extends AppCompatActivity {
 
     //카카오로그인에 필요한 ISession
     private ISessionCallback mSessionCallback;
 
+    Retrofit retrofit;
+    StoreService storeService;
+    LoginAtask loginAtask;
 
 
     // 로그인이 성공하면 static 로그인DTO 변수에 담아서
     // 어느곳에서나 접근할 수 있게 한다
-    public static MemberVO loginDTO = null;
+    public static MemberVO loginDTO;
+
+
+    SharedPreferences mPreferences;
+    String SharedPrefFile = "com.example.alphacar.SharedPreferences";
 
     MainActivity mainActivity;
 
@@ -57,6 +75,8 @@ public class LoginPageActivity extends AppCompatActivity {
 
         checkDangerousPermissions();
 
+        loginDTO = new MemberVO();
+
 
         memberlogin_et_email = findViewById(R.id.memberlogin_et_email);
         memberlogin_et_pw = findViewById(R.id.memberlogin_et_pw);
@@ -64,6 +84,7 @@ public class LoginPageActivity extends AppCompatActivity {
         memberlogin_bt_login = findViewById(R.id.memberlogin_bt_login);
         memberlogin_bt_join = findViewById(R.id.memberlogin_bt_join);
         btn_back = findViewById(R.id.btn_back);
+        mPreferences = getSharedPreferences(SharedPrefFile, MODE_PRIVATE);
 
         //상단 뒤로가기
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -81,15 +102,34 @@ public class LoginPageActivity extends AppCompatActivity {
                     String customer_email = memberlogin_et_email.getText().toString();
                     String customer_pw = memberlogin_et_pw.getText().toString();
 
-                    LoginSelect loginSelect = new LoginSelect(customer_email, customer_pw);
-
+              /*      loginAtask = new LoginAtask(customer_email,customer_pw);
                     try {
-                        loginSelect.execute().get();
+                        loginDTO = (MemberVO) loginAtask.execute().get();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+*/
+                    /* LoginSelect loginSelect = new LoginSelect(customer_email, customer_pw);
+                    try {
+                         loginSelect.execute().get();
                     } catch (ExecutionException e) {
                         e.getMessage();
                     } catch (InterruptedException e) {
                         e.getMessage();
-                    }
+                    }*/
+                    //레트로핏
+                      Call<MemberVO> call = RetrofitCommon.getClient().getAnLogin(customer_email,customer_pw);
+                    call.enqueue(new Callback<MemberVO>() {
+                        @Override
+                        public void onResponse(Call<MemberVO> call, Response<MemberVO> response) {
+                            loginDTO = response.body();
+                        }
+
+                        @Override
+                        public void onFailure(Call<MemberVO> call, Throwable t) {
+
+                        }
+                    });
 
                 } else {
                     Toast.makeText(LoginPageActivity.this, "아이디와 암호를 모두 입력하세요.", Toast.LENGTH_SHORT).show();
@@ -99,7 +139,7 @@ public class LoginPageActivity extends AppCompatActivity {
 
                 if (loginDTO != null) {
                     Toast.makeText(LoginPageActivity.this, "로그인 되었습니다.", Toast.LENGTH_SHORT).show();
-                    Log.d("main:login", loginDTO.getCustomer_name() + "님 로그인 되었습니다.");
+                    Log.d("main:login", loginDTO.getCustomer_email() + "님 로그인 되었습니다.");
 
                     // 로그인 정보에 값이 있으면 로그인이 되었으므로 메인화면으로 이동
                     if (loginDTO != null) {
@@ -184,11 +224,10 @@ public class LoginPageActivity extends AppCompatActivity {
 
             }
 
-
-
-
-
-
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 
     //권한설정
     private void checkDangerousPermissions() {

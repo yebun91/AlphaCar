@@ -105,7 +105,7 @@ public class StoreUpdate extends AsyncTask<Void, Void, String> {
                 builder.addPart("imgpath"+(i+1), new FileBody(new File(storePic.get(i))));
             }
 
-            String postURL = ipConfig + "/alphacar/anStoreUpdate";
+            String postURL = ipConfig + "/alphacar/android/anStoreUpdate";
             // 전송
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");

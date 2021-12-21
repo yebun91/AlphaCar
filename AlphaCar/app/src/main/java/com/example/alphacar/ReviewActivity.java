@@ -97,7 +97,6 @@ public class ReviewActivity extends AppCompatActivity {
                 String reviewTitle = editTitle.getText().toString();
                 String reviewContent = editReview.getText().toString();
                 String email = loginDTO.getCustomer_email();
-                Toast.makeText(getApplicationContext(), rating, Toast.LENGTH_LONG).show();
 
                 String imgPath = "";
                 if (imgFilePath!="") {
@@ -270,8 +269,6 @@ public class ReviewActivity extends AppCompatActivity {
 
         if(requestCode == reqPicCode && resultCode == RESULT_OK){
             // 저장처리를 함
-            Toast.makeText(ReviewActivity.this, "사진이 잘 찍힘", Toast.LENGTH_SHORT).show();
-
             setPic();
         }
 
@@ -337,9 +334,7 @@ public class ReviewActivity extends AppCompatActivity {
             try {
                 fos = (FileOutputStream) resolver
                         .openOutputStream(Objects.requireNonNull(imageUri));
-                Toast.makeText(ReviewActivity.this,
-                        "fos 작업됨", Toast.LENGTH_SHORT).show();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                       bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                 Objects.requireNonNull(fos);
 
             }catch (Exception e){

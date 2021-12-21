@@ -1,29 +1,31 @@
 package com.example.alphacar;
 
 import static com.example.alphacar.Common.CommonMethod.isNetworkConnected;
+
 import static com.example.alphacar.LoginPageActivity.loginDTO;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
+import androidx.core.widget.PopupWindowCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,14 +35,15 @@ import com.bumptech.glide.Glide;
 import com.example.alphacar.ATask.IdCheck;
 import com.example.alphacar.ATask.KakaoJoinInsert;
 import com.example.alphacar.ATask.KakaoLogin;
-import com.example.alphacar.ATask.Storelist;
 import com.example.alphacar.Adapter.ViewpagerAdapter;
+import com.example.alphacar.Common.RetrofitCommon;
 import com.example.alphacar.DTOS.StoreDTO;
 import com.example.alphacar.Fragment.ButtonFragment;
 import com.example.alphacar.Fragment.FavoriteFragment;
 import com.example.alphacar.Fragment.Main_search_bar_Fragment;
 import com.example.alphacar.Fragment.ViewpagerFragment;
 import com.example.alphacar.Fragment.AnnounceFragment;
+import com.example.alphacar.retro.StoreService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.kakao.plusfriend.PlusFriendService;
@@ -50,10 +53,13 @@ import com.lakue.lakuepopupactivity.PopupGravity;
 import com.lakue.lakuepopupactivity.PopupResult;
 import com.lakue.lakuepopupactivity.PopupType;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
+
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -65,6 +71,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     ImageView kakao_ch, kakao_chat, web_alphacar;
 
 
+
     NavigationView nav_view;
     SearchView searchView;
     DrawerLayout draw_layout;
@@ -73,16 +80,17 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     ArrayList<StoreDTO> storeDTOArrayList;
 
     IdCheck idCheck;
-    Storelist storelist;
     KakaoLogin kakaoLogin;
     KakaoJoinInsert kakaoJoinInsert;
 
     BottomNavigationView bottomNavigationView;
 
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        PopupResult popupResult = (PopupResult) data.getSerializableExtra("result");
         if(resultCode == RESULT_OK){
             PopupResult result = (PopupResult) data.getSerializableExtra("result");
             if(result == PopupResult.LEFT){
@@ -90,6 +98,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 startActivity(intent);
             }
         }
+
+
     }
 
 
@@ -98,10 +108,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-        getHashKey();
 
 
         search_bar = findViewById(R.id.search_bar);
@@ -117,9 +123,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         kakao_ch = findViewById(R.id.btn_kakao_ch);
         kakao_chat = findViewById(R.id.btn_kakao_chat);
 
-        web_alphacar = findViewById(R.id.web_alphacar);
 
-        storeDTOArrayList = new ArrayList<>();
+
+
         /* 메인 뷰페이저에 데이터 집어넣기 */
         storeDTOArrayList = new ArrayList<StoreDTO>();
 
@@ -127,10 +133,28 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         ImageView login_image = headerView.findViewById(R.id.loginImage);
         TextView login_text = headerView.findViewById(R.id.loginID);
         TextView login_str = headerView.findViewById(R.id.loginStr);
+
+       //레트로핏
+        Call<ArrayList<StoreDTO>> call = RetrofitCommon.getClient().getGson_List();
+        call.enqueue(new Callback<ArrayList<StoreDTO>>() {
+            @Override
+            public void onResponse(Call<ArrayList<StoreDTO>> call, Response<ArrayList<StoreDTO>> response) {
+                storeDTOArrayList = response.body();
+                viewpagerShow(storeDTOArrayList);
+            }
+            @Override
+            public void onFailure(Call<ArrayList<StoreDTO>> call, Throwable t) {
+
+            }
+        });
+
+
+
         if (loginDTO != null) {
             if (!loginDTO.getAdmin().equals("M")) {
                 btn_cp_reg.setVisibility(View.INVISIBLE);
             }
+            nav_view.getMenu().findItem(R.id.nav_join).setVisible(false);
         } else {
             btn_cp_reg.setVisibility(View.INVISIBLE);
         }
@@ -140,7 +164,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             nav_view.getMenu().findItem(R.id.nav_myPage).setTitle("로그인");
             nav_view.getMenu().findItem(R.id.nav_logout).setVisible(false);
         }
-        viewpagerShow(null);
+
+
+
 
         /* 검색창 프래그먼트 */
         Fragment fragment = new Main_search_bar_Fragment();
@@ -182,15 +208,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             }
         });
 
-        web_alphacar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://192.168.0.122:8080/alphacar/"));
-                //intent.setPackage("com.android.chrome");   // 브라우저가 여러개 인 경우 콕 찍어서 크롬을 지정할 경우
-                startActivity(intent);
-
-            }
-        });
 
 
 /*        Intent intent = new Intent(MainActivity.this, LoadingPageActivity.class);
@@ -243,10 +260,19 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         findViewById(R.id.tab3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoginJoinSelectActivity.class);
-                startActivity(intent);
+                if (loginDTO != null) {
+                    makeDialog();
+
+                }
+                else if(loginDTO == null){
+                    Intent intent = new Intent(getApplicationContext(), LoginJoinSelectActivity.class);
+                    startActivity(intent);
+                }
             }
         });
+
+
+
 
         /*tab4 마이페이지 바텀네비게이션*/
         findViewById(R.id.tab4).setOnClickListener(new View.OnClickListener() {
@@ -298,14 +324,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         if (strEmail != null) {
             if (isNetworkConnected(this) == true) {
                 idCheck = new IdCheck(strEmail);
-                //    reviewSelect = new ReviewSelect(customer_email,dtos,rdto);
                 try {
                     result = idCheck.execute().get().trim();
-
                     result = result.substring(11, 12);
 
-                    //    reviewSelect.execute().get();
-                    //     reviewSelect.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -420,10 +442,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
 
     /* 뷰페이져 */
-    public void viewpagerShow(String query){
-        if(isNetworkConnected(this) == true){
+    public void viewpagerShow(ArrayList<StoreDTO> storeDTOArrayList){
+       /* if(isNetworkConnected(this) == true){
             storelist  = new Storelist( storeDTOArrayList);
-            /* 뷰페이저 */
+            *//* 뷰페이저 *//*
             try {
                 storelist.execute().get();
                 //    Log.d(TAG, "onCreate: "+dto.getCustomer_email());
@@ -435,7 +457,18 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         }else {
             Toast.makeText(this, "인터넷이 연결되어 있지 않습니다.",
                     Toast.LENGTH_SHORT).show();
-        }
+        }*/
+
+
+       /* allAtask = new AllAtask(storeDTOArrayList);
+        try{
+            storeDTOArrayList = (ArrayList<StoreDTO>) allAtask.execute().get();
+        }catch (Exception e){
+            e.printStackTrace();
+        }*/
+
+
+
         ArrayList<Fragment> list = new ArrayList<>();
         for (int i =0; i<storeDTOArrayList.size(); i++){
             list.add(new ViewpagerFragment(storeDTOArrayList.get(i)));
@@ -459,31 +492,38 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     }
 
 
-    private void getHashKey(){
-        PackageInfo packageInfo = null;
-        try {
-            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        if (packageInfo == null)
-            Log.e("KeyHash", "KeyHash:null");
-
-        for (Signature signature : packageInfo.signatures) {
-            try {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            } catch (NoSuchAlgorithmException e) {
-                Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
-            }
-        }
-    }
 
 
     public void refresh(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+
+    private void makeDialog(){
+        AlertDialog.Builder alt_bld = new AlertDialog.Builder(MainActivity.this);
+
+        alt_bld.setTitle("로그아웃 하시겠습니까?").setCancelable(
+                false).setPositiveButton("확인",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        loginDTO = null;
+                        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+
+
+                    }
+                }).setNegativeButton("취소",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = alt_bld.create();
+        alert.show();
     }
 
 

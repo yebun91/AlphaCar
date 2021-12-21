@@ -12,6 +12,10 @@ public class MemberVO implements Serializable {
     private String kakao              ;
     private String admin              ;
 
+    public MemberVO() {
+
+    }
+
     public String getCustomer_email() {
         return customer_email;
     }

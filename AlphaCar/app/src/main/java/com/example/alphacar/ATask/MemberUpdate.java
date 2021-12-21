@@ -63,7 +63,7 @@ public class MemberUpdate extends AsyncTask<Void, Void, String> {
             //이미지 전송
             builder.addPart("customer_picture", new FileBody(new File(customer_picture)));
 
-            String postURL = ipConfig + "/alphacar/and_member_update";
+            String postURL = ipConfig + "/alphacar/android/and_member_update";
             // 전송
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");

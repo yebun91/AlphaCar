@@ -112,7 +112,7 @@ public class StoreRegister extends AsyncTask<Void, Void, String> {
                 builder.addPart("imgpath"+(i+1), new FileBody(new File(storePic.get(i))));
             }
 
-            String postURL = ipConfig + "/alphacar/anStoreRegister";
+            String postURL = ipConfig + "/alphacar/android/anStoreRegister";
             // 전송
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");

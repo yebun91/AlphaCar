@@ -54,7 +54,7 @@ public class JoinNoImgInsert extends AsyncTask<Void, Void, String> {
             builder.addTextBody("customer_name", customer_name, ContentType.create("Multipart/related", "UTF-8"));
             builder.addTextBody("admin", admin, ContentType.create("Multipart/related", "UTF-8"));
 
-            String postURL = ipConfig + "/alphacar/and_join_no_img";
+            String postURL = ipConfig + "/alphacar/android/and_join_no_img";
             // 전송
             InputStream inputStream = null;
             httpClient = AndroidHttpClient.newInstance("Android");

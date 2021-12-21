@@ -39,7 +39,7 @@ public class ListController {
 	
 	
 	@ResponseBody
-	@RequestMapping("/anShowName")
+	@RequestMapping("/android/anShowName")
 	public void anShowName(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		res.setCharacterEncoding("utf-8");
 		res.setContentType("text/html");
@@ -89,7 +89,7 @@ public class ListController {
 	 */
 	
 	@ResponseBody
-	@RequestMapping("/anStoreRegister")
+	@RequestMapping("/android/anStoreRegister")
 	public void anStoreRegister(HttpServletRequest req, HttpServletResponse res)
 			throws Exception {
 		res.setCharacterEncoding("UTF-8");
@@ -190,7 +190,7 @@ public class ListController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/anStoreUpdate")
+	@RequestMapping("/android/anStoreUpdate")
 	public void anStoreUpdate(HttpServletRequest req, HttpServletResponse res)
 			throws Exception {
 		res.setCharacterEncoding("UTF-8");
@@ -296,7 +296,7 @@ public class ListController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/anSelectAllDetail")
+	@RequestMapping("/android/anSelectAllDetail")
 	public void anSelectAllDetail(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");
@@ -318,7 +318,7 @@ public class ListController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/anSelectFile")
+	@RequestMapping("/android/anSelectFile")
 	public void anSelectFile(HttpServletRequest req , HttpServletResponse res) throws Exception {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");
@@ -336,7 +336,7 @@ public class ListController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/anSelectMaster")
+	@RequestMapping("/android/anSelectMaster")
 	public void anSelectMaster(HttpServletRequest req , HttpServletResponse res) throws Exception {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");
@@ -354,7 +354,7 @@ public class ListController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/anSelectMasterFile")
+	@RequestMapping("/android/anSelectMasterFile")
 	public void anSelectMasterFile(HttpServletRequest req , HttpServletResponse res) throws Exception {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");
@@ -375,12 +375,13 @@ public class ListController {
 	
 	
 	@ResponseBody
-	@RequestMapping("/anSelectDetail")
+	@RequestMapping("/android/anSelectDetail")
 	//@RequestMapping(value ="anSelectDetail", method = {RequestMethod.GET, RequestMethod.POST})
 	public void anSelectDetail(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");
 		req.setCharacterEncoding("UTF-8");
+		System.out.println(req.getParameter("store_number"));
 		int store_number = Integer.parseInt(req.getParameter("store_number"));
 		System.out.println(store_number);
 		List<StoreVO> vo = service.store_detail(store_number);
@@ -396,7 +397,7 @@ public class ListController {
 	
 	
 	@ResponseBody
-	@RequestMapping("anSelectMulti")
+	@RequestMapping("/android/anSelectMulti")
 	//@RequestMapping(value ="anSelectMulti", method = {RequestMethod.GET, RequestMethod.POST})
 	public void anSelectMulti(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		res.setCharacterEncoding("UTF-8");
@@ -425,7 +426,7 @@ public class ListController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("annotice")
+	@RequestMapping("/android/annotice")
 	public void list(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 

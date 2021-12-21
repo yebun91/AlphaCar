@@ -68,7 +68,7 @@ public class RegisterUpdateActivity extends AppCompatActivity {
     TextView textView;
 
     EditText et_store_name, et_store_master_name, et_store_registration_number, et_inventory, et_store_price,
-            et_introduce, et_addr1, et_addr2, et_store_tel, et_store_time, et_store_dayoff;
+            et_introduce, et_addr0 ,et_addr1, et_addr2, et_store_tel, et_store_time, et_store_dayoff;
 
     Button btnSearch_addr, btnRegister;
 
@@ -374,6 +374,7 @@ public class RegisterUpdateActivity extends AppCompatActivity {
         et_inventory = findViewById(R.id.register_et_inventory);
         et_store_price = findViewById(R.id.register_et_store_price);
         et_introduce = findViewById(R.id.register_et_introduce);
+        et_addr0 = findViewById(R.id.register_et_store_addr0);
         et_addr1 = findViewById(R.id.register_et_store_addr1);
         et_addr2 = findViewById(R.id.register_et_store_addr2);
         et_store_tel = findViewById(R.id.register_et_store_tel);
@@ -414,7 +415,7 @@ public class RegisterUpdateActivity extends AppCompatActivity {
                 }
                 if(store_master_name.length() == 0){
                     Toast.makeText(RegisterUpdateActivity.this, "대표 명을 입력하세요", Toast.LENGTH_SHORT).show();
-                    et_store_name.requestFocus();
+                    et_store_master_name.requestFocus();
                     return;
                 }
                 if(store_registration_number.length() == 0){

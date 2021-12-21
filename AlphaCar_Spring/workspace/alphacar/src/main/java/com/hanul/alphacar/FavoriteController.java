@@ -30,7 +30,7 @@ public class FavoriteController {
 	
 
 	  @ResponseBody
-	  @RequestMapping(value = "/anFavoriteDel") 
+	  @RequestMapping(value = "/android/anFavoriteDel") 
 	  public void anFavoriteDel(HttpServletRequest req , HttpServletResponse res) throws Exception { 
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html"); 
@@ -53,7 +53,7 @@ public class FavoriteController {
 	
 	
 	@ResponseBody
-	@RequestMapping("/anFavorite")
+	@RequestMapping("/android/anFavorite")
 	public void anFavorite(HttpServletRequest req , HttpServletResponse res) throws Exception {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");
@@ -71,7 +71,7 @@ public class FavoriteController {
 
 	
 	@ResponseBody
-	@RequestMapping("anFavoriteInsert")
+	@RequestMapping("/android/anFavoriteInsert")
 	public void favorite_insert (HttpServletRequest req, HttpServletResponse res) throws IOException {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");
@@ -107,7 +107,7 @@ public class FavoriteController {
 	
 	
 	@ResponseBody
-	@RequestMapping("fav_check")
+	@RequestMapping("/android/fav_check")
 	public void and_chkec_id(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");
@@ -129,7 +129,7 @@ public class FavoriteController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("fav_cnt_update")
+	@RequestMapping("/android/fav_cnt_update")
 	public void and_member_update(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		res.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html");

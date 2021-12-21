@@ -10,13 +10,10 @@ import static com.example.alphacar.LoginPageActivity.loginDTO;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -28,19 +25,20 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 
-import com.example.alphacar.ATask.DetailSelect;
+import com.example.alphacar.ATask.DetailAtask;
 import com.example.alphacar.ATask.FavoriteCheck;
 import com.example.alphacar.ATask.FavoriteCntUpdate;
 import com.example.alphacar.ATask.FavoriteDelect;
 import com.example.alphacar.ATask.FavoriteInsert;
-import com.example.alphacar.ATask.FavoriteSelect;
 import com.example.alphacar.ATask.ReviewSelect;
 import com.example.alphacar.Adapter.DetailAdapter;
 import com.example.alphacar.Adapter.Detail_SliderAdapter;
+import com.example.alphacar.Common.RetrofitCommon;
 import com.example.alphacar.DTOS.ReviewDTO;
 import com.example.alphacar.DTOS.StoreDTO;
 import com.example.alphacar.Fragment.DetailPagerFragment;
 import com.example.alphacar.Fragment.MapFragment;
+import com.example.alphacar.retro.StoreService;
 import com.lakue.lakuepopupactivity.PopupActivity;
 import com.lakue.lakuepopupactivity.PopupGravity;
 import com.lakue.lakuepopupactivity.PopupResult;
@@ -53,9 +51,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class DetailActivity extends AppCompatActivity{
     //사업장 정보를 id값 기준으로 가져와야함
-    DetailSelect detailSelect;
     ReviewSelect reviewSelect;
     FavoriteInsert favoriteInsert;
     FavoriteCntUpdate favoriteCntUpdate;
@@ -78,6 +80,7 @@ public class DetailActivity extends AppCompatActivity{
 
     MapFragment mapFragment;
 
+    DetailAtask detailAtask;
 
     TextView store_name;
     TextView store_price;
@@ -89,18 +92,15 @@ public class DetailActivity extends AppCompatActivity{
 
     int store_number;
 
+    Retrofit retrofit;
+    StoreService storeService;
+
+
 
 
     ScrollView scrollView;
 
-    //---------ViewPager Indicator---------
-  //  ViewPager2 imageContainer;
- //   Detail_SliderAdapter adapter;
-  //  Object list[]; //슬라이더 개수에 넣어줄 리스트
-    //int list[];
-  //  TextView[] dots; //점
-  //  LinearLayout layout;
-    //----------ViewPager Indicator---------
+
 
     //-----------expandableListView----------
     List<String> groupList;
@@ -129,51 +129,46 @@ public class DetailActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail);
 
-     /*   MapView mapView = new MapView(this);
-        ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
-        mapViewContainer.addView(mapView);
-*/     String state = "";
+        String state = "";
 
         detail_now_btn = findViewById(R.id.detail_now_btn);
         detail_review_btn = findViewById(R.id.detail_review_btn);
         detail_star_point = findViewById(R.id.detail_star_point);
+
         like_btn = findViewById(R.id.detail_favorite_btn);
         pager = findViewById(R.id.image_container);
+
         detail_back = findViewById(R.id.detail_back);
         detail_home = findViewById(R.id.detail_home);
 
+        scrollView = findViewById(R.id.detail_scroll);
+
+        store_name = findViewById(R.id.detail_store_name);
+        store_price = findViewById(R.id.detail_store_price);
+        store_addr = findViewById(R.id.detail_store_addr);
+
         dtos = new ArrayList<>();
-        store_list = new ArrayList<>();
+        store_list = new ArrayList<StoreDTO>();
         dto = new StoreDTO();
         rdto = new ReviewDTO();
-        store_list = new ArrayList<>();
+
 
         Intent intent = getIntent();
         store_number = intent.getIntExtra("store_number", 0);
 
 
-
-
         //영업장 정보 불러오는 atask
-        if(isNetworkConnected(this) == true){
-            detailSelect = new DetailSelect(store_number,store_list);
-            //    reviewSelect = new ReviewSelect(customer_email,dtos,rdto);
-            try {
-                detailSelect.execute().get();
-                //    reviewSelect.execute().get();
-                //     reviewSelect.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }else {
-            Toast.makeText(this, "인터넷이 연결되어 있지 않습니다.",
-                    Toast.LENGTH_SHORT).show();
+        detailAtask = new DetailAtask(store_number,store_list);
+        try {
+             store_list = (ArrayList<StoreDTO>) detailAtask.execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
 
 
         //리뷰 정보 불러오는 atask
         if(isNetworkConnected(this) == true){
-
             reviewSelect = new ReviewSelect(store_number,dtos,rdto);
             try {
                reviewSelect.execute().get();
@@ -185,7 +180,17 @@ public class DetailActivity extends AppCompatActivity{
             Toast.makeText(this, "인터넷이 연결되어 있지 않습니다.",
                     Toast.LENGTH_SHORT).show();
         }
-    if(loginDTO != null) {
+
+   /*     allAtask = new AllAtask(store_number, dtos, rdto);
+        try {
+            allAtask.execute().get();
+            //    reviewSelect.execute().get();
+            //     reviewSelect.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
+        if(loginDTO != null) {
         if (isNetworkConnected(DetailActivity.this) == true) {
             favoriteCheck = new FavoriteCheck(loginDTO.getCustomer_email(), store_list.get(0).getStore_number());
             //listDetail = new ListDetail(store_number);
@@ -202,6 +207,7 @@ public class DetailActivity extends AppCompatActivity{
             Toast.makeText(DetailActivity.this, "인터넷이 연결되어 있지 않습니다.",
                     Toast.LENGTH_SHORT).show();
         }
+
         if (state.equals("1")) {
             like_btn.setImageResource(R.drawable.ic_baseline_favorite_red_24);
             like_btn.setOnClickListener(new View.OnClickListener() {
@@ -220,7 +226,8 @@ public class DetailActivity extends AppCompatActivity{
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                    }else {
+
+
 
                     }
 
@@ -329,12 +336,6 @@ public class DetailActivity extends AppCompatActivity{
 
         //////////
 
-        scrollView = findViewById(R.id.detail_scroll);
-
-        //세차장 이름, 가격, 위치 가져오기
-        store_name = findViewById(R.id.detail_store_name);
-        store_price = findViewById(R.id.detail_store_price);
-        store_addr = findViewById(R.id.detail_store_addr);
 
         store_name.setText(store_list.get(0).getStore_name());
         store_price.setText(store_list.get(0).getStore_price());

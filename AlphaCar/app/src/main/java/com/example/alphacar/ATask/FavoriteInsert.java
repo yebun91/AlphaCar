@@ -46,7 +46,7 @@ public class FavoriteInsert extends AsyncTask<Void, Void,Void> {
         builder.addTextBody("customer_email", customer_email, ContentType.create("Multipart/related", "UTF-8"));
         builder.addTextBody("store_number", String.valueOf(store_number), ContentType.create("Multipart/related", "UTF-8"));
 
-        String postURL = ipConfig + "/alphacar/anFavoriteInsert";
+        String postURL = ipConfig + "/alphacar/android/anFavoriteInsert";
 
         InputStream inputStream = null;
         httpClient = AndroidHttpClient.newInstance("Android");
