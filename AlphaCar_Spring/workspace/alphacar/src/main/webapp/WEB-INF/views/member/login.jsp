@@ -53,7 +53,6 @@
 				$('#customer_pw').focus();
 				return;
 			} 
-			
  				if (checked) {
 					console.log('checked');
 					
