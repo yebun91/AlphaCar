@@ -7,7 +7,7 @@
       	style="cursor: pointer;">
       </div>
       <form class="form" method="post" action="webLogin">
-        <input type="text" placeholder="이메일" class="customer_email" id="customer_email" />
+        <input type="text" placeholder="이메일" class="customer_email" id="customer_email" autofocus />
         <input type="password" placeholder="비밀번호" class="customer_pw" id="customer_pw"
         				onkeypress = "if (event.keyCode == 13) go_login()" />
         <label><input type="checkbox" name="alwaysLogin" class="login_always" id="login_always"

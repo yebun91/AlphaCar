@@ -83,18 +83,12 @@ let pwToken = false;
 let p2Token = false;
 let nmToken = false;
 
-var csrfHeaderName = "${_csrf.headerName}";
-var csrfTokenValue = "${_csrf.token}";
-
 function duplicate() {
 	$.ajax({
 		url : 'email_dupl'
 		, data : {id:email.value}
 		, type : 'post'
 		, async : false
-		, beforeSend: function(xhr){
-	           xhr.setRequestHeader(csrfHeaderName, csrfTokenValue)
-	       }
 		, success : function (res) {
 			if (res == true) {
 				alert("사용 가능한 이메일 주소입니다.");
@@ -112,6 +106,7 @@ function checkEmail() {
 	if(!regEmail.test(email.value)) {
 		document.getElementById("emailError").innerText = "이메일 형식(예:abc@def.com)에 맞게 입력하세요.";
 		document.getElementById("emailError").style.color = "red";
+
 	}else {
 		document.getElementById("emailError").innerText = "이메일이 입력되었습니다.";
 		document.getElementById("emailError").style.color = "green";

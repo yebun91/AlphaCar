@@ -35,12 +35,6 @@ public class HomeNoticeController {
 			@RequestParam (defaultValue = "1") int curPage,
 			String search, String keyword) {
 		
-
-		/*
-		 * HashMap<String, String> map = new HashMap<String, String>();
-		 * map.put("customer_email", "admin@naver.com"); map.put("customer_pw",
-		 * "admin1234"); session.setAttribute("loginInfo", member.member_login(map));
-		 */
 		session.setAttribute("category", "no");
 		
 		page.setCurPage(curPage);
@@ -63,14 +57,13 @@ public class HomeNoticeController {
 		
 		// 로그인 된 사용자의 email을 저장함
 		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
-		
 		service.notice_insert(vo);
 		return "redirect:list.no";
 	}
 	
 	// 공지사항 상세화면 요청
 	@RequestMapping("/detail.no")
-	public String detail(int id, Model model) {
+	public String detail(int id, Model model, HttpSession session){
 		// 클릭시 조회수 증가
 		service.notice_read(id);
 		
