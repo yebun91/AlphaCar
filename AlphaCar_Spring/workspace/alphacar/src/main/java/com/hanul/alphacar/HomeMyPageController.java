@@ -96,6 +96,15 @@ public class HomeMyPageController {
 			vo.setCustomer_picture(memberVO.getCustomer_picture());
 		}
 		
+        //비밀번호를 바꾸지 않았을 경우 기존 비밀번호로 교체
+        if(memberVO.getSocial() == null) {
+            if (vo.getCustomer_pw() == null) {
+                vo.setCustomer_pw(memberVO.getCustomer_pw());
+            }
+        }else {
+            vo.setCustomer_pw(null);    
+        }
+        	
 		//화면에서 변경 입력한 정보를 db에 변경 저장한 후 상세화면으로 연결
 		if(cryptEncoder.matches(customer_old_pw, memberVO.getCustomer_pw())) {
 			System.out.println("일치");

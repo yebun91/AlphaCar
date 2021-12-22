@@ -123,7 +123,7 @@ const regPw    = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*
 const regName  = /^[가-힣]{2,4}$/
 
 function checkOldPw() {
-	if(mypageSocial.value != ""){
+	/* if(mypageSocial.value != ""){
 		wpToken = true;
 	}else if(oldPw.value != wrtPw.value) {	
 		document.getElementById("oldPwError").innerText = "기존의 비밀번호가 아닙니다.";
@@ -134,7 +134,8 @@ function checkOldPw() {
 		document.getElementById("oldPwError").style.color = "green";
 		wpToken = true;
 		
-	}
+	} */
+	wpToken = true;
 }
 
 function checkPw() {

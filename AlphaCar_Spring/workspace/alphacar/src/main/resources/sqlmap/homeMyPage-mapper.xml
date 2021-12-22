@@ -10,7 +10,7 @@
 				
 		begin
         
-        update customer set customer_pw = #{customer_pw}, 
+        update customer set customer_pw = #{customer_pw, jdbcType=VARCHAR}, 
 					customer_name = #{customer_name}, 
 					customer_picture = #{customer_picture},
 					city = #{city},
