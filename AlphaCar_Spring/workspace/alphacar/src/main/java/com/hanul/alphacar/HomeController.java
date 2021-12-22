@@ -42,7 +42,6 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, 
 			@RequestParam (defaultValue = "1") int curPage, HttpSession session , HttpServletRequest req) throws Exception {
-
 		page.setCurPage(curPage);
 		model.addAttribute("page", service.notice_list(page));
 		model.addAttribute("wash", companyService.company_list_all_fv());
