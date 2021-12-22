@@ -12,22 +12,32 @@
 <!-- 메인 시작 -->
 <main class="mypage">
 	<div id="page">
+	<input type="hidden" value="${loginInfo.social }" id="mypageSocial">
 		<form action="memberSubmit.mp" enctype="multipart/form-data"
 			class="customer_update_form form" method="post">
 			<h1>회원 정보 수정</h1>
-			<input type="text" name="customer_email"
-				value="${loginInfo.customer_email}" class="join_email" id="email"
-				readonly> <input type="hidden" id="old_pw"
-				value="${loginInfo.customer_pw}"> <input type="password"
-				placeholder="기존 비밀번호를 작성해주세요." class="old_join_pw" id="written_pw"
-				onkeyup="checkOldPw()">
-			<div id="oldPwError"></div>
-			<input type="password" name="customer_pw" placeholder="변경할 비밀번호"
-				class="join_pw" id="new_pw" onkeyup="checkPw()">
-			<div id="pwError"></div>
-			<input type="password" placeholder="변경할 비밀번호 확인" class="join_pw2"
-				id="new_pw2" onkeyup="checkPw2()">
-			<div id="pw2Error"></div>
+			<c:if test="${empty loginInfo.social}">
+				<input type="text" name="customer_email"
+					   value="${loginInfo.customer_email}"
+					   class="join_email" id="email" readonly> 
+			    <input type="hidden" id="old_pw" value="${loginInfo.customer_pw}"> 
+			    <input type="password"
+					   placeholder="기존 비밀번호를 작성해주세요." class="old_join_pw" id="written_pw"
+					   onkeyup="checkOldPw()">
+				<div id="oldPwError"></div>
+				<input type="password" name="customer_pw" placeholder="변경할 비밀번호"
+					class="join_pw" id="new_pw" onkeyup="checkPw()">
+				<div id="pwError"></div>
+				<input type="password" placeholder="변경할 비밀번호 확인" class="join_pw2"
+					id="new_pw2" onkeyup="checkPw2()">
+				<div id="pw2Error"></div>
+			</c:if>
+			<c:if test="${loginInfo.social != null}">
+				<input type="hidden" name="customer_email"
+					   value="${loginInfo.customer_email}"
+					   class="join_email" id="email" readonly> 
+			</c:if>
+			
 			<input type="text" name="customer_name"
 				value="${loginInfo.customer_name}" class="join_name" id="new_name"
 				onkeyup="checkName()">
@@ -54,11 +64,11 @@
 				<div class="mypage_user_image">
 					<img
 						src=<c:if test="${loginInfo.customer_picture == null}">
-          	  "resources/pictures/profiles/noImage.png" 
-          	</c:if>
+			          	  "resources/pictures/profiles/noImage.png" 
+			          	</c:if>
 						<c:if test="${loginInfo.customer_picture != null}">
-          	  "${loginInfo.customer_picture}"
-          	</c:if>
+			          	  "${loginInfo.customer_picture}"
+			          	</c:if>
 						alt="ProfileImage" onclick="choose_image()"
 						class="mypage_user_images">
 				</div>
@@ -102,6 +112,7 @@ let wrtPw = document.getElementById("written_pw");
 let pw    = document.getElementById("new_pw");
 let pw2   = document.getElementById("new_pw2");
 let name  = document.getElementById("new_name");
+let mypageSocial = document.getElementById("mypageSocial");
 
 let wpToken = false;
 let pwToken = true;
@@ -112,11 +123,12 @@ const regPw    = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*
 const regName  = /^[가-힣]{2,4}$/
 
 function checkOldPw() {
-	//alert(oldPw.value);
-	if(oldPw.value != wrtPw.value) {
+	if(mypageSocial.value != ""){
+		wpToken = true;
+	}else if(oldPw.value != wrtPw.value) {	
 		document.getElementById("oldPwError").innerText = "기존의 비밀번호가 아닙니다.";
 		document.getElementById("oldPwError").style.color = "red";
-		wpToken = false;
+		wpToken = false;	
 	}else {
 		document.getElementById("oldPwError").innerText = "기존의 비밀번호가 맞습니다.";
 		document.getElementById("oldPwError").style.color = "green";
@@ -165,7 +177,7 @@ function checkName() {
 
 //회원정보 수정 버튼 누를 시
 function member_update() {
-
+	if(mypageSocial.value != null){wpToken = true;}
 	if(!wpToken) {
 		alert("기존 비밀번호를 입력하세요.");
 		wrtPw.focus();

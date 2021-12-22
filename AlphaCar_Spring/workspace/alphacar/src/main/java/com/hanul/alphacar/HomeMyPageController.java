@@ -83,12 +83,18 @@ public class HomeMyPageController {
 		}
 		
 		//비밀번호를 바꾸지 않았을 경우 기존 비밀번호로 교체
-		if (vo.getCustomer_pw().isEmpty()) {
-			vo.setCustomer_pw(memberVO.getCustomer_pw());
+		if(memberVO.getSocial() == null) {
+			if (vo.getCustomer_pw() == null) {
+				vo.setCustomer_pw(memberVO.getCustomer_pw());
+			}
+		}else {
+			vo.setCustomer_pw(null);	
 		}
+		
 		
 		//화면에서 변경 입력한 정보를 db에 변경 저장한 후 상세화면으로 연결
 		homeService.home_member_update(vo);	
+		vo.setSocial(memberVO.getSocial());
 		session.setAttribute("loginInfo", vo);
 
 	    //session.setAttribute("loginInfo", member.member_login(map));
