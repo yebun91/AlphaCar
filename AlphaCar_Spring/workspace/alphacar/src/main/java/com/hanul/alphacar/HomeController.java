@@ -59,24 +59,38 @@ public class HomeController {
 //		}
 		
 		
-		String ip_addr = Inet4Address.getLocalHost().getHostAddress();
-		String com_name = Inet4Address.getLocalHost().getHostName();
-		
-		if(req.getAttribute("logout") == null) {
-		
-		WebMemberVO member = new WebMemberVO();
-		
-		member.setCom_name(com_name);
-		member.setIp_addr(ip_addr);
-		//webmember.login_info(member);
-		WebMemberVO vo = webmember.auto_login(member); 
-		if(vo != null) {
-			
-		session.setAttribute("loginInfo", vo);
-		}
-	}
-
-			
+//		String ip_addr = Inet4Address.getLocalHost().getHostAddress();
+//		String com_name = Inet4Address.getLocalHost().getHostName();
+//		
+//		if(req.getAttribute("logout") == null) {
+//		
+//		WebMemberVO member = new WebMemberVO();
+//		
+//		member.setCom_name(com_name);
+//		member.setIp_addr(ip_addr);
+//		WebMemberVO vo = webmember.auto_login(member); 
+//		if(vo != null) {
+//			
+//		session.setAttribute("loginInfo", vo);
+//		}
+//	}
 		return "index";
+	}
+	
+	@RequestMapping("/error")
+	public String error (HttpServletRequest req, Model model) {
+		
+		Throwable error = (Throwable) req.getAttribute("javax.servlet.error.exception"); 
+		StringBuffer msg = new StringBuffer();
+		
+		while( error != null ) {
+			msg.append("<p>").append(error.getMessage() ).append("</p>");
+			error = error.getCause();	// exception 이 발생한 근본적인 원인을 리턴
+		}
+		
+		model.addAttribute("msg", msg.toString());
+		
+		int code = (int) req.getAttribute("javax.servlet.error.status_code");
+		return "error/" + (code == 404 ? 404 : "common");
 	}
 }

@@ -59,7 +59,7 @@ public class HomeMemberController {
 		String ip_addr = Inet4Address.getLocalHost().getHostAddress();
 		String com_name = Inet4Address.getLocalHost().getHostName();
 
-		System.out.println(ip_addr + com_name + chk);
+		//System.out.println(ip_addr + com_name + chk);
 		HashMap<String, String> map = new HashMap<String, String>();
 	
 		map.put("customer_email", customer_email);

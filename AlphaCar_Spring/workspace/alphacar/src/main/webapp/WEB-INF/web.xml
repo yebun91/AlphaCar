@@ -53,6 +53,23 @@
 	</filter-mapping>
 
 	<!-- 한글 설정 END -->
-
+	
+	<!-- 에러 페이지 등록 -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error</location>	
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error</location>	
+	</error-page>
+	<error-page>
+		<error-code>400</error-code>
+		<location>/error</location>	
+	</error-page>
+	<error-page>
+		<error-code>406</error-code>
+		<location>/error</location>	
+	</error-page>
 
 </web-app>
