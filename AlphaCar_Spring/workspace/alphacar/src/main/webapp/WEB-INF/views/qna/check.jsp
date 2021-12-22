@@ -14,7 +14,7 @@
   <main>
     <div id="page">
       <h1>비밀번호 입력</h1>
-			<form class="form" method="post" action="detail.qna?qna_id=${vo.qna_id }">
+			<form class="form" method="post" action="detail.qn?qna_id=${vo.qna_id }">
 	        <input type="password" placeholder="비밀번호" class="qna_password" id="qna_password" />
 	        <div class="page_write_button">
 			      <button type="button" onclick="go_check()">작성완료</button>

@@ -17,6 +17,24 @@ public class HomeChartServiceImpl implements HomeChartService {
 		return dao.month_list(store_number);
 	}
 
+	@Override
+	public List<ChartVO> time_rank(int store_number) {
+		// TODO Auto-generated method stub
+		return dao.time_rank(store_number);
+	}
+
+	@Override
+	public List<ChartVO> week_cnt(int store_number) {
+		// TODO Auto-generated method stub
+		return dao.week_cnt(store_number);
+	}
+
+	@Override
+	public List<ChartVO> dcode_cnt() {
+		// TODO Auto-generated method stub
+		return dao.dcode_cnt();
+	}
+
 	
 
 }

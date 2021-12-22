@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import homeQna.QnaServiceImpl;
 import homeQna.QnaVO;
 import member.WebMemberVO;
+import security.CustomUserDetails;
 
 @Controller
 public class HomeQnaController {
@@ -23,13 +24,13 @@ public class HomeQnaController {
 	
 
 	//qna 새글쓰기
-	@RequestMapping("/write.qna")
+	@RequestMapping("/write.qn")
 	public String write(HttpSession session, Model model) {
 		return "qna/write";
 	}
 	
 	// 신규 qna 저장 처리 요청
-	@RequestMapping ("/insert.qna")
+	@RequestMapping ("/insert.qn")
 	public String insert (QnaVO vo, HttpSession session, MultipartFile file, String qna_search_index, 
 			String qna_password) {
 		
@@ -37,7 +38,7 @@ public class HomeQnaController {
 //					vo.setWriter(member.getId());
 		
 		// 로그인 된 사용자의 id를 가져와 글쓴이(writer)에 담기 위한 처리
-		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
+		vo.setCustomer_email( ( (CustomUserDetails) session.getAttribute("loginInfo")).getCustomer_email() );
 		System.out.println(vo.getCustomer_email());
 		System.out.println(qna_search_index);
 		String index = "";
@@ -60,7 +61,7 @@ public class HomeQnaController {
 		}
 	
 	//qna 글 자세히 보기
-	@RequestMapping("/detail.qna")
+	@RequestMapping("/detail.qn")
 	public String detail(int qna_id, Model model, WebMemberVO mvo, HttpSession session) {
 		
 			service.qna_read(qna_id);
@@ -72,7 +73,7 @@ public class HomeQnaController {
 	}
 	
 	//qna 비밀번호 확인 화면 요청
-	@RequestMapping("/check.qna")
+	@RequestMapping("/check.qn")
 	public String check(HttpSession session, Model model, int qna_id) {
 		
 		model.addAttribute("vo", service.check_pw(qna_id));
@@ -81,7 +82,7 @@ public class HomeQnaController {
 
 	
 	//qna 글 수정
-	@RequestMapping("/update.qna")
+	@RequestMapping("/update.qn")
 	public String update(HttpSession session, Model model, int qna_id) {
 		
 		model.addAttribute("vo", service.qna_detail(qna_id));
@@ -90,7 +91,7 @@ public class HomeQnaController {
 	
 	
 	// faq 수정 저장 처리 요청
-	@RequestMapping ("/update_work.qna")
+	@RequestMapping ("/update_work.qn")
 	public String update_work(QnaVO vo, HttpSession session, String qna_search_index) {
 		
 		String index = "";
@@ -106,14 +107,14 @@ public class HomeQnaController {
 		vo.setQna_attribute(index);
 		
 		service.qna_update(vo);	
-		return "redirect:detail.qna?qna_id=" + vo.getQna_id();
+		return "redirect:detail.qn?qna_id=" + vo.getQna_id();
 	}
 	
 	//qna 글 삭제
-	@RequestMapping("/delete.qna")
+	@RequestMapping("/delete.qn")
 	public String delete(HttpSession session, Model model, int qna_id) {
 		service.qna_delete(qna_id);
-		return "redirect:masterContact.mp";
+		return "redirect:masterContact.mpa";
 	}
 	
 	//qna 답글 작성화면 요청
@@ -129,7 +130,7 @@ public class HomeQnaController {
 	public String reply_insert (QnaVO vo, HttpSession session, int qna_id) {
 		System.out.println(qna_id);
 		// 로그인 된 사용자의 id를 가져와 글쓴이(writer)에 담기 위한 처리
-		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
+		vo.setCustomer_email( ( (CustomUserDetails) session.getAttribute("loginInfo")).getCustomer_email() );
 //			vo = service.qna_pw(qna_id);
 //			vo.setQna_password(vo.getQna_password());
 
@@ -151,6 +152,6 @@ public class HomeQnaController {
 	public String update_work(QnaVO vo, HttpSession session) {
 		
 		service.reply_update(vo);
-		return "redirect:detail.qna?qna_id=" + vo.getQna_id();
+		return "redirect:detail.qn?qna_id=" + vo.getQna_id();
 	}
 }

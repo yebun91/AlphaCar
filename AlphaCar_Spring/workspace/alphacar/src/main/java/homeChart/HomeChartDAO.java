@@ -18,6 +18,24 @@ public class HomeChartDAO implements HomeChartService {
 		return sql.selectList("homeChart.mapper.month_list", store_number);
 	}
 
+	@Override
+	public List<ChartVO> time_rank(int store_number) {
+		// TODO Auto-generated method stub
+		return sql.selectList("homeChart.mapper.time_rank", store_number);
+	}
+
+	@Override
+	public List<ChartVO> week_cnt(int store_number) {
+		// TODO Auto-generated method stub
+		return sql.selectList("homeChart.mapper.week_cnt", store_number);
+	}
+
+	@Override
+	public List<ChartVO> dcode_cnt() {
+		// TODO Auto-generated method stub
+		return sql.selectList("homeChart.mapper.dcode_cnt");
+	}
+
 	
 
 

@@ -9,13 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import member.WebMemberVO;
+import security.CustomUserDetails;
 
 @Controller
 public class ChatController {
 	
 	@RequestMapping("/list.chat")
 	public String chatList(Model model, HttpSession session, String revid) {
-		WebMemberVO vo = (WebMemberVO) session.getAttribute("loginInfo");
+		CustomUserDetails vo = (CustomUserDetails) session.getAttribute("loginInfo");
 		if(!vo.getAdmin().equals("A")) {
 			session.setAttribute("revid", "a");
 		}else {

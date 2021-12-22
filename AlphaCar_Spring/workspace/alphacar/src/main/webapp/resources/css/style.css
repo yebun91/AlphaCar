@@ -152,7 +152,7 @@ nav ul {
   display: flex;
 }
 
-nav li{
+nav li, nav button{
   color:#ffffff;
   font-size: var(--font-regular);
   font-weight: var(--weight-semi-bold);

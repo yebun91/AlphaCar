@@ -59,8 +59,7 @@
 				</div>
 				<div>
 					<h3>가격</h3>
-					<input type="number" name="store_price" id="store_price" onkeyup="checkPrice()">
-					<div id="priceError"></div>
+					<input type="text" name="store_price" id="store_price">
 				</div>
 				<div>
 					<h3>사업주 이름</h3>

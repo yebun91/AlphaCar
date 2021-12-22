@@ -10,5 +10,5 @@
 
 	<import resource="classpath:data/default.xml" />
 	<context:component-scan base-package="member, store, state, homeNotice, common, 
-		homeChat, homeMypage, review, favorite, homeBestQna, homeQna, homeChart, iot" />	
+		homeChat, homeMypage, review, favorite, homeBestQna, homeQna, homeChart, iot, security" />	
 </beans>

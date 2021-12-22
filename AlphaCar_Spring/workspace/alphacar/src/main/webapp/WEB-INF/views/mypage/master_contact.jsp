@@ -60,7 +60,7 @@
 		          	<c:forEach begin="1" end='${vo.qna_indent }' var='i'>
 									${i eq vo.qna_indent ? "<img src='img/re.gif' />" : "&nbsp;&nbsp;" }
 								</c:forEach>			
-	            	<a href='detail.qna?qna_id=${vo.qna_id }'>
+	            	<a href='detail.qn?qna_id=${vo.qna_id }'>
 	            	<c:if test="${vo.qna_attribute eq 'C'}">
 	              	<p>[고객]</p>
 	              </c:if>
@@ -80,7 +80,7 @@
 	          		<c:forEach begin="1" end='${vo.qna_indent }' var='i'>
 									${i eq vo.qna_indent ? "<img src='img/re.gif' />" : "&nbsp;&nbsp;" }
 								</c:forEach>			
-	            	<a href='check.qna?qna_id=${vo.qna_id }'>
+	            	<a href='check.qn?qna_id=${vo.qna_id }'>
 	            	<c:if test="${vo.qna_attribute eq 'C'}">
 	              	<p>[고객]</p>
 	              </c:if>
@@ -106,7 +106,7 @@
 	     </div>  
       </div>
       <div class="page_content_create">
-        <button type="button" onclick="location.href='write.qna'">글 작성</button>
+        <button type="button" onclick="location.href='write.qn'">글 작성</button>
       </div>
       
       <!-- 페이징 처리 -->

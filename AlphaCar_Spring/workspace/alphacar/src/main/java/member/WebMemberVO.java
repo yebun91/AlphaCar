@@ -5,13 +5,30 @@ import java.sql.Date;
 public class WebMemberVO {
 
 	String customer_email, customer_pw, customer_name, 
-		customer_picture, admin, city, addr, customer_filename, social, kakao, naver;
+		customer_picture, admin, city, addr, customer_filename, social, kakao, naver, authority_name;;
+	private Date joindate;
 	
 	String ip_addr, com_name,auto_login;
 	Date login_time;
 	
 	
 	
+	public String getAuthority_name() {
+		return authority_name;
+	}
+
+	public void setAuthority_name(String authority_name) {
+		this.authority_name = authority_name;
+	}
+
+	public Date getJoindate() {
+		return joindate;
+	}
+
+	public void setJoindate(Date joindate) {
+		this.joindate = joindate;
+	}
+
 	public String getIp_addr() {
 		return ip_addr;
 	}

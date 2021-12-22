@@ -42,6 +42,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, 
 			@RequestParam (defaultValue = "1") int curPage, HttpSession session , HttpServletRequest req) throws Exception {
+
 		page.setCurPage(curPage);
 		model.addAttribute("page", service.notice_list(page));
 		model.addAttribute("wash", companyService.company_list_all_fv());
@@ -67,29 +68,15 @@ public class HomeController {
 //		
 //		member.setCom_name(com_name);
 //		member.setIp_addr(ip_addr);
+//		//webmember.login_info(member);
 //		WebMemberVO vo = webmember.auto_login(member); 
 //		if(vo != null) {
 //			
 //		session.setAttribute("loginInfo", vo);
 //		}
 //	}
+
+			
 		return "index";
-	}
-	
-	@RequestMapping("/error")
-	public String error (HttpServletRequest req, Model model) {
-		
-		Throwable error = (Throwable) req.getAttribute("javax.servlet.error.exception"); 
-		StringBuffer msg = new StringBuffer();
-		
-		while( error != null ) {
-			msg.append("<p>").append(error.getMessage() ).append("</p>");
-			error = error.getCause();	// exception 이 발생한 근본적인 원인을 리턴
-		}
-		
-		model.addAttribute("msg", msg.toString());
-		
-		int code = (int) req.getAttribute("javax.servlet.error.status_code");
-		return "error/" + (code == 404 ? 404 : "common");
 	}
 }

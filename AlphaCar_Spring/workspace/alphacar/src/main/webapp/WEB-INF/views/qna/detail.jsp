@@ -31,7 +31,7 @@
 			<!-- 관리자로 로그인된 경우만 수정 가능 -->
 			<c:if test="${loginInfo.customer_email eq vo.customer_email}">
 				<c:if test="${vo.qna_indent eq 0 }">
-	    		<button type="button" onclick="location.href='update.qna?qna_id=${vo.qna_id}'">수정</button>
+	    		<button type="button" onclick="location.href='update.qn?qna_id=${vo.qna_id}'">수정</button>
 				</c:if>
 				<c:if test="${vo.qna_indent ne 0 }">
 	    		<button type="button" onclick="location.href='replyUpdate.qna?qna_id=${vo.qna_id}'">수정</button>

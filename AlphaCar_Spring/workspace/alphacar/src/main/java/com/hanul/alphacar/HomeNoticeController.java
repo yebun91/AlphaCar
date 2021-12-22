@@ -20,6 +20,7 @@ import homeNotice.HomeNoticeServiceImpl;
 import homeNotice.HomeNoticeVO;
 import member.WebMemberServiceImpl;
 import member.WebMemberVO;
+import security.CustomUserDetails;
 
 @Controller
 public class HomeNoticeController {
@@ -35,6 +36,12 @@ public class HomeNoticeController {
 			@RequestParam (defaultValue = "1") int curPage,
 			String search, String keyword) {
 		
+
+		/*
+		 * HashMap<String, String> map = new HashMap<String, String>();
+		 * map.put("customer_email", "admin@naver.com"); map.put("customer_pw",
+		 * "admin1234"); session.setAttribute("loginInfo", member.member_login(map));
+		 */
 		session.setAttribute("category", "no");
 		
 		page.setCurPage(curPage);
@@ -46,24 +53,25 @@ public class HomeNoticeController {
 	}
 	
 	//공지사항 작성 화면으로
-	@RequestMapping("/write.no")
+	@RequestMapping("/write.noa")
 	public String write(HttpSession session, Model model) {
 		return "notice/write";
 	}
 	
 	//공지사항 작성한 글 저장처리
-	@RequestMapping("/insert.no")
+	@RequestMapping("/insert.noa")
 	public String insert(HomeNoticeVO vo, HttpSession session, Model model) {
 		
 		// 로그인 된 사용자의 email을 저장함
-		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
+		vo.setCustomer_email( ( (CustomUserDetails) session.getAttribute("loginInfo")).getCustomer_email() );
+		
 		service.notice_insert(vo);
 		return "redirect:list.no";
 	}
 	
 	// 공지사항 상세화면 요청
 	@RequestMapping("/detail.no")
-	public String detail(int id, Model model, HttpSession session){
+	public String detail(int id, Model model) {
 		// 클릭시 조회수 증가
 		service.notice_read(id);
 		
@@ -75,21 +83,21 @@ public class HomeNoticeController {
 	}
 	
 	//공지글 수정 화면으로
-	@RequestMapping("/update.no")
+	@RequestMapping("/update.noa")
 	public String update(HttpSession session, Model model, int id) {
 		model.addAttribute("vo", service.notice_detail(id));
 		return "notice/update";
 	}
 	
 	// 공지글 수정 저장 처리 요청
-	@RequestMapping ("/update_work.no")
+	@RequestMapping ("/update_work.noa")
 	public String update_work(HomeNoticeVO vo, HttpSession session, String attach) {
 		service.notice_update(vo);		
 		return "redirect:detail.no?id=" + vo.getNotice_id();
 	}
 
 	//공지글 삭제처리
-	@RequestMapping("/delete.no")
+	@RequestMapping("/delete.noa")
 	public String delete(HttpSession session, Model model, int id) {
 		service.notice_delete(id);
 		return "redirect:list.no";
@@ -128,7 +136,7 @@ public class HomeNoticeController {
 	@RequestMapping ("/board/comment/update")
 	public boolean comment_update(HomeNoticeCommentVO vo,  HttpSession session) {
 		//작성자의 경우 member의 id 값을 담아야 하므로 로그인 정보 확인
-		WebMemberVO member = (WebMemberVO) session.getAttribute("loginInfo");
+		CustomUserDetails member = (CustomUserDetails) session.getAttribute("loginInfo");
 		vo.setCustomer_email(member.getCustomer_email());
 		return service.board_comment_update(vo) == 1 ? true : false;
 	}

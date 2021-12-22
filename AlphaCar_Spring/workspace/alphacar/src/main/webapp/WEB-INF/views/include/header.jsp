@@ -21,13 +21,15 @@
       <li><a href="list.se">고객센터</a></li>
     	<!-- 로그인을 하지 않은 경우 -->
 	  <c:if test="${empty loginInfo }">
-	      <li><a href="homeLogin">로그인</a></li>
+	      <li><a href="homeLogin.ho">로그인</a></li>
 	      <li><a href="homeLogin">마이페이지</a></li>
       </c:if>
     	<!-- 로그인을 한 경우 -->
-	  <c:if test="${!empty loginInfo }">
-	      <li><a href="homeLogout">로그아웃</a></li>
-	      <li><a href="mypage.mp">마이페이지</a></li>
+	  	<c:if test="${!empty loginInfo }">
+	      <form action = "homelogout.ho" method = "post" class="homeLogout">
+				<button>로그아웃</button>
+			</form>
+	    <li><a href="mypage.mp">마이페이지</a></li>
       </c:if>
       	      
     </ul>     

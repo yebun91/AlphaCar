@@ -6,7 +6,7 @@
       <img src="img/alphacarLogo_text_black_500px.png" alt="alphaCar" onclick="location.href='<c:url value="/" />'"
       	style="cursor: pointer;">
     </div>
-    <form action="homeRegister" class="form" method="post" enctype="multipart/form-data">
+    <form action="homeRegister.ho" class="form" method="post" enctype="multipart/form-data">
       <input type="text" placeholder="이메일" class="join_email" name="customer_email" id="customer_email" onkeyup="checkEmail()">
       <a id='btn_email' onclick="duplicate()">이메일 중복검사</a>
       <div type="text" class="valid" name="emailError" id="emailError"></div>
@@ -83,12 +83,18 @@ let pwToken = false;
 let p2Token = false;
 let nmToken = false;
 
+var csrfHeaderName = "${_csrf.headerName}";
+var csrfTokenValue = "${_csrf.token}";
+
 function duplicate() {
 	$.ajax({
 		url : 'email_dupl'
 		, data : {id:email.value}
 		, type : 'post'
 		, async : false
+		, beforeSend: function(xhr){
+	           xhr.setRequestHeader(csrfHeaderName, csrfTokenValue)
+	       }
 		, success : function (res) {
 			if (res == true) {
 				alert("사용 가능한 이메일 주소입니다.");
@@ -106,7 +112,6 @@ function checkEmail() {
 	if(!regEmail.test(email.value)) {
 		document.getElementById("emailError").innerText = "이메일 형식(예:abc@def.com)에 맞게 입력하세요.";
 		document.getElementById("emailError").style.color = "red";
-
 	}else {
 		document.getElementById("emailError").innerText = "이메일이 입력되었습니다.";
 		document.getElementById("emailError").style.color = "green";

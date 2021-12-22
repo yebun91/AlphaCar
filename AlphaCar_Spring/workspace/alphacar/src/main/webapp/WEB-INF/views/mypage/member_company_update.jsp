@@ -129,7 +129,7 @@
 	
 	function regiDupl() {
 		$.ajax({
-			url : 'regiDupl.mp'
+			url : 'regiDupl.mps'
 			, data : {id:regi.value}
 			, type : 'post'
 			, async : false

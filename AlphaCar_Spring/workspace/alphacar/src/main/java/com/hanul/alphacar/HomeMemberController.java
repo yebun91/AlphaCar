@@ -10,6 +10,9 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,69 +22,74 @@ import org.springframework.web.multipart.MultipartFile;
 import common.CommonService;
 import member.WebMemberServiceImpl;
 import member.WebMemberVO;
+import security.CustomUserDetailsService;
 
 @Controller
 public class HomeMemberController {
 
-	@Autowired
-	private WebMemberServiceImpl service;
-	@Autowired
-	private CommonService common;
+	@Autowired private WebMemberServiceImpl service;
+	@Autowired private CommonService common;
+	@Autowired BCryptPasswordEncoder cryptEncoder;
+	@Autowired CustomUserDetailsService seService;
 
 	String kakao_client_id = "5c5deb7b4d423a3f31e34f160359f421";
 
 	// 로그아웃 처리 요청
-	@RequestMapping("/homeLogout")
+	@RequestMapping("/homeLogout.ho")
 	public String logout(HttpSession session, HttpServletRequest req) {
 		// 세션에 담긴 로그인 정보를 삭제한다.
-		WebMemberVO vo = new WebMemberVO();
-		
-		vo.setAuto_login("N");
-		vo.setCustomer_email(( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email());
-		service.auto_logout(vo);
-		
-		session.removeAttribute("loginInfo");
-		session.removeAttribute("revid");
-		req.setAttribute("logout", "Y");
-		
+//		WebMemberVO vo = new WebMemberVO();
+//		
+//		vo.setAuto_login("N");
+//		vo.setCustomer_email(( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email());
+//		service.auto_logout(vo);
+//		
+//		session.removeAttribute("loginInfo");
+//		session.removeAttribute("revid");
+//		req.setAttribute("logout", "Y");
+//		
 		
 
-		return "index";
+		return "redirect:/";
 	}
 
 	// 로그인 처리 요청
 	@ResponseBody
-	@RequestMapping("/webLogin")
-	public Boolean webLogin(HttpSession session, String customer_email, String customer_pw, String chk)
+	@RequestMapping("/webLogin.ho")
+	public String webLogin(HttpSession session, Authentication authentication)
 			throws Exception {
 
 		// ip 주소와 컴퓨터 네임을 찾는다.
-		String ip_addr = Inet4Address.getLocalHost().getHostAddress();
-		String com_name = Inet4Address.getLocalHost().getHostName();
+//		String ip_addr = Inet4Address.getLocalHost().getHostAddress();
+//		String com_name = Inet4Address.getLocalHost().getHostName();
+//
+//		System.out.println(ip_addr + com_name + chk);
+//		HashMap<String, String> map = new HashMap<String, String>();
+//	
+//		map.put("customer_email", customer_email);
+//		map.put("customer_pw", customer_pw);
+//		if(chk.equalsIgnoreCase("true")) {
+//			map.put("auto_login", "Y");
+//			map.put("ip_addr", ip_addr);
+//			map.put("com_name", com_name);
+//		}else {
+//			map.put("auto_login", "N");
+//		}
+//		service.auto_update(map);
+//		WebMemberVO vo = service.member_login(map);
+//
+//		
+//		session.setAttribute("loginInfo", vo);
 
-		//System.out.println(ip_addr + com_name + chk);
-		HashMap<String, String> map = new HashMap<String, String>();
-	
-		map.put("customer_email", customer_email);
-		map.put("customer_pw", customer_pw);
-		if(chk.equalsIgnoreCase("true")) {
-			map.put("auto_login", "Y");
-			map.put("ip_addr", ip_addr);
-			map.put("com_name", com_name);
-		}else {
-			map.put("auto_login", "N");
-		}
-		service.auto_update(map);
-		WebMemberVO vo = service.member_login(map);
-
-		
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		WebMemberVO vo = service.member_login(userDetails.getUsername());
 		session.setAttribute("loginInfo", vo);
-
-		return vo == null ? false : true;
+		
+		return "redirect:/";
 	}
 
 	// 로그인 화면 요청
-	@RequestMapping("/homeLogin")
+	@RequestMapping("/homeLogin.ho")
 	public String login(HttpSession session) {
 
 		session.setAttribute("category", "homeLogin");
@@ -89,23 +97,23 @@ public class HomeMemberController {
 	}
 
 	// 회원가입 화면 요청
-	@RequestMapping("/homeJoin")
+	@RequestMapping("/homeJoin.ho")
 	public String join() {
 		return "member/join";
 	}
 
 	// 이메일 주소 중복 검사
 	@ResponseBody
-	@RequestMapping("/email_dupl")
+	@RequestMapping("/email_dupl.ho")
 	public boolean id_check(String id) {
 		return service.member_id_check(id);
 	}
 
 	// 회원가입 요청
 	@ResponseBody
-	@RequestMapping(value = "/homeRegister", produces = "text/html; charset=utf-8")
+	@RequestMapping(value = "/homeRegister.ho", produces = "text/html; charset=utf-8")
 	public String homeRegister(HttpSession session, WebMemberVO vo, HttpServletRequest req, String join_company,
-			MultipartFile file) {
+			MultipartFile file, String customer_pw, String admin) {
 		StringBuffer msg = new StringBuffer("<script>");
 
 		if (!file.isEmpty()) {
@@ -114,9 +122,20 @@ public class HomeMemberController {
 			// 전송한 이미지가 없을 경우 null을 입력
 			vo.setCustomer_picture(null);
 		}
-
-		if (service.member_join(vo)) {
-			msg.append("alert('회원가입을 축하드립니다.'); location='").append(req.getContextPath()).append("'");
+		String pwCrypt = cryptEncoder.encode(customer_pw);
+		vo.setCustomer_pw(pwCrypt);
+		if (admin.equals("A")) {
+			vo.setAuthority_name("ROLE_ALPHACHR");
+		} else if (admin.equals("M")) {
+			vo.setAuthority_name("ROLE_ADMIN");
+		} else if (admin.equals("C")) {
+			vo.setAuthority_name("ROLE_CUSTOMER");
+		}
+		
+		
+		if (service.member_join(vo) == -1) {
+			msg.append("alert('회원가입을 축하드립니다.'); location='")
+				.append(req.getContextPath()).append("'");
 		} else {
 			msg.append("alert('회원가입 실패'); location='homeJoin' ");
 		}
@@ -125,7 +144,7 @@ public class HomeMemberController {
 	}
 
 	// 카카오 로그인 요청
-	@RequestMapping("/kakaoLogin")
+	@RequestMapping("/kakaoLogin.ho")
 	public String kakaoLogin(HttpSession session) {
 
 		// 카카오 로그인 연동 URL 생성
@@ -141,7 +160,7 @@ public class HomeMemberController {
 	}
 
 	// 카카오 Callback 메소드 선언
-	@RequestMapping("/kakaocallback")
+	@RequestMapping("/kakaocallback.ho")
 	public String kakaocallback(@RequestParam(required = false) String code, String state,
 			@RequestParam(required = false) String error, HttpSession session) {
 

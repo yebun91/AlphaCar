@@ -17,7 +17,7 @@ public class WebMemberServiceImpl implements WebMemberService {
 	}
 
 	@Override
-	public boolean member_join(WebMemberVO vo) {
+	public int member_join(WebMemberVO vo) {
 		return dao.member_join(vo);
 	}
 
@@ -62,6 +62,12 @@ public class WebMemberServiceImpl implements WebMemberService {
 	public int auto_update(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
 		return dao.auto_update(map);
+	}
+
+	@Override
+	public WebMemberVO member_login(String customer_email) {
+		// TODO Auto-generated method stub
+		return dao.member_login(customer_email);
 	}
 
 }

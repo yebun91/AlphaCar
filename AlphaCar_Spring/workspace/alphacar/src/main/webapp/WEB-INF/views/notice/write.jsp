@@ -30,7 +30,7 @@
 				</textarea>
 			</div>
 			<div class="page_write_button">
-				<button>작성완료</button>
+				<button type="button" onclick="check()">작성완료</button>
 				<button type="button" onclick="location.href='list.no'" >취소</button>
 			</div>
 		</form>
@@ -38,6 +38,7 @@
   </main>
   <!-- 서머노트를 위해 추가해야할 부분 -->
   <script src="resources/js/summernote-lite.js"></script>
+  <script src="resources/js/summernote.js"></script>
   <script src="resources/js/lang/summernote-ko-KR.js"></script>
   <link rel="stylesheet" href="resources/css/summernote-lite.css">
 
@@ -50,32 +51,14 @@
   		if(title.value == "") {
 			alert("제목을 입력하세요.");
 			title.focus();
+			return false;
   		}else if(content.value == "") {
 			alert("내용을 입력하세요.");
 			content.focus();
+			return false;
   		}else {
 			$('form').submit();
 		}
   	}
   </script>
 
-  <script>
-	$('#summernote').summernote({
-	      height: 500,
-	      lang: "ko-KR",
-	      toolbar: [
-	           // [groupName, [list of button]]
-	           ['fontname', ['fontname']],
-	           ['fontsize', ['fontsize']],
-	           ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-	           ['color', ['forecolor','color']],
-	           ['para', ['ul', 'ol', 'paragraph']],
-	           ['height', ['height']],
-		       // 그림첨부, 링크만들기, 동영상첨부
-		 		   ['insert',['picture','link']],
-	           ['view', ['help']]
-	         ],
-	       fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-	       fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-	    });
-	</script>

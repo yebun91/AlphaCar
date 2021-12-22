@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <div class="mypage_image">
     </div>
     <div class="mypage_select">
@@ -48,7 +50,7 @@
             <p>내가 저장한 가게의 정보를 확인하거나</p>
             <p>관리할 수 있습니다.</p>
           </div>
-          <button onclick="location.href='memberCompany.mp'">보러가기</button>
+          <button onclick="location.href='memberCompany.mps'">보러가기</button>
         </div>
         </c:if>
         <c:if test="${loginInfo.admin == 'A'}">
@@ -58,7 +60,7 @@
 	            <p>알파카에 가입한 모든 회원의 정보를</p>
 	            <p>검색하고 수정할 수 있습니다.</p>
 	          </div>
-	          <button onclick="location.href='masterMemberList.mp'">수정하기</button>
+	          <button onclick="location.href='masterMemberList.mpa'">수정하기</button>
 	        </div>
 	        <div class="mypage_box mypage_contact">
 	          <h1>1:1 문의 처리</h1>

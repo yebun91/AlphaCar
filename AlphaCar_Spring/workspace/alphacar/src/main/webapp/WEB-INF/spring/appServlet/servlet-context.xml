@@ -6,9 +6,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
-	
-   
+
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
@@ -30,6 +30,8 @@
 		<beans:property name="maxUploadSize" value="100000000"></beans:property>
 	</beans:bean>
 	
+	
+	
 	<!-- 화면의 레이아웃을 지정하기 위한 tiles 라이브러리 설정
 	      view 의 순서(order) 를 지정 -->
 	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
@@ -37,10 +39,13 @@
 	</beans:bean>
 	
 	<!-- tiles 설정부를 별도 파일로 지정하여 정의하는 부분 -->
+	
 	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<beans:property name="definitions" value="/WEB-INF/views/tiles/config.xml" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.hanul.alphacar" />
+	<context:component-scan base-package="com" />
+	
+	
+	
 </beans:beans>
-

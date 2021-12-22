@@ -12,7 +12,7 @@
 <!-- 메인 시작 -->
 <main class="mypage">
 	<div id="page">
-		<form action="mastermemberSubmit.mp" enctype="multipart/form-data"
+		<form action="mastermemberSubmit.mpa" enctype="multipart/form-data"
 			class="customer_update_form form" method="post">
 			<h1>회원 정보 수정</h1>
 			<input type="text" name="customer_email" value="${vo.customer_email}" class="join_email" readonly> 
@@ -54,7 +54,7 @@
 				class="image_upload" accept="image/*" />
 			<button type="button" onclick="member_update()">수정하기</button>
 			<button type="button" onclick="if(confirm('정말 삭제 하시겠습니까?')){
-		location.href='mastermemberDelete.mp?customer_email=${vo.customer_email}'}">삭제하기</button>
+		location.href='mastermemberDelete.mpa?customer_email=${vo.customer_email}'}">삭제하기</button>
 		</form>
 	</div>
 </main>

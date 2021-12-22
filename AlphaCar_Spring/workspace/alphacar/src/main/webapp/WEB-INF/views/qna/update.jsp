@@ -13,7 +13,7 @@
   <main>
     <div id="page">
       <h1>Q&A 글 수정</h1>
-		<form action="update_work.qna" class="page_write" method="post">
+		<form action="update_work.qn" class="page_write" method="post">
 			<input type="hidden" name='qna_id' value="${vo.qna_id}"/>
 			<input type="hidden" name='attach' />
 			<div class="page_write_index">
@@ -61,7 +61,8 @@
 			$('form').submit();
 		}
 	}
-
+	
+	</script>
   <!-- 서머노트를 위해 추가해야할 부분 -->
   <script src="resources/js/summernote-lite.js"></script>
   <script src="resources/js/summernote.js"></script>

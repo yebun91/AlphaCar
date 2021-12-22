@@ -45,4 +45,7 @@ public interface HomeMyPageService {
     //회사 조회 후 좋아요 순으로 정렬
     List<HomeCompanyVO> company_list_all_fv();
     
+    //알파카가 하는 회원 정보 수정
+  	int member_update(WebMemberVO vo);
+    
 }

@@ -23,14 +23,14 @@
 	          	onclick="company_delete(${vo.store_number })">
 	          	X</button>
 	          <div class="mypage_company_select">
-	            <button onclick="location.href='memberCompanyGraph.mp?store_number=${vo.store_number }'">그래프로 보기</button>
-	            <button onclick="location.href='memberCompanyUpdate.mp?store_number=${vo.store_number }'">수정하기</button>
+	            <button onclick="location.href='memberCompanyGraph.mps?store_number=${vo.store_number }'">그래프로 보기</button>
+	            <button onclick="location.href='memberCompanyUpdate.mps?store_number=${vo.store_number }'">수정하기</button>
 	          </div>
 	        </div>
 	    </c:if>    
         </c:forEach>
         <div class="mypage_company">  
-          <a href="memberCompanyInsert.mp">+</a>
+          <a href="memberCompanyInsert.mps">+</a>
         </div>
       </div>
     </div>

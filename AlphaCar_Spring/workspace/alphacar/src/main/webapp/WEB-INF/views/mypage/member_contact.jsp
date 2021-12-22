@@ -31,7 +31,7 @@
         <form action="memberContact.mp" method="get" class="page_search">
       		<input type="hidden" name="curPage" value="1" /> 
           <div class="page_search_index">
-            <select name="service_search_index" id="service_search_index">
+            <select name="search" id="search">
               <option value="all" ${page.search eq 'all' ? 'selected' : '' }>전체</option>
 	            <option value="user-info" ${page.search eq 'user-info' ? 'selected' : '' }>고객</option>
 	            <option value="store" ${page.search eq 'store' ? 'selected' : '' }>가게</option>
@@ -107,7 +107,7 @@
 	     </div>  
       </div>
       <div class="page_content_create">
-        <button type="button" onclick="location.href='write.qna'">글 작성</button>
+        <button type="button" onclick="location.href='write.qn'">글 작성</button>
       </div>
       
       <!-- 페이징 처리 -->

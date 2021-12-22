@@ -19,9 +19,9 @@ public class WebMemberDAO implements WebMemberService {
 	}
 
 	@Override
-	public boolean member_join(WebMemberVO vo) {
+	public int member_join(WebMemberVO vo) {
 		// TODO Auto-generated method stub
-		return sql.insert("webmember.mapper.member_join", vo) == 1 ? true : false;
+		return sql.insert("webmember.mapper.member_join", vo);
 	}
 
 	@Override
@@ -66,5 +66,11 @@ public class WebMemberDAO implements WebMemberService {
 	public int auto_update(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
 		return sql.update("webmember.mapper.update_auto" , map);
+	}
+
+	@Override
+	public WebMemberVO member_login(String customer_email) {
+		// TODO Auto-generated method stub
+		return sql.selectOne("webmember.mapper.member_login_security", customer_email);
 	}
 }

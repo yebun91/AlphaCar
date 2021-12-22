@@ -31,7 +31,7 @@
       <textarea id="summernote" name="qna_content" id="qna_content"></textarea> 
     </div>
     <div class="page_password">
-        <p>비밀번호</p>
+        <p>글 비밀번호</p>
      </div>
     <div class="page_password_space">
 				<input type="password" placeholder="비밀번호" name="qna_password" id="qna_password" />
@@ -61,7 +61,7 @@
 			$('form').submit();
 		}
 	}
-
+</script>
 <!-- 서머노트를 위해 추가해야할 부분 -->
 <script src="resources/js/summernote-lite.js"></script>
 <script src="resources/js/summernote.js"></script>

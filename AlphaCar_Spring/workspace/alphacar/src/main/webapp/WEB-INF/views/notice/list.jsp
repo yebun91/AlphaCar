@@ -71,7 +71,7 @@
     </div>
     <div class="page_content_create">
       <c:if test="${loginInfo.admin eq 'A'}">
-		<button type="button" onclick="location.href='write.no'">글 작성</button>
+		<button type="button" onclick="location.href='write.noa'">글 작성</button>
 	  </c:if>  
     </div>
     

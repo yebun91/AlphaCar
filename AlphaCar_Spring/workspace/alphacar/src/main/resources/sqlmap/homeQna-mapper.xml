@@ -131,26 +131,26 @@
 			and qna_ATTRIBUTE = 'C' 
 			<if test="keyword != null">
 	  				and qna_title like '%'||#{keyword}||'%'
-	  		</if>
+	  	</if>
 		</if>
 		<if test='search == "store" '>
 			and qna_ATTRIBUTE = 'S' 
 			<if test="keyword != null">
 	  				and qna_title like '%'||#{keyword}||'%'
-	  			</if>
+	  		</if>
 		</if>
 	
 		<if test='search == "app_web" '>
 			and qna_ATTRIBUTE = 'M' 
 			<if test="keyword != null">
 	  				and qna_title like '%'||#{keyword}||'%'
-	  			</if>
+	  		</if>
 		</if>
 		<if test='search == "alphacar" '>
 			and qna_ATTRIBUTE = 'A' 
 			<if test="keyword != null">
 	  				and qna_title like '%'||#{keyword}||'%'
-	  			</if>
+	  		</if>
 		</if>
 		<if test='search == "all" '>
 			

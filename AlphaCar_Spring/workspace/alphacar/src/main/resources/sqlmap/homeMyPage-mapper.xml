@@ -6,14 +6,42 @@
 <mapper namespace="homeMyPage.mapper">
 	<!--웹 회원 정보 수정 -->
 	<update id="memberUpdate">
-		update customer set customer_pw = #{customer_pw, jdbcType=VARCHAR}, 
-			customer_name = #{customer_name}, 
-			admin = #{admin},
-			customer_picture = #{customer_picture},
-			city = #{city},
-			addr = #{addr}
-		where customer_email = #{customer_email}
+		declare
+				
+		begin
+        
+        update customer set customer_pw = #{customer_pw}, 
+					customer_name = #{customer_name}, 
+					customer_picture = #{customer_picture},
+					city = #{city},
+					admin = #{admin},
+					addr = #{addr}
+				where customer_email = #{customer_email};
+				
+        update authority set authority_name = #{authority_name}
+        where customer_email = #{customer_email};
+        
+		end;
 	</update>
+	
+	<!--알파카가 하는 회원 정보 수정 -->
+	<update id="AlphacarMemberUpdate">
+		declare
+		
+		begin
+			update customer set 
+				customer_name = #{customer_name}, 
+				admin = #{admin},
+				customer_picture = #{customer_picture},
+				city = #{city},
+				addr = #{addr}
+			where customer_email = #{customer_email};
+			
+			update authority set authority_name = #{authority_name}
+			where customer_email = #{customer_email};
+		end;
+	</update>
+	
 	
 	<!-- 내회사 리스트 뽑아오기 -->
 	<select id="company_select" resultType="homeMypage.HomeCompanyVO">

@@ -32,6 +32,7 @@ import homeBestQna.BestQnaPage;
 import homeNotice.HomeNoticePage;
 import homeNotice.HomeNoticeVO;
 import member.WebMemberVO;
+import security.CustomUserDetails;
 
 @Controller
 public class HomeServiceController {
@@ -94,14 +95,14 @@ public class HomeServiceController {
 	}
 	
 	// 신규 faq 저장 처리 요청
-	@RequestMapping ("/insert.se")
+	@RequestMapping ("/insert.sea")
 	public String insert (BestQnaVO vo, HttpSession session, MultipartFile file, String notice_search_index) {
 		
 //			MemberVO member = (MemberVO) session.getAttribute("loginInfo");
 //			vo.setWriter(member.getId());
 		
 		// 로그인 된 사용자의 id를 가져와 글쓴이(writer)에 담기 위한 처리
-		vo.setCustomer_email( ( (WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() );
+		vo.setCustomer_email( ( (CustomUserDetails) session.getAttribute("loginInfo")).getCustomer_email() );
 		System.out.println(vo.getCustomer_email());
 		System.out.println(notice_search_index);
 		String index = "";
@@ -123,7 +124,7 @@ public class HomeServiceController {
 		}
 	
 	//faq 새글 쓰기
-	@RequestMapping("/write.se")
+	@RequestMapping("/write.sea")
 	public String write(HttpSession session, Model model) {
 		return "service/write";
 	}
@@ -143,14 +144,14 @@ public class HomeServiceController {
 	}
 	
 	//faq 수정처리
-	@RequestMapping("/update.se")
+	@RequestMapping("/update.sea")
 	public String update(HttpSession session, Model model, int best_qna_id) {
 		model.addAttribute("vo", service.faq_detail(best_qna_id));
 		return "service/update";
 	}
 	
 	// faq 수정 저장 처리 요청
-	@RequestMapping ("/update_work.se")
+	@RequestMapping ("/update_work.sea")
 	public String update_work(BestQnaVO vo, HttpSession session, String best_qna_search_index) {
 		
 		String index = "";
@@ -170,7 +171,7 @@ public class HomeServiceController {
 	}
 	
 	//faq 게시글 삭제
-	@RequestMapping("/delete.se")
+	@RequestMapping("/delete.sea")
 	public String delete(HttpSession session, Model model, int best_qna_id) {
 		service.faq_delete(best_qna_id);
 		return "redirect:list.se";

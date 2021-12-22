@@ -115,5 +115,11 @@ public class HomeMyPageDAO implements HomeMyPageService {
         return sql.selectList("homeMyPage.mapper.company_list_all_fv");
     }
 
+	@Override
+	public int member_update(WebMemberVO vo) {
+		// TODO Auto-generated method stub
+		return sql.update("homeMyPage.mapper.AlphacarMemberUpdate", vo);
+	}
+
 
 }

@@ -40,19 +40,18 @@
       <div class="user_list">
         <div class="user_list_name">
           <h3>이메일</h3>
-          <h3>패스워드</h3>
           <h3>이름</h3>
           <h3>사업자유무</h3>
+          <h3>가입한 날짜</h3>
         </div>
         <div class="page_list_box">
           <c:forEach items="${page.list}" var="vo">
       		<div class="user_list_content">
 	          <div class="user_list_content_title">
-	            <a href='hidden.mp?customer_email=${vo.customer_email}'>
+	            <a href='mastermemberUpdate.mpa?customer_email=${vo.customer_email}'>
 	              <p>${vo.customer_email}</p>
 	            </a>
 	          </div>
-	          <p>${vo.customer_pw}</p>
 	          <p>${vo.customer_name}</p>
 	          <c:if test="${vo.admin eq 'M'}">
             	<p>사업자</p>
@@ -63,6 +62,7 @@
               <c:if test="${vo.admin eq 'A'}">
             	<p>알파카</p>
               </c:if>
+              <p>${vo.joindate }</p>
 	        </div>
 		  </c:forEach> 
     </div>

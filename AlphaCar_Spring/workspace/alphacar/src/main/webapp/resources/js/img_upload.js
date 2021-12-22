@@ -86,7 +86,7 @@
 		$.ajax({
 	   	      type: "post",
 	   	   	  enctype: "multipart/form-data",
-	   	      url: "homeStoreRegister.mp",
+	   	      url: "homeStoreRegister.mps",
 	       	  data : formData,
 	       	  processData: false,
 	   	      contentType: false,

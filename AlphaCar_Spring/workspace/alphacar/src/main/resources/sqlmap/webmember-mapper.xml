@@ -37,11 +37,25 @@
 		and customer_pw = #{customer_pw}	
 	</select>
 	
+	<!-- 로그인 (id, pw 일치 여부 조회) -->
+	<select id="member_login_security" resultType="member.WebMemberVO">
+		select * from customer
+		where customer_email = #{customer_email}
+		
+	</select>
+	
 	<!-- 회원가입 -->
 	<insert id="member_join">
-		insert into customer (customer_email, customer_pw, customer_name, customer_picture, admin,city,addr)
-		values (#{customer_email}, #{customer_pw}, #{customer_name}, #{customer_picture, jdbcType=VARCHAR}, #{admin},
-			#{city}, #{addr})
+		declare
+			
+		begin
+			
+			INSERT into customer (customer_email, customer_pw, customer_name, customer_picture, admin, city, addr, joindate)
+			values (#{customer_email}, #{customer_pw}, #{customer_name}, #{customer_picture, jdbcType=VARCHAR}, #{admin},
+				#{city}, #{addr}, sysdate);
+			insert into authority (customer_email, authority_name, authority_number)
+			values (#{customer_email}, #{authority_name}, SEQ_AUTHORITY.nextval);
+		end;
 	</insert>
 
 	<!-- 아이디 중복 체크 -->

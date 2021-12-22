@@ -107,4 +107,10 @@ public class HomeMyPageServiceImpl implements HomeMyPageService {
         // TODO Auto-generated method stub
         return dao.company_list_all_fv();
     }
+
+	@Override
+	public int member_update(WebMemberVO vo) {
+		// TODO Auto-generated method stub
+		return dao.member_update(vo);
+	}
 }
