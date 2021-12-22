@@ -22,6 +22,7 @@ public class CustomUserDetails implements UserDetails{
 	private String addr                   ;
 	private String customer_filename      ;
 	private String admin;
+	private String social;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -130,6 +131,14 @@ public class CustomUserDetails implements UserDetails{
 
 	public void setCustomer_email(String customer_email) {
 		this.customer_email = customer_email;
+	}
+
+	public String getSocial() {
+		return social;
+	}
+
+	public void setSocial(String social) {
+		this.social = social;
 	}
 	
 	
