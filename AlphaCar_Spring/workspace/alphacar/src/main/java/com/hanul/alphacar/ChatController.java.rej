@@ -1,9 +1,0 @@
-diff a/AlphaCar_Spring/workspace/alphacar/src/main/java/com/hanul/alphacar/ChatController.java b/AlphaCar_Spring/workspace/alphacar/src/main/java/com/hanul/alphacar/ChatController.java	(rejected hunks)
-@@ -18,7 +18,6 @@
- 	public String chatList(Model model, HttpSession session, String revid) {
- 		CustomUserDetails vo = (CustomUserDetails) session.getAttribute("loginInfo");
- 		if(!vo.getAdmin().equals("A")) {
--			session.setAttribute("revid", "admin");
- 			session.setAttribute("revid", "관리자");
- 		}else {
- 			if(revid != null) { 
