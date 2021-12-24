@@ -13,7 +13,7 @@
 <main>
 <div id="page">
   <h1>1:1 문의 작성</h1>
-  <form action="insert.qna" class="page_write" method="post">
+  <form action="insert.qn" class="page_write" method="post">
     <div class="page_write_index">
       <div class="page_search_index">
         <select name="qna_search_index" id="qna_search_index">
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="page_write_space">
-      <textarea id="summernote" name="qna_content" id="qna_content"></textarea> 
+      <textarea id="summernote" name="qna_content"></textarea> 
     </div>
     <div class="page_password">
         <p>글 비밀번호</p>

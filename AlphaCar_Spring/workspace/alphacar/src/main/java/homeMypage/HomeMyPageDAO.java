@@ -121,5 +121,11 @@ public class HomeMyPageDAO implements HomeMyPageService {
 		return sql.update("homeMyPage.mapper.AlphacarMemberUpdate", vo);
 	}
 
+	@Override
+	public int home_social_update(WebMemberVO vo) {
+		// TODO Auto-generated method stub
+		return sql.update("homeMyPage.mapper.memberSocialUpdate", vo);
+	}
+
 
 }

@@ -113,4 +113,10 @@ public class HomeMyPageServiceImpl implements HomeMyPageService {
 		// TODO Auto-generated method stub
 		return dao.member_update(vo);
 	}
+
+	@Override
+	public int home_social_update(WebMemberVO vo) {
+		// TODO Auto-generated method stub
+		return dao.home_social_update(vo);
+	}
 }

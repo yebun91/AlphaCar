@@ -57,31 +57,30 @@
 	          <div>
 	            <h3>베이수</h3>
 	            <input type="text" name="inventory" id="new_inventory" value="${vo.inventory }" onkeyup="checkInventory()">
-		<div id="invenError"></div>
+							<div id="invenError"></div>
 	          </div>
 	          <div>
 	            <h3>가격</h3>
-	            <input type="number" name="store_price" id="new_price" value="${vo.store_price }" onkeyup="checkPrice()">
-		<div id="priceError"></div>
+	            <input type="text" name="store_price" id="new_price" value="${vo.store_price }" >
 	          </div>
 	          <div>
 	            <h3>사업주 이름</h3>
 	            <input type="text" name="store_master_name" id="new_master" value="${vo.store_master_name }" onkeyup="checkMaster()">
-		<div id="masterError"></div>
+							<div id="masterError"></div>
 	          </div>
 	          <div>
 	            <h3>사업자 번호</h3>
 	            <input type="text" name="store_registration_number" id="new_regi" value="${vo.store_registration_number }" onkeyup="checkRegi()">
-		<a id='btn_regi' onclick="regiDupl()">사업자 등록번호 중복검사</a>
-		<div id="regiError"></div>
+							<a id='btn_regi' onclick="regiDupl()">사업자 등록번호 중복검사</a>
+							<div id="regiError"></div>
 	          </div>
 	          <div class="join_profile_images"> 
 	            <h3>사진</h3>
 	            <div>
 	            	<c:forEach items="${img }" var="img">
-					<div class="join_profile_image" >
-						<img alt="" src="${img.imgpath }" onclick="choose_image()" class="join_profile_image${img.rank }">
-					</div>
+								<div class="join_profile_image" >
+									<img src="${img.imgpath }" onclick="choose_image()" class="join_profile_image${img.rank }">
+								</div>
 		            </c:forEach>
 	            </div>
 	          </div>
@@ -99,7 +98,7 @@
   <!-- 다음 주소 검색 API -->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   
-  	<script type="text/javascript">
+  <script type="text/javascript">
 
 	const regName =  /^[가-힣]{2,4}$/
 	const regDigit = /[0-9]/g;
@@ -211,52 +210,65 @@
 		if(name.value == "") {
 			alert("세차장 이름을 입력하세요.");
 			name.focus();
+			return false;
 		}
 		else if(post.value == "") {
 			alert("우편번호를 입력하세요.");
 			post.focus();
+			return false;
 		}
 		else if(addr.value == "") {
 			alert("주소를 입력하세요.");
 			addr.focus();
+			return false;
 		}
 		else if(addr2.value == "") {
 			alert("상세주소를 입력하세요.");
 			addr2.focus();
+			return false;
 		}
 		else if(!teToken) {
 			alert("전화번호를 입력하세요.");
 			tel.focus();
+			return false;
 		}
 		else if(time.value == "") {
 			alert("영업시간을 입력하세요.");
 			time.focus();
+			return false;
 		}
 		else if(dayoff.value == "") {
 			alert("휴무일을 입력하세요.");
 			dayoff.focus();
+			return false;
 		}
 		else if(introduce.value == "") {
 			alert("세차장 소개를 입력하세요.");
 			introduce.focus();
+			return false;
 		}
 		else if(!inToken) {
 			alert("베이수를 입력하세요.");
 			inventory.focus();
+			return false;
 		}
-		else if(!prToken) {
+		else if(price.value == "") {
 			alert("가격을 입력하세요.");
 			price.focus();
+			return false;
 		}
 		else if(!maToken) {
 			alert("사업주 이름을 입력하세요.");
 			master.focus();
+			return false;
 		}
 		else if(!reToken) {
 			alert("등록번호를 입력하세요.");
 			regi.focus();
+			return false;
 		}else if(!r2Token) {
 			alert("등록번호 중복검사를 통과하세요.");
+			return false;
 		}else {
 			$('form').submit();
 		}
@@ -392,12 +404,12 @@
 		$.ajax({
 	   	      type: "post",
 	   	   	  enctype: "multipart/form-data",
-	   	      url: "update_work.mp",
+	   	      url: "update_work.mps",
 	       	  data : formData,
 	       	  processData: false,
 	   	      contentType: false,
 	   	      success: function (data) {
-	   	    	  window.location.replace("memberCompany.mp");	   	    	
+	   	    	  window.location.replace("memberCompany.mps");	   	    	
 	   	    		alert("가게수정 성공");
 
 	   	      },

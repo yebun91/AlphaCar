@@ -12,7 +12,7 @@
   <main>
     <div id="page">
       <h1>신규글 작성</h1>
-		<form action="insert.no" class="page_write" method="post">
+		<form action="insert.noa" class="page_write" method="post">
 			<div class="page_write_index">
 				<div class="page_search_index">
 					<select name="notice_attribute" id="notice_search_index">
@@ -26,7 +26,7 @@
 				</div>
 			</div>
 			<div class="page_write_space">
-				<textarea id="summernote" name="notice_content" cols="100" id="notice_content">
+				<textarea id="summernote" name="notice_content" cols="100">
 				</textarea>
 			</div>
 			<div class="page_write_button">

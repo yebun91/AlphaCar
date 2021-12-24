@@ -6,6 +6,8 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import security.CustomUserDetails;
+
 @Service
 public class WebMemberServiceImpl implements WebMemberService {
 
@@ -27,22 +29,22 @@ public class WebMemberServiceImpl implements WebMemberService {
 	}
 
 	@Override
-	public boolean member_social_email(WebMemberVO vo) {
+	public boolean member_social_email(CustomUserDetails vo) {
 		return dao.member_social_email(vo);
 	}
 
 	@Override
-	public boolean member_social_insert(WebMemberVO vo) {
+	public boolean member_social_insert(CustomUserDetails vo) {
 		return dao.member_social_insert(vo);
 	}
 
 	@Override
-	public boolean member_social_update(WebMemberVO vo) {
+	public boolean member_social_update(CustomUserDetails vo) {
 		return dao.member_social_update(vo);
 	}
 
 	@Override
-	public WebMemberVO member_social_login(String kakao) {
+	public CustomUserDetails member_social_login(String kakao) {
 		return dao.member_social_login(kakao);
 	}
 

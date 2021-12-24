@@ -3,14 +3,10 @@ package com.hanul.alphacar;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,11 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
 
 import common.CommonService;
-import homeChart.ChartVO;
 import homeMypage.CustomerPage;
 import homeMypage.HomeMyPageServiceImpl;
 import homeMypage.HomeStoreFileVO;
@@ -46,8 +39,8 @@ public class HomeMyPageController {
 	@Autowired private CommonService common;
 	@Autowired private HomeMyPageServiceImpl homeService;
 	@Autowired private CustomerPage c_page;
-	@Autowired private WebMemberServiceImpl member;
 	@Autowired private QnaServiceImpl service;
+	@Autowired private WebMemberServiceImpl member;
 	@Autowired private QnaPage page;
 	@Autowired BCryptPasswordEncoder cryptEncoder;
 	
@@ -74,9 +67,14 @@ public class HomeMyPageController {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
-		vo.setCustomer_email( ( (CustomUserDetails) session.getAttribute("loginInfo")).getCustomer_email() );
+		System.out.println(vo);
 		WebMemberVO memberVO = homeService.home_member_select(vo.getCustomer_email());
-		String newPw = cryptEncoder.encode(customer_pw);
+		String newPw;
+		if (customer_pw.equals("")) {
+			newPw = memberVO.getCustomer_pw();
+		} else {
+			newPw = cryptEncoder.encode(customer_pw);
+		}
 		
 		String uuid = session.getServletContext().getRealPath("resources")
 				+ "/" + memberVO.getCustomer_picture();
@@ -96,15 +94,6 @@ public class HomeMyPageController {
 			vo.setCustomer_picture(memberVO.getCustomer_picture());
 		}
 		
-        //비밀번호를 바꾸지 않았을 경우 기존 비밀번호로 교체
-        if(memberVO.getSocial() == null) {
-            if (vo.getCustomer_pw() == null) {
-                vo.setCustomer_pw(memberVO.getCustomer_pw());
-            }
-        }else {
-            vo.setCustomer_pw(null);    
-        }
-        	
 		//화면에서 변경 입력한 정보를 db에 변경 저장한 후 상세화면으로 연결
 		if(cryptEncoder.matches(customer_old_pw, memberVO.getCustomer_pw())) {
 			System.out.println("일치");
@@ -135,6 +124,70 @@ public class HomeMyPageController {
 		return "mypage.mp";
 
 	}	
+	
+	//소셜 로그인시 회원정보 수정 페이지로 이동
+	@RequestMapping("/memberSocialUpdate.mp")
+	public String memberSocialUpdate() {
+		return "mypage/member_social_update";
+	}
+	
+	//소셜 로그인시 회원정보 수정 처리
+	@RequestMapping("/memberSocialSubmit.mp")
+	public String memberSosialUpdateWork(WebMemberVO vo, MultipartFile image_file, HttpSession session, 
+			String attach, HttpServletResponse response, String admin, 
+			Authentication authentication) throws IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		System.out.println(vo);
+		WebMemberVO memberVO = homeService.home_member_select(vo.getCustomer_email());
+		
+		String uuid = session.getServletContext().getRealPath("resources")
+				+ "/" + memberVO.getCustomer_picture();
+		
+		//전송한 이미지 파일이 있다면
+		if (! image_file.isEmpty()) {
+			vo.setCustomer_picture(common.fileUpload("profiles", image_file, session));
+			//기존에 가지고 있었던 파일 패스값이 있다면
+			if ( memberVO.getCustomer_picture() != null ) {
+				File f = new File ( uuid );
+				// 기존 첨부 파일 삭제
+				if (f.exists()) f.delete();
+			} 
+			
+		}else {
+			//전송한 이미지가 없을 경우 기존 주소 유지
+			vo.setCustomer_picture(memberVO.getCustomer_picture());
+		}
+		
+		//화면에서 변경 입력한 정보를 db에 변경 저장한 후 상세화면으로 연결
+		
+		if (admin.equals("A")) {
+			vo.setAuthority_name("ROLE_ALPHACHR");
+			vo.setAdmin("A");
+		} else if (admin.equals("M")) {
+			vo.setAuthority_name("ROLE_ADMIN");
+			vo.setAdmin("M");
+		} else if (admin.equals("C")) {
+			vo.setAuthority_name("ROLE_CUSTOMER");
+			vo.setAdmin("C");
+		}
+		int a = homeService.home_social_update(vo);
+		if (homeService.home_social_update(vo) == -1) {
+			
+			out.println("<script>alert('수정성공!'); location='mypage.mp'; </script>");
+			out.flush();
+			
+			session.setAttribute("loginInfo", vo);
+		} else {
+			System.out.println("불일치");
+			out.println("<script>alert('회원정보가 일치하지 않습니다.'); location='mypage.mp'; </script>");
+			out.flush();
+		}  
+		
+		return "mypage.mp";
+		
+	}	
     //회원 탈퇴
     @RequestMapping("/memberDelete.mp")
     public String memberDelete(HttpSession session, String customer_email) {
@@ -146,7 +199,7 @@ public class HomeMyPageController {
 	//내 가게 정보
 	@RequestMapping("/memberCompany.mps")
 	public String memberCompany(HttpSession session, Model model) {
-		WebMemberVO member = (WebMemberVO) session.getAttribute("loginInfo");
+		CustomUserDetails member = (CustomUserDetails) session.getAttribute("loginInfo");
 		model.addAttribute("company", homeService.company_list(member.getCustomer_email()));
 		return "mypage/member_company";
 	}
@@ -176,7 +229,7 @@ public class HomeMyPageController {
 	@RequestMapping("/memberCompanyDelete.mps")
 	public String memberCompanyDelete(int store_number) {
 		homeService.company_delete(store_number);
-		return "redirect:memberCompany.mp";
+		return "redirect:memberCompany.mps";
 	}
 	
 	//가게 그래프 보러가기
@@ -244,7 +297,7 @@ public class HomeMyPageController {
         }
     	
 		
-		return "redirect:memberCompany.mp";
+		return "redirect:memberCompany.mps";
 	}
 	
 	//신규 가게등록 페이지 요청
@@ -263,15 +316,16 @@ public class HomeMyPageController {
 
 	//신규 가게 저장 요청
 	@RequestMapping(value = "/homeStoreRegister.mps", produces = "text/html; charset=utf-8")
-	public String homeStoreRegister(HomeStoreVO vo, HttpSession session, int inventory,  
-			@RequestParam("article_file") List<MultipartFile> mf) {
+	public String homeStoreRegister(HomeStoreVO vo, HttpSession session, String inventory 
+//			@RequestParam("article_file") List<MultipartFile> mf
+			) {
 		vo.setCustomer_email( ( (CustomUserDetails) session.getAttribute("loginInfo")).getCustomer_email() );
-		
+		System.out.println(inventory);
 		ArrayList<String> storeInventory = new ArrayList<>();
 		for (int i =0; i< 9; i++){
 			storeInventory.add("X");
         }
-        for(int i =0; i<inventory; i++){
+        for(int i =0; i<Integer.parseInt(inventory); i++){
         	storeInventory.set(i, "Y");
         }
         
@@ -284,21 +338,21 @@ public class HomeMyPageController {
         
         HomeStoreFileVO fvo = new HomeStoreFileVO(); 
         
-    	if(mf.size() > 0 && !mf.get(0).getOriginalFilename().equals("")) {
-    		int rank = 0;
-    		for(MultipartFile file:mf) {
-    			fvo.setImgname(file.getOriginalFilename());
-    			fvo.setImgpath(common.fileUpload("company", file, session));
-    			fvo.setRank(++rank);
-    			homeService.companyImg_insert(fvo);
-  			} 
+//    	if(mf.size() > 0 && !mf.get(0).getOriginalFilename().equals("")) {
+//    		int rank = 0;
+//    		for(MultipartFile file:mf) {
+//    			fvo.setImgname(file.getOriginalFilename());
+//    			fvo.setImgpath(common.fileUpload("company", file, session));
+//    			fvo.setRank(++rank);
+//    			homeService.companyImg_insert(fvo);
+//  			} 
 		
 		
 		
     	
-        }
+//        }
 
-    	return "redirect:memberCompany.mp";
+    	return "redirect:memberCompany.mps";
        
 	}
 	
@@ -351,7 +405,7 @@ public class HomeMyPageController {
     public String mastermemberDelete(HttpSession session, String customer_email) {
         homeService.home_member_delete(customer_email);
         session.removeAttribute("loginInfo");
-        return "redirect:masterMemberList.mp";
+        return "redirect:masterMemberList.mpa";
         
     }
     //마스터가 하는 회원정보 수정 처리
@@ -389,10 +443,10 @@ public class HomeMyPageController {
 		}
 
   		if (homeService.member_update(vo) == -1) {
-  			msg.append("alert('수정성공!'); location='masterMemberList.mp'");
+  			msg.append("alert('수정성공!'); location='masterMemberList.mpa'");
   			
 		} else {
-			msg.append("alert('수정실패'); location='masterMemberList.mp' ");
+			msg.append("alert('수정실패'); location='masterMemberList.mpa' ");
 		}
 
   		//화면에서 변경 입력한 정보를 db에 변경 저장한 후 상세화면으로 연결

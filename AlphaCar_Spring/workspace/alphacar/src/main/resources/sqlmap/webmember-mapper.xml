@@ -76,11 +76,17 @@
 	</update>
 	
 	<insert id="social_insert">
-		insert into customer (customer_email, customer_name, kakao, social, admin)
-		values ( #{customer_email}, #{customer_name}, #{kakao}, #{social}, 'C')
+		declare
+			
+		begin
+			insert into customer (customer_email, customer_name, kakao, social)
+			values ( #{customer_email}, #{customer_name}, #{kakao}, #{social});
+			insert into authority (customer_email, authority_number)
+			values (#{customer_email}, SEQ_AUTHORITY.nextval);
+		end;
 	</insert>
 	
-	<select id="social_login" resultType="member.WebMemberVO">
+	<select id="social_login" resultType="security.CustomUserDetails">
 		select * from customer
 		where kakao = #{kakao}
 	</select>

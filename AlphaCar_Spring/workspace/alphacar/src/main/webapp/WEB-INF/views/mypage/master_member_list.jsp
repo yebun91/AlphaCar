@@ -15,13 +15,13 @@
       <div class="page_index">
         <div class="page_select">
           <ul>
-            <li onclick="location.href='masterMemberList.mp'">전체</li>
-            <li onclick="location.href='masterMemberList.mp?search=C'">일반</li>
-            <li onclick="location.href='masterMemberList.mp?search=M'">사업자</li>
+            <li onclick="location.href='masterMemberList.mpa'">전체</li>
+            <li onclick="location.href='masterMemberList.mpa?search=C'">일반</li>
+            <li onclick="location.href='masterMemberList.mpa?search=M'">사업자</li>
           </ul>
         </div>
         <!-- service 검색기능 -->
-        <form action="masterMemberList.mp" class="page_search">
+        <form action="masterMemberList.mpa" class="page_search">
         <input type="hidden" name="curPage" value="1" /> 
           <div class="page_search_index">
             <select name="search" id="service_search_index">

@@ -12,7 +12,7 @@
   <main>
     <div id="page">
       <h1>작성 글 수정</h1>
-		<form action="insert.no" class="page_write" method="post">
+		<form action="insert.noa" class="page_write" method="post">
 			<input type="hidden" name='notice_id' value="${vo.notice_id}"/>
 			<input type="hidden" name='attach' />
 			<div class="page_write_index">
@@ -28,7 +28,7 @@
 				</div>
 			</div>
 			<div class="page_write_space">
-				<textarea id="summernote" name="notice_content" cols="100" id="notice_content">
+				<textarea id="summernote" name="notice_content" cols="100">
 				</textarea>
 			</div>
 			<div class="page_write_button">

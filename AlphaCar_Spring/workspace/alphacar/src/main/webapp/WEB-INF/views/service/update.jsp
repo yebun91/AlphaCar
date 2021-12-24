@@ -13,7 +13,7 @@
   <main>
     <div id="page">
       <h1>FAQ 글 수정</h1>
-		<form action="update_work.se" class="page_write" method="post">
+		<form action="update_work.sea" class="page_write" method="post">
 			<input type="hidden" name='best_qna_id' value="${vo.best_qna_id}"/>
 			<input type="hidden" name='attach' />
 			<div class="page_write_index">

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 
    <div class="sub_image">
-      <img src="img/main_image.jpg" alt="">
+      <img src="img/main_image.jpg">
    </div>
   
 	<div class="page_detail_text"> 

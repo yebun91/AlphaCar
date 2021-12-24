@@ -44,7 +44,7 @@ function company_delete(store_number) {
 		//id 변수 안의 데이터가 "abc"면 반복문 중단
 		if(id=="${loginInfo.customer_pw}"){ 
 			alert("삭제되었습니다."); 
-			location.href="memberCompanyDelete.mp?store_number="+store_number;
+			location.href="memberCompanyDelete.mps?store_number="+store_number;
 			break;
 		}
 		//id 변수 안의 데이터가 "abc"가 아니면 alert 상자 띄우기

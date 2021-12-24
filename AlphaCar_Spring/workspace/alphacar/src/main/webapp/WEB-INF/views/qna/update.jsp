@@ -30,7 +30,7 @@
 				</div>
 			</div>
 			<div class="page_write_space">
-				<textarea id="summernote" name="qna_content" cols="100" id="qna_content">${vo.qna_content }</textarea>
+				<textarea id="summernote" name="qna_content" cols="100">${vo.qna_content }</textarea>
 				
 			</div>
 			<div class="page_password_space">

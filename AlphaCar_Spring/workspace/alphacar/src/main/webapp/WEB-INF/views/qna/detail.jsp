@@ -37,7 +37,7 @@
 	    		<button type="button" onclick="location.href='replyUpdate.qna?qna_id=${vo.qna_id}'">수정</button>
 				</c:if>
 				<button type="button" onclick="if(confirm('정말 삭제 하시겠습니까?')) { 
-				location.href='delete.qna?qna_id=${vo.qna_id }'} ">삭제</button>
+				location.href='delete.qn?qna_id=${vo.qna_id }'} ">삭제</button>
 			</c:if>
 			<c:if test="${loginInfo.admin eq 'A'}">
 				<button type="button" onclick="location.href='reply.qna?qna_id=${vo.qna_id}'">답글쓰기</button>

@@ -32,7 +32,7 @@
 					$('#qna_password').focus();
 					return;
 				} else if ($('#qna_password').val() == '${vo.qna_password}'){
-					location.href = "detail.qna?qna_id=${vo.qna_id }";
+					location.href = "detail.qn?qna_id=${vo.qna_id }";
 					
 				} else if ($('#qna_password').val() != '${vo.qna_password}'){
 					alert('비밀번호가 일치하지 않습니다!');

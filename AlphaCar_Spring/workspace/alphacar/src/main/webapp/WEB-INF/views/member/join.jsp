@@ -83,6 +83,7 @@ let pwToken = false;
 let p2Token = false;
 let nmToken = false;
 
+
 function duplicate() {
 	$.ajax({
 		url : 'email_dupl.ho'
@@ -106,7 +107,6 @@ function checkEmail() {
 	if(!regEmail.test(email.value)) {
 		document.getElementById("emailError").innerText = "이메일 형식(예:abc@def.com)에 맞게 입력하세요.";
 		document.getElementById("emailError").style.color = "red";
-		emToken = false;
 	}else {
 		document.getElementById("emailError").innerText = "이메일이 입력되었습니다.";
 		document.getElementById("emailError").style.color = "green";
@@ -118,7 +118,6 @@ function checkPw() {
 	if(!regPw.test(pw.value)) {
 		document.getElementById("pwError").innerText = "영문 대소문자와 숫자, 특수문자를 모두 포함하는 8자리 이상의 비밀번호를 입력하세요.";
 		document.getElementById("pwError").style.color = "red";
-		pwToken = false;
 	}else {
 		document.getElementById("pwError").innerText = "비밀번호가 입력되었습니다.";
 		document.getElementById("pwError").style.color = "green";
@@ -129,7 +128,6 @@ function checkPw2() {
 	if(pw2.value != pw.value) {
 		document.getElementById("pwError2").innerText = "비밀번호가 일치하지 않습니다.";
 		document.getElementById("pwError2").style.color = "red";
-		p2Token = false;
 	}else {
 		document.getElementById("pwError2").innerText = "비밀번호가 일치합니다.";
 		document.getElementById("pwError2").style.color = "green";
@@ -140,7 +138,6 @@ function checkName() {
 	if(!regName.test(name.value)) {
 		document.getElementById("nameError").innerText = "2-4자의 한글만 가능합니다.";
 		document.getElementById("nameError").style.color = "red";
-		nmToken = false;
 	}else {
 		document.getElementById("nameError").innerText = "이름이 입력되었습니다.";
 		document.getElementById("nameError").style.color = "green";

@@ -40,9 +40,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 	  session = request.getSession(true);
 	  Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	  String customer_email = auth.getName();
-//	  UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//	  String customer_email = (String) authentication.getPrincipal();
-//	  String customer_pw = (String) authentication.getCredentials();
 	  CustomUserDetails vo = service.member_login(customer_email);
 	  
 	  session.setAttribute("loginInfo", vo);
@@ -52,9 +49,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		
 	  //Redirect URL 작업
 	  resultRedirectStrategy(request, response, authentication);
-//	  System.out.println("로그인 유저 정보 :" + vo);
-	  
-	  
 		
 	}
 	protected void clearAuthenticationAttributes(HttpServletRequest request) {

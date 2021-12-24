@@ -23,6 +23,7 @@ public class CustomUserDetails implements UserDetails{
 	private String customer_filename      ;
 	private String admin;
 	private String social;
+	private String kakao;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -139,6 +140,14 @@ public class CustomUserDetails implements UserDetails{
 
 	public void setSocial(String social) {
 		this.social = social;
+	}
+
+	public String getKakao() {
+		return kakao;
+	}
+
+	public void setKakao(String kakao) {
+		this.kakao = kakao;
 	}
 	
 	

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import security.CustomUserDetails;
+
 @Repository
 public class WebMemberDAO implements WebMemberService {
 
@@ -31,22 +33,22 @@ public class WebMemberDAO implements WebMemberService {
 	}
 
 	@Override
-	public boolean member_social_email(WebMemberVO vo) {
+	public boolean member_social_email(CustomUserDetails vo) {
 		return (Integer) sql.selectOne("webmember.mapper.social_email", vo) == 0 ? false : true;
 	}
 
 	@Override
-	public boolean member_social_insert(WebMemberVO vo) {
+	public boolean member_social_insert(CustomUserDetails vo) {
 		return sql.insert("webmember.mapper.social_insert", vo) == 0 ? false : true;
 	}
 
 	@Override
-	public boolean member_social_update(WebMemberVO vo) {
+	public boolean member_social_update(CustomUserDetails vo) {
 		return sql.update("webmember.mapper.social_update", vo) == 0 ? false : true;
 	}
 
 	@Override
-	public WebMemberVO member_social_login(String kakao) {
+	public CustomUserDetails member_social_login(String kakao) {
 		return sql.selectOne("webmember.mapper.social_login", kakao);
 	}
 

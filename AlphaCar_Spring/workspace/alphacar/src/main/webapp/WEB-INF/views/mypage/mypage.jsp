@@ -33,7 +33,12 @@
               </div>
             </div>
           </div>
-          <button onclick="location.href='memberUpdate.mp'">수정하기</button>
+          <c:if test="${empty loginInfo.social}">
+          	<button onclick="location.href='memberUpdate.mp'">수정하기</button>
+          </c:if>
+          <c:if test="${!empty loginInfo.social}">
+          	<button onclick="location.href='memberSocialUpdate.mp'">수정하기</button>
+          </c:if>
         </div>
         <div class="mypage_box mypage_contact">
           <h1>1:1 문의 내역</h1>

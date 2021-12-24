@@ -16,7 +16,6 @@
 			class="customer_update_form form" method="post">
 			<h1>회원 정보 수정</h1>
 			<input type="text" name="customer_email" value="${vo.customer_email}" class="join_email" readonly> 
-			<input type="password" name="customer_pw" value="${vo.customer_pw}" placeholder="변경할 비밀번호" class="join_pw"> 
 			<input type="text" name="customer_name" value="${vo.customer_name}"	class="join_name">
 			<div class="join_company">
 				<h3>사업자 이신가요?</h3>

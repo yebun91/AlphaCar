@@ -2,6 +2,8 @@ package member;
 
 import java.util.HashMap;
 
+import security.CustomUserDetails;
+
 public interface WebMemberService {
 
 	//아이디, 비번 일치하는 회원정보 조회
@@ -15,15 +17,15 @@ public interface WebMemberService {
 	boolean member_id_check(String id);
 
 	// 소셜 회원 정보 존재여부 (R)
-	boolean member_social_email(WebMemberVO vo);	
+	boolean member_social_email(CustomUserDetails vo);	
 	
 	// 소셜 회원 정보 신규 저장(C)
-	boolean member_social_insert(WebMemberVO vo);
+	boolean member_social_insert(CustomUserDetails vo);
 	
 	// 소셜 회원 정보 변경 저장(U)
-	boolean member_social_update(WebMemberVO vo);
+	boolean member_social_update(CustomUserDetails vo);
 	
-	WebMemberVO member_social_login(String kakao);
+	CustomUserDetails member_social_login(String kakao);
 	
 	// 로그아웃시 자동로그인이 풀리는 맵퍼
 	boolean auto_logout(WebMemberVO vo);

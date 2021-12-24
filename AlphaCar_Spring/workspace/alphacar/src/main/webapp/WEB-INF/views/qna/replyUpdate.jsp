@@ -22,7 +22,7 @@
 				</div>
 			</div>
 			<div class="page_write_space">
-				<textarea id="summernote" name="qna_content" id="qna_content" cols="100" >${vo.qna_content }</textarea>
+				<textarea id="summernote" name="qna_content" cols="100" >${vo.qna_content }</textarea>
 				
 			</div>
 			
@@ -50,7 +50,7 @@
 			$('form').submit();
 		}
 	}
-
+	</script>
   <!-- 서머노트를 위해 추가해야할 부분 -->
   <script src="resources/js/summernote-lite.js"></script>
   <script src="resources/js/summernote.js"></script>

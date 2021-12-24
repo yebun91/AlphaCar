@@ -47,5 +47,8 @@ public interface HomeMyPageService {
     
     //알파카가 하는 회원 정보 수정
   	int member_update(WebMemberVO vo);
+  	
+  	//소셜 로그인 시 회원정보 수정
+  	int home_social_update(WebMemberVO vo);
     
 }

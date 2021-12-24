@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import common.CommonService;
 import member.WebMemberServiceImpl;
 import member.WebMemberVO;
+import security.CustomUserDetails;
 import security.CustomUserDetailsService;
 
 @Controller
@@ -81,15 +82,15 @@ public class HomeMemberController {
 //		
 //		session.setAttribute("loginInfo", vo);
 
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		WebMemberVO vo = service.member_login(userDetails.getUsername());
-		session.setAttribute("loginInfo", vo);
+//		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//		WebMemberVO vo = service.member_login(userDetails.getUsername());
+//		session.setAttribute("loginInfo", vo);
 		
 		return "redirect:/";
 	}
 
 	// 로그인 화면 요청
-	@RequestMapping("/homeLogin.ho")
+	@RequestMapping("/homeLogin")
 	public String login(HttpSession session) {
 
 		session.setAttribute("category", "homeLogin");
@@ -126,10 +127,13 @@ public class HomeMemberController {
 		vo.setCustomer_pw(pwCrypt);
 		if (admin.equals("A")) {
 			vo.setAuthority_name("ROLE_ALPHACHR");
+			vo.setAdmin("A");
 		} else if (admin.equals("M")) {
 			vo.setAuthority_name("ROLE_ADMIN");
+			vo.setAdmin("M");
 		} else if (admin.equals("C")) {
 			vo.setAuthority_name("ROLE_CUSTOMER");
+			vo.setAdmin("C");
 		}
 		
 		
@@ -160,7 +164,7 @@ public class HomeMemberController {
 	}
 
 	// 카카오 Callback 메소드 선언
-	@RequestMapping("/kakaocallback.ho")
+	@RequestMapping("/kakaocallback")
 	public String kakaocallback(@RequestParam(required = false) String code, String state,
 			@RequestParam(required = false) String error, HttpSession session) {
 
@@ -183,7 +187,7 @@ public class HomeMemberController {
 		if (!json.isEmpty()) {
 
 			// 회원정보 DB 에 값을 담아서 관리 _ MemberVO
-			WebMemberVO vo = new WebMemberVO();
+			CustomUserDetails vo = new CustomUserDetails();
 			vo.setSocial("K");
 			vo.setCustomer_email(json.get("id").toString());
 
@@ -199,7 +203,7 @@ public class HomeMemberController {
 			else
 				service.member_social_insert(vo);
 
-			WebMemberVO login = service.member_social_login(vo.getKakao());
+			CustomUserDetails login = service.member_social_login(vo.getKakao());
 			session.setAttribute("loginInfo", login);
 		}
 

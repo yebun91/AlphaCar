@@ -5,9 +5,9 @@
     <img src="img/main_image.jpg" alt="">
   </div>
   <div class="service_buttons">
-  	<c:if test="${empty loginInfo}"><button onclick="location.href='homeLogin'">실시간 채팅 문의</button></c:if>
+  	<c:if test="${empty loginInfo}"><button onclick="location.href='homeLogin.ho'">실시간 채팅 문의</button></c:if>
   	<c:if test="${!empty loginInfo}"><button onclick="go_chat()">실시간 채팅 문의</button></c:if>
-  	<button onclick="location.href='write.qna'">1:1 문의하기</button>
+  	<button onclick="location.href='write.qn'">1:1 문의하기</button>
   </div>
 </nav>
 <!-- 메인 시작 -->
@@ -86,7 +86,7 @@
     
 				<!-- 관리자로 로그인된 경우만 글쓰기 가능 -->
 				<c:if test="${loginInfo.admin eq 'A'}">
-      				<button type="button" onclick="location.href='write.se'">글 작성</button>
+      				<button type="button" onclick="location.href='write.sea'">글 작성</button>
 				</c:if>
 			
     </div>

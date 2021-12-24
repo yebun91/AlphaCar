@@ -39,19 +39,12 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 	
 	<script type="text/javascript"  charset="UTF-8">         
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
 	const number = '${store_number}';
 	$.ajax({
 	   type: "POST",
 	    dataType: "json",
 	    data: {store_number:number},
 	    url: "month_list.cha",
-	    beforeSend: function(xhr) {
-			
-				xhr.setRequestHeader(header, token);
-			
-			},
 	   	success : function( datas ) 
 	      {             
 	      tt = JSON.parse(datas);
@@ -134,18 +127,11 @@
 	</script>
 	
  	<script type="text/javascript"  charset="UTF-8">         
-	var csrfHeaderName = "${_csrf.headerName}";
-	var csrfTokenValue = "${_csrf.token}";
 	$.ajax({
 	   type: "POST",
 	    dataType: "json",
 	    data: {store_number:number},
 	    url: "week_cnt.cha",
-	    beforeSend: function(xhr) {
-			
-				xhr.setRequestHeader(header, token);
-			
-			},
 	   	success : function( datas ) 
 	      {             
 		   customer = JSON.parse(datas);
@@ -249,19 +235,12 @@
 	</script>
 
 	<script type="text/javascript"  charset="UTF-8">         
-	var csrfHeaderName = "${_csrf.headerName}";
-	var csrfTokenValue = "${_csrf.token}";
 	
 	$.ajax({
 	   type: "POST",
 	    dataType: "json",
 	    data: {store_number:number},
 	    url: "time_rank.cha",
-	    beforeSend: function(xhr) {
-			
-				xhr.setRequestHeader(header, token);
-			
-			},
 	   	success : function( datas ) 
 	      {             
 	      time = JSON.parse(datas);
