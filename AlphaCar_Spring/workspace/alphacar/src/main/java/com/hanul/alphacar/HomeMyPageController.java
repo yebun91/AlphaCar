@@ -190,10 +190,10 @@ public class HomeMyPageController {
 	}	
     //회원 탈퇴
     @RequestMapping("/memberDelete.mp")
-    public String memberDelete(HttpSession session, String customer_email) {
+    public String memberDelete(HttpSession session, String customer_email){
         homeService.home_member_delete(customer_email);
         session.removeAttribute("loginInfo");
-        return "redirect:/";
+		return "redirect:/";
     }
     
 	//내 가게 정보
@@ -404,7 +404,7 @@ public class HomeMyPageController {
     @RequestMapping("/mastermemberDelete.mpa")
     public String mastermemberDelete(HttpSession session, String customer_email) {
         homeService.home_member_delete(customer_email);
-        session.removeAttribute("loginInfo");
+		/* session.removeAttribute("loginInfo"); */
         return "redirect:masterMemberList.mpa";
         
     }
