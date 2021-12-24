@@ -14,7 +14,8 @@
   <!-- 메인 시작 -->
   <main class="mypage">
     <div id="page">
-      <form class="form company_update_form" name="dataForm" id="dataForm" onsubmit="return registerAction()">
+      <form class="form company_update_form" method="post" name="dataForm" id="dataForm" enctype="multipart/form-data"
+      			action="update_work.mps">
 	      <input type="hidden" name='store_number' value="${vo.store_number}"/>
 				<input type="hidden" name='attach' />
         <h1>세차장 정보 수정</h1>
@@ -38,8 +39,8 @@
 	          </div>
 	          <div>
 	            <h3>전화번호</h3>
-	            <input type="text" name="store_tel" id="new_tel" value="${vo.store_tel }" onkeyup="checkTel()" >
-		<div id="telError"></div>
+	            <input type="text" name="store_tel" id="new_tel" value="${vo.store_tel }"  onkeyup="checkTel()">
+							<div id="telError"></div>
 	          </div>
 	          <div>
 	            <h3>영업시간</h3>
@@ -70,9 +71,7 @@
 	          </div>
 	          <div>
 	            <h3>사업자 번호</h3>
-	            <input type="text" name="store_registration_number" id="new_regi" value="${vo.store_registration_number }" onkeyup="checkRegi()">
-							<a id='btn_regi' onclick="regiDupl()">사업자 등록번호 중복검사</a>
-							<div id="regiError"></div>
+	            <input type="text" name="store_registration_number" id="new_regi" value="${vo.store_registration_number }" readonly="readonly">
 	          </div>
 	          <div class="join_profile_images"> 
 	            <h3>사진</h3>
@@ -86,18 +85,15 @@
 	          </div>
 	        </div>
 	        <!-- style="display: none" -->
-	        <div id="articlefileChange" style="display: none"></div>
-	        <input multiple="multiple" type="file" class='input_file' id='input_file' name="file" accept="image/*" style="display: none" >
-	        <!-- <button type="button" onclick='$("form").submit()'>수정하기</button> -->
+	        <div style="display: none" id="articlefileChange"></div>
+	    		<input style="display: none" multiple="multiple" type="file" class='input_file' id='input_file' name="input_file" accept="image/*" >
 	        <button type="button" onclick="check()">수정하기</button>
       </form>
-      <input multiple="multiple">
     </div>
   </main>
   
   <!-- 다음 주소 검색 API -->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  
   <script type="text/javascript">
 
 	const regName =  /^[가-힣]{2,4}$/
@@ -193,18 +189,6 @@
 		}
 	}
 
-	function checkRegi() {
-		r2Token = false;
-		if(!regRegi.test(regi.value)) {
-			document.getElementById("regiError").innerText = "-를 제외한 등록번호(10자리)를 입력해주세요.";
-			document.getElementById("regiError").style.color = "red";
-			reToken = false;
-		}else {
-			document.getElementById("regiError").innerText = "사업자 등록번호가 입력되었습니다.";
-			document.getElementById("regiError").style.color = "green";
-			reToken = true;
-		}
-	}
 	
 	function check() {
 		if(name.value == "") {
@@ -261,70 +245,79 @@
 			alert("사업주 이름을 입력하세요.");
 			master.focus();
 			return false;
-		}
-		else if(!reToken) {
-			alert("등록번호를 입력하세요.");
-			regi.focus();
-			return false;
-		}else if(!r2Token) {
-			alert("등록번호 중복검사를 통과하세요.");
-			return false;
 		}else {
 			$('form').submit();
 		}
 	}
 	</script>
-  
-  <!-- 파일 업로드 스크립트 -->
-  <script type="text/javascript">
-  const image = document.querySelector('.join_profile_image');
-  const input_file = document.querySelector('#input_file');
-  //이미지 파일 누를 때 input_file도 같이 클릭
-  function choose_image() {
-	input_file.click();
-  }
-//첨부파일 선택시 처리
-  $(document).on('change', '#input_file', function() {
-  	var attached1 = this.files[0];
-  	if (attached1) { // 첨부된 파일이 있을 경우
-  		$('.join_profile_image1').html('<img src="" />');
-  		var reader = new FileReader();
-  		reader.onload = function(e) {
-  			$('.join_profile_image1').attr('src', e.target.result);
-  		}
-  		reader.readAsDataURL(attached1);
-  	}
-  })
-   $(document).on('change', '#input_file', function() {
-  	var attached2 = this.files[1];
-  	if (attached2) { // 첨부된 파일이 있을 경우
-  		$('.join_profile_image2').html('<img src="" />');
-  		var reader = new FileReader();
-  		reader.onload = function(e) {
-  			$('.join_profile_image2').attr('src', e.target.result);
-  		}
-  		reader.readAsDataURL(attached2);
-  	}
-  })
-  $(document).on('change', '#input_file', function() {
-  	var attached3 = this.files[2];
-  	if (attached3) { // 첨부된 파일이 있을 경우
-  		$('.join_profile_image3').html('<img src="" />');
-  		var reader = new FileReader();
-  		reader.onload = function(e) {
-  			$('.join_profile_image3').attr('src', e.target.result);
-  		}
-  		reader.readAsDataURL(attached3);
-  	}
-  })
-  
-  $(document).ready(function()
+	<script type="text/javascript">
+	function daum_post() {
+	    new daum.Postcode({
+	        oncomplete: function(data) {
+	            // 조회된 우편번호를 입력하기 위한 선언
+	            // name 이 post 인 태그의 val(값)을 받아온 변수 (data) 내 zonecode 값을 담음
+	            $('[name=store_post]').val( data.zonecode);
+	            
+	            // 지번 주소 : J  도로명 주소 : R
+	            var addr =data.userSelectedType == 'J' ? data.jibunAddress : data.roadAddress;
+	            
+	            // 건물명이 있을 경우 추가
+	            if ( data.buildingName != '') addr += ' ('+ data.buildingName + ')'; 
+	            	$('[name=store_addr]').eq(0).val( addr );
+	        }
+	    }).open();
+	}
+	$(document).ready(function()
 			// input file 파일 첨부시 fileCheck 함수 실행
 			{
 				$("#input_file").on("change", fileCheck);
 			});
-
-	//첨부파일로직
+	
+	
+	
+	const image = document.querySelector('.join_profile_image');
+	const input_file = document.querySelector('#input_file');
+	//이미지 파일 누를 때 input_file도 같이 클릭
+	function choose_image() {
+		input_file.click();
+	}
+	//첨부파일 선택시 처리
+	  $(document).on('change', '#input_file', function() {
+	  	var attached1 = this.files[0];
+	  	if (attached1) { // 첨부된 파일이 있을 경우
+	  		$('.join_profile_image1').html('<img src="" />');
+	  		var reader = new FileReader();
+	  		reader.onload = function(e) {
+	  			$('.join_profile_image1').attr('src', e.target.result);
+	  		}
+	  		reader.readAsDataURL(attached1);
+	  	}
+	  })
+	   $(document).on('change', '#input_file', function() {
+	  	var attached2 = this.files[1];
+	  	if (attached2) { // 첨부된 파일이 있을 경우
+	  		$('.join_profile_image2').html('<img src="" />');
+	  		var reader = new FileReader();
+	  		reader.onload = function(e) {
+	  			$('.join_profile_image2').attr('src', e.target.result);
+	  		}
+	  		reader.readAsDataURL(attached2);
+	  	}
+	  })
+	  $(document).on('change', '#input_file', function() {
+	  	var attached3 = this.files[2];
+	  	if (attached3) { // 첨부된 파일이 있을 경우
+	  		$('.join_profile_image3').html('<img src="" />');
+	  		var reader = new FileReader();
+	  		reader.onload = function(e) {
+	  			$('.join_profile_image3').attr('src', e.target.result);
+	  		}
+	  		reader.readAsDataURL(attached3);
+	  	}
+	  })
+	  /**
+	 * 첨부파일로직
+	 */
 	$(function () {
 	    $('#btn-upload').click(function (e) {
 	        e.preventDefault();
@@ -346,7 +339,7 @@
 	    
 	    // 파일 배열 담기
 	    var filesArr = Array.prototype.slice.call(files);
-	    filesArr.sort();
+	    
 	    // 파일 개수 확인 및 제한
 	    if (fileCount + filesArr.length != totalCount) {
 	      alert('파일은 '+totalCount+'개만 업로드 할 수 있습니다.');
@@ -384,58 +377,13 @@
 		fileCount --;
 	    console.log(content_files);
 	}
-	
-	/*
+	  
+	  /*
 	 * 폼 submit 로직
 	 */
 		function registerAction(){
-			
-		var form = $("form")[0];        
-	 	var formData = new FormData(form);
-			for (var x = 0; x < content_files.length; x++) {
-				// 삭제 안한것만 담아 준다. 
-				if(!content_files[x].is_delete){
-					 formData.append("article_file", content_files[x]);
-				}
-			}
-	   /*
-	   * 파일업로드 multiple ajax처리
-	   */    
-		$.ajax({
-	   	      type: "post",
-	   	   	  enctype: "multipart/form-data",
-	   	      url: "update_work.mps",
-	       	  data : formData,
-	       	  processData: false,
-	   	      contentType: false,
-	   	      success: function (data) {
-	   	    	  window.location.replace("memberCompany.mps");	   	    	
-	   	    		alert("가게수정 성공");
+			$('form').submit();
 
-	   	      },
-	   	      error: function (xhr, status, error) {
-	   	    		alert("서버오류로 지연되고있습니다. 잠시 후 다시 시도해주시기 바랍니다.");
-	   	     	return false;
-	   	      }
-	   	    });
-	   	    return false;
 		}
-		
-			function daum_post() {
-			    new daum.Postcode({
-			        oncomplete: function(data) {
-			            // 조회된 우편번호를 입력하기 위한 선언
-			            // name 이 post 인 태그의 val(값)을 받아온 변수 (data) 내 zonecode 값을 담음
-			            $('[name=store_post]').val( data.zonecode);
-			            
-			            // 지번 주소 : J  도로명 주소 : R
-			            var addr =data.userSelectedType == 'J' ? data.jibunAddress : data.roadAddress;
-			            
-			            // 건물명이 있을 경우 추가
-			            if ( data.buildingName != '') addr += ' ('+ data.buildingName + ')'; 
-			            	$('[name=store_addr]').eq(0).val( addr );
-			        }
-			    }).open();
-			}
-  </script>
+</script>
 	

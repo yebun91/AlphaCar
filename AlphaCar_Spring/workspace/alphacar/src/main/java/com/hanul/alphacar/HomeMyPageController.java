@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import common.CommonService;
 import homeMypage.CustomerPage;
@@ -188,7 +189,8 @@ public class HomeMyPageController {
 		return "mypage.mp";
 		
 	}	
-    //회원 탈퇴
+
+	//회원 탈퇴
     @RequestMapping("/memberDelete.mp")
     public String memberDelete(HttpSession session, String customer_email){
         homeService.home_member_delete(customer_email);
@@ -253,51 +255,53 @@ public class HomeMyPageController {
 	}
 
 	// 가게 수정 저장 처리 요청
-	@RequestMapping ("/update_work.mps")
-	public String update_work(HomeStoreVO vo, HttpSession session, int inventory, int store_number, 
-			@RequestParam("article_file") List<MultipartFile> mf) {
-		ArrayList<String> storeInventory = new ArrayList<>();
-		HomeStoreVO hvo = homeService.companyId_list(store_number);
-		if(mf.isEmpty()) {
-			System.out.println("엠티먹음");
-		}
-		if(mf.equals(null)) {
-			System.out.println("이퀄 (null) 먹음");
-		}
+	@RequestMapping(value = "/update_work.mps", produces = "text/html; charset=utf-8")
+	public String update_work(MultipartHttpServletRequest req, HomeStoreVO vo, int inventory,
+			HttpSession session, HttpServletResponse response, int store_number) throws IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		vo.setCustomer_email( ( (CustomUserDetails) session.getAttribute("loginInfo")).getCustomer_email() );
+		vo.setStore_number(store_number);
+		HomeStoreVO cVO = homeService.companyId_list(store_number);
 		
-		for (int i =0; i< 9; i++){
-			storeInventory.add("X");
-		}
-		for(int i =0; i<inventory; i++){
-			storeInventory.set(i, "Y");
-		}
-		for (int i = 0; i < storeInventory.size(); i++) {
-			vo.setNow_state(storeInventory.get(i));
+		List<MultipartFile> fileList = req.getFiles("input_file");
+		ArrayList<String> storeInventory = new ArrayList<>();
+		if (cVO.getInventory() != inventory) {
+			
+			for (int i =0; i< 9; i++){
+				storeInventory.add("X");
+			}
+			for(int i =0; i<inventory; i++){
+				storeInventory.set(i, "Y");
+			}
+			for (int i = 0; i < storeInventory.size(); i++) {
+				vo.setNow_state(storeInventory.get(i));
+			} 
 		} 
 		
-		
-		
-    	vo.setStore_number(store_number);
+    	
     	
     	
     	homeService.company_update(vo);
     	
     	HomeStoreFileVO fvo = new HomeStoreFileVO(); 
     	
-    	if(mf.size() > 0 && !mf.get(0).getOriginalFilename().equals("")) {
+    	if(fileList.size() > 0 && !fileList.get(0).getOriginalFilename().equals("")) {
     		int rank = 0;
-    		for(MultipartFile file:mf) {
+    		for(MultipartFile file:fileList) {
     			fvo.setStore_number(store_number);
     			fvo.setImgname(file.getOriginalFilename());
     			fvo.setImgpath(common.fileUpload("company", file, session));
     			fvo.setRank(++rank);
     			homeService.companyImg_update(fvo);
+    			out.println("<script>alert('수정성공!'); location='memberCompany.mps'; </script>");
+				out.flush();
     		}
     	
         }
     	
 		
-		return "redirect:memberCompany.mps";
+		return "memberCompany.mps";
 	}
 	
 	//신규 가게등록 페이지 요청
@@ -316,18 +320,24 @@ public class HomeMyPageController {
 
 	//신규 가게 저장 요청
 	@RequestMapping(value = "/homeStoreRegister.mps", produces = "text/html; charset=utf-8")
-	public String homeStoreRegister(HomeStoreVO vo, HttpSession session, String inventory 
-//			@RequestParam("article_file") List<MultipartFile> mf
-			) {
+	public String homeStoreRegister(MultipartHttpServletRequest req, HomeStoreVO vo, int inventory,
+			HttpSession session, HttpServletResponse response) throws IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
 		vo.setCustomer_email( ( (CustomUserDetails) session.getAttribute("loginInfo")).getCustomer_email() );
-		System.out.println(inventory);
+		//System.out.println(inventory);
+		System.out.println("===");
+		List<MultipartFile> fileList = req.getFiles("input_file");
 		ArrayList<String> storeInventory = new ArrayList<>();
 		for (int i =0; i< 9; i++){
 			storeInventory.add("X");
         }
-        for(int i =0; i<Integer.parseInt(inventory); i++){
-        	storeInventory.set(i, "Y");
-        }
+		
+		for(int i =0; i<inventory; i++){ 
+		  storeInventory.set(i,"Y"); 
+		}
+		 
         
         for (int i = 0; i < storeInventory.size(); i++) {
 			vo.setNow_state(storeInventory.get(i));
@@ -338,21 +348,21 @@ public class HomeMyPageController {
         
         HomeStoreFileVO fvo = new HomeStoreFileVO(); 
         
-//    	if(mf.size() > 0 && !mf.get(0).getOriginalFilename().equals("")) {
-//    		int rank = 0;
-//    		for(MultipartFile file:mf) {
-//    			fvo.setImgname(file.getOriginalFilename());
-//    			fvo.setImgpath(common.fileUpload("company", file, session));
-//    			fvo.setRank(++rank);
-//    			homeService.companyImg_insert(fvo);
-//  			} 
 		
-		
-		
-    	
-//        }
+		 if(fileList.size() > 0 && !fileList.get(0).getOriginalFilename().equals("")) { 
+			 int rank =0; 
+			 for(MultipartFile file:fileList) { 
+				 fvo.setImgname(file.getOriginalFilename());
+				 fvo.setImgpath(common.fileUpload("company", file, session));
+				 fvo.setRank(++rank); homeService.companyImg_insert(fvo); 
+				 out.println("<script>alert('저장성공!'); location='memberCompany.mps'; </script>");
+				 out.flush();
+			 }
+		 
+		  }
+		 
 
-    	return "redirect:memberCompany.mps";
+    	return "memberCompany.mps";
        
 	}
 	
@@ -404,7 +414,7 @@ public class HomeMyPageController {
     @RequestMapping("/mastermemberDelete.mpa")
     public String mastermemberDelete(HttpSession session, String customer_email) {
         homeService.home_member_delete(customer_email);
-		/* session.removeAttribute("loginInfo"); */
+        session.removeAttribute("loginInfo");
         return "redirect:masterMemberList.mpa";
         
     }

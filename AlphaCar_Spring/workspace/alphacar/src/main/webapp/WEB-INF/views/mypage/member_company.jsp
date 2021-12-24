@@ -19,9 +19,9 @@
 	        <div class="mypage_company">
 	          <img src="${vo.imgpath}" alt="회사이미지">
 	          <div class="mypage_company_back"></div>
-	          <button class="mypage_company_delete"
-	          	onclick="company_delete(${vo.store_number })">
-	          	X</button>
+	          <button class="mypage_company_delete" type="button" onclick="if(confirm('정말 삭제 하시겠습니까?')) { 
+									location.href='memberCompanyDelete.mps?store_number=${vo.store_number }'} ">X</button>
+	          
 	          <div class="mypage_company_select">
 	            <button onclick="location.href='memberCompanyGraph.mps?store_number=${vo.store_number }'">그래프로 보기</button>
 	            <button onclick="location.href='memberCompanyUpdate.mps?store_number=${vo.store_number }'">수정하기</button>
