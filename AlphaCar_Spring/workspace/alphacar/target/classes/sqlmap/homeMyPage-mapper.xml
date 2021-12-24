@@ -236,18 +236,19 @@
          
          select inventory into p_inventory from store where store_number = #{store_number};
          
-         if p_inventory = #{inventory} then return ;
-         else
-	         <foreach collection="now_state" item="item" index="i" >
-	              select sensor_id into p_sensor_id from sensor where store_number = #{store_number}
-	              and sensor_number = #{i, jdbcType=VARCHAR}+1;
-	              
-	               
-	              update state set now_state = #{item, jdbcType=VARCHAR}
-	              where store_number = #{store_number}
-	              and sensor_id = p_sensor_id;
-	        </foreach>
-         end if;      
+         
+         <foreach collection="now_state" item="item" index="i" >
+              select sensor_id into p_sensor_id from sensor 
+              where store_number = #{store_number}
+              and sensor_number = #{i, jdbcType=VARCHAR}+1;
+              
+               
+              update state set now_state = #{item, jdbcType=VARCHAR}
+              where store_number = #{store_number}
+              and sensor_id = p_sensor_id;
+              
+              commit;
+        </foreach>
       end;  
    </update>
 	
