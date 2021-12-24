@@ -114,7 +114,7 @@ public class HomeQnaController {
 	@RequestMapping("/delete.qn")
 	public String delete(HttpSession session, Model model, int qna_id) {
 		service.qna_delete(qna_id);
-		return "redirect:masterContact.mpa";
+		return "redirect:masterContact.mp";
 	}
 	
 	//qna 답글 작성화면 요청

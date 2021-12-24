@@ -116,7 +116,7 @@ public class HomeNoticeController {
 	@RequestMapping ("/board/comment/regist")
 	public boolean comment_regist(HomeNoticeCommentVO vo, HttpSession session) {
 		//작성자의 경우 member의 id 값을 담아야 하므로 로그인 정보 확인
-		WebMemberVO member = (WebMemberVO) session.getAttribute("loginInfo");
+		CustomUserDetails member = (CustomUserDetails) session.getAttribute("loginInfo");
 		vo.setCustomer_email(member.getCustomer_email());
 		return service.board_comment_insert(vo) == 1 ? true : false;
 		//반환 결과가 1이면 true 아니면 false

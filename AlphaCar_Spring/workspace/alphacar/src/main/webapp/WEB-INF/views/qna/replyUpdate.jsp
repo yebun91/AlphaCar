@@ -43,9 +43,6 @@
 		if(title.value == "") {
 		alert("제목을 입력하세요.");
 		title.focus();
-		}else if(content.value == "") {
-		alert("내용을 입력하세요.");
-		content.focus();
 		}else {
 			$('form').submit();
 		}

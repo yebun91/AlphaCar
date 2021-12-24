@@ -14,8 +14,11 @@
 	<security:http pattern="/img/**" security="none"/>		
 	<security:http pattern="/ioTCarWash" security="none"/>		
 	<security:http pattern="/**/*.an" security="none"/>		
-	<security:http pattern="/homeStoreRegister.mps" security="none"/>
-	<security:http pattern="/**/*.chat" security="none"/>		
+	<security:http pattern="/homeStoreRegister.mps" security="none"/>		
+	<security:http pattern="board/comment/update" security="none"/>	
+	<security:http pattern="board/comment/list/*" security="none"/>	
+	<security:http pattern="board/comment/list/" security="none"/>	
+
 
 	
 	
@@ -32,7 +35,7 @@
 <!-- 		<security:intercept-url pattern="/**/*.mp" access="hasAnyRole('ROLE_ALPHACHR, ROLE_ADMIN, ROLE_CUSTOMER')"/> -->
 		<security:intercept-url pattern="/**/*.qn" access="isAuthenticated()" />
 		<security:intercept-url pattern="/**/*.mps" access="isAuthenticated()" />
-		<!-- <security:intercept-url pattern="/**/*.chat" access="isAuthenticated()" /> -->
+		<security:intercept-url pattern="/**/*.chat" access="isAuthenticated()" />
 		<security:intercept-url pattern="/**/*.mpa" access="hasRole('ROLE_ALPHACHR')" />
 		<security:intercept-url pattern="/**/*.noa" access="hasRole('ROLE_ALPHACHR')" />
 		<security:intercept-url pattern="/**/*.qna" access="hasRole('ROLE_ALPHACHR')" />

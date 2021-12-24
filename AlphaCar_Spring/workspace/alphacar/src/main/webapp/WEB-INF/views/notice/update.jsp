@@ -12,7 +12,7 @@
   <main>
     <div id="page">
       <h1>작성 글 수정</h1>
-		<form action="insert.noa" class="page_write" method="post">
+		<form action="update_work.noa" class="page_write" method="post">
 			<input type="hidden" name='notice_id' value="${vo.notice_id}"/>
 			<input type="hidden" name='attach' />
 			<div class="page_write_index">
@@ -24,16 +24,15 @@
 					</select>
 				</div>
 				<div class="page_write_title">
-					<input type="text" placeholder="제목" name="notice_title" id="notice_title">
+					<input type="text" name="notice_title" value="${vo.notice_title }">
 				</div>
 			</div>
 			<div class="page_write_space">
-				<textarea id="summernote" name="notice_content" cols="100">
-				</textarea>
+				<textarea id="summernote" name="notice_content" cols="100" >${vo.notice_content }</textarea>
 			</div>
 			<div class="page_write_button">
 				<button>수정완료</button>
-				<button type="button" onclick="location.href='list.no'" >취소</button>
+				<button type="button" onclick="location.href='list.no'">취소</button>
 			</div>
 		</form>
     </div>
