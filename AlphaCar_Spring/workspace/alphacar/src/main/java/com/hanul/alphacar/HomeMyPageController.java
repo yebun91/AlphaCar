@@ -285,6 +285,7 @@ public class HomeMyPageController {
     	homeService.company_update(vo);
     	
     	HomeStoreFileVO fvo = new HomeStoreFileVO(); 
+    	List<HomeStoreFileVO> fList = homeService.company_img(store_number);
     	
     	if(fileList.size() > 0 && !fileList.get(0).getOriginalFilename().equals("")) {
     		int rank = 0;
@@ -298,9 +299,20 @@ public class HomeMyPageController {
 				out.flush();
     		}
     	
-        }
+        } else {
+        	int rank = 0;
+        	for (int i = 0; i < fList.size(); i++) {
+    			fList.get(i).getImgname();
+    			fvo.setStore_number(store_number);
+    			fvo.setImgname(fList.get(i).getImgname());
+    			fvo.setImgpath(fList.get(i).getImgpath());
+    			fvo.setRank(++rank);
+    			homeService.companyImg_update(fvo);
+    			out.println("<script>alert('수정성공!'); location='memberCompany.mps'; </script>");
+				out.flush();
+    		}
     	
-		
+        }
 		return "memberCompany.mps";
 	}
 	
