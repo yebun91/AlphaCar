@@ -79,12 +79,32 @@
       </c:if>
       <div class="user_delete">
         <p>더 이상 알파카를 이용하지 않는다면 </p>
-        <button onclick="user_delete('${loginInfo.customer_pw}', '${loginInfo.customer_email}')">회원탈퇴 바로가기</button>
+        <%-- <button onclick="user_delete('${loginInfo.customer_pw}', '${loginInfo.customer_email}')">회원탈퇴 바로가기</button> --%>
+        <button onclick="user_delete('${loginInfo.customer_email}')">회원탈퇴 바로가기</button>
       </div>
     </div>
   </main>
 <script type="text/javascript">
-function user_delete(customer_pw, customer_email) {
+
+function user_delete(customer_emails) {
+	if(confirm('정말 탈퇴 하시겠습니까?')){
+		$.ajax({
+			url : "memberDelete.mp"
+			, data : {customer_email: customer_emails}
+			, type : 'post'
+			, async : false
+			, success : function (res) {
+				window.location.replace("homeLogin");
+				alert("탈퇴되었습니다.");				
+			}, error : function ( req, text ) {
+				alert("탈퇴실패.");
+			}
+		});
+		//location.href="memberDelete.mp?customer_email="+customer_email;
+	}
+}
+
+/* function user_delete(customer_pw, customer_email) {
 	while(true){
 		//변수 ID 선언
 		var id = prompt("삭제하시려면 비밀번호를 입력하세요.","");
@@ -100,5 +120,5 @@ function user_delete(customer_pw, customer_email) {
 			break;
 		}
 	}
-}
+} */
 </script>
