@@ -405,7 +405,7 @@ function check() {
 	 * 폼 submit 로직
 	 */
 		function registerAction(){
-//			$('form').submit();
+			$('form').submit();
 // 		var form = $("form")[0];        
 //  	 	var formData = new FormData(form);
 // 			for (var x = 0; x < content_files.length; x++) {

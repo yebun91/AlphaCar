@@ -333,7 +333,7 @@
 	       options: {
 		    	   title: {
 		       			diplay: true,
-		       			text: "이번 주 인기있는 시간대"
+		       			text: "이번 달 인기있는 시간대"
 		       		}
 	       		
 	       }

@@ -35,6 +35,8 @@ public class HomeNoticeController {
 	public String list(HttpSession session, Model model, 
 			@RequestParam (defaultValue = "1") int curPage,
 			String search, String keyword) {
+		
+
 		/*
 		 * HashMap<String, String> map = new HashMap<String, String>();
 		 * map.put("customer_email", "admin@naver.com"); map.put("customer_pw",

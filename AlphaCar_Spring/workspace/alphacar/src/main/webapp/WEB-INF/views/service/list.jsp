@@ -5,9 +5,8 @@
     <img src="img/main_image.jpg" alt="">
   </div>
   <div class="service_buttons">
-  	<button onclick="go_chat()">실시간 채팅 문의</button>
-  	<%-- <c:if test="${empty loginInfo}"><button onclick="location.href='homeLogin'">실시간 채팅 문의</button></c:if>
-  	<c:if test="${!empty loginInfo}"><button onclick="go_chat()">실시간 채팅 문의</button></c:if> --%>
+  	<c:if test="${empty loginInfo}"><button onclick="location.href='homeLogin'">실시간 채팅 문의</button></c:if>
+  	<c:if test="${!empty loginInfo}"><button onclick="go_chat()">실시간 채팅 문의</button></c:if>
   	<button onclick="location.href='write.qn'">1:1 문의하기</button>
   </div>
 </nav>

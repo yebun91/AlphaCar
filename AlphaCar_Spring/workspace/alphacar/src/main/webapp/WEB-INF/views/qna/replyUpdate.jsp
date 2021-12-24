@@ -37,7 +37,6 @@
   
   <script type="text/javascript">
 	let title   = document.getElementById("qna_title");
-	let content = document.getElementById("qna_content");
 	
 	function check() {
 		if(title.value == "") {

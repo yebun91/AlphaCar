@@ -20,8 +20,8 @@ public class HomeChartDAO implements HomeChartService {
 
 	@Override
 	public List<ChartVO> time_rank(int store_number) {
-		// TODO Auto-generated method stub
-		return sql.selectList("homeChart.mapper.time_rank", store_number);
+		List<ChartVO> list = sql.selectList("homeChart.mapper.time_rank", store_number);
+		return list;
 	}
 
 	@Override

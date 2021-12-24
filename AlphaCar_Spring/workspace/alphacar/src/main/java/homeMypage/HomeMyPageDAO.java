@@ -54,7 +54,8 @@ public class HomeMyPageDAO implements HomeMyPageService {
 
 	@Override
 	public void company_update(HomeStoreVO vo) {
-		sql.update("homeMyPage.mapper.company_update", vo);
+		int a = sql.update("homeMyPage.mapper.company_update", vo);
+		System.out.println(a);
 	}
 
 	@Override
