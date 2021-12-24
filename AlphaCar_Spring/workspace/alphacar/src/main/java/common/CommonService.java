@@ -37,8 +37,8 @@ public class CommonService {
 		// \wtpwebapps\alphacar\resources\pictures\profiles\00.jpg
 
 		String folder = resources + "/pictures/" + category;
-		String save = "http://192.168.25.60:8989/alphacar/resources/pictures/"+category;
-//		String save = "http://192.168.0.30:8989/alphacar/resources/pictures/"+category;
+//		String save = "http://192.168.25.60:8989/alphacar/resources/pictures/"+category;
+		String save = "http://192.168.0.30:8989/alphacar/resources/pictures/"+category;
 		String uuid =  UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 		
 		File dir = new File ( folder );

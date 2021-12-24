@@ -13,7 +13,7 @@
 <main class="mypage">
 	<div id="page">
 	<input type="hidden" value="${loginInfo.social }" id="mypageSocial">
-		<form action="memberSubmit.mp" class="customer_update_form form" method="post">
+		<form action="memberSubmit.mp" class="customer_update_form form" method="post" enctype="multipart/form-data">
 			<h1>회원 정보 수정</h1>
 			<c:if test="${empty loginInfo.social}">
 				<input type="text" name="customer_email"

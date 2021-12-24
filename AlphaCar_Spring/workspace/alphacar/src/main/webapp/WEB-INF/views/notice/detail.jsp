@@ -32,7 +32,7 @@
 		</div>
 	  </div>
 	  <div class="page_write_button">
-		<button type="button" onclick="location.href='list.no'">목록으로</button>
+		<button type="button" onclick="location.href='list.no?curPage=${page.curPage }&serch=${page.search }&keyword=${page.keyword}'">목록으로</button>
 		<c:if test="${loginInfo.customer_email eq vo.customer_email || loginInfo.admin eq 'A'}">
 			<button type="button" onclick="location.href='update.noa?id=${vo.notice_id }'">수정</button>
 			<button type="button" onclick="

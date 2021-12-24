@@ -10,8 +10,27 @@
 				
 		begin
         
-        update customer set customer_pw = #{customer_pw, jdbcType=VARCHAR}, 
+        update customer set customer_pw = #{customer_pw}, 
 					customer_name = #{customer_name}, 
+					customer_picture = #{customer_picture},
+					city = #{city},
+					admin = #{admin},
+					addr = #{addr}
+				where customer_email = #{customer_email};
+				
+        update authority set authority_name = #{authority_name}
+        where customer_email = #{customer_email};
+        
+		end;
+	</update>
+	
+	<!--웹 회원 정보 수정 -->
+	<update id="memberSocialUpdate">
+		declare
+				
+		begin
+        
+        update customer set customer_name = #{customer_name}, 
 					customer_picture = #{customer_picture},
 					city = #{city},
 					admin = #{admin},
@@ -85,8 +104,8 @@
 				from ( select * 
 					   from customer
 					   <include refid="where_search" />
-					   order by customer_name) w
-			  order by no desc)
+					   order by joindate) w
+			  order by w.joindate desc)
 		where no between #{beginList} and #{endList}
 	</select>
 	
