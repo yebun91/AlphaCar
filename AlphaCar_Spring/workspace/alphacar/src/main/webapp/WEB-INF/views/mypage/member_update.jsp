@@ -20,7 +20,7 @@
 					   value="${loginInfo.customer_email}"
 					   class="join_email" id="email" readonly> 
 			    <input type="password" placeholder="기존 비밀번호를 작성해주세요." 
-			    	   class="old_join_pw" id="written_pw" name="customer_old_pw" onkeyup="checkOldPw()">
+			    	   			class="old_join_pw" id="written_pw" name="customer_old_pw">
 				<input type="password" name="customer_pw" placeholder="변경할 비밀번호"
 					class="join_pw" id="new_pw" onkeyup="checkPw()">
 				<div id="pwError"></div>

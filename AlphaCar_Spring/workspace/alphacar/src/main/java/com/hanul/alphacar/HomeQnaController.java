@@ -39,8 +39,6 @@ public class HomeQnaController {
 		
 		// 로그인 된 사용자의 id를 가져와 글쓴이(writer)에 담기 위한 처리
 		vo.setCustomer_email( ( (CustomUserDetails) session.getAttribute("loginInfo")).getCustomer_email() );
-		System.out.println(vo.getCustomer_email());
-		System.out.println(qna_search_index);
 		String index = "";
 		if (qna_search_index.equals("user-info") ) {
 			index = "C";
@@ -57,7 +55,7 @@ public class HomeQnaController {
 		// 화면에서 입력한 정보를 DB에 저장한 후 화면으로 연결(출력)
 		service.qna_insert(vo);
 		
-		return "redirect:masterContact.mp"; // 리턴 시 공지사항 목록 화면으로 이동 처리
+		return "redirect:memberContact.mp"; // 리턴 시 공지사항 목록 화면으로 이동 처리
 		}
 	
 	//qna 글 자세히 보기
@@ -114,7 +112,7 @@ public class HomeQnaController {
 	@RequestMapping("/delete.qn")
 	public String delete(HttpSession session, Model model, int qna_id) {
 		service.qna_delete(qna_id);
-		return "redirect:masterContact.mp";
+		return "redirect:memberContact.mp";
 	}
 	
 	//qna 답글 작성화면 요청
@@ -128,16 +126,13 @@ public class HomeQnaController {
 	// 답글 저장 처리 요청
 	@RequestMapping ("/reply_insert.qna")
 	public String reply_insert (QnaVO vo, HttpSession session, int qna_id) {
-		System.out.println(qna_id);
 		// 로그인 된 사용자의 id를 가져와 글쓴이(writer)에 담기 위한 처리
 		vo.setCustomer_email( ( (CustomUserDetails) session.getAttribute("loginInfo")).getCustomer_email() );
-//			vo = service.qna_pw(qna_id);
-//			vo.setQna_password(vo.getQna_password());
 
 		// 화면에서 입력한 정보를 DB에 저장한 후 화면으로 연결(출력)
 		service.qna_reply_insert(vo);
 		
-		return "redirect:masterContact.mp";
+		return "redirect:masterContact.mpa";
 	}
 	
 	//qna 답글 수정

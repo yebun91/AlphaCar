@@ -80,7 +80,6 @@
 	          		<c:forEach begin="1" end='${vo.qna_indent }' var='i'>
 									${i eq vo.qna_indent ? "<img src='img/re.gif' />" : "&nbsp;&nbsp;" }
 								</c:forEach>			
-	            	<a href='check.qn?qna_id=${vo.qna_id }'>
 	            	<c:if test="${vo.qna_attribute eq 'C'}">
 	              	<p>[고객]</p>
 	              </c:if>
@@ -94,7 +93,6 @@
 	              	<p>[알파카]</p>
 	              </c:if>
 	              <p>${vo.qna_title}</p>
-	            </a>
 	            </c:if>
 	              
 	          </div>

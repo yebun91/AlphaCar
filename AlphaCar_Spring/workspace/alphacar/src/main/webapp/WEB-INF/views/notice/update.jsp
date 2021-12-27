@@ -24,14 +24,14 @@
 					</select>
 				</div>
 				<div class="page_write_title">
-					<input type="text" name="notice_title" value="${vo.notice_title }">
+					<input type="text" name="notice_title" id="notice_title" value="${vo.notice_title }">
 				</div>
 			</div>
 			<div class="page_write_space">
-				<textarea id="summernote" name="notice_content" cols="100" >${vo.notice_content }</textarea>
+				<textarea id="summernote" name="notice_content">${vo.notice_content }</textarea>
 			</div>
 			<div class="page_write_button">
-				<button>수정완료</button>
+				<button type="button" onclick="check()">수정완료</button>
 				<button type="button" onclick="location.href='list.no'">취소</button>
 			</div>
 		</form>
@@ -45,20 +45,21 @@
 
   <!-- 제목, 내용 필수입력 -->
   <script type="text/javascript">
-  	let title   = document.getElementById("notice_title");
-  	let content = document.getElementById("notice_content");
-  	
-  	function check() {
-  		if(title.value == "") {
+  function check() {
+	  
+		if ($("#notice_title").val() == "") {
 			alert("제목을 입력하세요.");
-			title.focus();
-  		}else if(content.value == "") {
-			alert("내용을 입력하세요.");
-			content.focus();
-  		}else {
+			$("#notice_title").focus();
+			return false;
+		}else if ($('#summernote').summernote('isEmpty')) {
+			  alert('editor content is empty');
+			  return false;
+		}else {
 			$('form').submit();
 		}
-  	}
+		
+		
+	}
   </script>
 
   
