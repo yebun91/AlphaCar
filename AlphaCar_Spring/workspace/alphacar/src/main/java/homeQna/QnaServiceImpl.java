@@ -72,7 +72,7 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public List<QnaVO> member_qna_list(String customer_email) {
+	public List<Integer> member_qna_list(String customer_email) {
 		// TODO Auto-generated method stub
 		return dao.member_qna_list(customer_email);
 	}
@@ -89,6 +89,10 @@ public class QnaServiceImpl implements QnaService {
 		
 	}
 
-	
+	@Override
+	public List<QnaVO> member_qna_list(List<Integer>list_qna_root) {
+		// TODO Auto-generated method stub
+		return dao.member_qna_list(list_qna_root);
+	}
 
 }

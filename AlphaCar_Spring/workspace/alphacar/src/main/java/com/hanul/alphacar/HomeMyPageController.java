@@ -107,7 +107,6 @@ public class HomeMyPageController {
 				vo.setAuthority_name("ROLE_CUSTOMER");
 				vo.setAdmin("C");
 			}
-			
 			homeService.home_member_update(vo);	
 			out.println("<script>alert('수정성공!'); location='mypage.mp'; </script>");
 			out.flush();
@@ -213,12 +212,20 @@ public class HomeMyPageController {
 		page.setSearch(search);
 		page.setKeyword(keyword);
 		//((WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() ;
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("customer_email", ((CustomUserDetails) session.getAttribute("loginInfo")).getCustomer_email());
-		map.put("page", page);
-		//DB에서 공지글 목록을 조회한 후 목록화면에 출력
-		model.addAttribute("page", service.member_qna_list(map));
 		
+		//DB에서 공지글 목록을 조회한 후 목록화면에 출력
+		//model.addAttribute("page", service.member_qna_list(map));
+		List<Integer> list_qna_root = new ArrayList<Integer>();
+		String customer_email = ((CustomUserDetails) session.getAttribute("loginInfo")).getCustomer_email();
+		//List<QnaVO> list = service.member_qna_list(((CustomUserDetails) session.getAttribute("loginInfo")).getCustomer_email());
+		list_qna_root = service.member_qna_list(customer_email);
+		List<QnaVO> rootList = service.member_qna_list(list_qna_root);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("rootList", list_qna_root);
+		map.put("page", page);
+		page = service.member_qna_list(map);
+		model.addAttribute("page", page);
 		return "mypage/member_contact";
 	}
 
