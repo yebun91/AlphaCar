@@ -85,7 +85,8 @@ public class QnaDAO implements QnaService {
 			
 		QnaPage page = (QnaPage)map.get("page");
 		page.setTotallist( sql.selectOne("homeQna.mapper.homeMembertotalList", map) );
-		page.setList( sql.selectList("homeQna.mapper.homeMemberQnaPageList", page) );
+		map.put("page", page);
+		page.setList( sql.selectList("homeQna.mapper.homeMemberQnaPageList", map) );
 		return page;
 			
 		}
