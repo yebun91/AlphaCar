@@ -195,8 +195,15 @@
 	
 	<!-- 가게 이미지 저장 -->
 	<insert id="companyImg_insert">
-		insert into store_file (file_id, store_number, imgpath, imgname, rank)
-		values (seq_store_file.nextval, SEQ_STORE.currval, #{imgpath, jdbcType=VARCHAR}, #{imgname, jdbcType=VARCHAR}, #{rank, jdbcType=VARCHAR})
+		DECLARE
+			V_MAX_ID number;
+		BEGIN
+		
+			SELECT NVL(MAX(FILE_ID),0)  INTO  V_MAX_ID from store_file;
+			
+			insert into store_file (file_id, store_number, imgpath, imgname, rank)
+			values (V_MAX_ID+1, SEQ_STORE.currval, #{imgpath, jdbcType=VARCHAR}, #{imgname, jdbcType=VARCHAR}, #{rank, jdbcType=VARCHAR});
+		end;
 	</insert>
 	
 	<!-- 회사id를 기준으로 회사정보 조회 -->
