@@ -94,6 +94,7 @@ public class HomeController {
 		model.addAttribute("msg", msg.toString());
 		
 		int code = (int) req.getAttribute("javax.servlet.error.status_code");
+		
 		return "error/" + (code == 404 ? 404 : "common");
 	}
 	
