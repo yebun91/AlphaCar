@@ -188,8 +188,6 @@
 	
    <!-- 고객과 점주일 경우 qna 수 조회 -->
 	<select id="homeMemberQnaPageList" resultType="homeQna.QnaVO">
-		
-		
 		select *
 			from (select rownum no, w.*, ( select customer_name from customer c where c.customer_email = w.customer_email ) customer_name 
 					from ( 
@@ -200,7 +198,7 @@
 					</foreach> ) w
 				)
 			where no between #{page.beginList} and #{page.endList}
-			 order by qna_root, qna_indent
+			order by no desc
 	</select>
 
 	
