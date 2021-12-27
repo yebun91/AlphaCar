@@ -103,4 +103,15 @@ public class QnaDAO implements QnaService {
 		return sql.selectList("homeQna.mapper.homeMemberQnaReplyList", list_qna_root);
 	}
 
+	@Override
+	public List<Integer> delete_list(QnaVO vo) {
+		// TODO Auto-generated method stub
+		return sql.selectList("homeQna.mapper.homeQnaDeleteList", vo);
+	}
+
+	@Override
+	public void qna_delete(List<Integer> list_qna_root) {
+		sql.delete("homeQna.mapper.homeQnaDeleteAll", list_qna_root);
+	}
+
 }

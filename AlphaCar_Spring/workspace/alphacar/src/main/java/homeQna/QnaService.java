@@ -42,6 +42,10 @@ public interface QnaService {
 		
 	//고객과 점주일 경우 qna 목록조회 - 페이지 처리된
 	QnaPage member_qna_list(HashMap<String, Object> map);
+	
+	List<Integer> delete_list(QnaVO vo);
+	
+	void qna_delete(List<Integer>list_qna_root);
 
 }
 
