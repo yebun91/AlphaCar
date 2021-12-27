@@ -195,10 +195,10 @@
 						select *
 			 			from web_qna 
 			 			where qna_root = #{item.qna_root}
-					</foreach> ) w
+					</foreach> ) w order by no desc
 				)
 			where no between #{page.beginList} and #{page.endList}
-			order by no desc
+			
 	</select>
 
 	
