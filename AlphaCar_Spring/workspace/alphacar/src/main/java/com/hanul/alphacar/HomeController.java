@@ -97,12 +97,16 @@ public class HomeController {
 		String err = "error/";
 		if(code == 404) {
 			err += "404";
-		}else if(code == 401) {
+		}else if(code == 403) {
 			err += "no_permission";
 		}else {
 			err += "common";
 		}	
 		return err;
+	}
+	@RequestMapping("/no_permission")
+	public String error_per (HttpServletRequest req, Model model) {
+		return "error/no_permission";
 	}
 	
 }

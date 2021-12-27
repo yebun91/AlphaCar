@@ -74,7 +74,7 @@
 		</security:session-management>
 			
 		<!-- 권한이 없어서 금지된 URI 접속할 때 보여줄 페이지(403 에러 페이지 대체) -->
-		<security:access-denied-handler error-page="/homeLogin" />
+		<security:access-denied-handler error-page="/no_permission" />
 		
 	</security:http> 
 	
