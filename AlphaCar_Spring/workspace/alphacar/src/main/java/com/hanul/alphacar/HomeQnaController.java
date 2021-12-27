@@ -3,6 +3,9 @@ package com.hanul.alphacar;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,6 +114,11 @@ public class HomeQnaController {
 	//qna 글 삭제
 	@RequestMapping("/delete.qn")
 	public String delete(HttpSession session, Model model, int qna_id) {
+//		List<Integer> list_qna_root = new ArrayList<Integer>();
+//		QnaVO vo = service.qna_detail(qna_id);
+//		list_qna_root = service.delete_list(vo);
+//		service.qna_delete(list_qna_root);
+		
 		service.qna_delete(qna_id);
 		String admin = ( (CustomUserDetails) session.getAttribute("loginInfo")).getAdmin();	
 		if (admin.equals("A")) {

@@ -95,4 +95,16 @@ public class QnaServiceImpl implements QnaService {
 		return dao.member_qna_list(list_qna_root);
 	}
 
+	@Override
+	public List<Integer> delete_list(QnaVO vo) {
+		// TODO Auto-generated method stub
+		return dao.delete_list(vo);
+	}
+
+	@Override
+	public void qna_delete(List<Integer> list_qna_root) {
+		dao.qna_delete(list_qna_root);
+		
+	}
+
 }
