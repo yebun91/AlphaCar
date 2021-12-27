@@ -6,10 +6,9 @@
     </div>
     <hr />
     <div style="text-align: center; margin-top: 30px">
-        <h3>내부적인 오류가 발생했습니다.</h3>
+        <h3>권한이 없습니다.</h3>
         </br>
-        <pre>빠른 시일내에 오류를 해결해 복구시키도록 하겠습니다.</pre>
-        <pre>관련 문의사항은 Alphacar 고객센터에 알려주시면 친절하게 안내해 드리겠습니다.</pre>
+        <pre>해당페이지는 지정된 사용자만 들어갈 수 있는 페이지 입니다.</pre>
         ${msg }
     </div>
 </div>
