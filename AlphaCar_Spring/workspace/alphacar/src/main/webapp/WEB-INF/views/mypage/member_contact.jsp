@@ -14,7 +14,11 @@
   <main>
     <div id="page">
       <h1>내 1:1 문의 내역</h1>
-      <!-- notice 글 목록  -->
+		<form action="memberContact.mp" method="post">
+			<input type="hidden" name="curPage" value="1" />
+		</form>
+
+		<!-- notice 글 목록  -->
       <div class="page_list">
         <div class="page_list_name">
           <h3>글</h3>

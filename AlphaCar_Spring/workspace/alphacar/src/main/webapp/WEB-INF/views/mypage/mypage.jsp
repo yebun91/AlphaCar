@@ -40,6 +40,7 @@
           	<button onclick="location.href='memberSocialUpdate.mp'">수정하기</button>
           </c:if>
         </div>
+        <c:if test="${loginInfo.admin != 'A'}">
         <div class="mypage_box mypage_contact">
           <h1>1:1 문의 내역</h1>
           <div class="mypage_content">
@@ -48,6 +49,7 @@
           </div>
           <button onclick="location.href='memberContact.mp'">보러가기</button>
         </div>
+        </c:if>
         <c:if test="${loginInfo.admin == 'M'}">
         <div class="mypage_box mypage_contact">
           <h1>내 가게 정보</h1>

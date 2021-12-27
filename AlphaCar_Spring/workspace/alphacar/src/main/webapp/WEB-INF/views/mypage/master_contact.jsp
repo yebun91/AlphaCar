@@ -14,20 +14,20 @@
     <div id="page">
       <h1>1:1 문의 내역</h1>
       <div class="page_index">
-      <form action="masterContact.mp" method="post">
+      <form action="masterContact.mpa" method="post">
 		    <input type="hidden" name="curPage" value="1" /> 
 	        <div class="page_select">
 	          <ul>
-	           	<li onclick="location.href='masterContact.mp'">전체</li>
-		          <li onclick="location.href='masterContact.mp?search=user-info'">고객</li>
-		          <li onclick="location.href='masterContact.mp?search=store'">가게</li>
-		          <li onclick="location.href='masterContact.mp?search=app_web'">모바일/홈페이지</li>
-		          <li onclick="location.href='masterContact.mp?search=alphacar'">알파카</li>
+	           	<li onclick="location.href='masterContact.mpa'">전체</li>
+		          <li onclick="location.href='masterContact.mpa?search=user-info'">고객</li>
+		          <li onclick="location.href='masterContact.mpa?search=store'">가게</li>
+		          <li onclick="location.href='masterContact.mpa?search=app_web'">모바일/홈페이지</li>
+		          <li onclick="location.href='masterContact.mpa?search=alphacar'">알파카</li>
 	          </ul>
 	        </div>
         </form>
         <!-- service 검색기능 -->
-        <form action="masterContact.mp" method="post" class="page_search">
+        <form action="masterContact.mpa" method="post" class="page_search">
       		<input type="hidden" name="curPage" value="1" /> 
           <div class="page_search_index">
             <select name="service_search_index" id="service_search_index">
