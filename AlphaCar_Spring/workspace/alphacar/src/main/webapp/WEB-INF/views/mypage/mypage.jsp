@@ -73,7 +73,7 @@
 	            <p>회원이 작성한 문의내용을</p>
 	            <p>답변할 수 있습니다.</p>
 	          </div>
-	          <button onclick="location.href='masterContact.mp'">처리하기</button>
+	          <button onclick="location.href='masterContact.mpa'">처리하기</button>
 	        </div>
 	      </div>
       </c:if>
