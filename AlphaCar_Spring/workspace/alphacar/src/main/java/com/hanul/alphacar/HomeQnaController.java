@@ -112,7 +112,13 @@ public class HomeQnaController {
 	@RequestMapping("/delete.qn")
 	public String delete(HttpSession session, Model model, int qna_id) {
 		service.qna_delete(qna_id);
-		return "redirect:memberContact.mp";
+		String admin = ( (CustomUserDetails) session.getAttribute("loginInfo")).getAdmin();	
+		if (admin.equals("A")) {
+			
+			return "redirect:masterContact.mpa";
+		}else {
+			return "redirect:memberContact.mp";
+		}
 	}
 	
 	//qna 답글 작성화면 요청

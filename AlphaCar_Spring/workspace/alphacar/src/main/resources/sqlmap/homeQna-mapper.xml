@@ -115,6 +115,7 @@
 	<delete id="homeQnaDelete">
 		delete web_qna
 		where qna_id = #{qna_id}
+		and qna_root = #{qna_root}
 	</delete>
 	
 	<!-- qna 비밀번호 확인 -->
@@ -195,10 +196,10 @@
 						select *
 			 			from web_qna 
 			 			where qna_root = #{item.qna_root}
-					</foreach> ) w order by no desc
+					</foreach> ) w
 				)
 			where no between #{page.beginList} and #{page.endList}
-			
+			order by qna_root, qna_indent
 	</select>
 
 	
