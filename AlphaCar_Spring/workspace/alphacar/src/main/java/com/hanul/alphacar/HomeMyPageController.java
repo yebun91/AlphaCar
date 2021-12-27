@@ -107,6 +107,7 @@ public class HomeMyPageController {
 				vo.setAuthority_name("ROLE_CUSTOMER");
 				vo.setAdmin("C");
 			}
+			
 			homeService.home_member_update(vo);	
 			out.println("<script>alert('수정성공!'); location='mypage.mp'; </script>");
 			out.flush();
@@ -117,7 +118,7 @@ public class HomeMyPageController {
 			out.println("<script>alert('회원정보가 일치하지 않습니다.'); location='mypage.mp'; </script>");
 			out.flush();
 		}  
-		
+
 		return "mypage.mp";
 
 	}	
@@ -173,7 +174,7 @@ public class HomeMyPageController {
 			
 			out.println("<script>alert('수정성공!'); location='mypage.mp'; </script>");
 			out.flush();
-			
+			vo.setSocial(memberVO.getSocial());
 			session.setAttribute("loginInfo", vo);
 		} else {
 			out.println("<script>alert('회원정보가 일치하지 않습니다.'); location='mypage.mp'; </script>");

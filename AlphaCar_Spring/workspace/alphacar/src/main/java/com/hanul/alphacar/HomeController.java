@@ -79,4 +79,22 @@ public class HomeController {
 			
 		return "index";
 	}
+	
+	@RequestMapping("/error")
+	public String error (HttpServletRequest req, Model model) {
+		
+		Throwable error = (Throwable) req.getAttribute("javax.servlet.error.exception"); 
+		StringBuffer msg = new StringBuffer();
+		
+		while( error != null ) {
+			msg.append("<p>").append(error.getMessage() ).append("</p>");
+			error = error.getCause();	// exception 이 발생한 근본적인 원인을 리턴
+		}
+		
+		model.addAttribute("msg", msg.toString());
+		
+		int code = (int) req.getAttribute("javax.servlet.error.status_code");
+		return "error/" + (code == 404 ? 404 : "common");
+	}
+	
 }
