@@ -214,19 +214,21 @@ public class HomeMyPageController {
 		//((WebMemberVO) session.getAttribute("loginInfo")).getCustomer_email() ;
 		
 		//DB에서 공지글 목록을 조회한 후 목록화면에 출력
-		//model.addAttribute("page", service.member_qna_list(map));
-		List<Integer> list_qna_root = new ArrayList<Integer>();
 		String customer_email = ((CustomUserDetails) session.getAttribute("loginInfo")).getCustomer_email();
-		//List<QnaVO> list = service.member_qna_list(((CustomUserDetails) session.getAttribute("loginInfo")).getCustomer_email());
-		list_qna_root = service.member_qna_list(customer_email);
-		List<QnaVO> rootList = service.member_qna_list(list_qna_root);
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("rootList", list_qna_root);
-		map.put("page", page);
-		page = service.member_qna_list(map);
-		model.addAttribute("page", page);
-		return "mypage/member_contact";
+		List<QnaVO> qvo = service.member_qna_list(customer_email);
+		if (qvo.size() == 0) {
+			return "mypage/member_contact";
+		} else {
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("qna_pid", qvo.get(0).getQna_pid());
+			map.put("page", page);
+			page = service.member_qna_list(map);
+			model.addAttribute("page", page);
+			
+			return "mypage/member_contact";
+		}
 	}
 
 	//가게 삭제
