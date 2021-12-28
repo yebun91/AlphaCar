@@ -210,13 +210,14 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         });
 
 
+/*
 
-/*        Intent intent = new Intent(MainActivity.this, LoadingPageActivity.class);
-        startActivity(intent);*/
+        Intent intent = new Intent(MainActivity.this, LoadingPageActivity.class);
+        startActivity(intent);
 
 
 
-  /*          animationView = findViewById(R.id.lottie);
+            animationView = findViewById(R.id.lottie);
             animationView.setAnimation("test8.json");
             animationView.loop(true);
             animationView.playAnimation();
@@ -282,11 +283,15 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
                 if (loginDTO != null) {
                     //   login_image.setImageResource(loginDTO.getCustomer_picture());
-                    Glide.with(MainActivity.this)
-                            .load(loginDTO.getCustomer_picture())
-                            // .load("https://upload3.inven.co.kr/upload/2020/06/21/bbs/i015955522648.gif")//.load("url넣기 png,gif,jpg파일 밖에 안됨")
-                            .circleCrop()
-                            .into(login_image);
+                   if(!loginDTO.getCustomer_picture().equals("")) {
+                       Glide.with(MainActivity.this)
+                               .load(loginDTO.getCustomer_picture())
+                               // .load("https://upload3.inven.co.kr/upload/2020/06/21/bbs/i015955522648.gif")//.load("url넣기 png,gif,jpg파일 밖에 안됨")
+                               .circleCrop()
+                               .into(login_image);
+                   }
+
+
                     login_text.setText(loginDTO.getCustomer_name());
                     login_str.setText(loginDTO.getCustomer_email());
                 }
@@ -416,6 +421,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         }else if(id == R.id.nav_logout){
             // 로그인 로그아웃
             loginDTO = null;
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
 
 
         }

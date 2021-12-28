@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +57,7 @@ public class NotifyAdapter extends BaseAdapter {
             // 붙인 화면과 아래에 생성한 뷰홀더를 연결한다.
             viewHolder.title = convertView.findViewById(R.id.noti_title);
             viewHolder.content = convertView.findViewById(R.id.noti_content);
+            viewHolder.imageView = convertView.findViewById(R.id.noti_detail_photo);
      //       viewHolder.customer_email = convertView.findViewById(R.id.noti_customer_email);
      //       viewHolder.noti_id = convertView.findViewById(R.id.noti_id);
 
@@ -71,6 +73,7 @@ public class NotifyAdapter extends BaseAdapter {
    //     String customer_email = dto.getCustomer_email();
 
     //    viewHolder.noti_id.setText(id);
+
         viewHolder.title.setText(title);
         viewHolder.content.setText(content);
    //     viewHolder.customer_email.setText(customer_email);
@@ -87,6 +90,7 @@ public class NotifyAdapter extends BaseAdapter {
                intent.putExtra("customer_email",dto.getCustomer_email());
                intent.putExtra("notice_title",dto.getNotice_title());
                intent.putExtra("notice_content",dto.getNotice_content());
+               intent.putExtra("notice_file", dto.getNotice_filepath());
                mContext.startActivity(intent);
 
             }
@@ -97,5 +101,6 @@ public class NotifyAdapter extends BaseAdapter {
 
     public class NotiViewHolder{
         public TextView title, content, customer_email, noti_id;
+        public ImageView imageView;
     }
 }

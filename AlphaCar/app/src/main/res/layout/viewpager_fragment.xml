@@ -33,11 +33,13 @@
                 <TextView
                 android:id="@+id/storeName"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:text="세차장"
                 android:textColor="@color/black"
                 android:textSize="26dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+
+                    />
 
                 <RelativeLayout
                     android:id="@id/parentRelative"
@@ -52,41 +54,26 @@
 
                 </RelativeLayout>
 
-            </LinearLayout>
-
-
-
-
-
-
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
-
-
                 <TextView
                     android:id="@+id/introduce"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="bottom"
                     android:text="가게 설명"
                     android:textColor="@color/black"
                     android:textSize="25dp"
-                    android:textStyle="bold" />
+
+                    />
+
             </LinearLayout>
 
 
 
+
+
+
         </androidx.cardview.widget.CardView>
+
 
 
 

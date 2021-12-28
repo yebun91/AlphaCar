@@ -49,4 +49,6 @@ public class ViewpagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return "세차창" + (position + 1);
     }
+
+
 }

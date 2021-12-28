@@ -67,6 +67,10 @@ public class JoinPageActivity extends AppCompatActivity {
     ImageView memberjoin_iv_profile;
     String imgFilePath = "";
 
+    int join_check = 0;
+
+    int emailChk = 0, passChk = 0, passChk2 = 0;
+
     //이미지 리얼패스
     private String getRealPathFromUri(Uri uri) {
         String[] proj= {MediaStore.Images.Media.DATA};
@@ -377,40 +381,60 @@ public class JoinPageActivity extends AppCompatActivity {
                 //회원가입 처리 시작
                 JoinInsert joinInsert = null;
                 JoinNoImgInsert joinNoImgInsert = null;
-                if(profile == null){
-                    joinNoImgInsert = new JoinNoImgInsert(id, passwd, name, admin);
-                }else{
-                    joinInsert = new JoinInsert(id, passwd, name, admin, profile);
+                if(emailChk == 0 && passChk == 0 && passChk2 == 0){
+                    join_check = 0;
+                }else {
+                    join_check = 1;
                 }
+
+                if(join_check == 0){
+                    if (profile == null) {
+                        joinNoImgInsert = new JoinNoImgInsert(id, passwd, name, admin);
+                    } else {
+                        joinInsert = new JoinInsert(id, passwd, name, admin, profile);
+                    }
+
+                    String state = "";
+                    try {
+                        if(profile == null){
+                            state = joinNoImgInsert.execute().get().trim();
+
+                        }else{
+                            state = joinInsert.execute().get().trim();
+                        }
+                        Log.d("main:joinact0 : ", state);
+                        state = state.substring(11, 12);
+                        Log.d("main:joinact1 : ", state);
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    if(state.equals("1")){
+                        Toast.makeText(JoinPageActivity.this, "가입성공!", Toast.LENGTH_SHORT).show();
+                        Log.d("main:joinact", "가입성공!");
+                        finish();
+                    }else{
+                        Toast.makeText(JoinPageActivity.this, "가입실패!", Toast.LENGTH_SHORT).show();
+                        Log.d("main:joinact", "가입실패!");
+                        finish();
+                    }
+
+                } else {
+                    if(emailChk == 1){
+                        Toast.makeText(JoinPageActivity.this, "이메일을 확인하세요", Toast.LENGTH_SHORT).show();
+                        memberjoin_et_email.requestFocus();
+                    } else if(passChk == 1 || passChk2 == 1){
+                        Toast.makeText(JoinPageActivity.this,"비밀번호를 확인하세요", Toast.LENGTH_SHORT).show();
+                        memberjoin_et_pw.requestFocus();
+                    }
+                }
+
 
 
                 //가입 성공 여부
-                String state = "";
-                try {
-                    if(profile == null){
-                        state = joinNoImgInsert.execute().get().trim();
 
-                    }else{
-                        state = joinInsert.execute().get().trim();
-                    }
-                    Log.d("main:joinact0 : ", state);
-                    state = state.substring(11, 12);
-                    Log.d("main:joinact1 : ", state);
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                if(state.equals("1")){
-                    Toast.makeText(JoinPageActivity.this, "가입성공!", Toast.LENGTH_SHORT).show();
-                    Log.d("main:joinact", "가입성공!");
-                    finish();
-                }else{
-                    Toast.makeText(JoinPageActivity.this, "가입실패!", Toast.LENGTH_SHORT).show();
-                    Log.d("main:joinact", "가입실패!");
-                    finish();
-                }
             }
         });
 
@@ -441,14 +465,17 @@ public class JoinPageActivity extends AppCompatActivity {
                 if(state.equals("0")) {
                     memberjoin_et_email.setTextColor(white);
                     emailCheck = true;
+                    emailChk = 0;
                 }else{
                     memberjoin_et_email.setTextColor(red);
                     emailCheck = false;
+                    emailChk = 1;
                 }
 
                 if(!android.util.Patterns.EMAIL_ADDRESS.matcher(id).matches())
                 {
                     memberjoin_et_email.setTextColor(red);
+                    emailChk = 1;
                 }
 
 
@@ -471,11 +498,11 @@ public class JoinPageActivity extends AppCompatActivity {
                 int white = ContextCompat.getColor(getApplicationContext(), R.color.white);
                 int red = ContextCompat.getColor(getApplicationContext(), R.color.red);
                 if(!passwd.equals(passwd2)) {
-                    memberjoin_et_pw.setTextColor(red);
                     memberjoin_et_pw2.setTextColor(red);
+                    passChk2 = 1;
                 }else{
-                    memberjoin_et_pw.setTextColor(white);
                     memberjoin_et_pw2.setTextColor(white);
+                    passChk2 = 0;
                 }
             }
             @Override
@@ -498,8 +525,12 @@ public class JoinPageActivity extends AppCompatActivity {
                 if(!Pattern.matches(
                         "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&]).{6,15}.$", passwd)) {
                     memberjoin_et_pw.setTextColor(red);
+                    memberjoin_et_pw2.setTextColor(red);
+                    passChk = 1;
                 }else{
                     memberjoin_et_pw.setTextColor(white);
+                    memberjoin_et_pw2.setTextColor(white);
+                    passChk = 0;
                 }
             }
             @Override
