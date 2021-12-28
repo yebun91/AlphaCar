@@ -198,7 +198,6 @@
 		</foreach>)
 		
 	</select>
-<<<<<<< HEAD
 	
    <!-- 고객과 점주일 경우 qna 수 조회 -->
 	<select id="homeMemberQnaPageList" resultType="homeQna.QnaVO">
@@ -209,26 +208,9 @@
 						select *
 			 			from web_qna 
 			 			where qna_root = #{item.qna_root}
-					</foreach> ) w 
+					</foreach> ) w order by no
 				)
 			where no between #{page.beginList} and #{page.endList}
-			order by no desc, qna_indent
+			order by qna_step desc
 	</select>
-=======
->>>>>>> 940e365898e742fa9546865d90dcf7821ea37255
-
-	<!-- 고객과 점주일 경우 qna 수 조회 -->
-   <select id="homeMemberQnaPageList" resultType="homeQna.QnaVO">
-      select *
-         from (select rownum no, w.*, ( select customer_name from customer c where c.customer_email = w.customer_email ) customer_name 
-               from ( 
-               <foreach collection="rootList" item="item" separator="union all">
-                  select *
-                   from web_qna 
-                   where qna_root = #{item.qna_root}
-               </foreach> ) w 
-            )
-         where no between #{page.beginList} and #{page.endList}
-         order by no desc, qna_indent
-   </select>
 </mapper>

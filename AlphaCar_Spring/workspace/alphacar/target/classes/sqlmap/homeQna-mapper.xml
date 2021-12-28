@@ -113,9 +113,21 @@
 	
 	<!-- qna 글 삭제 -->
 	<delete id="homeQnaDelete">
-		delete web_qna
-		where qna_id = #{qna_id}
-		and qna_root = #{qna_root}
+		DELETE FROM WEB_QNA
+		WHERE QNA_ROOT = ( SELECT QNA_ROOT FROM WEB_QNA WHERE QNA_ID = #{qna_id})
+
+	</delete>
+	
+	<select id="homeQnaDeleteList" resultType="homeQna.QnaVO">
+   		select qna_root from web_qna where qna_id = #{qna_id}
+   </select>
+   
+	<!-- qna 글 모두 삭제 -->
+	<delete id="homeQnaDeleteAll">
+		<foreach collection="list" item="item" separator="union all">
+			delete web_qna
+			where qna_root = #{item}
+		</foreach>
 	</delete>
 	
 	<!-- qna 비밀번호 확인 -->
@@ -196,11 +208,9 @@
 						select *
 			 			from web_qna 
 			 			where qna_root = #{item.qna_root}
-					</foreach> ) w 
+					</foreach> ) w order by no
 				)
 			where no between #{page.beginList} and #{page.endList}
-			order by no desc, qna_indent
+			order by qna_step desc
 	</select>
-
-	
 </mapper>
