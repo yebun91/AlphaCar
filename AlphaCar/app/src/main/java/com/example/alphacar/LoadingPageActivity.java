@@ -31,7 +31,7 @@ public class LoadingPageActivity extends AppCompatActivity {
                 LoadingPageActivity.this.startActivity(intent);
                 LoadingPageActivity.this.finish();
             }
-        },1000);
+        },3000);
     }
 
 }

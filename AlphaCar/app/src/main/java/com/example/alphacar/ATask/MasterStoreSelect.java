@@ -165,9 +165,9 @@ public class MasterStoreSelect extends AsyncTask<Void, Void, Void> {
             } else if (readStr.equals("store_addr")) {
                 store_addr = reader.nextString();
             } else if (readStr.equals("store_detail_addr")) {
-                store_name = reader.nextString();
+                store_detail_addr = reader.nextString();
             } else if (readStr.equals("store_post")) {
-                store_addr = reader.nextString();
+                store_post = reader.nextString();
             }  else if (readStr.equals("store_tel")) {
                 store_tel = reader.nextString();
             }  else if (readStr.equals("store_time")) {
@@ -182,7 +182,9 @@ public class MasterStoreSelect extends AsyncTask<Void, Void, Void> {
                 store_price = reader.nextString();
             }   else if (readStr.equals("store_registration_number")) {
                 store_registration_number = reader.nextString();
-            }   else if (readStr.equals("imgpath")) {
+            } else if(readStr.equals("store_master_name")){
+                store_master_name = reader.nextString();
+            } else if (readStr.equals("imgpath")) {
                 imgpath =reader.nextString();
             } else {
                 reader.skipValue();

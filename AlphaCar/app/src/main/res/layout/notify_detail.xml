@@ -19,6 +19,7 @@
             android:layout_gravity="center"
             android:gravity="center_horizontal"
             android:text="공지사항"
+            android:textColor="@color/black"
             android:textSize="36dp" />
 
         <Button
@@ -28,6 +29,8 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/ic_backicon"
             android:layout_gravity="center_vertical"/>
+
+
 
         <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="match_parent"
@@ -40,6 +43,14 @@
 
     </FrameLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#9C9C9C"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        />
+
     <TextView
 
         android:layout_width="match_parent"
@@ -47,15 +58,23 @@
         android:id="@+id/noti_detail_title"
         android:layout_marginLeft="15dp"
         android:textSize="30dp"
+        android:textStyle="bold"
         android:text="title"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#9C9C9C"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        />
 
 
 
     <ImageView
         android:id="@+id/noti_detail_photo"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal" />
 
 
@@ -65,15 +84,19 @@
         android:layout_height="wrap_content"
         android:id="@+id/noti_detail_content"
         android:layout_marginLeft="15dp"
-        android:text="content" />
+        android:text="content"
+        android:textSize="18dp"
+        />
 
-  <!--  <FrameLayout
-        android:id="@+id/forPhoto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-    </FrameLayout>
--->
+
+    <!--  <FrameLayout
+          android:id="@+id/forPhoto"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+      </FrameLayout>
+  -->
 
 
 </LinearLayout>

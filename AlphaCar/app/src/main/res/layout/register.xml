@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:paddingLeft="15dp"
-            app:srcCompat="@drawable/ic_backicon"/>
+            app:srcCompat="@drawable/ic_backicon_white"/>
 
         <View
             android:layout_width="fill_parent"
@@ -129,6 +129,7 @@
                     android:hint="입력 시 '-'는 제외 하고 입력해 주세요"
                     android:textColorHint="#A8A8A8"
                     android:maxLength="10"
+                    android:inputType="number"
                     />
 
             </LinearLayout>
@@ -306,7 +307,9 @@
                     android:layout_height="wrap_content"
                     android:text="연락처"
                     android:textColor="#FFFFFF"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp"
+                    android:hint="'-'를 빼고 입력해주세요"
+                    />
 
                 <EditText
                     android:id="@+id/register_et_store_tel"
@@ -317,6 +320,8 @@
                     android:paddingLeft="20dp"
                     android:layout_marginBottom="20dp"
                     android:layout_height="40dp"
+                    android:maxLength="11"
+                    android:inputType="number"
                     />
 
             </LinearLayout>
@@ -399,21 +404,21 @@
                         android:id="@+id/register_iv_pic1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_launcher_background"
+                        android:src="@drawable/add_photo"
                         android:layout_weight="1"/>
 
                     <ImageView
                         android:id="@+id/register_iv_pic2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_launcher_background"
+                        android:src="@drawable/add_photo"
                         android:layout_weight="1"/>
 
                     <ImageView
                         android:id="@+id/register_iv_pic3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_launcher_background"
+                        android:src="@drawable/add_photo"
                         android:layout_weight="1"/>
                 </LinearLayout>
 

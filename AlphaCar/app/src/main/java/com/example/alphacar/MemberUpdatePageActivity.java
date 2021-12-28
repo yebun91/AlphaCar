@@ -47,6 +47,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Pattern;
 
 
 public class MemberUpdatePageActivity extends AppCompatActivity {
@@ -55,6 +56,8 @@ public class MemberUpdatePageActivity extends AppCompatActivity {
     CheckBox memberupdate_cb_company;
     TextView memberupdate_bt_update;
     ImageButton btn_back;
+
+    int joinUpChk = 0;
 
     private int GALLEY_CODE = 10;
     private int CAMERA_CODE = 1004;
@@ -300,10 +303,10 @@ public class MemberUpdatePageActivity extends AppCompatActivity {
                 int white = ContextCompat.getColor(getApplicationContext(), R.color.white);
                 int red = ContextCompat.getColor(getApplicationContext(), R.color.red);
                 if(!passwd.equals(passwd2)) {
-                    memberupdate_et_newpw.setTextColor(red);
+               //     memberupdate_et_newpw.setTextColor(red);
                     memberupdate_et_newpw2.setTextColor(red);
                 }else{
-                    memberupdate_et_newpw.setTextColor(white);
+              //      memberupdate_et_newpw.setTextColor(white);
                     memberupdate_et_newpw2.setTextColor(white);
                 }
             }
@@ -313,28 +316,30 @@ public class MemberUpdatePageActivity extends AppCompatActivity {
         });
 
         //비밀번호 유효성 검사 할때 틀리면 빨간색으로 변경
-        /*etPasswd.addTextChangedListener(new TextWatcher() {
+        memberupdate_et_newpw.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String passwd = etPasswd.getText().toString();
+                String passwd = memberupdate_et_newpw.getText().toString();
                 int white = ContextCompat.getColor(getApplicationContext(), R.color.white);
                 int red = ContextCompat.getColor(getApplicationContext(), R.color.red);
 
                 if(!Pattern.matches(
                         "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&]).{6,15}.$", passwd)) {
-                    etPasswd.setTextColor(red);
+                    memberupdate_et_newpw.setTextColor(red);
+                    joinUpChk = 1;
                 }else{
-                    etPasswd.setTextColor(white);
+                    memberupdate_et_newpw.setTextColor(white);
+
                 }
             }
             @Override
             public void afterTextChanged(Editable s) {
             }
-        });*/
+        });
 
         //가입하기 버튼 클릭
         memberupdate_bt_update.setOnClickListener(new View.OnClickListener() {
@@ -348,63 +353,63 @@ public class MemberUpdatePageActivity extends AppCompatActivity {
                 String email = loginDTO.getCustomer_email();
 
                 //비번을 입력하지 않았을 때 경고창
-                if(passwd.length() == 0){
+                if (passwd.length() == 0) {
                     Toast.makeText(MemberUpdatePageActivity.this, "비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
                     memberupdate_et_oldpw.requestFocus();
                     return;
                 }
 
                 //비밀번호가 기존의 비밀번호와 다를 경우
-                if(!passwd.equals(loginDTO.getCustomer_pw())){
+                if (!passwd.equals(loginDTO.getCustomer_pw())) {
                     Toast.makeText(MemberUpdatePageActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                     memberupdate_et_oldpw.requestFocus();
                     return;
                 }
 
                 //새로운비밀번호2가 새로운비밀번호1과 다를경우 경고장
-                if(!newpasswd.equals(newpasswd2)) {
+                if (!newpasswd.equals(newpasswd2)) {
                     Toast.makeText(MemberUpdatePageActivity.this, "비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
                     memberupdate_et_newpw.requestFocus();
                     return;
                 }
 
                 //사업자 유무
-                if(memberupdate_cb_company.isChecked()){
+                if (memberupdate_cb_company.isChecked()) {
                     admin = "M";
-                }else{
+                } else {
                     admin = "C";
                 }
 
-                //비밀번호 유효성 검사
-                /*if(!Pattern.matches(
-                        "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&]).{6,15}.$", newpasswd)){
-                    Toast.makeText(MemberUpdate.this, "비밀번호 형식을 확인해 주세요.", Toast.LENGTH_SHORT).show();
-                    etNewPASSWD.requestFocus();
-                    return;
-                }*/
+
 
                 //위의 검사를 모두 통과 한 후 newpasswd에 값이 들어있을 경우 passwd에 newpasswd 값을 넣는다.
-                if(!newpasswd.isEmpty()){ passwd = newpasswd; }
+                if (!newpasswd.isEmpty()) {
+                    passwd = newpasswd;
+                }
                 //name에 값이 없을 경우 lgoinDTO의 name 값을 가져온다.
-                if(name.isEmpty()){ name = loginDTO.getCustomer_name(); }
-
-                //회원가입 처리 시작
-                MemberUpdate memberUpdatePage = new MemberUpdate(email, passwd, name, admin, loginDTO.getCustomer_picture());
-
-                //가입 성공 여부
-                String state = "";
-                try {
-                    state = memberUpdatePage.execute().get().trim();
-                    Log.d("main:joinact0 : ", state);
-                    state = state.substring(11, 12);
-                    Log.d("main:joinact1 : ", state);
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (name.isEmpty()) {
+                    name = loginDTO.getCustomer_name();
                 }
 
-                if(state.equals("1")){
+
+                if (joinUpChk == 0) {
+                    //회원가입 처리 시작
+                    MemberUpdate memberUpdatePage = new MemberUpdate(email, passwd, name, admin, loginDTO.getCustomer_picture());
+
+                    //가입 성공 여부
+                    String state = "";
+                    try {
+                        state = memberUpdatePage.execute().get().trim();
+                        Log.d("main:joinact0 : ", state);
+                        state = state.substring(11, 12);
+                        Log.d("main:joinact1 : ", state);
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (state.equals("1")) {
                    /* LoginSelect loginSelect = new LoginSelect(email, passwd);
                     try {
                         loginSelect.execute().get();
@@ -414,20 +419,24 @@ public class MemberUpdatePageActivity extends AppCompatActivity {
                         e.getMessage();
                     }
 */
-                    LoginAtask loginAtask = new LoginAtask(email, passwd);
-                    try {
-                        loginDTO = (MemberVO) loginAtask.execute().get();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                        LoginAtask loginAtask = new LoginAtask(email, passwd);
+                        try {
+                            loginDTO = (MemberVO) loginAtask.execute().get();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-                    Toast.makeText(MemberUpdatePageActivity.this, "수정되었습니다.", Toast.LENGTH_SHORT).show();
-                    Log.d("main:memberUpdate", "수정되었습니다.");
-                    finish();
-                }else{
-                    Toast.makeText(MemberUpdatePageActivity.this, "수정실패!", Toast.LENGTH_SHORT).show();
-                    Log.d("main:memberUpdate", "수정실패!");
-                    finish();
+                        Toast.makeText(MemberUpdatePageActivity.this, "수정되었습니다.", Toast.LENGTH_SHORT).show();
+                        Log.d("main:memberUpdate", "수정되었습니다.");
+                        finish();
+                    } else {
+                        Toast.makeText(MemberUpdatePageActivity.this, "수정실패!", Toast.LENGTH_SHORT).show();
+                        Log.d("main:memberUpdate", "수정실패!");
+                        finish();
+                    }
+                } else {
+                    Toast.makeText(MemberUpdatePageActivity.this, "비밀번호를 확인하세요", Toast.LENGTH_SHORT).show();
+                    memberupdate_et_newpw.requestFocus();
                 }
             }
         });

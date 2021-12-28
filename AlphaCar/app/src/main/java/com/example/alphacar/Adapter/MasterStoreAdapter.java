@@ -61,7 +61,9 @@ public class MasterStoreAdapter extends RecyclerView.Adapter<MasterStoreAdapter.
                 intent.putExtra("inventory", item.getInventory());
                 intent.putExtra("store_price", item.getStore_price());
                 intent.putExtra("introduce", item.getIntroduce());
+                intent.putExtra("store_post", item.getStore_post());
                 intent.putExtra("store_addr", item.getStore_addr());
+                intent.putExtra("store_detail_addr", item.getStore_detail_addr());
                 intent.putExtra("store_tel", item.getStore_tel());
                 intent.putExtra("store_time", item.getStore_time());
                 intent.putExtra("store_dayoff", item.getStore_dayoff());

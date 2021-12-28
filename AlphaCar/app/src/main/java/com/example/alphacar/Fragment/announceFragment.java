@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -83,11 +84,14 @@ public class AnnounceFragment extends Fragment implements AbsListView.OnScrollLi
                     Toast.LENGTH_SHORT).show();
         }
 
-        notifyAdapter = new NotifyAdapter(mActivity, notiftList);
-        listView.setAdapter(notifyAdapter);
 
-        listView.setOnScrollListener(this);
-        getItem();
+            notifyAdapter = new NotifyAdapter(mActivity, notiftList);
+            listView.setAdapter(notifyAdapter);
+
+            listView.setOnScrollListener(this);
+            getItem();
+
+
 
 
 

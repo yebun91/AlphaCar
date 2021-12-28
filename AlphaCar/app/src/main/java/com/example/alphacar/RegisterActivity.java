@@ -76,6 +76,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     String customer_email;
 
+    int regCheck = 0;
+
+    int storeNameChk = 0, masterNameChk = 0, regNumChk = 0, storeTel = 0, timeChk = 0, offChk = 0;
+
     File imgFile = null;
 
     private int GALLEY_CODE = 10;
@@ -369,9 +373,9 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String store_name = et_store_name.getText().toString();
                 String store_master_name = et_store_master_name.getText().toString();
-                String store_registration_number = et_store_registration_number.getText().toString();
+                String regnum = et_store_registration_number.getText().toString();
                 int inventory = 0;
-                if(!et_inventory.getText().toString().equals("")) {
+                if (!et_inventory.getText().toString().equals("")) {
                     inventory = Integer.parseInt(et_inventory.getText().toString());
                 }
                 String store_price = et_store_price.getText().toString();
@@ -379,103 +383,151 @@ public class RegisterActivity extends AppCompatActivity {
                 String store_post = et_addr0.getText().toString();
                 String store_addr = et_addr1.getText().toString();
                 String store_detail_addr = et_addr2.getText().toString();
-                String store_tel = et_store_tel.getText().toString();
+                String store_telnum = et_store_tel.getText().toString();
                 String store_time = et_store_time.getText().toString();
                 String store_dayoff = et_store_dayoff.getText().toString();
 
-                if(store_name.length() == 0){
+                String first = store_telnum.substring(0, 3);
+                String second = store_telnum.substring(3, 7);
+                String third = store_telnum.substring(7);
+                String store_tel = first + "-" + second + "-" + third;
+
+                first = regnum.substring(0, 3);
+                second = regnum.substring(4, 9);
+                third = regnum.substring(9);
+                String store_registration_number = first + "-" + second + "-" + third;
+
+                if (store_name.length() == 0) {
                     Toast.makeText(RegisterActivity.this, "가게 명을 입력하세요", Toast.LENGTH_SHORT).show();
                     et_store_name.requestFocus();
                     return;
                 }
-                if(store_master_name.length() == 0){
+                if (store_master_name.length() == 0) {
                     Toast.makeText(RegisterActivity.this, "대표 명을 입력하세요", Toast.LENGTH_SHORT).show();
                     et_store_master_name.requestFocus();
                     return;
                 }
-                if(store_registration_number.length() == 0){
+                if (store_registration_number.length() == 0) {
                     Toast.makeText(RegisterActivity.this, "사업자 등록 번호를 입력하세요", Toast.LENGTH_SHORT).show();
                     et_store_registration_number.requestFocus();
                     return;
                 }
-                if(inventory == 0){
+                if (inventory == 0) {
                     Toast.makeText(RegisterActivity.this, "베이 수를 입력하세요", Toast.LENGTH_SHORT).show();
                     et_inventory.requestFocus();
                     return;
                 }
-                if(store_price.length() == 0){
+                if (store_price.length() == 0) {
                     Toast.makeText(RegisterActivity.this, "가격을 입력하세요", Toast.LENGTH_SHORT).show();
                     et_store_price.requestFocus();
                     return;
                 }
-                if(introduce.length() == 0){
+                if (introduce.length() == 0) {
                     Toast.makeText(RegisterActivity.this, "가게 소개를 입력하세요", Toast.LENGTH_SHORT).show();
                     et_introduce.requestFocus();
                     return;
                 }
-                if(store_post.length() == 0 && store_detail_addr.length() == 0){
+                if (store_post.length() == 0 && store_detail_addr.length() == 0) {
                     Toast.makeText(RegisterActivity.this, "주소를 입력하세요", Toast.LENGTH_SHORT).show();
                     et_introduce.requestFocus();
                     return;
                 }
-                if(store_tel.length() == 0){
+                if (store_tel.length() == 0) {
                     Toast.makeText(RegisterActivity.this, "연락처를 입력하세요", Toast.LENGTH_SHORT).show();
                     et_addr2.requestFocus();
                     return;
                 }
-                if(store_time.length() == 0){
+                if (store_time.length() == 0) {
                     Toast.makeText(RegisterActivity.this, "영업 시간을 입력하세요", Toast.LENGTH_SHORT).show();
                     et_store_time.requestFocus();
                     return;
                 }
 
-                if(store_dayoff.length() == 0){
+                if (store_dayoff.length() == 0) {
                     Toast.makeText(RegisterActivity.this, "휴무일을 입력하세요", Toast.LENGTH_SHORT).show();
                     et_store_dayoff.requestFocus();
                     return;
                 }
 
-
-
-
-
-
-                StoreRegister register = new StoreRegister(customer_email, store_name,store_post, store_addr,
-                        store_detail_addr,store_tel, store_time, store_dayoff, introduce, inventory, store_price,
-                        store_master_name, store_registration_number, storePic);
-                String state = "";
-                try {
-                    state = register.execute().get().trim();
-                    Log.d("main:joinact0 : ", state);
-                    state = state.substring(11, 12);
-                    Log.d("main:joinact1 : ", state);
-                } catch (ExecutionException e) {
-                    //e.printStackTrace();
-                } catch (InterruptedException e) {
-                    //e.printStackTrace();
+                if(storeNameChk == 0 && masterNameChk == 0 && regNumChk ==0 && storeTel == 0 && timeChk ==0 && offChk ==0){
+                    regCheck = 0;
+                }
+                else {
+                    regCheck = 1;
                 }
 
-                if (state.equals("1")) {
-                    Toast.makeText(RegisterActivity.this, "삽입성공 !!!", Toast.LENGTH_SHORT).show();
-                    Log.d("main:joinact", "삽입성공 !!!");
-                    finish();
-                } else {
-                    Toast.makeText(RegisterActivity.this, "삽입실패 !!!", Toast.LENGTH_SHORT).show();
-                    Log.d("main:joinact", "삽입실패 !!!");
-                    finish();
+                if(regCheck == 0) {
+                      if(storePic.size() != 0) {
+                            StoreRegister register = new StoreRegister(customer_email, store_name, store_post, store_addr,
+                                    store_detail_addr, store_tel, store_time, store_dayoff, introduce, inventory, store_price,
+                                    store_master_name, store_registration_number, storePic);
+                            String state = "";
+                            try {
+                                state = register.execute().get().trim();
+                                Log.d("main:joinact0 : ", state);
+                                state = state.substring(11, 12);
+                                Log.d("main:joinact1 : ", state);
+                            } catch (ExecutionException e) {
+                                //e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                //e.printStackTrace();
+                            }
+
+
+                            if (state.equals("1")) {
+                                Toast.makeText(RegisterActivity.this, "삽입성공 !!!", Toast.LENGTH_SHORT).show();
+                                Log.d("main:joinact", "삽입성공 !!!");
+                                finish();
+                            }
+                            //fix
+                            else {
+                                Toast.makeText(RegisterActivity.this, "삽입실패 !!!", Toast.LENGTH_SHORT).show();
+                                Log.d("main:joinact", "삽입성공 !!!");
+                                finish();
+                            }
+                        } else{
+                            Toast.makeText(RegisterActivity.this, "사진을 넣어주세요, 사진은 3장이 들어가야 합니다", Toast.LENGTH_SHORT).show();
+                        }
+                }else {
+                    if(storeNameChk == 1){
+                        Toast.makeText(RegisterActivity.this, "가게명을 확인하세요", Toast.LENGTH_SHORT).show();
+                        et_store_name.requestFocus();
+
+                    }
+                    else if(masterNameChk == 1){
+                        Toast.makeText(RegisterActivity.this, "대표명을 확인하세요", Toast.LENGTH_SHORT).show();
+                        et_store_master_name.requestFocus();
+                    }
+                    else if(regNumChk == 1){
+                        Toast.makeText(RegisterActivity.this, "사업자 번호를 확인하세요", Toast.LENGTH_SHORT).show();
+                        et_store_registration_number.requestFocus();
+                    }
+                    else if(storeTel == 1){
+                        Toast.makeText(RegisterActivity.this, "연락처를 확인하세요", Toast.LENGTH_SHORT).show();
+                        et_store_tel.requestFocus();
+                    }
+                    else if(timeChk == 1){
+                        Toast.makeText(RegisterActivity.this, "영업시간을 확인하세요", Toast.LENGTH_SHORT).show();
+                        et_store_time.requestFocus();
+                    }
+                    else if(offChk == 1){
+                        Toast.makeText(RegisterActivity.this, "휴무일을 확인하세요", Toast.LENGTH_SHORT).show();
+                        et_store_dayoff.requestFocus();
+                    }
                 }
+
             }
         });
-        Editable inventory = et_inventory.getText();
+     /*   Editable inventory = et_inventory.getText();
         Editable store_registration_number = et_store_registration_number.getText();
         Editable store_tel = et_store_tel.getText();
         Editable store_time = et_store_time.getText();
-
+*/
         int white = ContextCompat.getColor(getApplicationContext(), R.color.white);
         int red = ContextCompat.getColor(getApplicationContext(), R.color.red);
 
-        //사업자번호 유효성
-        et_store_registration_number.addTextChangedListener(new TextWatcher() {
+        //가게명 유효성
+        et_store_name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -483,11 +535,15 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            if(!Pattern.matches("^[1-9]*$",store_registration_number)){
-                et_store_registration_number.setTextColor(red);
-            }else{
-                et_store_registration_number.setTextColor(white);
-            }
+            String storeName = et_store_name.getText().toString();
+                if(!Pattern.matches("^[a-z|A-Z|가-힣|0-9]*$",storeName)) {
+                    et_store_name.setTextColor(red);
+                    storeNameChk = 1;
+                }else{
+                    et_store_name.setTextColor(white);
+                    storeNameChk = 0;
+                }
+
             }
 
             @Override
@@ -495,8 +551,11 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-        //인벤토리 유효성
-        et_inventory.addTextChangedListener(new TextWatcher() {
+
+
+        //대표자명 유효성
+        et_store_master_name.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -504,10 +563,13 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(!Pattern.matches("^[1-9]*$",inventory)){
-                    et_inventory.setTextColor(red);
+                String name = et_store_master_name.getText().toString();
+                if(!Pattern.matches("^[가-힣]*$",name)) {
+                    et_store_master_name.setTextColor(red);
+                    masterNameChk = 1;
                 }else{
-                    et_inventory.setTextColor(white);
+                    et_store_master_name.setTextColor(white);
+                    masterNameChk = 0;
                 }
             }
 
@@ -516,9 +578,40 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+
+        //사업자번호 유효성
+        et_store_registration_number.addTextChangedListener(new TextWatcher() {
+
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String regnum = et_store_registration_number.getText().toString();
+            if(!Pattern.matches("^[0-9]{10}$",regnum)){
+
+                et_store_registration_number.setTextColor(red);
+                regNumChk = 1;
+            }else{
+                et_store_registration_number.setTextColor(white);
+                regNumChk = 0;
+            }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
 
         //연락처 유효성
         et_store_tel.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -526,10 +619,13 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(!Pattern.matches("^(?:[0-9]{2,3})-(?:\\d{3}|\\d{4})-\\d{4}$",store_tel)){
+                String telnum = et_store_tel.getText().toString();
+                if(!Pattern.matches("^[0-9]{11}$",telnum)){
                     et_store_tel.setTextColor(red);
+                    storeTel = 1;
                 }else{
                     et_store_tel.setTextColor(white);
+                    storeTel = 0;
                 }
             }
 
@@ -539,7 +635,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        //영업시간 유효성
         et_store_time.addTextChangedListener(new TextWatcher() {
+            String store_time = et_store_time.getText().toString();
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -549,9 +647,38 @@ public class RegisterActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(!Pattern.matches("^[0-9.~:]*$",store_time)){
                     et_store_time.setTextColor(red);
+                    timeChk = 1;
+
                 }else{
                     et_store_time.setTextColor(white);
+                    timeChk = 0;
                 }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        //휴무일 유효성
+        et_store_dayoff.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String off = et_store_dayoff.getText().toString();
+                if(!Pattern.matches("^[가-힣]*$", off)){
+                    et_store_dayoff.setTextColor(red);
+                    offChk = 1;
+                }else{
+                    et_store_dayoff.setTextColor(white);
+                    offChk = 0;
+                }
+
             }
 
             @Override

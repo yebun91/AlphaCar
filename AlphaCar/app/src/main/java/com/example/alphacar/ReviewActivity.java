@@ -54,6 +54,7 @@ public class ReviewActivity extends AppCompatActivity {
     ImageView addPhoto;
     RatingBar ratingBar;
     private final int PICK_IMAGE = 1111;
+    private String profile = null;
 
     // constant to compare
     // the activity result code
@@ -177,6 +178,9 @@ public class ReviewActivity extends AppCompatActivity {
         Intent i = new Intent();
         i.setType("image/*");
         i.setAction(Intent.ACTION_GET_CONTENT);
+
+
+
 
         // pass the constant to compare it
         // with the returned requestCode
